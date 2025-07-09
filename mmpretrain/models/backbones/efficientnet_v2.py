@@ -55,7 +55,6 @@ class EnhancedConvModule(ConvModule):
             ("conv", "norm", "act") and ("act", "conv", "norm").
             Default: ('conv', 'norm', 'act').
     """
-
     def __init__(self, *args, has_skip=False, drop_path_rate=0, **kwargs):
         super().__init__(*args, **kwargs)
         self.has_skip = has_skip
@@ -190,10 +189,9 @@ class EfficientNetV2(BaseBackbone):
                  with_cp: bool = False,
                  init_cfg=[
                      dict(type='Kaiming', layer='Conv2d'),
-                     dict(
-                         type='Constant',
-                         layer=['_BatchNorm', 'GroupNorm'],
-                         val=1)
+                     dict(type='Constant',
+                          layer=['_BatchNorm', 'GroupNorm'],
+                          val=1)
                  ]):
         super(EfficientNetV2, self).__init__(init_cfg)
         assert arch in self.arch_settings, \
@@ -238,14 +236,13 @@ class EfficientNetV2(BaseBackbone):
     def make_layers(self, ):
         # make the first layer
         self.layers.append(
-            ConvModule(
-                in_channels=self.in_channels,
-                out_channels=self.arch[0][4],
-                kernel_size=3,
-                stride=2,
-                conv_cfg=self.conv_cfg,
-                norm_cfg=self.norm_cfg,
-                act_cfg=self.act_cfg))
+            ConvModule(in_channels=self.in_channels,
+                       out_channels=self.arch[0][4],
+                       kernel_size=3,
+                       stride=2,
+                       conv_cfg=self.conv_cfg,
+                       norm_cfg=self.norm_cfg,
+                       act_cfg=self.act_cfg))
 
         in_channels = self.arch[0][4]
         layer_setting = self.arch[:-1]
@@ -267,56 +264,53 @@ class EfficientNetV2(BaseBackbone):
                     has_skip = stride == 1 and in_channels == out_channels
                     droppath_rate = dpr[block_idx] if has_skip else 0.0
                     layer.append(
-                        EnhancedConvModule(
-                            in_channels=in_channels,
-                            out_channels=out_channels,
-                            kernel_size=kernel_size,
-                            has_skip=has_skip,
-                            drop_path_rate=droppath_rate,
-                            stride=stride,
-                            padding=1,
-                            conv_cfg=None,
-                            norm_cfg=self.norm_cfg,
-                            act_cfg=self.act_cfg))
+                        EnhancedConvModule(in_channels=in_channels,
+                                           out_channels=out_channels,
+                                           kernel_size=kernel_size,
+                                           has_skip=has_skip,
+                                           drop_path_rate=droppath_rate,
+                                           stride=stride,
+                                           padding=1,
+                                           conv_cfg=None,
+                                           norm_cfg=self.norm_cfg,
+                                           act_cfg=self.act_cfg))
                     in_channels = out_channels
                 else:
                     mid_channels = int(in_channels * expand_ratio)
                     se_cfg = None
                     if block_type != 0 and se_ratio > 0:
-                        se_cfg = dict(
-                            channels=mid_channels,
-                            ratio=expand_ratio * (1.0 / se_ratio),
-                            divisor=1,
-                            act_cfg=(self.act_cfg, dict(type='Sigmoid')))
+                        se_cfg = dict(channels=mid_channels,
+                                      ratio=expand_ratio * (1.0 / se_ratio),
+                                      divisor=1,
+                                      act_cfg=(self.act_cfg,
+                                               dict(type='Sigmoid')))
                     block = FusedMBConv if block_type == 0 else MBConv
                     conv_cfg = self.conv_cfg if stride == 2 else None
                     layer.append(
-                        block(
-                            in_channels=in_channels,
-                            out_channels=out_channels,
-                            mid_channels=mid_channels,
-                            kernel_size=kernel_size,
-                            stride=stride,
-                            se_cfg=se_cfg,
-                            conv_cfg=conv_cfg,
-                            norm_cfg=self.norm_cfg,
-                            act_cfg=self.act_cfg,
-                            drop_path_rate=dpr[block_idx],
-                            with_cp=self.with_cp))
+                        block(in_channels=in_channels,
+                              out_channels=out_channels,
+                              mid_channels=mid_channels,
+                              kernel_size=kernel_size,
+                              stride=stride,
+                              se_cfg=se_cfg,
+                              conv_cfg=conv_cfg,
+                              norm_cfg=self.norm_cfg,
+                              act_cfg=self.act_cfg,
+                              drop_path_rate=dpr[block_idx],
+                              with_cp=self.with_cp))
                     in_channels = out_channels
                 block_idx += 1
             self.layers.append(Sequential(*layer))
 
         # make the last layer
         self.layers.append(
-            ConvModule(
-                in_channels=in_channels,
-                out_channels=self.out_channels,
-                kernel_size=self.arch[-1][1],
-                stride=self.arch[-1][2],
-                conv_cfg=self.conv_cfg,
-                norm_cfg=self.norm_cfg,
-                act_cfg=self.act_cfg))
+            ConvModule(in_channels=in_channels,
+                       out_channels=self.out_channels,
+                       kernel_size=self.arch[-1][1],
+                       stride=self.arch[-1][2],
+                       conv_cfg=self.conv_cfg,
+                       norm_cfg=self.norm_cfg,
+                       act_cfg=self.act_cfg))
 
     def forward(self, x: Tensor) -> Tuple[Tensor]:
         outs = []

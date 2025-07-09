@@ -59,8 +59,10 @@ def test_inverted_residual():
     assert x_out.shape == torch.Size((1, 16, 56, 56))
 
     # Test InvertedResidual forward with GroupNorm
-    block = InvertedResidual(
-        16, 16, 32, norm_cfg=dict(type='GN', num_groups=2))
+    block = InvertedResidual(16,
+                             16,
+                             32,
+                             norm_cfg=dict(type='GN', num_groups=2))
     x = torch.randn(1, 16, 56, 56)
     x_out = block(x)
     for m in block.modules():

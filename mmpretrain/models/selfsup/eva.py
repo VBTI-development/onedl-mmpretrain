@@ -13,9 +13,9 @@ class EVA(BaseSelfSupervisor):
     """EVA.
 
     Implementation of `EVA: Exploring the Limits of Masked Visual
-    Representation Learning at Scale <https://arxiv.org/abs/2211.07636>`_.
+    Representation Learning at Scale`     `
+    <https://arxiv.org/abs/2211.07636>`_.
     """
-
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 

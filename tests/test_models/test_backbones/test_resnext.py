@@ -12,8 +12,12 @@ def test_bottleneck():
         BottleneckX(64, 64, groups=32, width_per_group=4, style='tensorflow')
 
     # Test ResNeXt Bottleneck structure
-    block = BottleneckX(
-        64, 256, groups=32, width_per_group=4, stride=2, style='pytorch')
+    block = BottleneckX(64,
+                        256,
+                        groups=32,
+                        width_per_group=4,
+                        stride=2,
+                        style='pytorch')
     assert block.conv2.stride == (2, 2)
     assert block.conv2.groups == 32
     assert block.conv2.out_channels == 128
@@ -31,8 +35,10 @@ def test_resnext():
         ResNeXt(depth=18)
 
     # Test ResNeXt with group 32, width_per_group 4
-    model = ResNeXt(
-        depth=50, groups=32, width_per_group=4, out_indices=(0, 1, 2, 3))
+    model = ResNeXt(depth=50,
+                    groups=32,
+                    width_per_group=4,
+                    out_indices=(0, 1, 2, 3))
     for m in model.modules():
         if isinstance(m, BottleneckX):
             assert m.conv2.groups == 32

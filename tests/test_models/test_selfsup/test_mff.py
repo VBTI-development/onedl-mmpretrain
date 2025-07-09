@@ -10,8 +10,10 @@ from mmpretrain.structures import DataSample
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
 def test_mae_vit():
-    backbone = dict(
-        arch='b', patch_size=16, mask_ratio=0.75, out_indices=[1, 11])
+    backbone = dict(arch='b',
+                    patch_size=16,
+                    mask_ratio=0.75,
+                    out_indices=[1, 11])
     mae_backbone = MFFViT(**backbone)
     mae_backbone.init_weights()
     fake_inputs = torch.randn((2, 3, 224, 224))
@@ -28,12 +30,11 @@ def test_mae():
         'std': [0.5, 0.5, 0.5],
         'to_rgb': True
     }
-    backbone = dict(
-        type='MFFViT',
-        arch='b',
-        patch_size=16,
-        mask_ratio=0.75,
-        out_indices=[1, 11])
+    backbone = dict(type='MFFViT',
+                    arch='b',
+                    patch_size=16,
+                    mask_ratio=0.75,
+                    out_indices=[1, 11])
     neck = dict(
         type='MAEPretrainDecoder',
         patch_size=16,
@@ -45,14 +46,15 @@ def test_mae():
         mlp_ratio=4.,
     )
     loss = dict(type='PixelReconstructionLoss', criterion='L2')
-    head = dict(
-        type='MAEPretrainHead', norm_pix=False, patch_size=16, loss=loss)
+    head = dict(type='MAEPretrainHead',
+                norm_pix=False,
+                patch_size=16,
+                loss=loss)
 
-    alg = MFF(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = MFF(backbone=backbone,
+              neck=neck,
+              head=head,
+              data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs': torch.randn((2, 3, 224, 224)),

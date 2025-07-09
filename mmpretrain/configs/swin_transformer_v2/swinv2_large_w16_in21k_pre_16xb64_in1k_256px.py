@@ -12,13 +12,10 @@ with read_base():
     from .._base_.schedules.imagenet_bs1024_adamw_swin import *
 
 # model settings
-model.update(
-    backbone=dict(
-        arch='large',
-        img_size=256,
-        window_size=[16, 16, 16, 8],
-        pretrained_window_sizes=[12, 12, 12, 6]),
-    head=dict(
-        in_channels=1536,
-        loss=dict(type=CrossEntropyLoss, loss_weight=1.0),
-        topk=(1, 5)))
+model.update(backbone=dict(arch='large',
+                           img_size=256,
+                           window_size=[16, 16, 16, 8],
+                           pretrained_window_sizes=[12, 12, 12, 6]),
+             head=dict(in_channels=1536,
+                       loss=dict(type=CrossEntropyLoss, loss_weight=1.0),
+                       topk=(1, 5)))

@@ -25,7 +25,6 @@ class SwAVNeck(BaseModule):
             Defaults to dict(type='SyncBN').
         init_cfg (dict or list[dict], optional): Initialization config dict.
     """
-
     def __init__(
         self,
         in_channels: int,

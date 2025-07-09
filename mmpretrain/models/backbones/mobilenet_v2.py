@@ -31,7 +31,6 @@ class InvertedResidual(BaseModule):
     Returns:
         Tensor: The output tensor
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -53,36 +52,32 @@ class InvertedResidual(BaseModule):
         layers = []
         if expand_ratio != 1:
             layers.append(
-                ConvModule(
-                    in_channels=in_channels,
-                    out_channels=hidden_dim,
-                    kernel_size=1,
-                    conv_cfg=conv_cfg,
-                    norm_cfg=norm_cfg,
-                    act_cfg=act_cfg))
+                ConvModule(in_channels=in_channels,
+                           out_channels=hidden_dim,
+                           kernel_size=1,
+                           conv_cfg=conv_cfg,
+                           norm_cfg=norm_cfg,
+                           act_cfg=act_cfg))
         layers.extend([
-            ConvModule(
-                in_channels=hidden_dim,
-                out_channels=hidden_dim,
-                kernel_size=3,
-                stride=stride,
-                padding=1,
-                groups=hidden_dim,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg),
-            ConvModule(
-                in_channels=hidden_dim,
-                out_channels=out_channels,
-                kernel_size=1,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=None)
+            ConvModule(in_channels=hidden_dim,
+                       out_channels=hidden_dim,
+                       kernel_size=3,
+                       stride=stride,
+                       padding=1,
+                       groups=hidden_dim,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg),
+            ConvModule(in_channels=hidden_dim,
+                       out_channels=out_channels,
+                       kernel_size=1,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=None)
         ])
         self.conv = nn.Sequential(*layers)
 
     def forward(self, x):
-
         def _inner_forward(x):
             if self.use_res_connect:
                 return x + self.conv(x)
@@ -138,10 +133,9 @@ class MobileNetV2(BaseBackbone):
                  with_cp=False,
                  init_cfg=[
                      dict(type='Kaiming', layer=['Conv2d']),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ]):
         super(MobileNetV2, self).__init__(init_cfg)
         self.widen_factor = widen_factor
@@ -164,26 +158,24 @@ class MobileNetV2(BaseBackbone):
 
         self.in_channels = make_divisible(32 * widen_factor, 8)
 
-        self.conv1 = ConvModule(
-            in_channels=3,
-            out_channels=self.in_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            conv_cfg=self.conv_cfg,
-            norm_cfg=self.norm_cfg,
-            act_cfg=self.act_cfg)
+        self.conv1 = ConvModule(in_channels=3,
+                                out_channels=self.in_channels,
+                                kernel_size=3,
+                                stride=2,
+                                padding=1,
+                                conv_cfg=self.conv_cfg,
+                                norm_cfg=self.norm_cfg,
+                                act_cfg=self.act_cfg)
 
         self.layers = []
 
         for i, layer_cfg in enumerate(self.arch_settings):
             expand_ratio, channel, num_blocks, stride = layer_cfg
             out_channels = make_divisible(channel * widen_factor, 8)
-            inverted_res_layer = self.make_layer(
-                out_channels=out_channels,
-                num_blocks=num_blocks,
-                stride=stride,
-                expand_ratio=expand_ratio)
+            inverted_res_layer = self.make_layer(out_channels=out_channels,
+                                                 num_blocks=num_blocks,
+                                                 stride=stride,
+                                                 expand_ratio=expand_ratio)
             layer_name = f'layer{i + 1}'
             self.add_module(layer_name, inverted_res_layer)
             self.layers.append(layer_name)
@@ -193,15 +185,14 @@ class MobileNetV2(BaseBackbone):
         else:
             self.out_channel = 1280
 
-        layer = ConvModule(
-            in_channels=self.in_channels,
-            out_channels=self.out_channel,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            conv_cfg=self.conv_cfg,
-            norm_cfg=self.norm_cfg,
-            act_cfg=self.act_cfg)
+        layer = ConvModule(in_channels=self.in_channels,
+                           out_channels=self.out_channel,
+                           kernel_size=1,
+                           stride=1,
+                           padding=0,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=self.act_cfg)
         self.add_module('conv2', layer)
         self.layers.append('conv2')
 
@@ -220,15 +211,14 @@ class MobileNetV2(BaseBackbone):
             if i >= 1:
                 stride = 1
             layers.append(
-                InvertedResidual(
-                    self.in_channels,
-                    out_channels,
-                    stride,
-                    expand_ratio=expand_ratio,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    with_cp=self.with_cp))
+                InvertedResidual(self.in_channels,
+                                 out_channels,
+                                 stride,
+                                 expand_ratio=expand_ratio,
+                                 conv_cfg=self.conv_cfg,
+                                 norm_cfg=self.norm_cfg,
+                                 act_cfg=self.act_cfg,
+                                 with_cp=self.with_cp))
             self.in_channels = out_channels
 
         return nn.Sequential(*layers)

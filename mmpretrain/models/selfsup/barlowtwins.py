@@ -17,7 +17,6 @@ class BarlowTwins(BaseSelfSupervisor):
     Part of the code is borrowed from:
     `<https://github.com/facebookresearch/barlowtwins/blob/main/main.py>`_.
     """
-
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

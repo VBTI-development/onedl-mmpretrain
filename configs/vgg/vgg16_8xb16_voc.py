@@ -9,18 +9,18 @@ _base_ = [
 pretrained = 'https://download.openmmlab.com/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth'  # noqa
 
 # use different head for multilabel task
-model = dict(
-    type='ImageClassifier',
-    backbone=dict(
-        type='VGG',
-        depth=16,
-        num_classes=20,
-        init_cfg=dict(
-            type='Pretrained', checkpoint=pretrained, prefix='backbone')),
-    neck=None,
-    head=dict(
-        type='MultiLabelClsHead',
-        loss=dict(type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)))
+model = dict(type='ImageClassifier',
+             backbone=dict(type='VGG',
+                           depth=16,
+                           num_classes=20,
+                           init_cfg=dict(type='Pretrained',
+                                         checkpoint=pretrained,
+                                         prefix='backbone')),
+             neck=None,
+             head=dict(type='MultiLabelClsHead',
+                       loss=dict(type='CrossEntropyLoss',
+                                 use_sigmoid=True,
+                                 loss_weight=1.0)))
 
 # schedule settings
 optim_wrapper = dict(

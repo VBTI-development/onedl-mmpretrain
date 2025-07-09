@@ -47,7 +47,6 @@ class SDTAEncoder(BaseModule):
             Defaults to ``dict(type='GELU')``.
         scales (int): Number of scales. Default to 1.
     """
-
     def __init__(self,
                  in_channel,
                  drop_path_rate=0.,
@@ -63,21 +62,19 @@ class SDTAEncoder(BaseModule):
                  scales=1,
                  init_cfg=None):
         super(SDTAEncoder, self).__init__(init_cfg=init_cfg)
-        conv_channels = max(
-            int(math.ceil(in_channel / scales)),
-            int(math.floor(in_channel // scales)))
+        conv_channels = max(int(math.ceil(in_channel / scales)),
+                            int(math.floor(in_channel // scales)))
         self.conv_channels = conv_channels
         self.num_convs = scales if scales == 1 else scales - 1
 
         self.conv_modules = ModuleList()
         for i in range(self.num_convs):
             self.conv_modules.append(
-                nn.Conv2d(
-                    conv_channels,
-                    conv_channels,
-                    kernel_size=3,
-                    padding=1,
-                    groups=conv_channels))
+                nn.Conv2d(conv_channels,
+                          conv_channels,
+                          kernel_size=3,
+                          padding=1,
+                          groups=conv_channels))
 
         self.pos_embed = PositionEncodingFourier(
             embed_dims=in_channel) if use_pos_emb else None
@@ -86,12 +83,11 @@ class SDTAEncoder(BaseModule):
         self.gamma_csa = nn.Parameter(
             layer_scale_init_value * torch.ones(in_channel),
             requires_grad=True) if layer_scale_init_value > 0 else None
-        self.csa = ChannelMultiheadAttention(
-            embed_dims=in_channel,
-            num_heads=num_heads,
-            qkv_bias=qkv_bias,
-            attn_drop=attn_drop,
-            proj_drop=proj_drop)
+        self.csa = ChannelMultiheadAttention(embed_dims=in_channel,
+                                             num_heads=num_heads,
+                                             qkv_bias=qkv_bias,
+                                             attn_drop=attn_drop,
+                                             proj_drop=proj_drop)
 
         self.norm = build_norm_layer(norm_cfg, in_channel)
         self.pointwise_conv1 = nn.Linear(in_channel, mlp_ratio * in_channel)

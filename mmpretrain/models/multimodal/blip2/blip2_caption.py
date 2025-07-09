@@ -53,8 +53,8 @@ class Blip2Caption(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
 
         self.tokenizer = TOKENIZER.build(tokenizer)
         self.eos_token_id = self.tokenizer(
@@ -166,8 +166,8 @@ class Blip2Caption(BaseModel):
             return_dict=True,
         )
         inputs_opt = self.vision_neck([query_outputs.last_hidden_state])
-        attns_opt = torch.ones(
-            inputs_opt.size()[:-1], dtype=torch.long).to(images.device)
+        attns_opt = torch.ones(inputs_opt.size()[:-1],
+                               dtype=torch.long).to(images.device)
 
         self.tokenizer.padding_side = 'right'
 
@@ -189,14 +189,12 @@ class Blip2Caption(BaseModel):
         if self.prompt:
             targets[:, :self.prompt_length] = -100
 
-        empty_targets = (
-            torch.ones(attns_opt.size(),
-                       dtype=torch.long).to(images.device).fill_(-100))
+        empty_targets = (torch.ones(attns_opt.size(), dtype=torch.long).to(
+            images.device).fill_(-100))
         targets = torch.cat([empty_targets, targets], dim=1)
 
-        inputs_embeds = (
-            self.text_backbone.model.decoder.embed_tokens(
-                opt_tokens.input_ids))
+        inputs_embeds = (self.text_backbone.model.decoder.embed_tokens(
+            opt_tokens.input_ids))
         inputs_embeds = torch.cat([inputs_opt, inputs_embeds], dim=1)
         attention_mask = torch.cat([attns_opt, opt_tokens.attention_mask],
                                    dim=1)
@@ -245,8 +243,8 @@ class Blip2Caption(BaseModel):
             return_dict=True,
         )
         inputs_opt = self.vision_neck([query_outputs.last_hidden_state])
-        attns_opt = torch.ones(
-            inputs_opt.size()[:-1], dtype=torch.long).to(images.device)
+        attns_opt = torch.ones(inputs_opt.size()[:-1],
+                               dtype=torch.long).to(images.device)
 
         prompt = [self.prompt] * image_embeds.size(0)
 
@@ -260,8 +258,8 @@ class Blip2Caption(BaseModel):
         attention_mask = torch.cat([attns_opt, opt_tokens.attention_mask],
                                    dim=1)
 
-        inputs_embeds = (
-            self.text_backbone.get_input_embeddings()(opt_tokens.input_ids))
+        inputs_embeds = (self.text_backbone.get_input_embeddings()(
+            opt_tokens.input_ids))
         inputs_embeds = torch.cat([inputs_opt, inputs_embeds], dim=1)
 
         outputs = self.text_backbone.generate(
@@ -279,8 +277,8 @@ class Blip2Caption(BaseModel):
             num_return_sequences=self.num_captions,
         )
 
-        output_text = self.tokenizer.batch_decode(
-            outputs, skip_special_tokens=True)
+        output_text = self.tokenizer.batch_decode(outputs,
+                                                  skip_special_tokens=True)
         output_text = [text.strip() for text in output_text]
 
         out_data_samples = []

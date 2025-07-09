@@ -20,10 +20,9 @@ model = dict(
             'vit-large-p14_clip-openai-pre_3rdparty_20230517-95e2af0b.pth'),
     ),
     lang_encoder=dict(
-        base=dict(
-            type='AutoModelForCausalLM',
-            name_or_path='huggyllama/llama-7b',
-            local_files_only=True),
+        base=dict(type='AutoModelForCausalLM',
+                  name_or_path='huggyllama/llama-7b',
+                  local_files_only=True),
         adapter=dict(
             type='FlamingoLMAdapter',
             vis_hidden_size=1024,
@@ -34,8 +33,8 @@ model = dict(
     ),
     task='caption',
     final_prompt_tmpl='<image>User:Please describe the image. GPT:<answer>',
-    generation_cfg=dict(
-        num_beams=3, max_new_tokens=24, no_repeat_ngram_size=3),
+    generation_cfg=dict(num_beams=3, max_new_tokens=24,
+                        no_repeat_ngram_size=3),
 )
 
 # data settings
@@ -48,11 +47,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=224,
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='ResizeEdge',
+         scale=224,
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='CenterCrop', crop_size=(224, 224)),
     dict(
         type='PackInputs',

@@ -33,7 +33,7 @@ python tools/visualization/browse_dataset.py \
 - "original" means show images load from disk;
 - "transformed" means to show images after transformed;
 - "concat" means show images stitched by "original" and "transformed" images;
-- "pipeline" means show all the intermediate images throghout the pipeline.
+- "pipeline" means show all the intermediate images throughout the pipeline.
 
 2.  The `-r, --rescale-factor` option is set when the label information is too large or too small relative to the picture. For example, when visualizing the CIFAR dataset, since the resolution of the image is very small, `--rescale-factor` can be set to 10.
 ```

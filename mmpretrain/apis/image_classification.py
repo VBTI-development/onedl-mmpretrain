@@ -63,8 +63,10 @@ class ImageClassificationInferencer(BaseInferencer):
                  device: Union[str, torch.device, None] = None,
                  classes=None,
                  **kwargs) -> None:
-        super().__init__(
-            model=model, pretrained=pretrained, device=device, **kwargs)
+        super().__init__(model=model,
+                         pretrained=pretrained,
+                         device=device,
+                         **kwargs)
 
         if classes is not None:
             self.classes = classes
@@ -102,11 +104,10 @@ class ImageClassificationInferencer(BaseInferencer):
         Returns:
             list: The inference results.
         """
-        return super().__call__(
-            inputs,
-            return_datasamples=return_datasamples,
-            batch_size=batch_size,
-            **kwargs)
+        return super().__call__(inputs,
+                                return_datasamples=return_datasamples,
+                                batch_size=batch_size,
+                                **kwargs)
 
     def _init_pipeline(self, cfg: Config) -> Callable:
         test_pipeline_cfg = cfg.test_dataloader.dataset.pipeline
@@ -120,7 +121,6 @@ class ImageClassificationInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[InputType], batch_size: int = 1):
-
         def load_image(input_):
             img = imread(input_)
             if img is None:
@@ -169,19 +169,18 @@ class ImageClassificationInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_cls(
-                image,
-                data_sample,
-                classes=self.classes,
-                resize=resize,
-                show=show,
-                wait_time=wait_time,
-                rescale_factor=rescale_factor,
-                draw_gt=False,
-                draw_pred=True,
-                draw_score=draw_score,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_cls(image,
+                                          data_sample,
+                                          classes=self.classes,
+                                          resize=resize,
+                                          show=show,
+                                          wait_time=wait_time,
+                                          rescale_factor=rescale_factor,
+                                          draw_gt=False,
+                                          draw_pred=True,
+                                          draw_score=draw_score,
+                                          name=name,
+                                          out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

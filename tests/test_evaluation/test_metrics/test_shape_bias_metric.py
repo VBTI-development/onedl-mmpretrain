@@ -10,6 +10,7 @@ def test_shape_bias_metric():
     data_sample['pred_label'] = torch.tensor(1)
     data_sample['gt_label'] = torch.tensor(1)
     data_sample['img_path'] = 'tests/airplane/test.JPEG'
-    evaluator = ShapeBiasMetric(
-        csv_dir='tests/data', dataset_name='test', model_name='test')
+    evaluator = ShapeBiasMetric(csv_dir='tests/data',
+                                dataset_name='test',
+                                model_name='test')
     evaluator.process(None, [data_sample])

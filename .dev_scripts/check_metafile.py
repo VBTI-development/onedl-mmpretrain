@@ -44,13 +44,14 @@ MMCLS_ROOT = Path(__file__).absolute().parents[1]
 
 def parse_args():
     parser = argparse.ArgumentParser(description=prog_description)
-    parser.add_argument(
-        'metafile', type=Path, nargs='+', help='The path of the matafile.')
-    parser.add_argument(
-        '--Wall',
-        '-w',
-        action='store_true',
-        help='Whether to enable all warnings.')
+    parser.add_argument('metafile',
+                        type=Path,
+                        nargs='+',
+                        help='The path of the matafile.')
+    parser.add_argument('--Wall',
+                        '-w',
+                        action='store_true',
+                        help='Whether to enable all warnings.')
     parser.add_argument('--skip', action='append', help='Rules to skip check.')
     args = parser.parse_args()
     args.skip = args.skip or []

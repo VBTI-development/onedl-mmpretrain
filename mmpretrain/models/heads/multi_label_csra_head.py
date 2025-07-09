@@ -83,7 +83,6 @@ class CSRAModule(BaseModule):
         init_cfg (dict | optional): The extra init config of layers.
             Defaults to use dict(type='Normal', layer='Linear', std=0.01).
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,

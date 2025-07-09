@@ -13,11 +13,10 @@ with read_base():
 
 # model settings
 model.update(
-    backbone=dict(
-        arch='small',
-        img_size=256,
-        drop_path_rate=0.3,
-        window_size=[16, 16, 16, 8]),
+    backbone=dict(arch='small',
+                  img_size=256,
+                  drop_path_rate=0.3,
+                  window_size=[16, 16, 16, 8]),
     head=dict(in_channels=768),
     init_cfg=[
         dict(type=TruncNormalInit, layer='Linear', std=0.02, bias=0.),

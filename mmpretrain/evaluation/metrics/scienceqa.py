@@ -44,7 +44,6 @@ class ScienceQAMetric(BaseMetric):
             will be used instead. Should be modified according to the
             `retrieval_type` for unambiguous results. Defaults to TR.
     """
-
     def __init__(self,
                  options: List[str] = ['A', 'B', 'C', 'D', 'E'],
                  collect_device: str = 'cpu',
@@ -79,8 +78,8 @@ class ScienceQAMetric(BaseMetric):
         for data_sample in data_samples:
             result = dict()
             choices = data_sample.get('choices')
-            result['prediction'] = get_pred_idx(
-                data_sample.get('pred_answer'), choices, self.options)
+            result['prediction'] = get_pred_idx(data_sample.get('pred_answer'),
+                                                choices, self.options)
             result['grade'] = data_sample.get('grade')
             result['subject'] = data_sample.get('subject')
             result['answer'] = data_sample.get('gt_answer')

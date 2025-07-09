@@ -108,8 +108,13 @@ def test_res_layer():
     assert x_out.shape == torch.Size([1, 256, 28, 28])
 
     # Test ResLayer of 3 SEBottleneck with stride=2 and average downsample
-    layer = ResLayer(
-        SEBottleneck, 3, 64, 256, stride=2, avg_down=True, se_ratio=8)
+    layer = ResLayer(SEBottleneck,
+                     3,
+                     64,
+                     256,
+                     stride=2,
+                     avg_down=True,
+                     se_ratio=8)
     assert isinstance(layer[0].downsample[0], AvgPool2d)
     assert layer[0].downsample[1].out_channels == 256
     assert layer[0].downsample[1].stride == (1, 1)
@@ -154,10 +159,10 @@ def test_seresnet():
     assert check_norm_state(model.modules(), False)
 
     # Test SEResNet50 with torchvision pretrained weight
-    model = SEResNet(
-        depth=50,
-        norm_eval=True,
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50'))
+    model = SEResNet(depth=50,
+                     norm_eval=True,
+                     init_cfg=dict(type='Pretrained',
+                                   checkpoint='torchvision://resnet50'))
     model.init_weights()
     model.train()
     assert check_norm_state(model.modules(), False)

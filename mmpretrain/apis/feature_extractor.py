@@ -93,7 +93,6 @@ class FeatureExtractor(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[InputType], batch_size: int = 1):
-
         def load_image(input_):
             img = imread(input_)
             if img is None:

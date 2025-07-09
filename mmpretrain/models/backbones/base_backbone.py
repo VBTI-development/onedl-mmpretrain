@@ -10,7 +10,6 @@ class BaseBackbone(BaseModule, metaclass=ABCMeta):
     This class defines the basic functions of a backbone. Any backbone that
     inherits this class should at least define its own `forward` function.
     """
-
     def __init__(self, init_cfg=None):
         super(BaseBackbone, self).__init__(init_cfg)
 

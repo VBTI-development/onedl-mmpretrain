@@ -156,7 +156,6 @@ def init_empty_weights(include_buffers: bool = False):
             module._buffers[name] = module._buffers[name].to(device)
 
     def patch_tensor_constructor(fn):
-
         def wrapper(*args, **kwargs):
             kwargs['device'] = device
             return fn(*args, **kwargs)
@@ -227,7 +226,6 @@ def compute_module_sizes(
         dtype: Union[str, torch.dtype, None] = None,
         special_dtypes: Optional[Dict[str, Union[str, torch.dtype]]] = None):
     """Compute the size of each submodule of a given model."""
-
     def get_dtype(dtype):
         if isinstance(dtype, str):
             dtype = getattr(torch, dtype)
@@ -254,9 +252,8 @@ def compute_module_sizes(
         }
 
     module_sizes = defaultdict(int)
-    for name, tensor in chain(
-            model.named_parameters(recurse=True),
-            model.named_buffers(recurse=True)):
+    for name, tensor in chain(model.named_parameters(recurse=True),
+                              model.named_buffers(recurse=True)):
         if special_dtypes is not None and name in special_dtypes:
             size = tensor.numel() * special_dtypes[name]
         elif dtype is None:

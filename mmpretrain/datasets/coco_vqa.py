@@ -23,7 +23,6 @@ class COCOVQA(BaseDataset):
             validation. Defaults to an empty string.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root: str,
                  data_prefix: str,

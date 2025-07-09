@@ -5,13 +5,12 @@ _base_ = [
 
 model = dict(
     type='iTPN',
-    backbone=dict(
-        type='iTPNHiViT',
-        arch='base',
-        drop_path_rate=0.0,
-        rpe=True,
-        layer_scale_init_value=0.1,
-        reconstruction_type='clip'),
+    backbone=dict(type='iTPNHiViT',
+                  arch='base',
+                  drop_path_rate=0.0,
+                  rpe=True,
+                  layer_scale_init_value=0.1,
+                  reconstruction_type='clip'),
     neck=dict(
         type='iTPNPretrainDecoder',
         patch_size=16,
@@ -24,11 +23,10 @@ model = dict(
         fpn_depth=2,
         num_outs=3,
     ),
-    head=dict(
-        type='iTPNClipHead',
-        embed_dims=512,
-        num_embed=512,
-        loss=dict(type='CosineSimilarityLoss')),
+    head=dict(type='iTPNClipHead',
+              embed_dims=512,
+              num_embed=512,
+              loss=dict(type='CosineSimilarityLoss')),
     target_generator=dict(
         type='CLIPGenerator',
         tokenizer_path=  # noqa
@@ -41,8 +39,10 @@ optim_wrapper = dict(
     type='AmpOptimWrapper',
     loss_scale='dynamic',
     # betas: (0.9, 0.98) for 300 epochs and (0.9, 0.999) for 1600 epochs.
-    optimizer=dict(
-        type='AdamW', lr=1.5e-3, betas=(0.9, 0.98), weight_decay=0.05),
+    optimizer=dict(type='AdamW',
+                   lr=1.5e-3,
+                   betas=(0.9, 0.98),
+                   weight_decay=0.05),
     clip_grad=dict(max_norm=3.0),
     paramwise_cfg=dict(
         custom_keys={
@@ -53,20 +53,18 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        eta_min=1e-5,
-        by_epoch=True,
-        begin=10,
-        end=300,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         eta_min=1e-5,
+         by_epoch=True,
+         begin=10,
+         end=300,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

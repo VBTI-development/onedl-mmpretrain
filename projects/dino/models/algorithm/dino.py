@@ -29,7 +29,6 @@ class DINO(BaseSelfSupervisor):
         init_cfg (list[dict] | dict, optional): Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  backbone: dict,
                  neck: dict,
@@ -38,17 +37,16 @@ class DINO(BaseSelfSupervisor):
                  base_momentum: float = 0.99,
                  data_preprocessor: Optional[dict] = None,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            pretrained=pretrained,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         pretrained=pretrained,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         # create momentum model
-        self.teacher = CosineEMA(
-            nn.Sequential(self.backbone, self.neck), momentum=base_momentum)
+        self.teacher = CosineEMA(nn.Sequential(self.backbone, self.neck),
+                                 momentum=base_momentum)
         # weight normalization layer
         self.neck.last_layer = nn.utils.weight_norm(self.neck.last_layer)
         self.neck.last_layer.weight_g.data.fill_(1)

@@ -13,7 +13,6 @@ from mmpretrain.models.backbones.poolformer import Pooling
 
 
 class TestEfficientFormer(TestCase):
-
     def setUp(self):
         self.cfg = dict(arch='l1', drop_path_rate=0.1)
         self.arch = EfficientFormer.arch_settings['l1']
@@ -91,11 +90,10 @@ class TestEfficientFormer(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear'),
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear'),
             dict(type='Constant', layer=['LayerScale'], val=1e-4)
         ]
         model = EfficientFormer(**cfg)

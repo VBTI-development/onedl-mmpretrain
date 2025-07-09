@@ -53,7 +53,6 @@ class SparseResNet(ResNet):
             in resblocks to let them behave as identity. Defaults to True.
         drop_path_rate (float): stochastic depth rate. Defaults to 0.
     """
-
     def __init__(self,
                  depth: int,
                  in_channels: int = 3,
@@ -75,35 +74,33 @@ class SparseResNet(ResNet):
                  zero_init_residual: bool = False,
                  init_cfg: Optional[dict] = [
                      dict(type='Kaiming', layer=['Conv2d']),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ],
                  drop_path_rate: float = 0,
                  **kwargs):
-        super().__init__(
-            depth=depth,
-            in_channels=in_channels,
-            stem_channels=stem_channels,
-            base_channels=base_channels,
-            expansion=expansion,
-            num_stages=num_stages,
-            strides=strides,
-            dilations=dilations,
-            out_indices=out_indices,
-            style=style,
-            deep_stem=deep_stem,
-            avg_down=avg_down,
-            frozen_stages=frozen_stages,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            norm_eval=norm_eval,
-            with_cp=with_cp,
-            zero_init_residual=zero_init_residual,
-            init_cfg=init_cfg,
-            drop_path_rate=drop_path_rate,
-            **kwargs)
+        super().__init__(depth=depth,
+                         in_channels=in_channels,
+                         stem_channels=stem_channels,
+                         base_channels=base_channels,
+                         expansion=expansion,
+                         num_stages=num_stages,
+                         strides=strides,
+                         dilations=dilations,
+                         out_indices=out_indices,
+                         style=style,
+                         deep_stem=deep_stem,
+                         avg_down=avg_down,
+                         frozen_stages=frozen_stages,
+                         conv_cfg=conv_cfg,
+                         norm_cfg=norm_cfg,
+                         norm_eval=norm_eval,
+                         with_cp=with_cp,
+                         zero_init_residual=zero_init_residual,
+                         init_cfg=init_cfg,
+                         drop_path_rate=drop_path_rate,
+                         **kwargs)
         norm_type = norm_cfg['type']
         enable_sync_bn = False
         if re.search('Sync', norm_type) is not None:
@@ -134,23 +131,21 @@ class SparseResNet(ResNet):
 
         elif isinstance(m, nn.MaxPool2d):
             m: nn.MaxPool2d
-            output = SparseMaxPooling(
-                m.kernel_size,
-                stride=m.stride,
-                padding=m.padding,
-                dilation=m.dilation,
-                return_indices=m.return_indices,
-                ceil_mode=m.ceil_mode)
+            output = SparseMaxPooling(m.kernel_size,
+                                      stride=m.stride,
+                                      padding=m.padding,
+                                      dilation=m.dilation,
+                                      return_indices=m.return_indices,
+                                      ceil_mode=m.ceil_mode)
 
         elif isinstance(m, nn.AvgPool2d):
             m: nn.AvgPool2d
-            output = SparseAvgPooling(
-                m.kernel_size,
-                m.stride,
-                m.padding,
-                ceil_mode=m.ceil_mode,
-                count_include_pad=m.count_include_pad,
-                divisor_override=m.divisor_override)
+            output = SparseAvgPooling(m.kernel_size,
+                                      m.stride,
+                                      m.padding,
+                                      ceil_mode=m.ceil_mode,
+                                      count_include_pad=m.count_include_pad,
+                                      divisor_override=m.divisor_override)
 
         elif isinstance(m, (nn.BatchNorm2d, nn.SyncBatchNorm)):
             m: nn.BatchNorm2d
@@ -173,7 +168,7 @@ class SparseResNet(ResNet):
         for name, child in m.named_children():
             output.add_module(
                 name,
-                self.dense_model_to_sparse(
-                    child, enable_sync_bn=enable_sync_bn))
+                self.dense_model_to_sparse(child,
+                                           enable_sync_bn=enable_sync_bn))
         del m
         return output

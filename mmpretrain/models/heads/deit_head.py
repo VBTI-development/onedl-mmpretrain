@@ -29,7 +29,6 @@ class DeiTClsHead(VisionTransformerClsHead):
         init_cfg (dict): The extra initialization configs. Defaults to
             ``dict(type='Constant', layer='Linear', val=0)``.
     """
-
     def _init_layers(self):
         """"Init extra hidden linear layer to handle dist token if exists."""
         super(DeiTClsHead, self)._init_layers()

@@ -72,7 +72,7 @@ msgstr ""
 #: ../../api/data_process.rst:14
 msgid ""
 ":mod:`Data Preprocessors <mmcls.models.utils.data_preprocessor>`: Processes includes collate, "
-"normalization, stacking, channel fliping and etc."
+"normalization, stacking, channel flipping and etc."
 msgstr ""
 ":mod:`数据预处理器 <mmcls.models.utils.data_preprocessor>`：主要负责批量数据的收集、归一化、堆叠、通道翻转等"
 "操作。"
@@ -873,7 +873,7 @@ msgstr ""
 
 #: mmcls.datasets.imagenet.ImageNet21k:3 of
 msgid ""
-"Since the dataset ImageNet21k is extremely big, cantains 21k+ classes and 1.4B files. We won't provide the "
+"Since the dataset ImageNet21k is extremely big, contains 21k+ classes and 1.4B files. We won't provide the "
 "default categories list. Please specify it from the ``classes`` argument."
 msgstr ""
 
@@ -1010,7 +1010,7 @@ msgid "Annotation file path, path relative to ``data_root``. Defaults to 'images
 msgstr ""
 
 #: mmcls.datasets.cub.CUB:34 of
-msgid "Prefix for iamges, path relative to ``data_root``. Defaults to 'images'."
+msgid "Prefix for images, path relative to ``data_root``. Defaults to 'images'."
 msgstr ""
 
 #: mmcls.datasets.cub.CUB:37 of
@@ -4130,13 +4130,13 @@ msgstr ""
 
 #: mmcls.models.backbones.deit.DistilledVisionTransformer:50 mmcls.models.backbones.deit3.DeiT3:58
 #: mmcls.models.backbones.t2t_vit.T2T_ViT:37 mmcls.models.backbones.vision_transformer.VisionTransformer:62 of
-msgid "Select the interpolate mode for position embeding vector resize. Defaults to \"bicubic\"."
+msgid "Select the interpolate mode for position embedding vector resize. Defaults to \"bicubic\"."
 msgstr ""
 
 #: mmcls.models.backbones.deit.DistilledVisionTransformer:53 mmcls.models.backbones.deit3.DeiT3:61
 #: mmcls.models.backbones.mlp_mixer.MlpMixer:36 mmcls.models.backbones.vision_transformer.VisionTransformer:65
 #: of
-msgid "Configs of patch embeding. Defaults to an empty dict."
+msgid "Configs of patch embedding. Defaults to an empty dict."
 msgstr ""
 
 #: mmcls.models.backbones.deit.DistilledVisionTransformer:55 mmcls.models.backbones.deit3.DeiT3:63
@@ -4649,7 +4649,7 @@ msgid ""
 msgstr ""
 
 #: mmcls.models.backbones.inception_v3.InceptionV3:10 of
-msgid "The number of categroies. Defaults to 1000."
+msgid "The number of categories. Defaults to 1000."
 msgstr ""
 
 #: mmcls.models.backbones.inception_v3.InceptionV3:12 of
@@ -6102,7 +6102,7 @@ msgstr ""
 
 #: mmcls.models.backbones.swin_transformer.SwinTransformer:42
 #: mmcls.models.backbones.swin_transformer_v2.SwinTransformerV2:42 of
-msgid "Select the interpolate mode for absolute position embeding vector resize. Defaults to \"bicubic\"."
+msgid "Select the interpolate mode for absolute position embedding vector resize. Defaults to \"bicubic\"."
 msgstr ""
 
 #: ../../api/generated/mmcls.models.backbones.SwinTransformerV2.rst:7
@@ -6240,7 +6240,7 @@ msgid "Input image size. Defaults to 224"
 msgstr ""
 
 #: mmcls.models.backbones.tnt.TNT:14 of
-msgid "The patch size. Deault to 16"
+msgid "The patch size. Default to 16"
 msgstr ""
 
 #: mmcls.models.backbones.tnt.TNT:16 of
@@ -6626,7 +6626,7 @@ msgid ""
 msgstr ""
 
 #: mmcls.models.classifiers.hugging_face.HuggingFaceClassifier:11 of
-msgid "Please confirm that you have installed ``transfromers`` if you want to use it."
+msgid "Please confirm that you have installed ``transformers`` if you want to use it."
 msgstr ""
 
 #: mmcls.models.classifiers.hugging_face.HuggingFaceClassifier:16 of
@@ -7974,9 +7974,9 @@ msgstr ""
 
 #: mmcls.models.utils.se_layer.SELayer:21 of
 msgid ""
-"Config dict for activation layer. If act_cfg is a dict, two activation layers will be configurated by this "
-"dict. If act_cfg is a sequence of dicts, the first activation layer will be configurated by the first dict "
-"and the second activation layer will be configurated by the second dict. Default: (dict(type='ReLU'), "
+"Config dict for activation layer. If act_cfg is a dict, two activation layers will be configured by this "
+"dict. If act_cfg is a sequence of dicts, the first activation layer will be configured by the first dict "
+"and the second activation layer will be configured by the second dict. Default: (dict(type='ReLU'), "
 "dict(type='Sigmoid'))"
 msgstr ""
 
@@ -8231,7 +8231,7 @@ msgid "Whether to apply lambda correction when cutmix bbox clipped by image bord
 msgstr ""
 
 #: mmcls.models.utils.batch_augments.resizemix.ResizeMix:31 of
-msgid "Any other parameters accpeted by :class:`CutMix`."
+msgid "Any other parameters accepted by :class:`CutMix`."
 msgstr ""
 
 #: mmcls.models.utils.batch_augments.resizemix.ResizeMix:35 of

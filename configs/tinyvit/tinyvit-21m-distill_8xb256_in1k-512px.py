@@ -6,20 +6,18 @@ _base_ = [
 ]
 
 # model settings
-model = dict(
-    backbone=dict(
-        img_size=(512, 512),
-        window_size=[16, 16, 32, 16],
-        drop_path_rate=0.1,
-    ))
+model = dict(backbone=dict(
+    img_size=(512, 512),
+    window_size=[16, 16, 32, 16],
+    drop_path_rate=0.1,
+))
 # data settings
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(512, 512),
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='Resize',
+         scale=(512, 512),
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='PackInputs'),
 ]
 

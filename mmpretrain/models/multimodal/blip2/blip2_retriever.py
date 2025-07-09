@@ -52,7 +52,6 @@ class Blip2Retrieval(BlipRetrieval):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_backbone: dict,
                  text_backbone: Optional[dict] = None,
@@ -74,8 +73,9 @@ class Blip2Retrieval(BlipRetrieval):
             data_preprocessor = MODELS.build(data_preprocessor)
 
         # Skip BlipRetrieval init
-        super(BlipRetrieval, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BlipRetrieval,
+              self).__init__(init_cfg=init_cfg,
+                             data_preprocessor=data_preprocessor)
 
         self.vision_backbone = MODELS.build(vision_backbone)
         self.ln_vision_backbone = nn.LayerNorm(self.vision_backbone.embed_dims)
@@ -137,8 +137,8 @@ class Blip2Retrieval(BlipRetrieval):
             # Add layernorm inside backbone and handle the concat outside
             image_embeds = self.ln_vision_backbone(
                 self.vision_backbone(inputs)[0])
-            image_atts = torch.ones(
-                image_embeds.size()[:-1], dtype=torch.long).to(self.device)
+            image_atts = torch.ones(image_embeds.size()[:-1],
+                                    dtype=torch.long).to(self.device)
 
             query_tokens = self.query_tokens.expand(image_embeds.shape[0], -1,
                                                     -1)
@@ -149,8 +149,9 @@ class Blip2Retrieval(BlipRetrieval):
                 use_cache=True,
                 return_dict=True,
             )
-            image_feat = F.normalize(
-                self.vision_neck([query_output.last_hidden_state]), dim=-1)
+            image_feat = F.normalize(self.vision_neck(
+                [query_output.last_hidden_state]),
+                                     dim=-1)
             return {
                 'image_embeds': image_embeds,
                 'image_feat': image_feat,
@@ -164,8 +165,8 @@ class Blip2Retrieval(BlipRetrieval):
                 return_dict=True,
             )
             text_embeds = text_output.last_hidden_state
-            text_feat = F.normalize(
-                self.text_neck([text_embeds[:, 0, :]]), dim=-1)
+            text_feat = F.normalize(self.text_neck([text_embeds[:, 0, :]]),
+                                    dim=-1)
             return {'text_embeds': text_embeds, 'text_feat': text_feat}
         else:
             raise RuntimeError(f'Invalid modality "{modality}".')
@@ -205,8 +206,8 @@ class Blip2Retrieval(BlipRetrieval):
         text_feat_all = torch.cat(dist.all_gather(text_feat))
 
         # B, B*world_size, num_query
-        sim_q2t = torch.matmul(
-            image_feat.unsqueeze(1), text_feat_all.unsqueeze(-1)).squeeze()
+        sim_q2t = torch.matmul(image_feat.unsqueeze(1),
+                               text_feat_all.unsqueeze(-1)).squeeze()
 
         # image to text similarity
         sim_i2t, _ = sim_q2t.max(-1)
@@ -223,8 +224,8 @@ class Blip2Retrieval(BlipRetrieval):
 
         rank = dist.get_rank()
         bs = images.size(0)
-        targets = torch.linspace(
-            rank * bs, rank * bs + bs - 1, bs, dtype=int).to(self.device)
+        targets = torch.linspace(rank * bs, rank * bs + bs - 1, bs,
+                                 dtype=int).to(self.device)
 
         itc_loss = (F.cross_entropy(sim_i2t, targets, label_smoothing=0.1) +
                     F.cross_entropy(sim_t2i, targets, label_smoothing=0.1)) / 2
@@ -266,15 +267,15 @@ class Blip2Retrieval(BlipRetrieval):
 
         query_tokens_itm = self.query_tokens.expand(text_ids_all.shape[0], -1,
                                                     -1)
-        query_atts_itm = torch.ones(
-            query_tokens_itm.size()[:-1], dtype=torch.long).to(self.device)
+        query_atts_itm = torch.ones(query_tokens_itm.size()[:-1],
+                                    dtype=torch.long).to(self.device)
         attention_mask_all = torch.cat([query_atts_itm, text_atts_all], dim=1)
 
         image_embeds_all = torch.cat(
             [image_embeds, image_embeds_neg, image_embeds],
             dim=0)  # pos, neg, pos
-        image_atts_all = torch.ones(
-            image_embeds_all.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts_all = torch.ones(image_embeds_all.size()[:-1],
+                                    dtype=torch.long).to(self.device)
 
         output_itm = self.multimodal_backbone.bert(
             text_ids_all,
@@ -301,8 +302,8 @@ class Blip2Retrieval(BlipRetrieval):
             decoder_input_ids == self.tokenizer.pad_token_id, -100)
 
         query_tokens = self.query_tokens.expand(image_embeds.shape[0], -1, -1)
-        query_atts = torch.ones(
-            query_tokens.size()[:-1], dtype=torch.long).to(self.device)
+        query_atts = torch.ones(query_tokens.size()[:-1],
+                                dtype=torch.long).to(self.device)
         attention_mask = torch.cat([query_atts, text_attn_mask], dim=1)
         lm_output = self.multimodal_backbone(
             decoder_input_ids,
@@ -312,8 +313,9 @@ class Blip2Retrieval(BlipRetrieval):
             labels=labels,
         )
 
-        return dict(
-            itc_loss=itc_loss, **loss_multimodal, lm_loss=lm_output.loss)
+        return dict(itc_loss=itc_loss,
+                    **loss_multimodal,
+                    lm_loss=lm_output.loss)
 
     def predict_all(self,
                     feats: Dict[str, torch.Tensor],
@@ -418,13 +420,13 @@ class Blip2Retrieval(BlipRetrieval):
             topk_sim, topk_idx = sims.topk(k=self.topk, dim=0)
             # get repeated image embeddings
             encoder_output = img_embeds[i].repeat(self.topk, 1, 1)
-            encoder_att = torch.ones(
-                encoder_output.size()[:-1], dtype=torch.long).to(self.device)
+            encoder_att = torch.ones(encoder_output.size()[:-1],
+                                     dtype=torch.long).to(self.device)
             # query embeds and attention masks
             query_tokens = self.query_tokens.expand(encoder_output.shape[0],
                                                     -1, -1)
-            query_atts = torch.ones(
-                query_tokens.size()[:-1], dtype=torch.long).to(self.device)
+            query_atts = torch.ones(query_tokens.size()[:-1],
+                                    dtype=torch.long).to(self.device)
             attention_mask = torch.cat([query_atts, text_atts[topk_idx]],
                                        dim=1)
             output = self.multimodal_backbone.bert(
@@ -480,13 +482,13 @@ class Blip2Retrieval(BlipRetrieval):
             topk_sim, topk_idx = sims.topk(k=self.topk, dim=0)
             # get topk image embeddings
             encoder_output = img_embeds[topk_idx]
-            encoder_att = torch.ones(
-                encoder_output.size()[:-1], dtype=torch.long).to(self.device)
+            encoder_att = torch.ones(encoder_output.size()[:-1],
+                                     dtype=torch.long).to(self.device)
             # get query embeds and attention masks
             query_tokens = self.query_tokens.expand(encoder_output.shape[0],
                                                     -1, -1)
-            query_atts = torch.ones(
-                query_tokens.size()[:-1], dtype=torch.long).to(self.device)
+            query_atts = torch.ones(query_tokens.size()[:-1],
+                                    dtype=torch.long).to(self.device)
             attention_mask = torch.cat(
                 [query_atts, text_atts[i].repeat(self.topk, 1)], dim=1)
             output = self.multimodal_backbone.bert(

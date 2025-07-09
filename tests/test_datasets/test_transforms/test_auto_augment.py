@@ -38,7 +38,6 @@ def construct_toy_data_photometric():
 
 
 class TestAutoAugment(TestCase):
-
     def test_construct(self):
         policies = [[
             dict(type='Posterize', bits=4, prob=0.4),
@@ -60,10 +59,9 @@ class TestAutoAugment(TestCase):
                 mock.assert_called()
 
         # test hparams
-        cfg = dict(
-            type='AutoAugment',
-            policies=policies,
-            hparams=dict(pad_val=[255, 255, 255]))
+        cfg = dict(type='AutoAugment',
+                   policies=policies,
+                   hparams=dict(pad_val=[255, 255, 255]))
         transform = TRANSFORMS.build(cfg)
         self.assertEqual(transform.policies[0][1]['pad_val'], [255, 255, 255])
         self.assertNotIn('pad_val', transform.policies[0][0])
@@ -84,11 +82,10 @@ class TestAutoAugment(TestCase):
 
 
 class TestRandAugment(TestCase):
-    DEFAULT_ARGS = dict(
-        type='RandAugment',
-        magnitude_level=7,
-        num_policies=1,
-        policies='timm_increasing')
+    DEFAULT_ARGS = dict(type='RandAugment',
+                        magnitude_level=7,
+                        num_policies=1,
+                        policies='timm_increasing')
 
     def test_construct(self):
         policies = [
@@ -192,12 +189,11 @@ class TestShear(TestCase):
                 'interpolation': 'nearest',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                0.2,
-                direction='horizontal',
-                border_value=255,
-                interpolation='nearest')
+            mock.assert_called_once_with(ANY,
+                                         0.2,
+                                         direction='horizontal',
+                                         border_value=255,
+                                         interpolation='nearest')
 
         # test random_negative_prob
         with patch('mmcv.imshear') as mock:
@@ -208,8 +204,11 @@ class TestShear(TestCase):
                 'prob': 1.,
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY, -0.2, direction=ANY, border_value=ANY, interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         -0.2,
+                                         direction=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
         # test prob
         with patch('mmcv.imshear') as mock:
@@ -234,12 +233,11 @@ class TestShear(TestCase):
                 'interpolation': 'nearest',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                0.2,
-                direction='horizontal',
-                border_value=(255, 255, 255),
-                interpolation='nearest')
+            mock.assert_called_once_with(ANY,
+                                         0.2,
+                                         direction='horizontal',
+                                         border_value=(255, 255, 255),
+                                         interpolation='nearest')
 
         # test magnitude_range
         with patch('mmcv.imshear') as mock:
@@ -251,8 +249,11 @@ class TestShear(TestCase):
                 'magnitude_range': (0, 0.3),
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY, 0.18, direction=ANY, border_value=ANY, interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         0.18,
+                                         direction=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
         # test magnitude_std is positive
         with patch('mmcv.imshear') as mock:
@@ -325,12 +326,11 @@ class TestTranslate(TestCase):
                 'interpolation': 'nearest',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                200 * 0.2,
-                direction='horizontal',
-                border_value=255,
-                interpolation='nearest')
+            mock.assert_called_once_with(ANY,
+                                         200 * 0.2,
+                                         direction='horizontal',
+                                         border_value=255,
+                                         interpolation='nearest')
 
         with patch(transform_func) as mock:
             cfg = {
@@ -343,12 +343,11 @@ class TestTranslate(TestCase):
                 'interpolation': 'nearest',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                100 * 0.2,
-                direction='vertical',
-                border_value=255,
-                interpolation='nearest')
+            mock.assert_called_once_with(ANY,
+                                         100 * 0.2,
+                                         direction='vertical',
+                                         border_value=255,
+                                         interpolation='nearest')
 
         # test sequeue pad_val
         with patch(transform_func) as mock:
@@ -362,12 +361,11 @@ class TestTranslate(TestCase):
                 'interpolation': 'nearest',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                200 * 0.2,
-                direction='horizontal',
-                border_value=(255, 255, 255),
-                interpolation='nearest')
+            mock.assert_called_once_with(ANY,
+                                         200 * 0.2,
+                                         direction='horizontal',
+                                         border_value=(255, 255, 255),
+                                         interpolation='nearest')
 
         # test prob
         with patch(transform_func) as mock:
@@ -389,12 +387,11 @@ class TestTranslate(TestCase):
                 'prob': 1.,
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                -0.2 * 200,
-                direction=ANY,
-                border_value=ANY,
-                interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         -0.2 * 200,
+                                         direction=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
         # test magnitude_range
         with patch(transform_func) as mock:
@@ -406,12 +403,11 @@ class TestTranslate(TestCase):
                 'magnitude_range': (0, 0.3),
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                0.18 * 200,
-                direction=ANY,
-                border_value=ANY,
-                interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         0.18 * 200,
+                                         direction=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
     def test_repr(self):
         cfg = {**self.DEFAULT_ARGS, 'magnitude': 0.1}
@@ -452,13 +448,12 @@ class TestRotate(TestCase):
                 'interpolation': 'bilinear',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                30,
-                center=(10, 10),
-                scale=1.5,
-                border_value=255,
-                interpolation='bilinear')
+            mock.assert_called_once_with(ANY,
+                                         30,
+                                         center=(10, 10),
+                                         scale=1.5,
+                                         border_value=255,
+                                         interpolation='bilinear')
 
         # test params inputs
         with patch(transform_func) as mock:
@@ -473,13 +468,12 @@ class TestRotate(TestCase):
                 'interpolation': 'bilinear',
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                30,
-                center=(10, 10),
-                scale=1.5,
-                border_value=(255, 255, 255),
-                interpolation='bilinear')
+            mock.assert_called_once_with(ANY,
+                                         30,
+                                         center=(10, 10),
+                                         scale=1.5,
+                                         border_value=(255, 255, 255),
+                                         interpolation='bilinear')
 
         # test prob
         with patch(transform_func) as mock:
@@ -501,13 +495,12 @@ class TestRotate(TestCase):
                 'prob': 1.,
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                -30,
-                center=ANY,
-                scale=ANY,
-                border_value=ANY,
-                interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         -30,
+                                         center=ANY,
+                                         scale=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
         # test magnitude_range
         with patch(transform_func) as mock:
@@ -519,13 +512,12 @@ class TestRotate(TestCase):
                 'magnitude_range': (0, 30),
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY,
-                18,
-                center=ANY,
-                scale=ANY,
-                border_value=ANY,
-                interpolation=ANY)
+            mock.assert_called_once_with(ANY,
+                                         18,
+                                         center=ANY,
+                                         scale=ANY,
+                                         border_value=ANY,
+                                         interpolation=ANY)
 
     def test_repr(self):
         cfg = {**self.DEFAULT_ARGS, 'angle': 30}
@@ -1234,8 +1226,8 @@ class TestCutout(TestCase):
                 'pad_val': [255, 255, 255],
             }
             TRANSFORMS.build(cfg)(construct_toy_data())
-            mock.assert_called_once_with(
-                ANY, (10, 15), pad_val=(255, 255, 255))
+            mock.assert_called_once_with(ANY, (10, 15),
+                                         pad_val=(255, 255, 255))
 
         # test random_negative_prob
         # cannot accept `random_negative_prob` argument

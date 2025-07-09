@@ -19,11 +19,10 @@ data_preprocessor = dict(
 
 train_pipeline = [
     dict(type=LoadImageFromFile),
-    dict(
-        type=RandomResizedCrop,
-        scale=384,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type=RandomResizedCrop,
+         scale=384,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type=RandomFlip, prob=0.5, direction='horizontal'),
     dict(type=PackInputs),
 ]
@@ -37,24 +36,22 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=64,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        ann_file='meta/train.txt',
-        data_prefix='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 ann_file='meta/train.txt',
+                 data_prefix='train',
+                 pipeline=train_pipeline),
     sampler=dict(type=DefaultSampler, shuffle=True),
 )
 
 val_dataloader = dict(
     batch_size=64,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        ann_file='meta/val.txt',
-        data_prefix='val',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 ann_file='meta/val.txt',
+                 data_prefix='val',
+                 pipeline=test_pipeline),
     sampler=dict(type=DefaultSampler, shuffle=False),
 )
 val_evaluator = dict(type=Accuracy, topk=(1, 5))

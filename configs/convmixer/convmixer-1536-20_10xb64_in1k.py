@@ -22,13 +22,12 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=130,
-        eta_min=1e-5,
-        by_epoch=True,
-        begin=20,
-        end=150)
+    dict(type='CosineAnnealingLR',
+         T_max=130,
+         eta_min=1e-5,
+         by_epoch=True,
+         begin=20,
+         end=150)
 ]
 
 train_cfg = dict(by_epoch=True, max_epochs=150)

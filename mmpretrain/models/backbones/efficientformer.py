@@ -28,7 +28,6 @@ class AttentionWithBias(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads=8,
@@ -65,7 +64,7 @@ class AttentionWithBias(BaseModule):
 
     @torch.no_grad()
     def train(self, mode=True):
-        """change the mode of model."""
+        """Change the mode of model."""
         super().train(mode)
         if mode and hasattr(self, 'ab'):
             del self.ab
@@ -73,7 +72,7 @@ class AttentionWithBias(BaseModule):
             self.ab = self.attention_biases[:, self.attention_bias_idxs]
 
     def forward(self, x):
-        """forward function.
+        """Forward function.
 
         Args:
             x (tensor): input features with shape of (B, N, C)
@@ -94,7 +93,6 @@ class AttentionWithBias(BaseModule):
 
 class Flat(nn.Module):
     """Flat the input from (B, C, H, W) to (B, H*W, C)."""
-
     def __init__(self, ):
         super().__init__()
 
@@ -120,7 +118,6 @@ class LinearMlp(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self,
                  in_features: int,
                  hidden_features: Optional[int] = None,
@@ -166,7 +163,6 @@ class ConvMlp(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self,
                  in_features,
                  hidden_features=None,
@@ -205,7 +201,6 @@ class ConvMlp(BaseModule):
 class Meta3D(BaseModule):
     """Meta Former block using 3 dimensions inputs, ``torch.Tensor`` with shape
     (B, N, C)."""
-
     def __init__(self,
                  dim,
                  mlp_ratio=4.,
@@ -220,11 +215,10 @@ class Meta3D(BaseModule):
         self.token_mixer = AttentionWithBias(dim)
         self.norm2 = build_norm_layer(norm_cfg, dim)[1]
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = LinearMlp(
-            in_features=dim,
-            hidden_features=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            drop=drop)
+        self.mlp = LinearMlp(in_features=dim,
+                             hidden_features=mlp_hidden_dim,
+                             act_cfg=act_cfg,
+                             drop=drop)
 
         self.drop_path = DropPath(drop_path) if drop_path > 0. \
             else nn.Identity()
@@ -243,7 +237,6 @@ class Meta3D(BaseModule):
 class Meta4D(BaseModule):
     """Meta Former block using 4 dimensions inputs, ``torch.Tensor`` with shape
     (B, C, H, W)."""
-
     def __init__(self,
                  dim,
                  pool_size=3,
@@ -257,11 +250,10 @@ class Meta4D(BaseModule):
 
         self.token_mixer = Pooling(pool_size=pool_size)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = ConvMlp(
-            in_features=dim,
-            hidden_features=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            drop=drop)
+        self.mlp = ConvMlp(in_features=dim,
+                           hidden_features=mlp_hidden_dim,
+                           act_cfg=act_cfg,
+                           drop=drop)
 
         self.drop_path = DropPath(drop_path) if drop_path > 0. \
             else nn.Identity()
@@ -289,24 +281,23 @@ def basic_blocks(in_channels,
                  use_layer_scale=True,
                  vit_num=1,
                  has_downsamper=False):
-    """generate EfficientFormer blocks for a stage."""
+    """Generate EfficientFormer blocks for a stage."""
     blocks = []
     if has_downsamper:
         blocks.append(
-            ConvModule(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=3,
-                stride=2,
-                padding=1,
-                bias=True,
-                norm_cfg=dict(type='BN'),
-                act_cfg=None))
+            ConvModule(in_channels=in_channels,
+                       out_channels=out_channels,
+                       kernel_size=3,
+                       stride=2,
+                       padding=1,
+                       bias=True,
+                       norm_cfg=dict(type='BN'),
+                       act_cfg=None))
     if index == 3 and vit_num == layers[index]:
         blocks.append(Flat())
     for block_idx in range(layers[index]):
-        block_dpr = drop_path_rate * (block_idx + sum(layers[:index])) / (
-            sum(layers) - 1)
+        block_dpr = drop_path_rate * (block_idx +
+                                      sum(layers[:index])) / (sum(layers) - 1)
         if index == 3 and layers[index] - block_idx <= vit_num:
             blocks.append(
                 Meta3D(
@@ -319,13 +310,12 @@ def basic_blocks(in_channels,
                 ))
         else:
             blocks.append(
-                Meta4D(
-                    out_channels,
-                    pool_size=pool_size,
-                    act_cfg=act_cfg,
-                    drop=drop_rate,
-                    drop_path=block_dpr,
-                    use_layer_scale=use_layer_scale))
+                Meta4D(out_channels,
+                       pool_size=pool_size,
+                       act_cfg=act_cfg,
+                       drop=drop_rate,
+                       drop_path=block_dpr,
+                       use_layer_scale=use_layer_scale))
             if index == 3 and layers[index] - block_idx - 1 == vit_num:
                 blocks.append(Flat())
     blocks = nn.Sequential(*blocks)
@@ -480,19 +470,18 @@ class EfficientFormer(BaseBackbone):
             else:
                 in_channels = self.embed_dims[i]
             out_channels = self.embed_dims[i]
-            stage = basic_blocks(
-                in_channels,
-                out_channels,
-                i,
-                self.layers,
-                pool_size=pool_size,
-                mlp_ratio=mlp_ratios,
-                act_cfg=act_cfg,
-                drop_rate=drop_rate,
-                drop_path_rate=drop_path_rate,
-                vit_num=self.vit_num,
-                use_layer_scale=use_layer_scale,
-                has_downsamper=self.downsamples[i])
+            stage = basic_blocks(in_channels,
+                                 out_channels,
+                                 i,
+                                 self.layers,
+                                 pool_size=pool_size,
+                                 mlp_ratio=mlp_ratios,
+                                 act_cfg=act_cfg,
+                                 drop_rate=drop_rate,
+                                 drop_path_rate=drop_path_rate,
+                                 vit_num=self.vit_num,
+                                 use_layer_scale=use_layer_scale,
+                                 has_downsamper=self.downsamples[i])
             network.append(stage)
 
         self.network = ModuleList(network)
@@ -511,12 +500,12 @@ class EfficientFormer(BaseBackbone):
         for i_layer in self.out_indices:
             if not self.reshape_last_feat and \
                     i_layer == 3 and self.vit_num > 0:
-                layer = build_norm_layer(
-                    dict(type='LN'), self.embed_dims[i_layer])[1]
+                layer = build_norm_layer(dict(type='LN'),
+                                         self.embed_dims[i_layer])[1]
             else:
                 # use GN with 1 group as channel-first LN2D
-                layer = build_norm_layer(
-                    dict(type='GN', num_groups=1), self.embed_dims[i_layer])[1]
+                layer = build_norm_layer(dict(type='GN', num_groups=1),
+                                         self.embed_dims[i_layer])[1]
 
             layer_name = f'norm{i_layer}'
             self.add_module(layer_name, layer)
@@ -525,28 +514,26 @@ class EfficientFormer(BaseBackbone):
         self._freeze_stages()
 
     def _make_stem(self, in_channels: int, stem_channels: int):
-        """make 2-ConvBNReLu stem layer."""
+        """Make 2-ConvBNReLu stem layer."""
         self.patch_embed = Sequential(
-            ConvModule(
-                in_channels,
-                stem_channels // 2,
-                kernel_size=3,
-                stride=2,
-                padding=1,
-                bias=True,
-                conv_cfg=None,
-                norm_cfg=dict(type='BN'),
-                inplace=True),
-            ConvModule(
-                stem_channels // 2,
-                stem_channels,
-                kernel_size=3,
-                stride=2,
-                padding=1,
-                bias=True,
-                conv_cfg=None,
-                norm_cfg=dict(type='BN'),
-                inplace=True))
+            ConvModule(in_channels,
+                       stem_channels // 2,
+                       kernel_size=3,
+                       stride=2,
+                       padding=1,
+                       bias=True,
+                       conv_cfg=None,
+                       norm_cfg=dict(type='BN'),
+                       inplace=True),
+            ConvModule(stem_channels // 2,
+                       stem_channels,
+                       kernel_size=3,
+                       stride=2,
+                       padding=1,
+                       bias=True,
+                       conv_cfg=None,
+                       norm_cfg=dict(type='BN'),
+                       inplace=True))
 
     def forward_tokens(self, x):
         outs = []

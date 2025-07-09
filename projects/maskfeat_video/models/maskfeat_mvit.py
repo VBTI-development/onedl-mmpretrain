@@ -53,38 +53,38 @@ class MaskFeatMViT(MViT):
         mlp_ratio: float = 4,
         qkv_bias: bool = True,
         norm_cfg: dict = dict(type='LN', eps=1e-6),
-        patch_cfg: dict = dict(
-            kernel_size=(3, 7, 7), stride=(2, 4, 4), padding=(1, 3, 3)),
+        patch_cfg: dict = dict(kernel_size=(3, 7, 7),
+                               stride=(2, 4, 4),
+                               padding=(1, 3, 3)),
         init_cfg: Optional[Union[dict, List[dict]]] = [
             dict(type='TruncNormal', layer=['Conv2d', 'Conv3d'], std=0.02),
             dict(type='TruncNormal', layer='Linear', std=0.02, bias=0.),
             dict(type='Constant', layer='LayerNorm', val=1., bias=0.02),
         ]
     ) -> None:
-        super().__init__(
-            arch=arch,
-            spatial_size=spatial_size,
-            temporal_size=temporal_size,
-            in_channels=in_channels,
-            out_scales=out_scales,
-            drop_path_rate=drop_path_rate,
-            use_abs_pos_embed=use_abs_pos_embed,
-            interpolate_mode=interpolate_mode,
-            pool_kernel=pool_kernel,
-            dim_mul=dim_mul,
-            head_mul=head_mul,
-            adaptive_kv_stride=adaptive_kv_stride,
-            rel_pos_embed=rel_pos_embed,
-            residual_pooling=residual_pooling,
-            dim_mul_in_attention=dim_mul_in_attention,
-            with_cls_token=with_cls_token,
-            output_cls_token=output_cls_token,
-            rel_pos_zero_init=rel_pos_zero_init,
-            mlp_ratio=mlp_ratio,
-            qkv_bias=qkv_bias,
-            norm_cfg=norm_cfg,
-            patch_cfg=patch_cfg,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         spatial_size=spatial_size,
+                         temporal_size=temporal_size,
+                         in_channels=in_channels,
+                         out_scales=out_scales,
+                         drop_path_rate=drop_path_rate,
+                         use_abs_pos_embed=use_abs_pos_embed,
+                         interpolate_mode=interpolate_mode,
+                         pool_kernel=pool_kernel,
+                         dim_mul=dim_mul,
+                         head_mul=head_mul,
+                         adaptive_kv_stride=adaptive_kv_stride,
+                         rel_pos_embed=rel_pos_embed,
+                         residual_pooling=residual_pooling,
+                         dim_mul_in_attention=dim_mul_in_attention,
+                         with_cls_token=with_cls_token,
+                         output_cls_token=output_cls_token,
+                         rel_pos_zero_init=rel_pos_zero_init,
+                         mlp_ratio=mlp_ratio,
+                         qkv_bias=qkv_bias,
+                         norm_cfg=norm_cfg,
+                         patch_cfg=patch_cfg,
+                         init_cfg=init_cfg)
 
         self.mask_token = nn.Parameter(torch.zeros(1, 1, self.embed_dims))
         self.patch_stride = patch_cfg['stride']
@@ -116,12 +116,11 @@ class MaskFeatMViT(MViT):
         x = torch.cat((cls_tokens, x), dim=1)
 
         if self.use_abs_pos_embed:
-            x = x + resize_pos_embed(
-                self.pos_embed,
-                self.patch_resolution,
-                patch_resolution,
-                mode=self.interpolate_mode,
-                num_extra_tokens=self.num_extra_tokens)
+            x = x + resize_pos_embed(self.pos_embed,
+                                     self.patch_resolution,
+                                     patch_resolution,
+                                     mode=self.interpolate_mode,
+                                     num_extra_tokens=self.num_extra_tokens)
 
         # if not self.with_cls_token:
         #     # Remove class token for transformer encoder input

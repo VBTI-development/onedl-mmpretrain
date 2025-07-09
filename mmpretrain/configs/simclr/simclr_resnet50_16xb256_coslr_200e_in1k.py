@@ -23,11 +23,10 @@ train_dataloader.merge(dict(batch_size=256))
 # model settings
 model = dict(
     type=SimCLR,
-    backbone=dict(
-        type=ResNet,
-        depth=50,
-        norm_cfg=dict(type='SyncBN'),
-        zero_init_residual=True),
+    backbone=dict(type=ResNet,
+                  depth=50,
+                  norm_cfg=dict(type='SyncBN'),
+                  zero_init_residual=True),
     neck=dict(
         type=NonLinearNeck,  # SimCLR non-linear neck
         in_channels=2048,
@@ -35,10 +34,9 @@ model = dict(
         out_channels=128,
         num_layers=2,
         with_avg_pool=True),
-    head=dict(
-        type=ContrastiveHead,
-        loss=dict(type=CrossEntropyLoss),
-        temperature=0.1),
+    head=dict(type=ContrastiveHead,
+              loss=dict(type=CrossEntropyLoss),
+              temperature=0.1),
 )
 
 # optimizer
@@ -54,5 +52,6 @@ optim_wrapper = dict(
         }))
 
 # runtime settings
-default_hooks.checkpoint = dict(
-    type=CheckpointHook, interval=10, max_keep_ckpts=3)
+default_hooks.checkpoint = dict(type=CheckpointHook,
+                                interval=10,
+                                max_keep_ckpts=3)

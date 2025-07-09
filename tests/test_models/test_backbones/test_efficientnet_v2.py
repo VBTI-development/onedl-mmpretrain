@@ -83,10 +83,11 @@ def test_efficientnet_v2_backbone():
 
     # Test EfficientNetV2 forward with 'b0' arch and GroupNorm
     out_channels = [32, 16, 32, 48, 96, 112, 192, 1280]
-    model = EfficientNetV2(
-        arch='b0',
-        out_indices=(0, 1, 2, 3, 4, 5, 6, 7),
-        norm_cfg=dict(type='GN', num_groups=2, requires_grad=True))
+    model = EfficientNetV2(arch='b0',
+                           out_indices=(0, 1, 2, 3, 4, 5, 6, 7),
+                           norm_cfg=dict(type='GN',
+                                         num_groups=2,
+                                         requires_grad=True))
     for m in model.modules():
         if is_norm(m):
             assert isinstance(m, GroupNorm)
@@ -126,10 +127,11 @@ def test_efficientnet_v2_backbone():
 
     # Test EfficientNetV2 forward with 'm' arch and GroupNorm
     out_channels = [24, 24, 48, 80, 160, 176, 304, 512, 1280]
-    model = EfficientNetV2(
-        arch='m',
-        out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8),
-        norm_cfg=dict(type='GN', num_groups=2, requires_grad=True))
+    model = EfficientNetV2(arch='m',
+                           out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8),
+                           norm_cfg=dict(type='GN',
+                                         num_groups=2,
+                                         requires_grad=True))
     for m in model.modules():
         if is_norm(m):
             assert isinstance(m, GroupNorm)

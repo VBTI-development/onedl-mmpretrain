@@ -171,7 +171,7 @@ mim download mmpretrain --dataset imagenet1k
 
 `````
 
-### The Directory Structrue of the ImageNet dataset
+### The Directory Structure of the ImageNet dataset
 
 We support two ways of organizing the ImageNet dataset: Subfolder Format and Text Annotation File Format.
 
@@ -290,7 +290,7 @@ Some dataset homepage links may be unavailable, and you can download datasets th
 
 ## OpenMMLab 2.0 Standard Dataset
 
-In order to facilitate the training of multi-task algorithm models, we unify the dataset interfaces of different tasks. OpenMMLab has formulated the **OpenMMLab 2.0 Dataset Format Specification**. When starting a trainning task, the users can choose to convert their dataset annotation into the specified format, and use the algorithm library of OpenMMLab to perform algorithm training and testing based on the data annotation file.
+In order to facilitate the training of multi-task algorithm models, we unify the dataset interfaces of different tasks. OpenMMLab has formulated the **OpenMMLab 2.0 Dataset Format Specification**. When starting a training task, the users can choose to convert their dataset annotation into the specified format, and use the algorithm library of OpenMMLab to perform algorithm training and testing based on the data annotation file.
 
 The OpenMMLab 2.0 Dataset Format Specification stipulates that the annotation file must be in `json` or `yaml`, `yml`, `pickle` or `pkl` format; the dictionary stored in the annotation file must contain `metainfo` and `data_list` fields, The value of `metainfo` is a dictionary, which contains the meta information of the dataset; and the value of `data_list` is a list, each element in the list is a dictionary, the dictionary defines a raw data, each raw data contains a or several training/testing samples.
 

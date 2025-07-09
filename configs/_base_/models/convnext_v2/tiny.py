@@ -15,8 +15,10 @@ model = dict(
         loss=dict(type='LabelSmoothLoss', label_smooth_val=0.2),
         init_cfg=None,
     ),
-    init_cfg=dict(
-        type='TruncNormal', layer=['Conv2d', 'Linear'], std=.02, bias=0.),
+    init_cfg=dict(type='TruncNormal',
+                  layer=['Conv2d', 'Linear'],
+                  std=.02,
+                  bias=0.),
     train_cfg=dict(augments=[
         dict(type='Mixup', alpha=0.8),
         dict(type='CutMix', alpha=1.0),

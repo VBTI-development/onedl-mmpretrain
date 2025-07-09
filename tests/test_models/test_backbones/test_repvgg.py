@@ -168,10 +168,9 @@ def test_repvgg_backbone():
 
     # max(arch['group_idx'].keys()) <= sum(arch['num_blocks'])
     with pytest.raises(AssertionError):
-        arch = dict(
-            num_blocks=[2, 4, 14, 1],
-            width_factor=[0.75, 0.75, 0.75],
-            group_idx={22: 2})
+        arch = dict(num_blocks=[2, 4, 14, 1],
+                    width_factor=[0.75, 0.75, 0.75],
+                    group_idx={22: 2})
         RepVGG(arch=arch)
 
     # Test RepVGG norm state
@@ -216,12 +215,11 @@ def test_repvgg_backbone():
     assert feat[0].shape == torch.Size((1, 1280, 1, 1))
 
     # Test with custom arch
-    cfg = dict(
-        num_blocks=[3, 5, 7, 3],
-        width_factor=[1, 1, 1, 1],
-        group_layer_map=None,
-        se_cfg=None,
-        stem_channels=16)
+    cfg = dict(num_blocks=[3, 5, 7, 3],
+               width_factor=[1, 1, 1, 1],
+               group_layer_map=None,
+               se_cfg=None,
+               stem_channels=16)
     model = RepVGG(arch=cfg, out_indices=(3, ))
     model.eval()
     assert model.stem.out_channels == min(16, 64 * 1)
@@ -256,8 +254,8 @@ def test_repvgg_backbone():
     for model_test_setting in model_test_settings:
         if model_test_setting['model_name'] not in choose_models:
             continue
-        model = RepVGG(
-            model_test_setting['model_name'], out_indices=(0, 1, 2, 3))
+        model = RepVGG(model_test_setting['model_name'],
+                       out_indices=(0, 1, 2, 3))
         model.init_weights()
         model.eval()
 
@@ -310,11 +308,10 @@ def test_repvgg_backbone():
     assert feat[0].shape == torch.Size((1, 1280, 2, 2))
 
     # Test RepVGG forward with 'stem_channels' not in arch
-    arch = dict(
-        num_blocks=[2, 4, 14, 1],
-        width_factor=[0.75, 0.75, 0.75, 2.5],
-        group_layer_map=None,
-        se_cfg=None)
+    arch = dict(num_blocks=[2, 4, 14, 1],
+                width_factor=[0.75, 0.75, 0.75, 2.5],
+                group_layer_map=None,
+                se_cfg=None)
     model = RepVGG(arch, add_ppf=True)
     model.stem.in_channels = min(64, 64 * 0.75)
     model.init_weights()

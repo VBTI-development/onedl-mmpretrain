@@ -52,11 +52,11 @@ ACT2FN = {
 class BertEmbeddings(nn.Module):
     """Construct the embeddings from word, position and token_type
     embeddings."""
-
     def __init__(self, config):
         super(BertEmbeddings, self).__init__()
-        self.word_embeddings = nn.Embedding(
-            config.vocab_size, config.hidden_size, padding_idx=0)
+        self.word_embeddings = nn.Embedding(config.vocab_size,
+                                            config.hidden_size,
+                                            padding_idx=0)
         self.position_embeddings = nn.Embedding(config.max_position_embeddings,
                                                 config.hidden_size)
         self.token_type_embeddings = nn.Embedding(config.type_vocab_size,
@@ -64,15 +64,16 @@ class BertEmbeddings(nn.Module):
 
         # self.LayerNorm is not snake-cased to stick with TensorFlow model
         # variable name and be able to load any TensorFlow checkpoint file
-        self.LayerNorm = nn.LayerNorm(
-            config.hidden_size, eps=config.layer_norm_eps)
+        self.LayerNorm = nn.LayerNorm(config.hidden_size,
+                                      eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
     def forward(self, input_ids, token_type_ids=None, position_ids=None):
         seq_length = input_ids.size(1)
         if position_ids is None:
-            position_ids = torch.arange(
-                seq_length, dtype=torch.long, device=input_ids.device)
+            position_ids = torch.arange(seq_length,
+                                        dtype=torch.long,
+                                        device=input_ids.device)
             position_ids = position_ids.unsqueeze(0).expand_as(input_ids)
         if token_type_ids is None:
             token_type_ids = torch.zeros_like(input_ids)
@@ -89,7 +90,6 @@ class BertEmbeddings(nn.Module):
 
 
 class BertLayer(nn.Module):
-
     def __init__(self, config):
         super(BertLayer, self).__init__()
         self.attention = BertAttention(config)
@@ -110,7 +110,6 @@ class BertLayer(nn.Module):
 
 
 class BertEncoder(nn.Module):
-
     def __init__(self, config):
         super(BertEncoder, self).__init__()
         self.output_attentions = config.output_attentions
@@ -165,8 +164,8 @@ class BertPreTrainedModel(nn.Module):
             # Slightly different from the TF version
             # which uses truncated_normal for initialization
             # cf https://github.com/pytorch/pytorch/pull/5617
-            module.weight.data.normal_(
-                mean=0.0, std=self.config.initializer_range)
+            module.weight.data.normal_(mean=0.0,
+                                       std=self.config.initializer_range)
         elif isinstance(module, nn.LayerNorm):
             module.bias.data.zero_()
             module.weight.data.fill_(1.0)
@@ -177,7 +176,6 @@ class BertPreTrainedModel(nn.Module):
 @MODELS.register_module()
 class BertModelCN(BertPreTrainedModel):
     """The BERT model implementation for Chinese CLIP."""
-
     def __init__(self, config):
         config = BertConfig.from_dict(config)
         super(BertModelCN, self).__init__(config)
@@ -243,12 +241,12 @@ class BertModelCN(BertPreTrainedModel):
         else:
             head_mask = [None] * self.config.num_hidden_layers
 
-        embedding_output = self.embeddings(
-            input_ids,
-            position_ids=position_ids,
-            token_type_ids=token_type_ids)
-        encoder_outputs = self.encoder(
-            embedding_output, extended_attention_mask, head_mask=head_mask)
+        embedding_output = self.embeddings(input_ids,
+                                           position_ids=position_ids,
+                                           token_type_ids=token_type_ids)
+        encoder_outputs = self.encoder(embedding_output,
+                                       extended_attention_mask,
+                                       head_mask=head_mask)
         sequence_output = encoder_outputs[0]
         # pooled_output = self.pooler(sequence_output)
         pooled_output = None

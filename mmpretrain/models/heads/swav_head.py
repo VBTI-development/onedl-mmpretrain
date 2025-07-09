@@ -12,7 +12,6 @@ class SwAVHead(BaseModule):
     Args:
         loss (dict): Config dict for module of loss functions.
     """
-
     def __init__(self, loss: dict) -> None:
         super().__init__()
         self.loss_module = MODELS.build(loss)

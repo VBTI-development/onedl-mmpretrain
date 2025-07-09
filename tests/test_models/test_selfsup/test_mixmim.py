@@ -35,29 +35,25 @@ def test_simmim():
     }
 
     # model config
-    backbone = dict(
-        type='MixMIMPretrainTransformer',
-        arch='B',
-        drop_rate=0.0,
-        drop_path_rate=0.0)
-    neck = dict(
-        type='MixMIMPretrainDecoder',
-        num_patches=49,
-        encoder_stride=32,
-        embed_dim=1024,
-        decoder_embed_dim=512,
-        decoder_depth=8,
-        decoder_num_heads=16)
-    head = dict(
-        type='MixMIMPretrainHead',
-        norm_pix=True,
-        loss=dict(type='PixelReconstructionLoss', criterion='L2'))
+    backbone = dict(type='MixMIMPretrainTransformer',
+                    arch='B',
+                    drop_rate=0.0,
+                    drop_path_rate=0.0)
+    neck = dict(type='MixMIMPretrainDecoder',
+                num_patches=49,
+                encoder_stride=32,
+                embed_dim=1024,
+                decoder_embed_dim=512,
+                decoder_depth=8,
+                decoder_num_heads=16)
+    head = dict(type='MixMIMPretrainHead',
+                norm_pix=True,
+                loss=dict(type='PixelReconstructionLoss', criterion='L2'))
 
-    model = MixMIM(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    model = MixMIM(backbone=backbone,
+                   neck=neck,
+                   head=head,
+                   data_preprocessor=data_preprocessor)
 
     # test forward_train
     fake_data_sample = DataSample()

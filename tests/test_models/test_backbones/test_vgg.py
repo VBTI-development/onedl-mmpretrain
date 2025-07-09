@@ -88,11 +88,10 @@ def test_vgg():
     assert feat[4].shape == (1, 512, 7, 7)
 
     # Test VGG11BN forward with classifiers
-    model = VGG(
-        11,
-        num_classes=10,
-        norm_cfg=dict(type='BN'),
-        out_indices=(0, 1, 2, 3, 4, 5))
+    model = VGG(11,
+                num_classes=10,
+                norm_cfg=dict(type='BN'),
+                out_indices=(0, 1, 2, 3, 4, 5))
     model.init_weights()
     model.train()
 

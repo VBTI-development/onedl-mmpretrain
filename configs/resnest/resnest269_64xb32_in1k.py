@@ -17,20 +17,18 @@ EIGVEC = [
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandAugment',
-        policies={{_base_.policies}},
-        num_policies=2,
-        magnitude_level=12),
+    dict(type='RandAugment',
+         policies={{_base_.policies}},
+         num_policies=2,
+         magnitude_level=12),
     dict(type='EfficientNetRandomCrop', scale=416, backend='pillow'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='ColorJitter', brightness=0.4, contrast=0.4, saturation=0.4),
-    dict(
-        type='Lighting',
-        eigval=EIGVAL,
-        eigvec=EIGVEC,
-        alphastd=0.1,
-        to_rgb=False),
+    dict(type='Lighting',
+         eigval=EIGVAL,
+         eigvec=EIGVEC,
+         alphastd=0.1,
+         to_rgb=False),
     dict(type='PackInputs'),
 ]
 

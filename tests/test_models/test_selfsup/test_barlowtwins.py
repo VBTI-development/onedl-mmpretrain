@@ -16,26 +16,23 @@ def test_barlowtwins():
         'to_rgb': True
     }
     backbone = dict(type='ResNet', depth=18, norm_cfg=dict(type='BN'))
-    neck = dict(
-        type='NonLinearNeck',
-        in_channels=512,
-        hid_channels=2,
-        out_channels=2,
-        num_layers=3,
-        with_last_bn=False,
-        with_last_bn_affine=False,
-        with_avg_pool=True,
-        norm_cfg=dict(type='BN1d'))
-    head = dict(
-        type='LatentCrossCorrelationHead',
-        in_channels=2,
-        loss=dict(type='CrossCorrelationLoss'))
+    neck = dict(type='NonLinearNeck',
+                in_channels=512,
+                hid_channels=2,
+                out_channels=2,
+                num_layers=3,
+                with_last_bn=False,
+                with_last_bn_affine=False,
+                with_avg_pool=True,
+                norm_cfg=dict(type='BN1d'))
+    head = dict(type='LatentCrossCorrelationHead',
+                in_channels=2,
+                loss=dict(type='CrossCorrelationLoss'))
 
-    alg = BarlowTwins(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = BarlowTwins(backbone=backbone,
+                      neck=neck,
+                      head=head,
+                      data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs':

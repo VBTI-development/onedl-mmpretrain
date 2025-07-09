@@ -17,27 +17,24 @@ bgr_std = data_preprocessor['std'][::-1]
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=224,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=224,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='NumpyToPIL', to_rgb=True),
-    dict(
-        type='torchvision/TrivialAugmentWide',
-        num_magnitude_bins=31,
-        interpolation='bicubic',
-        fill=None),
+    dict(type='torchvision/TrivialAugmentWide',
+         num_magnitude_bins=31,
+         interpolation='bicubic',
+         fill=None),
     dict(type='PILToNumpy', to_bgr=True),
-    dict(
-        type='RandomErasing',
-        erase_prob=0.25,
-        mode='rand',
-        min_area_ratio=0.02,
-        max_area_ratio=1 / 3,
-        fill_color=bgr_mean,
-        fill_std=bgr_std),
+    dict(type='RandomErasing',
+         erase_prob=0.25,
+         mode='rand',
+         min_area_ratio=0.02,
+         max_area_ratio=1 / 3,
+         fill_color=bgr_mean,
+         fill_std=bgr_std),
     dict(type='PackInputs'),
 ]
 
@@ -49,19 +46,21 @@ train_dataloader = dict(
 # Model settings
 model = dict(
     type='ImageClassifier',
-    backbone=dict(
-        type='ConvNeXt',
-        arch='tiny',
-        drop_path_rate=0.1,
-        layer_scale_init_value=0.,
-        use_grn=True,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')),
+    backbone=dict(type='ConvNeXt',
+                  arch='tiny',
+                  drop_path_rate=0.1,
+                  layer_scale_init_value=0.,
+                  use_grn=True,
+                  init_cfg=dict(type='Pretrained',
+                                checkpoint='',
+                                prefix='backbone.')),
     head=dict(
         type='LinearClsHead',
         num_classes=1000,
         in_channels=768,
-        loss=dict(
-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
+        loss=dict(type='LabelSmoothLoss',
+                  label_smooth_val=0.1,
+                  mode='original'),
         init_cfg=dict(type='TruncNormal', layer='Linear', std=.02, bias=0.),
     ),
     train_cfg=dict(augments=[
@@ -71,43 +70,40 @@ model = dict(
 )
 
 custom_hooks = [
-    dict(
-        type='EMAHook',
-        momentum=1e-4,
-        evaluate_on_origin=True,
-        priority='ABOVE_NORMAL')
+    dict(type='EMAHook',
+         momentum=1e-4,
+         evaluate_on_origin=True,
+         priority='ABOVE_NORMAL')
 ]
 
 # schedule settings
 # optimizer
-optim_wrapper = dict(
-    optimizer=dict(
-        type='AdamW', lr=3.2e-3, betas=(0.9, 0.999), weight_decay=0.05),
-    constructor='LearningRateDecayOptimWrapperConstructor',
-    paramwise_cfg=dict(
-        layer_decay_rate=0.7,
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        flat_decay_mult=0.0))
+optim_wrapper = dict(optimizer=dict(type='AdamW',
+                                    lr=3.2e-3,
+                                    betas=(0.9, 0.999),
+                                    weight_decay=0.05),
+                     constructor='LearningRateDecayOptimWrapperConstructor',
+                     paramwise_cfg=dict(layer_decay_rate=0.7,
+                                        norm_decay_mult=0.0,
+                                        bias_decay_mult=0.0,
+                                        flat_decay_mult=0.0))
 
 # learning policy
 param_scheduler = [
     # warm up learning rate scheduler
-    dict(
-        type='LinearLR',
-        start_factor=0.0001,
-        by_epoch=True,
-        begin=0,
-        end=20,
-        convert_to_iter_based=True),
+    dict(type='LinearLR',
+         start_factor=0.0001,
+         by_epoch=True,
+         begin=0,
+         end=20,
+         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=280,
-        eta_min=1.0e-5,
-        by_epoch=True,
-        begin=20,
-        end=300)
+    dict(type='CosineAnnealingLR',
+         T_max=280,
+         eta_min=1.0e-5,
+         by_epoch=True,
+         begin=20,
+         end=300)
 ]
 train_cfg = dict(by_epoch=True, max_epochs=300)
 val_cfg = dict()

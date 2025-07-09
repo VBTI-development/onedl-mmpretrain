@@ -9,7 +9,6 @@ from mmpretrain.models.backbones.davit import SpatialBlock
 
 
 class TestDaViT(TestCase):
-
     def setUp(self):
         self.cfg = dict(arch='t', patch_size=4, drop_path_rate=0.1)
 
@@ -48,11 +47,10 @@ class TestDaViT(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = DaViT(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()

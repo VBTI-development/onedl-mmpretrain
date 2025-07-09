@@ -16,18 +16,17 @@ def main():
         '--show',
         action='store_true',
         help='Whether to show the prediction result in a window.')
-    parser.add_argument(
-        '--show-dir',
-        type=str,
-        help='The directory to save the visualization image.')
+    parser.add_argument('--show-dir',
+                        type=str,
+                        help='The directory to save the visualization image.')
     parser.add_argument('--device', help='Device used for inference')
     args = parser.parse_args()
 
     # build the model from a config file and a checkpoint file
     try:
         pretrained = args.checkpoint or True
-        inferencer = ImageClassificationInferencer(
-            args.model, pretrained=pretrained)
+        inferencer = ImageClassificationInferencer(args.model,
+                                                   pretrained=pretrained)
     except ValueError:
         raise ValueError(
             f'Unavailable model "{args.model}", you can specify find a model '

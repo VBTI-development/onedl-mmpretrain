@@ -9,24 +9,24 @@ checkpoint = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet10
 # weight. checkpoint = 'PATH/TO/PRE-TRAINED_WEIGHT'
 
 # model settings
-model = dict(
-    type='ImageClassifier',
-    backbone=dict(
-        type='ResNet',
-        depth=101,
-        num_stages=4,
-        out_indices=(3, ),
-        style='pytorch',
-        init_cfg=dict(
-            type='Pretrained', checkpoint=checkpoint, prefix='backbone')),
-    neck=None,
-    head=dict(
-        type='CSRAClsHead',
-        num_classes=20,
-        in_channels=2048,
-        num_heads=1,
-        lam=0.1,
-        loss=dict(type='CrossEntropyLoss', use_sigmoid=True, loss_weight=1.0)))
+model = dict(type='ImageClassifier',
+             backbone=dict(type='ResNet',
+                           depth=101,
+                           num_stages=4,
+                           out_indices=(3, ),
+                           style='pytorch',
+                           init_cfg=dict(type='Pretrained',
+                                         checkpoint=checkpoint,
+                                         prefix='backbone')),
+             neck=None,
+             head=dict(type='CSRAClsHead',
+                       num_classes=20,
+                       in_channels=2048,
+                       num_heads=1,
+                       lam=0.1,
+                       loss=dict(type='CrossEntropyLoss',
+                                 use_sigmoid=True,
+                                 loss_weight=1.0)))
 
 # dataset setting
 data_preprocessor = dict(
@@ -63,13 +63,12 @@ optim_wrapper = dict(
     paramwise_cfg=dict(custom_keys={'head': dict(lr_mult=10)}))
 
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-7,
-        by_epoch=True,
-        begin=0,
-        end=1,
-        convert_to_iter_based=True),
+    dict(type='LinearLR',
+         start_factor=1e-7,
+         by_epoch=True,
+         begin=0,
+         end=1,
+         convert_to_iter_based=True),
     dict(type='StepLR', by_epoch=True, step_size=6, gamma=0.1)
 ]
 

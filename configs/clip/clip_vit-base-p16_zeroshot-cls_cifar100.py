@@ -21,11 +21,10 @@ train_dataloader = None
 test_dataloader = dict(
     batch_size=32,
     num_workers=8,
-    dataset=dict(
-        type='CIFAR100',
-        data_root='data/cifar100',
-        split='test',
-        pipeline=test_pipeline),
+    dataset=dict(type='CIFAR100',
+                 data_root='data/cifar100',
+                 split='test',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 test_evaluator = dict(type='Accuracy', topk=(1, 5))
@@ -55,10 +54,9 @@ model = dict(
         heads=8,
         attn_mask=True,
     ),
-    tokenizer=dict(
-        type='AutoTokenizer',
-        name_or_path='openai/clip-vit-base-patch16',
-        use_fast=False),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='openai/clip-vit-base-patch16',
+                   use_fast=False),
     vocab_size=49408,
     transformer_width=512,
     proj_dim=512,

@@ -72,7 +72,6 @@ class MultiLabelDataset(BaseDataset):
 
             Defaults to None.
     """
-
     def get_cat_ids(self, idx: int) -> List[int]:
         """Get category ids by index.
 

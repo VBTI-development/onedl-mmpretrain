@@ -18,16 +18,15 @@ def make_vgg_layer(in_channels,
                    ceil_mode=False):
     layers = []
     for _ in range(num_blocks):
-        layer = ConvModule(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=3,
-            dilation=dilation,
-            padding=dilation,
-            bias=True,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        layer = ConvModule(in_channels=in_channels,
+                           out_channels=out_channels,
+                           kernel_size=3,
+                           dilation=dilation,
+                           padding=dilation,
+                           bias=True,
+                           conv_cfg=conv_cfg,
+                           norm_cfg=norm_cfg,
+                           act_cfg=act_cfg)
         layers.append(layer)
         in_channels = out_channels
     layers.append(nn.MaxPool2d(kernel_size=2, stride=2, ceil_mode=ceil_mode))
@@ -117,16 +116,15 @@ class VGG(BaseBackbone):
             end_idx = start_idx + num_modules
             dilation = dilations[i]
             out_channels = 64 * 2**i if i < 4 else 512
-            vgg_layer = make_vgg_layer(
-                self.in_channels,
-                out_channels,
-                num_blocks,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                dilation=dilation,
-                with_norm=with_norm,
-                ceil_mode=ceil_mode)
+            vgg_layer = make_vgg_layer(self.in_channels,
+                                       out_channels,
+                                       num_blocks,
+                                       conv_cfg=conv_cfg,
+                                       norm_cfg=norm_cfg,
+                                       act_cfg=act_cfg,
+                                       dilation=dilation,
+                                       with_norm=with_norm,
+                                       ceil_mode=ceil_mode)
             vgg_layers.extend(vgg_layer)
             self.in_channels = out_channels
             self.range_sub_modules.append([start_idx, end_idx])

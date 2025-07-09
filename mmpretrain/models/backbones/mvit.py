@@ -99,7 +99,6 @@ class MLP(BaseModule):
         init_cfg (dict, optional): The config of weight initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels,
                  hidden_channels=None,
@@ -189,7 +188,6 @@ class MultiScaleAttention(BaseModule):
         init_cfg (dict, optional): The config of weight initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  in_dims,
                  out_dims,
@@ -327,7 +325,6 @@ class MultiScaleBlock(BaseModule):
         init_cfg (dict, optional): The config of weight initialization.
             Defaults to None.
     """
-
     def __init__(
         self,
         in_dims,
@@ -355,29 +352,27 @@ class MultiScaleBlock(BaseModule):
         self.dim_mul_in_attention = dim_mul_in_attention
 
         attn_dims = out_dims if dim_mul_in_attention else in_dims
-        self.attn = MultiScaleAttention(
-            in_dims,
-            attn_dims,
-            num_heads=num_heads,
-            qkv_bias=qkv_bias,
-            norm_cfg=norm_cfg,
-            pool_kernel=qkv_pool_kernel,
-            stride_q=stride_q,
-            stride_kv=stride_kv,
-            rel_pos_spatial=rel_pos_spatial,
-            residual_pooling=residual_pooling,
-            input_size=input_size,
-            rel_pos_zero_init=rel_pos_zero_init)
+        self.attn = MultiScaleAttention(in_dims,
+                                        attn_dims,
+                                        num_heads=num_heads,
+                                        qkv_bias=qkv_bias,
+                                        norm_cfg=norm_cfg,
+                                        pool_kernel=qkv_pool_kernel,
+                                        stride_q=stride_q,
+                                        stride_kv=stride_kv,
+                                        rel_pos_spatial=rel_pos_spatial,
+                                        residual_pooling=residual_pooling,
+                                        input_size=input_size,
+                                        rel_pos_zero_init=rel_pos_zero_init)
         self.drop_path = DropPath(
             drop_path) if drop_path > 0.0 else nn.Identity()
 
         self.norm2 = build_norm_layer(norm_cfg, attn_dims)[1]
 
-        self.mlp = MLP(
-            in_channels=attn_dims,
-            hidden_channels=int(attn_dims * mlp_ratio),
-            out_channels=out_dims,
-            act_cfg=act_cfg)
+        self.mlp = MLP(in_channels=attn_dims,
+                       hidden_channels=int(attn_dims * mlp_ratio),
+                       out_channels=out_dims,
+                       act_cfg=act_cfg)
 
         if in_dims != out_dims:
             self.proj = nn.Linear(in_dims, out_dims)
@@ -387,8 +382,10 @@ class MultiScaleBlock(BaseModule):
         if stride_q > 1:
             kernel_skip = stride_q + 1
             padding_skip = int(kernel_skip // 2)
-            self.pool_skip = nn.MaxPool2d(
-                kernel_skip, stride_q, padding_skip, ceil_mode=False)
+            self.pool_skip = nn.MaxPool2d(kernel_skip,
+                                          stride_q,
+                                          padding_skip,
+                                          ceil_mode=False)
 
             if input_size is not None:
                 input_size = to_2tuple(input_size)
@@ -678,12 +675,11 @@ class MViT(BaseBackbone):
         x, patch_resolution = self.patch_embed(x)
 
         if self.use_abs_pos_embed:
-            x = x + resize_pos_embed(
-                self.pos_embed,
-                self.patch_resolution,
-                patch_resolution,
-                mode=self.interpolate_mode,
-                num_extra_tokens=self.num_extra_tokens)
+            x = x + resize_pos_embed(self.pos_embed,
+                                     self.patch_resolution,
+                                     patch_resolution,
+                                     mode=self.interpolate_mode,
+                                     num_extra_tokens=self.num_extra_tokens)
 
         outs = []
         for i, block in enumerate(self.blocks):

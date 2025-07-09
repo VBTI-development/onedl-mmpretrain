@@ -25,7 +25,7 @@ class HuggingFaceClassifier(BaseClassifier):
     It can load checkpoints of hugging-face directly, and the saved checkpoints
     also can be directly load by hugging-face.
 
-    Please confirm that you have installed ``transfromers`` if you want to use it.
+    Please confirm that you have installed ``transformers`` if you want to use it.
 
     .. _transformers.AutoModelForImageClassification:
         https://huggingface.co/docs/transformers/main/en/model_doc/auto#transformers.AutoModelForImageClassification
@@ -87,8 +87,8 @@ class HuggingFaceClassifier(BaseClassifier):
             # Set batch augmentations by `train_cfg`
             data_preprocessor['batch_augments'] = train_cfg
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
 
         from transformers import AutoConfig, AutoModelForImageClassification
         if pretrained:
@@ -157,8 +157,10 @@ class HuggingFaceClassifier(BaseClassifier):
 
         # compute loss
         losses = dict()
-        loss = self.loss_module(
-            cls_score, target, avg_factor=cls_score.size(0), **kwargs)
+        loss = self.loss_module(cls_score,
+                                target,
+                                avg_factor=cls_score.size(0),
+                                **kwargs)
         losses['loss'] = loss
 
         return losses

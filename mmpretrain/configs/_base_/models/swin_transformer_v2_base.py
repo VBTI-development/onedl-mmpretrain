@@ -7,8 +7,10 @@ from mmpretrain.models import (GlobalAveragePooling, ImageClassifier,
 # model settings
 model = dict(
     type=ImageClassifier,
-    backbone=dict(
-        type=SwinTransformerV2, arch='base', img_size=384, drop_path_rate=0.2),
+    backbone=dict(type=SwinTransformerV2,
+                  arch='base',
+                  img_size=384,
+                  drop_path_rate=0.2),
     neck=dict(type=GlobalAveragePooling),
     head=dict(
         type=LinearClsHead,

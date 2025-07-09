@@ -17,10 +17,9 @@ def parse_args():
         description='Process a checkpoint to be published')
     parser.add_argument('in_file', help='input checkpoint filename')
     parser.add_argument('out_file', help='output checkpoint filename')
-    parser.add_argument(
-        '--no-ema',
-        action='store_true',
-        help='Use keys in `ema_state_dict` (no-ema keys).')
+    parser.add_argument('--no-ema',
+                        action='store_true',
+                        help='Use keys in `ema_state_dict` (no-ema keys).')
     parser.add_argument(
         '--dataset-type',
         type=str,

@@ -17,12 +17,12 @@ class SparK(BaseSelfSupervisor):
     """Implementation of SparK.
 
     Implementation of `Designing BERT for Convolutional Networks: Sparse and
-    Hierarchical Masked Modeling <https://arxiv.org/abs/2301.03580>`_.
+    Hierarchical Masked Modeling
+    ``<https://arxiv.org/abs/2301.03580>`_.
 
     Modified from
     https://github.com/keyu-tian/SparK/blob/main/pretrain/spark.py
     """
-
     def __init__(
         self,
         backbone: dict,
@@ -37,13 +37,12 @@ class SparK(BaseSelfSupervisor):
         enc_dec_norm_dim: int = 2048,
         init_cfg: Optional[dict] = None,
     ) -> None:
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            pretrained=pretrained,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         pretrained=pretrained,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
         self.input_size = input_size
         self.downsample_raito = downsample_raito
         feature_map_size = input_size // downsample_raito
@@ -65,13 +64,12 @@ class SparK(BaseSelfSupervisor):
             self.enc_dec_norms.append(enc_dec_norm)
 
             kernel_size = 1 if i <= 0 else 3
-            proj_layer = nn.Conv2d(
-                enc_dec_norm_dim,
-                proj_out_dim,
-                kernel_size=kernel_size,
-                stride=1,
-                padding=kernel_size // 2,
-                bias=True)
+            proj_layer = nn.Conv2d(enc_dec_norm_dim,
+                                   proj_out_dim,
+                                   kernel_size=kernel_size,
+                                   stride=1,
+                                   padding=kernel_size // 2,
+                                   bias=True)
             if i == 0 and enc_dec_norm_dim == proj_out_dim:
                 proj_layer = nn.Identity()
             self.enc_dec_projectors.append(proj_layer)
@@ -102,9 +100,11 @@ class SparK(BaseSelfSupervisor):
         f = self.feature_map_size
         idx = torch.rand(B, f * f, generator=generator).argsort(dim=1)
         idx = idx[:, :self.len_keep].to(device)  # (B, len_keep)
-        return torch.zeros(
-            B, f * f, dtype=torch.bool, device=device).scatter_(
-                dim=1, index=idx, value=True).view(B, 1, f, f)
+        return torch.zeros(B, f * f, dtype=torch.bool,
+                           device=device).scatter_(dim=1,
+                                                   index=idx,
+                                                   value=True).view(
+                                                       B, 1, f, f)
 
     def loss(self, inputs: torch.Tensor, data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
@@ -143,16 +143,15 @@ class SparK(BaseSelfSupervisor):
                 # fill in empty positions with [mask] embeddings
                 feature_map = self.enc_dec_norms[i](feature_map)
                 mask_token = self.mask_tokens[i].expand_as(feature_map)
-                feature_map = torch.where(
-                    cur_active.expand_as(feature_map), feature_map,
-                    mask_token.to(feature_map.dtype))
+                feature_map = torch.where(cur_active.expand_as(feature_map),
+                                          feature_map,
+                                          mask_token.to(feature_map.dtype))
                 feature_map = self.enc_dec_projectors[i](feature_map)
             feature_maps_to_dec.append(feature_map)
 
             # dilate the mask map
             cur_active = cur_active.repeat_interleave(
-                2, dim=2).repeat_interleave(
-                    2, dim=3)
+                2, dim=2).repeat_interleave(2, dim=3)
 
         # decode and reconstruct
         rec_img = self.neck(feature_maps_to_dec)

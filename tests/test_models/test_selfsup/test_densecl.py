@@ -20,26 +20,23 @@ def test_densecl():
     momentum = 0.001
     loss_lambda = 0.5
     backbone = dict(type='ResNet', depth=18, norm_cfg=dict(type='BN'))
-    neck = dict(
-        type='DenseCLNeck',
-        in_channels=512,
-        hid_channels=2,
-        out_channels=2,
-        num_grid=None)
-    head = dict(
-        type='ContrastiveHead',
-        loss=dict(type='CrossEntropyLoss'),
-        temperature=0.2)
+    neck = dict(type='DenseCLNeck',
+                in_channels=512,
+                hid_channels=2,
+                out_channels=2,
+                num_grid=None)
+    head = dict(type='ContrastiveHead',
+                loss=dict(type='CrossEntropyLoss'),
+                temperature=0.2)
 
-    alg = DenseCL(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        queue_len=queue_len,
-        feat_dim=feat_dim,
-        momentum=momentum,
-        loss_lambda=loss_lambda,
-        data_preprocessor=data_preprocessor)
+    alg = DenseCL(backbone=backbone,
+                  neck=neck,
+                  head=head,
+                  queue_len=queue_len,
+                  feat_dim=feat_dim,
+                  momentum=momentum,
+                  loss_lambda=loss_lambda,
+                  data_preprocessor=data_preprocessor)
 
     # test init
     assert alg.queue.size() == torch.Size([feat_dim, queue_len])

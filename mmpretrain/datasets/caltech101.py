@@ -84,12 +84,11 @@ class Caltech101(BaseDataset):
         data_prefix = '101_ObjectCategories'
         test_mode = split == 'test'
 
-        super(Caltech101, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(Caltech101, self).__init__(ann_file=ann_file,
+                                         data_root=data_root,
+                                         data_prefix=data_prefix,
+                                         test_mode=test_mode,
+                                         **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

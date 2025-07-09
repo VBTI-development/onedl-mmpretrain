@@ -84,10 +84,9 @@ def test_levit():
     assert isinstance(model.patch_embed.patch_embed[0],
                       levit.ConvolutionBatchNorm)
 
-    model = LeViT(
-        arch='128s',
-        hybrid_backbone=lambda embed_dims: nn.Conv2d(
-            embed_dims, embed_dims, kernel_size=2))
+    model = LeViT(arch='128s',
+                  hybrid_backbone=lambda embed_dims: nn.Conv2d(
+                      embed_dims, embed_dims, kernel_size=2))
     model.eval()
     assert isinstance(model.patch_embed, nn.Conv2d)
 

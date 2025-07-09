@@ -26,7 +26,6 @@ class ITCHead(BaseModule):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dim: int,
                  queue_size: int = 57600,
@@ -106,12 +105,10 @@ class ITCHead(BaseModule):
                 sim_i2t_m = img_feats_m @ text_feats_all / self.temp
                 sim_t2i_m = text_feats_m @ img_feats_all / self.temp
 
-                sim_i2t_targets = (
-                    self.alpha * F.softmax(sim_i2t_m, dim=1) +
-                    (1 - self.alpha) * sim_targets)
-                sim_t2i_targets = (
-                    self.alpha * F.softmax(sim_t2i_m, dim=1) +
-                    (1 - self.alpha) * sim_targets)
+                sim_i2t_targets = (self.alpha * F.softmax(sim_i2t_m, dim=1) +
+                                   (1 - self.alpha) * sim_targets)
+                sim_t2i_targets = (self.alpha * F.softmax(sim_t2i_m, dim=1) +
+                                   (1 - self.alpha) * sim_targets)
 
         sim_i2t = img_feats @ text_feats_all / self.temp
         sim_t2i = text_feats @ img_feats_all / self.temp
@@ -122,10 +119,10 @@ class ITCHead(BaseModule):
             loss_t2i = -torch.sum(
                 F.log_softmax(sim_t2i, dim=1) * sim_t2i_targets, dim=1).mean()
         else:
-            loss_i2t = -torch.sum(
-                F.log_softmax(sim_i2t, dim=1) * sim_targets, dim=1).mean()
-            loss_t2i = -torch.sum(
-                F.log_softmax(sim_t2i, dim=1) * sim_targets, dim=1).mean()
+            loss_i2t = -torch.sum(F.log_softmax(sim_i2t, dim=1) * sim_targets,
+                                  dim=1).mean()
+            loss_t2i = -torch.sum(F.log_softmax(sim_t2i, dim=1) * sim_targets,
+                                  dim=1).mean()
 
         # compute loss
         losses = dict()

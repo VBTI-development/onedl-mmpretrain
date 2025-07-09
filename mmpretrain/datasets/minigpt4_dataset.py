@@ -47,7 +47,6 @@ class MiniGPT4Dataset(BaseDataset):
         ann_file (str): Conversation file path.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def load_data_list(self) -> List[dict]:
         file_backend = get_file_backend(self.data_root)
         conversation_path = file_backend.join_path(self.data_root,

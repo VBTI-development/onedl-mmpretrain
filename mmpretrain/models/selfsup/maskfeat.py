@@ -30,7 +30,6 @@ class HOGGenerator(BaseModule):
         pool (float): Number of cell. Defaults to 8.
         gaussian_window (int): Size of gaussian kernel. Defaults to 16.
     """
-
     def __init__(self,
                  nbins: int = 9,
                  pool: int = 8,
@@ -53,7 +52,6 @@ class HOGGenerator(BaseModule):
 
     def get_gaussian_kernel(self, kernlen: int, std: int) -> torch.Tensor:
         """Returns a 2D Gaussian kernel array."""
-
         def _gaussian_fn(kernlen: int, std: int) -> torch.Tensor:
             n = torch.arange(0, kernlen).float()
             n -= n.mean()
@@ -89,10 +87,18 @@ class HOGGenerator(BaseModule):
         # input is RGB image with shape [B 3 H W]
         self.h, self.w = x.size(-2), x.size(-1)
         x = F.pad(x, pad=(1, 1, 1, 1), mode='reflect')
-        gx_rgb = F.conv2d(
-            x, self.weight_x, bias=None, stride=1, padding=0, groups=3)
-        gy_rgb = F.conv2d(
-            x, self.weight_y, bias=None, stride=1, padding=0, groups=3)
+        gx_rgb = F.conv2d(x,
+                          self.weight_x,
+                          bias=None,
+                          stride=1,
+                          padding=0,
+                          groups=3)
+        gy_rgb = F.conv2d(x,
+                          self.weight_y,
+                          bias=None,
+                          stride=1,
+                          padding=0,
+                          groups=3)
         norm_rgb = torch.stack([gx_rgb, gy_rgb], dim=-1).norm(dim=-1)
         phase = torch.atan2(gx_rgb, gy_rgb)
         phase = phase / self.pi * self.nbins  # [-9, 9]
@@ -190,14 +196,14 @@ class MaskFeatViT(VisionTransformer):
 
             It only works without input mask. Defaults to ``"avg_featmap"``.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+            embedding vector resize. Defaults to "bicubic".
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  arch: Union[str, dict] = 'b',
                  img_size: int = 224,
@@ -212,24 +218,24 @@ class MaskFeatViT(VisionTransformer):
                  patch_cfg: dict = dict(),
                  layer_cfgs: dict = dict(),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            arch=arch,
-            img_size=img_size,
-            patch_size=patch_size,
-            out_indices=out_indices,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            norm_cfg=norm_cfg,
-            final_norm=final_norm,
-            out_type=out_type,
-            with_cls_token=True,
-            interpolate_mode=interpolate_mode,
-            patch_cfg=patch_cfg,
-            layer_cfgs=layer_cfgs,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         img_size=img_size,
+                         patch_size=patch_size,
+                         out_indices=out_indices,
+                         drop_rate=drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         norm_cfg=norm_cfg,
+                         final_norm=final_norm,
+                         out_type=out_type,
+                         with_cls_token=True,
+                         interpolate_mode=interpolate_mode,
+                         patch_cfg=patch_cfg,
+                         layer_cfgs=layer_cfgs,
+                         init_cfg=init_cfg)
 
-        self.mask_token = nn.parameter.Parameter(
-            torch.zeros(1, 1, self.embed_dims), requires_grad=True)
+        self.mask_token = nn.parameter.Parameter(torch.zeros(
+            1, 1, self.embed_dims),
+                                                 requires_grad=True)
         self.num_patches = self.patch_resolution[0] * self.patch_resolution[1]
 
     def init_weights(self) -> None:
@@ -303,9 +309,9 @@ class MaskFeat(BaseSelfSupervisor):
     """MaskFeat.
 
     Implementation of `Masked Feature Prediction for Self-Supervised Visual
-    Pre-Training <https://arxiv.org/abs/2112.09133>`_.
+    Pre-Training
+    <https://arxiv.org/abs/2112.09133>`_.
     """
-
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 

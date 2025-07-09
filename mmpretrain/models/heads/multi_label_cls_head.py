@@ -28,7 +28,6 @@ class MultiLabelClsHead(BaseModule):
         positive predictions. If neither is set, use ``thr=0.5`` as
         default.
     """
-
     def __init__(self,
                  loss: Dict = dict(type='CrossEntropyLoss', use_sigmoid=True),
                  thr: Optional[float] = None,
@@ -101,8 +100,10 @@ class MultiLabelClsHead(BaseModule):
 
         # compute loss
         losses = dict()
-        loss = self.loss_module(
-            cls_score, target, avg_factor=cls_score.size(0), **kwargs)
+        loss = self.loss_module(cls_score,
+                                target,
+                                avg_factor=cls_score.size(0),
+                                **kwargs)
         losses['loss'] = loss
 
         return losses

@@ -29,8 +29,9 @@ class MultiTaskMetric(TestCase):
                 task_sample.set_gt_label(data_gt[i][task_name])
                 task_sample.set_field(True, 'eval_mask', field_type='metainfo')
             else:
-                task_sample.set_field(
-                    False, 'eval_mask', field_type='metainfo')
+                task_sample.set_field(False,
+                                      'eval_mask',
+                                      field_type='metainfo')
             sample[task_name] = task_sample.to_dict()
 
         preds.append(sample)
@@ -95,20 +96,19 @@ class MultiTaskMetric(TestCase):
     task_metrics2 = {
         'task0': [dict(type='Accuracy', topk=(1, ))],
         'task1': [
-            dict(
-                type='MultiTasksMetric',
-                task_metrics={
-                    'task10': [
-                        dict(type='Accuracy', topk=(1, 3)),
-                        dict(type='SingleLabelMetric', items=['precision'])
-                    ],
-                    'task11': [dict(type='Accuracy', topk=(1, ))]
-                })
+            dict(type='MultiTasksMetric',
+                 task_metrics={
+                     'task10': [
+                         dict(type='Accuracy', topk=(1, 3)),
+                         dict(type='SingleLabelMetric', items=['precision'])
+                     ],
+                     'task11': [dict(type='Accuracy', topk=(1, ))]
+                 })
         ]
     }
 
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
 
         # Test with score (use score instead of label if score exists)
         metric = MultiTasksMetric(self.task_metrics)

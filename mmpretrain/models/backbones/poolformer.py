@@ -24,7 +24,6 @@ class PatchEmbed(nn.Module):
             Defaults to 768.
         norm_layer (module): Normalization module. Defaults to None (not use).
     """
-
     def __init__(self,
                  patch_size=16,
                  stride=16,
@@ -33,12 +32,11 @@ class PatchEmbed(nn.Module):
                  embed_dim=768,
                  norm_layer=None):
         super().__init__()
-        self.proj = nn.Conv2d(
-            in_chans,
-            embed_dim,
-            kernel_size=patch_size,
-            stride=stride,
-            padding=padding)
+        self.proj = nn.Conv2d(in_chans,
+                              embed_dim,
+                              kernel_size=patch_size,
+                              stride=stride,
+                              padding=padding)
         self.norm = norm_layer(embed_dim) if norm_layer else nn.Identity()
 
     def forward(self, x):
@@ -53,14 +51,12 @@ class Pooling(nn.Module):
     Args:
         pool_size (int): Pooling size. Defaults to 3.
     """
-
     def __init__(self, pool_size=3):
         super().__init__()
-        self.pool = nn.AvgPool2d(
-            pool_size,
-            stride=1,
-            padding=pool_size // 2,
-            count_include_pad=False)
+        self.pool = nn.AvgPool2d(pool_size,
+                                 stride=1,
+                                 padding=pool_size // 2,
+                                 count_include_pad=False)
 
     def forward(self, x):
         return self.pool(x) - x
@@ -79,7 +75,6 @@ class Mlp(nn.Module):
             convolution. Defaults to ``dict(type='GELU')``.
         drop (float): Dropout rate. Defaults to 0.0.
     """
-
     def __init__(self,
                  in_features,
                  hidden_features=None,
@@ -119,7 +114,6 @@ class PoolFormerBlock(BaseModule):
         layer_scale_init_value (float): Init value for Layer Scale.
             Defaults to 1e-5.
     """
-
     def __init__(self,
                  dim,
                  pool_size=3,
@@ -136,19 +130,20 @@ class PoolFormerBlock(BaseModule):
         self.token_mixer = Pooling(pool_size=pool_size)
         self.norm2 = build_norm_layer(norm_cfg, dim)[1]
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = Mlp(
-            in_features=dim,
-            hidden_features=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            drop=drop)
+        self.mlp = Mlp(in_features=dim,
+                       hidden_features=mlp_hidden_dim,
+                       act_cfg=act_cfg,
+                       drop=drop)
 
         # The following two techniques are useful to train deep PoolFormers.
         self.drop_path = DropPath(drop_path) if drop_path > 0. \
             else nn.Identity()
-        self.layer_scale_1 = nn.Parameter(
-            layer_scale_init_value * torch.ones((dim)), requires_grad=True)
-        self.layer_scale_2 = nn.Parameter(
-            layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+        self.layer_scale_1 = nn.Parameter(layer_scale_init_value * torch.ones(
+            (dim)),
+                                          requires_grad=True)
+        self.layer_scale_2 = nn.Parameter(layer_scale_init_value * torch.ones(
+            (dim)),
+                                          requires_grad=True)
 
     def forward(self, x):
         x = x + self.drop_path(
@@ -176,8 +171,8 @@ def basic_blocks(dim,
     """
     blocks = []
     for block_idx in range(layers[index]):
-        block_dpr = drop_path_rate * (block_idx + sum(layers[:index])) / (
-            sum(layers) - 1)
+        block_dpr = drop_path_rate * (block_idx +
+                                      sum(layers[:index])) / (sum(layers) - 1)
         blocks.append(
             PoolFormerBlock(
                 dim,
@@ -316,39 +311,36 @@ class PoolFormer(BaseBackbone):
         layer_scale_init_value = arch['layer_scale_init_value'] \
             if 'layer_scale_init_value' in arch else 1e-5
 
-        self.patch_embed = PatchEmbed(
-            patch_size=in_patch_size,
-            stride=in_stride,
-            padding=in_pad,
-            in_chans=3,
-            embed_dim=embed_dims[0])
+        self.patch_embed = PatchEmbed(patch_size=in_patch_size,
+                                      stride=in_stride,
+                                      padding=in_pad,
+                                      in_chans=3,
+                                      embed_dim=embed_dims[0])
 
         # set the main block in network
         network = []
         for i in range(len(layers)):
-            stage = basic_blocks(
-                embed_dims[i],
-                i,
-                layers,
-                pool_size=pool_size,
-                mlp_ratio=mlp_ratios[i],
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                drop_rate=drop_rate,
-                drop_path_rate=drop_path_rate,
-                layer_scale_init_value=layer_scale_init_value)
+            stage = basic_blocks(embed_dims[i],
+                                 i,
+                                 layers,
+                                 pool_size=pool_size,
+                                 mlp_ratio=mlp_ratios[i],
+                                 norm_cfg=norm_cfg,
+                                 act_cfg=act_cfg,
+                                 drop_rate=drop_rate,
+                                 drop_path_rate=drop_path_rate,
+                                 layer_scale_init_value=layer_scale_init_value)
             network.append(stage)
             if i >= len(layers) - 1:
                 break
             if embed_dims[i] != embed_dims[i + 1]:
                 # downsampling between two stages
                 network.append(
-                    PatchEmbed(
-                        patch_size=down_patch_size,
-                        stride=down_stride,
-                        padding=down_pad,
-                        in_chans=embed_dims[i],
-                        embed_dim=embed_dims[i + 1]))
+                    PatchEmbed(patch_size=down_patch_size,
+                               stride=down_stride,
+                               padding=down_pad,
+                               in_chans=embed_dims[i],
+                               embed_dim=embed_dims[i + 1]))
 
         self.network = nn.ModuleList(network)
 

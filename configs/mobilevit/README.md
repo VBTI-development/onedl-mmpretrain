@@ -8,7 +8,7 @@
 
 **MobileViT** aims at introducing a light-weight network, which takes the advantages of both ViTs and CNNs, uses the `InvertedResidual` blocks in [MobileNetV2](../mobilenet_v2/README.md) and `MobileViTBlock` which refers to [ViT](../vision_transformer/README.md) transformer blocks to build a standard 5-stage model structure.
 
-The MobileViTBlock reckons transformers as convolutions to perform a global representation, meanwhile conbined with original convolution layers for local representation to build a block with global receptive field. This is different from ViT, which adds an extra class token and position embeddings for learning relative relationship. Without any position embeddings, MobileViT can benfit from multi-scale inputs during training.
+The MobileViTBlock reckons transformers as convolutions to perform a global representation, meanwhile combined with original convolution layers for local representation to build a block with global receptive field. This is different from ViT, which adds an extra class token and position embeddings for learning relative relationship. Without any position embeddings, MobileViT can benefit from multi-scale inputs during training.
 
 Also, this paper puts forward a strategy for multi-scale training to dynamically adjust batch size based on the image size to both improve training efficiency and final performance.
 

@@ -71,8 +71,10 @@ def seesaw_ce_loss(cls_score,
 
     if weight is not None:
         weight = weight.float()
-    loss = weight_reduce_loss(
-        loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
+    loss = weight_reduce_loss(loss,
+                              weight=weight,
+                              reduction=reduction,
+                              avg_factor=avg_factor)
     return loss
 
 
@@ -98,7 +100,6 @@ class SeesawLoss(nn.Module):
              Options are "none", "mean" and "sum". Defaults to "mean".
         loss_weight (float): The weight of the loss. Defaults to 1.0
     """
-
     def __init__(self,
                  use_sigmoid=False,
                  p=0.8,
@@ -148,8 +149,8 @@ class SeesawLoss(nn.Module):
         assert cls_score.size(0) == labels.view(-1).size(0), \
             f'Expected `labels` shape [{cls_score.size(0)}], ' \
             f'but got {list(labels.size())}'
-        reduction = (
-            reduction_override if reduction_override else self.reduction)
+        reduction = (reduction_override
+                     if reduction_override else self.reduction)
         assert cls_score.size(-1) == self.num_classes, \
             f'The channel number of output ({cls_score.size(-1)}) does ' \
             f'not match the `num_classes` of seesaw loss ({self.num_classes}).'

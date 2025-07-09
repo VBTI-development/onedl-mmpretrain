@@ -22,14 +22,15 @@ class iTPNClipHead(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(
         self,
         embed_dims: int,
         num_embed: int,
         loss: dict,
-        init_cfg: Optional[Union[dict, List[dict]]] = dict(
-            type='TruncNormal', layer='Linear', std=0.02, bias=0)
+        init_cfg: Optional[Union[dict, List[dict]]] = dict(type='TruncNormal',
+                                                           layer='Linear',
+                                                           std=0.02,
+                                                           bias=0)
     ) -> None:
         super().__init__(init_cfg=init_cfg)
         self.cls_head = nn.Linear(embed_dims, num_embed)

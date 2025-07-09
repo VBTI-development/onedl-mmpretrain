@@ -7,11 +7,10 @@ _base_ = [
 # model settings
 model = dict(
     type='SimCLR',
-    backbone=dict(
-        type='ResNet',
-        depth=50,
-        norm_cfg=dict(type='SyncBN'),
-        zero_init_residual=True),
+    backbone=dict(type='ResNet',
+                  depth=50,
+                  norm_cfg=dict(type='SyncBN'),
+                  zero_init_residual=True),
     neck=dict(
         type='NonLinearNeck',  # SimCLR non-linear neck
         in_channels=2048,
@@ -19,10 +18,9 @@ model = dict(
         out_channels=128,
         num_layers=2,
         with_avg_pool=True),
-    head=dict(
-        type='ContrastiveHead',
-        loss=dict(type='CrossEntropyLoss'),
-        temperature=0.1),
+    head=dict(type='ContrastiveHead',
+              loss=dict(type='CrossEntropyLoss'),
+              temperature=0.1),
 )
 
 # optimizer
@@ -39,15 +37,13 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR', T_max=790, by_epoch=True, begin=10, end=800)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR', T_max=790, by_epoch=True, begin=10, end=800)
 ]
 
 # runtime settings

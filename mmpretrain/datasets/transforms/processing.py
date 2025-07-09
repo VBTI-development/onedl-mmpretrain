@@ -29,13 +29,13 @@ except ImportError:
 
 
 def _str_to_torch_dtype(t: str):
-    """mapping str format dtype to torch.dtype."""
+    """Mapping str format dtype to torch.dtype."""
     import torch  # noqa: F401,F403
     return eval(f'torch.{t}')
 
 
 def _interpolation_modes_from_str(t: str):
-    """mapping str format to Interpolation."""
+    """Mapping str format to Interpolation."""
     t = t.lower()
     inverse_modes_mapping = {
         'nearest': InterpolationMode.NEAREST,
@@ -49,7 +49,6 @@ def _interpolation_modes_from_str(t: str):
 
 
 class TorchVisonTransformWrapper:
-
     def __init__(self, transform, *args, **kwargs):
         if 'interpolation' in kwargs and isinstance(kwargs['interpolation'],
                                                     str):
@@ -83,10 +82,9 @@ def register_vision_transforms() -> List[str]:
         if inspect.isclass(_transform) and callable(
                 _transform) and not isinstance(_transform, (EnumMeta)):
             from functools import partial
-            TRANSFORMS.register_module(
-                module=partial(
-                    TorchVisonTransformWrapper, transform=_transform),
-                name=f'torchvision/{module_name}')
+            TRANSFORMS.register_module(module=partial(
+                TorchVisonTransformWrapper, transform=_transform),
+                                       name=f'torchvision/{module_name}')
             vision_transforms.append(f'torchvision/{module_name}')
     return vision_transforms
 
@@ -139,7 +137,6 @@ class RandomCrop(BaseTransform):
               2 elements on both sides in symmetric mode will result in
               [2, 1, 1, 2, 3, 4, 4, 3].
     """
-
     def __init__(self,
                  crop_size: Union[Sequence, int],
                  padding: Optional[Union[Sequence, int]] = None,
@@ -203,11 +200,10 @@ class RandomCrop(BaseTransform):
             h_pad = math.ceil(max(0, self.crop_size[0] - img.shape[0]) / 2)
             w_pad = math.ceil(max(0, self.crop_size[1] - img.shape[1]) / 2)
 
-            img = mmcv.impad(
-                img,
-                padding=(w_pad, h_pad, w_pad, h_pad),
-                pad_val=self.pad_val,
-                padding_mode=self.padding_mode)
+            img = mmcv.impad(img,
+                             padding=(w_pad, h_pad, w_pad, h_pad),
+                             pad_val=self.pad_val,
+                             padding_mode=self.padding_mode)
 
         offset_h, offset_w, target_h, target_w = self.rand_crop_params(img)
         img = mmcv.imcrop(
@@ -271,7 +267,6 @@ class RandomResizedCrop(BaseTransform):
         backend (str): The image resize backend type, accepted values are
             'cv2' and 'pillow'. Defaults to 'cv2'.
     """
-
     def __init__(self,
                  scale: Union[Sequence, int],
                  crop_ratio_range: Tuple[float, float] = (0.08, 1.0),
@@ -358,17 +353,15 @@ class RandomResizedCrop(BaseTransform):
         """
         img = results['img']
         offset_h, offset_w, target_h, target_w = self.rand_crop_params(img)
-        img = mmcv.imcrop(
-            img,
-            bboxes=np.array([
-                offset_w, offset_h, offset_w + target_w - 1,
-                offset_h + target_h - 1
-            ]))
-        img = mmcv.imresize(
-            img,
-            tuple(self.scale[::-1]),
-            interpolation=self.interpolation,
-            backend=self.backend)
+        img = mmcv.imcrop(img,
+                          bboxes=np.array([
+                              offset_w, offset_h, offset_w + target_w - 1,
+                              offset_h + target_h - 1
+                          ]))
+        img = mmcv.imresize(img,
+                            tuple(self.scale[::-1]),
+                            interpolation=self.interpolation,
+                            backend=self.backend)
         results['img'] = img
         results['img_shape'] = img.shape
 
@@ -424,7 +417,6 @@ class EfficientNetRandomCrop(RandomResizedCrop):
         backend (str): The image resize backend type, accepted values are
             'cv2' and 'pillow'. Defaults to 'cv2'.
     """
-
     def __init__(self,
                  scale: int,
                  min_covered: float = 0.1,
@@ -458,10 +450,10 @@ class EfficientNetRandomCrop(RandomResizedCrop):
 
         for _ in range(self.max_attempts):
             aspect_ratio = np.random.uniform(*self.aspect_ratio_range)
-            min_target_h = int(
-                round(math.sqrt(min_target_area / aspect_ratio)))
-            max_target_h = int(
-                round(math.sqrt(max_target_area / aspect_ratio)))
+            min_target_h = int(round(math.sqrt(min_target_area /
+                                               aspect_ratio)))
+            max_target_h = int(round(math.sqrt(max_target_area /
+                                               aspect_ratio)))
 
             if max_target_h * aspect_ratio > w:
                 max_target_h = int((w + 0.5 - 1e-7) / aspect_ratio)
@@ -472,8 +464,8 @@ class EfficientNetRandomCrop(RandomResizedCrop):
             min_target_h = min(max_target_h, min_target_h)
 
             # slightly differs from tf implementation
-            target_h = int(
-                round(np.random.uniform(min_target_h, max_target_h)))
+            target_h = int(round(np.random.uniform(min_target_h,
+                                                   max_target_h)))
             target_w = int(round(target_h * aspect_ratio))
             target_area = target_h * target_w
 
@@ -556,7 +548,6 @@ class RandomErasing(BaseTransform):
         - RE-0: RandomErasing(mode='const', fill_color=0)
         - RE-255: RandomErasing(mode='const', fill_color=255)
     """
-
     def __init__(self,
                  erase_prob=0.5,
                  min_area_ratio=0.02,
@@ -628,8 +619,8 @@ class RandomErasing(BaseTransform):
         """Randomly generate patch the erase."""
         # convert the aspect ratio to log space to equally handle width and
         # height.
-        log_aspect_range = np.log(
-            np.array(self.aspect_range, dtype=np.float32))
+        log_aspect_range = np.log(np.array(self.aspect_range,
+                                           dtype=np.float32))
         aspect_ratio = np.exp(np.random.uniform(*log_aspect_range))
         area = img_h * img_w
         area *= np.random.uniform(self.min_area_ratio, self.max_area_ratio)
@@ -709,7 +700,6 @@ class EfficientNetCenterCrop(BaseTransform):
 
         And then the pipeline resizes the img to the input crop size.
     """
-
     def __init__(self,
                  crop_size: int,
                  crop_padding: int = 32,
@@ -748,17 +738,15 @@ class EfficientNetCenterCrop(BaseTransform):
         offset_w = max(0, int(round((w - crop_size) / 2.)))
 
         # crop the image
-        img = mmcv.imcrop(
-            img,
-            bboxes=np.array([
-                offset_w, offset_h, offset_w + crop_size - 1,
-                offset_h + crop_size - 1
-            ]))
+        img = mmcv.imcrop(img,
+                          bboxes=np.array([
+                              offset_w, offset_h, offset_w + crop_size - 1,
+                              offset_h + crop_size - 1
+                          ]))
         # resize image
-        img = mmcv.imresize(
-            img, (self.crop_size, self.crop_size),
-            interpolation=self.interpolation,
-            backend=self.backend)
+        img = mmcv.imresize(img, (self.crop_size, self.crop_size),
+                            interpolation=self.interpolation,
+                            backend=self.backend)
         results['img'] = img
         results['img_shape'] = img.shape
 
@@ -806,7 +794,6 @@ class ResizeEdge(BaseTransform):
             backend, "nearest", "bilinear" for 'pillow' backend.
             Defaults to 'bilinear'.
     """
-
     def __init__(self,
                  scale: int,
                  edge: str = 'short',
@@ -823,12 +810,11 @@ class ResizeEdge(BaseTransform):
     def _resize_img(self, results: dict) -> None:
         """Resize images with ``results['scale']``."""
 
-        img, w_scale, h_scale = mmcv.imresize(
-            results['img'],
-            results['scale'],
-            interpolation=self.interpolation,
-            return_scale=True,
-            backend=self.backend)
+        img, w_scale, h_scale = mmcv.imresize(results['img'],
+                                              results['scale'],
+                                              interpolation=self.interpolation,
+                                              return_scale=True,
+                                              backend=self.backend)
         results['img'] = img
         results['img_shape'] = img.shape[:2]
         results['scale'] = img.shape[:2][::-1]
@@ -912,7 +898,6 @@ class ColorJitter(BaseTransform):
             Defaults to 0.
         backend (str): The backend to operate the image. Defaults to 'pillow'
     """
-
     def __init__(self,
                  brightness: Union[float, Sequence[float]] = 0.,
                  contrast: Union[float, Sequence[float]] = 0.,
@@ -985,13 +970,15 @@ class ColorJitter(BaseTransform):
 
         for index in trans_inds:
             if index == 0 and brightness is not None:
-                img = mmcv.adjust_brightness(
-                    img, brightness, backend=self.backend)
+                img = mmcv.adjust_brightness(img,
+                                             brightness,
+                                             backend=self.backend)
             elif index == 1 and contrast is not None:
                 img = mmcv.adjust_contrast(img, contrast, backend=self.backend)
             elif index == 2 and saturation is not None:
-                img = mmcv.adjust_color(
-                    img, alpha=saturation, backend=self.backend)
+                img = mmcv.adjust_color(img,
+                                        alpha=saturation,
+                                        backend=self.backend)
             elif index == 3 and hue is not None:
                 img = mmcv.adjust_hue(img, hue, backend=self.backend)
 
@@ -1033,7 +1020,6 @@ class Lighting(BaseTransform):
             Defaults to 0.1.
         to_rgb (bool): Whether to convert img to rgb. Defaults to False.
     """
-
     def __init__(self,
                  eigval: Sequence[float],
                  eigvec: Sequence[float],
@@ -1066,12 +1052,11 @@ class Lighting(BaseTransform):
         assert 'img' in results, 'No `img` field in the input.'
 
         img = results['img']
-        img_lighting = mmcv.adjust_lighting(
-            img,
-            self.eigval,
-            self.eigvec,
-            alphastd=self.alphastd,
-            to_rgb=self.to_rgb)
+        img_lighting = mmcv.adjust_lighting(img,
+                                            self.eigval,
+                                            self.eigvec,
+                                            alphastd=self.alphastd,
+                                            to_rgb=self.to_rgb)
         results['img'] = img_lighting.astype(img.dtype)
         return results
 
@@ -1171,7 +1156,6 @@ class Albumentations(BaseTransform):
         >>> print(data['img'].shape)
         (375, 500, 3)
     """
-
     def __init__(self, transforms: List[Dict], keymap: Optional[Dict] = None):
         if albumentations is None:
             raise RuntimeError('albumentations is not installed')
@@ -1291,7 +1275,6 @@ class SimMIMMaskGenerator(BaseTransform):
         model_patch_size (int): Patch size of each token. Defaults to 4.
         mask_ratio (float): The mask ratio of image. Defaults to 0.6.
     """
-
     def __init__(self,
                  input_size: int = 192,
                  mask_patch_size: int = 32,
@@ -1363,7 +1346,6 @@ class BEiTMaskGenerator(BaseTransform):
         min_aspect (float, optional): The minimum aspect ratio of mask blocks.
             Defaults to None.
     """
-
     def __init__(self,
                  input_size: int,
                  num_masking_patches: int,
@@ -1492,7 +1474,6 @@ class RandomResizedCropAndInterpolationWithTwoPic(BaseTransform):
         second_interpolation (str): The interpolation for the second image.
             Defaults to ``lanczos``.
     """
-
     def __init__(self,
                  size: Union[tuple, int],
                  second_size=None,
@@ -1593,10 +1574,12 @@ class RandomResizedCropAndInterpolationWithTwoPic(BaseTransform):
             results.update({'img': img})
         else:
             img = img[i:i + h, j:j + w]
-            img_sample = mmcv.imresize(
-                img, self.size, interpolation=interpolation)
-            img_target = mmcv.imresize(
-                img, self.second_size, interpolation=self.second_interpolation)
+            img_sample = mmcv.imresize(img,
+                                       self.size,
+                                       interpolation=interpolation)
+            img_target = mmcv.imresize(img,
+                                       self.second_size,
+                                       interpolation=self.second_interpolation)
             results.update({'img': [img_sample, img_target]})
         return results
 
@@ -1637,7 +1620,6 @@ class CleanCaption(BaseTransform):
         strip (bool): Whether to remove leading and trailing whitespaces.
             Defaults to True.
     """
-
     def __init__(
         self,
         keys='gt_caption',
@@ -1688,7 +1670,6 @@ class CleanCaption(BaseTransform):
 
 @TRANSFORMS.register_module()
 class OFAAddObjects(BaseTransform):
-
     def transform(self, results: dict) -> dict:
         if 'objects' not in results:
             raise ValueError(
@@ -1708,7 +1689,6 @@ class OFAAddObjects(BaseTransform):
 
 @TRANSFORMS.register_module()
 class RandomTranslatePad(BaseTransform):
-
     def __init__(self, size=640, aug_translate=False):
         self.size = size
         self.aug_translate = aug_translate
@@ -1751,11 +1731,11 @@ class MAERandomResizedCrop(transforms.RandomResizedCrop):
     """RandomResizedCrop for matching TF/TPU implementation: no for-loop is
     used.
 
-    This may lead to results different with torchvision's version.
-    Following BYOL's TF code:
-    https://github.com/deepmind/deepmind-research/blob/master/byol/utils/dataset.py#L206 # noqa: E501
+    This may lead to results different with torchvision's version. Following
+    BYOL's TF code:
+    https://github.com/deepmind/deepmind-research/blob/master/byol/utils/dataset.py#L206
+    # noqa: E501
     """
-
     @staticmethod
     def get_params(img: Image.Image, scale: tuple, ratio: tuple) -> Tuple:
         width, height = img.size

@@ -17,7 +17,6 @@ class SwAV(BaseSelfSupervisor):
 
     The queue is built in ``mmpretrain/engine/hooks/swav_hook.py``.
     """
-
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """Forward computation during training.
@@ -33,9 +32,9 @@ class SwAV(BaseSelfSupervisor):
         assert isinstance(inputs, list)
         # multi-res forward passes
         idx_crops = torch.cumsum(
-            torch.unique_consecutive(
-                torch.tensor([input.shape[-1] for input in inputs]),
-                return_counts=True)[1], 0)
+            torch.unique_consecutive(torch.tensor(
+                [input.shape[-1] for input in inputs]),
+                                     return_counts=True)[1], 0)
         start_idx = 0
         output = []
         for end_idx in idx_crops:

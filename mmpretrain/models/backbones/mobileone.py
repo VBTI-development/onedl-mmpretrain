@@ -39,7 +39,6 @@ class MobileOneBlock(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -78,16 +77,15 @@ class MobileOneBlock(BaseModule):
         self.dilation = dilation
 
         if deploy:
-            self.branch_reparam = build_conv_layer(
-                conv_cfg,
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                groups=self.groups,
-                stride=stride,
-                padding=padding,
-                dilation=dilation,
-                bias=True)
+            self.branch_reparam = build_conv_layer(conv_cfg,
+                                                   in_channels=in_channels,
+                                                   out_channels=out_channels,
+                                                   kernel_size=kernel_size,
+                                                   groups=self.groups,
+                                                   stride=stride,
+                                                   padding=padding,
+                                                   dilation=dilation,
+                                                   bias=True)
         else:
             # judge if input shape and output shape are the same.
             # If true, add a normalized identity shortcut.
@@ -103,28 +101,26 @@ class MobileOneBlock(BaseModule):
             self.branch_conv_list = ModuleList()
             for _ in range(num_convs):
                 self.branch_conv_list.append(
-                    self.create_conv_bn(
-                        kernel_size=kernel_size,
-                        padding=padding,
-                        dilation=dilation))
+                    self.create_conv_bn(kernel_size=kernel_size,
+                                        padding=padding,
+                                        dilation=dilation))
 
         self.act = build_activation_layer(act_cfg)
 
     def create_conv_bn(self, kernel_size, dilation=1, padding=0):
-        """cearte a (conv + bn) Sequential layer."""
+        """Cearte a (conv + bn) Sequential layer."""
         conv_bn = Sequential()
         conv_bn.add_module(
             'conv',
-            build_conv_layer(
-                self.conv_cfg,
-                in_channels=self.in_channels,
-                out_channels=self.out_channels,
-                kernel_size=kernel_size,
-                groups=self.groups,
-                stride=self.stride,
-                dilation=dilation,
-                padding=padding,
-                bias=False))
+            build_conv_layer(self.conv_cfg,
+                             in_channels=self.in_channels,
+                             out_channels=self.out_channels,
+                             kernel_size=kernel_size,
+                             groups=self.groups,
+                             stride=self.stride,
+                             dilation=dilation,
+                             padding=padding,
+                             bias=False))
         conv_bn.add_module(
             'norm',
             build_norm_layer(self.norm_cfg, num_features=self.out_channels)[1])
@@ -132,7 +128,6 @@ class MobileOneBlock(BaseModule):
         return conv_bn
 
     def forward(self, x):
-
         def _inner_forward(inputs):
             if self.deploy:
                 return self.branch_reparam(inputs)
@@ -159,16 +154,15 @@ class MobileOneBlock(BaseModule):
             "Switch is not allowed when norm_cfg['type'] != 'BN'."
 
         reparam_weight, reparam_bias = self.reparameterize()
-        self.branch_reparam = build_conv_layer(
-            self.conv_cfg,
-            self.in_channels,
-            self.out_channels,
-            kernel_size=self.kernel_size,
-            stride=self.stride,
-            padding=self.padding,
-            dilation=self.dilation,
-            groups=self.groups,
-            bias=True)
+        self.branch_reparam = build_conv_layer(self.conv_cfg,
+                                               self.in_channels,
+                                               self.out_channels,
+                                               kernel_size=self.kernel_size,
+                                               stride=self.stride,
+                                               padding=self.padding,
+                                               dilation=self.dilation,
+                                               groups=self.groups,
+                                               bias=True)
         self.branch_reparam.weight.data = reparam_weight
         self.branch_reparam.bias.data = reparam_bias
 
@@ -318,35 +312,30 @@ class MobileOne(BaseBackbone):
 
     arch_zoo = {
         's0':
-        dict(
-            num_blocks=[2, 8, 10, 1],
-            width_factor=[0.75, 1.0, 1.0, 2.0],
-            num_conv_branches=[4, 4, 4, 4],
-            num_se_blocks=[0, 0, 0, 0]),
+        dict(num_blocks=[2, 8, 10, 1],
+             width_factor=[0.75, 1.0, 1.0, 2.0],
+             num_conv_branches=[4, 4, 4, 4],
+             num_se_blocks=[0, 0, 0, 0]),
         's1':
-        dict(
-            num_blocks=[2, 8, 10, 1],
-            width_factor=[1.5, 1.5, 2.0, 2.5],
-            num_conv_branches=[1, 1, 1, 1],
-            num_se_blocks=[0, 0, 0, 0]),
+        dict(num_blocks=[2, 8, 10, 1],
+             width_factor=[1.5, 1.5, 2.0, 2.5],
+             num_conv_branches=[1, 1, 1, 1],
+             num_se_blocks=[0, 0, 0, 0]),
         's2':
-        dict(
-            num_blocks=[2, 8, 10, 1],
-            width_factor=[1.5, 2.0, 2.5, 4.0],
-            num_conv_branches=[1, 1, 1, 1],
-            num_se_blocks=[0, 0, 0, 0]),
+        dict(num_blocks=[2, 8, 10, 1],
+             width_factor=[1.5, 2.0, 2.5, 4.0],
+             num_conv_branches=[1, 1, 1, 1],
+             num_se_blocks=[0, 0, 0, 0]),
         's3':
-        dict(
-            num_blocks=[2, 8, 10, 1],
-            width_factor=[2.0, 2.5, 3.0, 4.0],
-            num_conv_branches=[1, 1, 1, 1],
-            num_se_blocks=[0, 0, 0, 0]),
+        dict(num_blocks=[2, 8, 10, 1],
+             width_factor=[2.0, 2.5, 3.0, 4.0],
+             num_conv_branches=[1, 1, 1, 1],
+             num_se_blocks=[0, 0, 0, 0]),
         's4':
-        dict(
-            num_blocks=[2, 8, 10, 1],
-            width_factor=[3.0, 3.5, 3.5, 4.0],
-            num_conv_branches=[1, 1, 1, 1],
-            num_se_blocks=[0, 0, 5, 1])
+        dict(num_blocks=[2, 8, 10, 1],
+             width_factor=[3.0, 3.5, 3.5, 4.0],
+             num_conv_branches=[1, 1, 1, 1],
+             num_se_blocks=[0, 0, 5, 1])
     }
 
     def __init__(self,
@@ -392,16 +381,15 @@ class MobileOne(BaseBackbone):
         base_channels = [64, 128, 256, 512]
         channels = min(64,
                        int(base_channels[0] * self.arch['width_factor'][0]))
-        self.stage0 = MobileOneBlock(
-            self.in_channels,
-            channels,
-            stride=2,
-            kernel_size=3,
-            num_convs=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg,
-            deploy=deploy)
+        self.stage0 = MobileOneBlock(self.in_channels,
+                                     channels,
+                                     stride=2,
+                                     kernel_size=3,
+                                     num_convs=1,
+                                     conv_cfg=conv_cfg,
+                                     norm_cfg=norm_cfg,
+                                     act_cfg=act_cfg,
+                                     deploy=deploy)
 
         self.in_planes = channels
         self.stages = []
@@ -442,34 +430,32 @@ class MobileOne(BaseBackbone):
 
             blocks.append(
                 # Depthwise conv
-                MobileOneBlock(
-                    in_channels=self.in_planes,
-                    out_channels=self.in_planes,
-                    kernel_size=3,
-                    num_convs=num_conv_branches,
-                    stride=strides[i],
-                    padding=1,
-                    groups=self.in_planes,
-                    se_cfg=self.se_cfg if use_se else None,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    deploy=self.deploy))
+                MobileOneBlock(in_channels=self.in_planes,
+                               out_channels=self.in_planes,
+                               kernel_size=3,
+                               num_convs=num_conv_branches,
+                               stride=strides[i],
+                               padding=1,
+                               groups=self.in_planes,
+                               se_cfg=self.se_cfg if use_se else None,
+                               conv_cfg=self.conv_cfg,
+                               norm_cfg=self.norm_cfg,
+                               act_cfg=self.act_cfg,
+                               deploy=self.deploy))
 
             blocks.append(
                 # Pointwise conv
-                MobileOneBlock(
-                    in_channels=self.in_planes,
-                    out_channels=planes,
-                    kernel_size=1,
-                    num_convs=num_conv_branches,
-                    stride=1,
-                    padding=0,
-                    se_cfg=self.se_cfg if use_se else None,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    deploy=self.deploy))
+                MobileOneBlock(in_channels=self.in_planes,
+                               out_channels=planes,
+                               kernel_size=1,
+                               num_convs=num_conv_branches,
+                               stride=1,
+                               padding=0,
+                               se_cfg=self.se_cfg if use_se else None,
+                               conv_cfg=self.conv_cfg,
+                               norm_cfg=self.norm_cfg,
+                               act_cfg=self.act_cfg,
+                               deploy=self.deploy))
 
             self.in_planes = planes
 
@@ -498,7 +484,7 @@ class MobileOne(BaseBackbone):
                 param.requires_grad = False
 
     def train(self, mode=True):
-        """switch the mobile to train mode or not."""
+        """Switch the mobile to train mode or not."""
         super(MobileOne, self).train(mode)
         self._freeze_stages()
         if mode and self.norm_eval:
@@ -507,7 +493,7 @@ class MobileOne(BaseBackbone):
                     m.eval()
 
     def switch_to_deploy(self):
-        """switch the model to deploy mode, which has smaller amount of
+        """Switch the model to deploy mode, which has smaller amount of
         parameters and calculations."""
         for m in self.modules():
             if isinstance(m, MobileOneBlock):

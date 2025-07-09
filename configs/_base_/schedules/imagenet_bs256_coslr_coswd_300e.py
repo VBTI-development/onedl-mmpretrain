@@ -14,20 +14,18 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=295,
-        eta_min=1.0e-6,
-        by_epoch=True,
-        begin=5,
-        end=300),
-    dict(
-        type='CosineAnnealingParamScheduler',
-        param_name='weight_decay',
-        eta_min=0.00001,
-        by_epoch=True,
-        begin=0,
-        end=300)
+    dict(type='CosineAnnealingLR',
+         T_max=295,
+         eta_min=1.0e-6,
+         by_epoch=True,
+         begin=5,
+         end=300),
+    dict(type='CosineAnnealingParamScheduler',
+         param_name='weight_decay',
+         eta_min=0.00001,
+         by_epoch=True,
+         begin=0,
+         end=300)
 ]
 
 # train, val, test setting

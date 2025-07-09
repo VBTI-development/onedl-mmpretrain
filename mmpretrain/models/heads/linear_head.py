@@ -26,12 +26,12 @@ class LinearClsHead(ClsHead):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to ``dict(type='Normal', layer='Linear', std=0.01)``.
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
-                 init_cfg: Optional[dict] = dict(
-                     type='Normal', layer='Linear', std=0.01),
+                 init_cfg: Optional[dict] = dict(type='Normal',
+                                                 layer='Linear',
+                                                 std=0.01),
                  **kwargs):
         super(LinearClsHead, self).__init__(init_cfg=init_cfg, **kwargs)
 

@@ -14,18 +14,18 @@ model = dict(
         dict(type='Xavier', distribution='uniform', layer='Linear'),
         dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
     ]),
-    neck=dict(
-        type='MAEPretrainDecoder',
-        predict_feature_dim=512,
-        init_cfg=[
-            dict(type='Xavier', distribution='uniform', layer='Linear'),
-            dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
-        ]),
+    neck=dict(type='MAEPretrainDecoder',
+              predict_feature_dim=512,
+              init_cfg=[
+                  dict(type='Xavier', distribution='uniform', layer='Linear'),
+                  dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
+              ]),
     head=dict(
         _delete_=True,
         type='MIMHead',
-        loss=dict(
-            type='CosineSimilarityLoss', shift_factor=2.0, scale_factor=2.0),
+        loss=dict(type='CosineSimilarityLoss',
+                  shift_factor=2.0,
+                  scale_factor=2.0),
     ),
     target_generator=dict(
         type='CLIPGenerator',
@@ -35,39 +35,35 @@ model = dict(
     init_cfg=None)
 
 # optimizer wrapper
-optim_wrapper = dict(
-    type='OptimWrapper',
-    optimizer=dict(
-        type='AdamW',
-        lr=1.5e-4 * 4096 / 256,
-        betas=(0.9, 0.95),
-        weight_decay=0.05),
-    paramwise_cfg=dict(
-        custom_keys={
-            'ln': dict(decay_mult=0.0),
-            'bias': dict(decay_mult=0.0),
-            'pos_embed': dict(decay_mult=0.),
-            'mask_token': dict(decay_mult=0.),
-            'cls_token': dict(decay_mult=0.)
-        }))
+optim_wrapper = dict(type='OptimWrapper',
+                     optimizer=dict(type='AdamW',
+                                    lr=1.5e-4 * 4096 / 256,
+                                    betas=(0.9, 0.95),
+                                    weight_decay=0.05),
+                     paramwise_cfg=dict(
+                         custom_keys={
+                             'ln': dict(decay_mult=0.0),
+                             'bias': dict(decay_mult=0.0),
+                             'pos_embed': dict(decay_mult=0.),
+                             'mask_token': dict(decay_mult=0.),
+                             'cls_token': dict(decay_mult=0.)
+                         }))
 find_unused_parameters = True
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=40,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=360,
-        by_epoch=True,
-        begin=40,
-        end=400,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=40,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=360,
+         by_epoch=True,
+         begin=40,
+         end=400,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

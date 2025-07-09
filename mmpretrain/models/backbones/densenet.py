@@ -16,7 +16,6 @@ from .base_backbone import BaseBackbone
 
 class DenseLayer(BaseBackbone):
     """DenseBlock layers."""
-
     def __init__(self,
                  in_channels,
                  growth_rate,
@@ -28,29 +27,27 @@ class DenseLayer(BaseBackbone):
         super(DenseLayer, self).__init__()
 
         self.norm1 = build_norm_layer(norm_cfg, in_channels)[1]
-        self.conv1 = nn.Conv2d(
-            in_channels,
-            bn_size * growth_rate,
-            kernel_size=1,
-            stride=1,
-            bias=False)
+        self.conv1 = nn.Conv2d(in_channels,
+                               bn_size * growth_rate,
+                               kernel_size=1,
+                               stride=1,
+                               bias=False)
         self.act = build_activation_layer(act_cfg)
         self.norm2 = build_norm_layer(norm_cfg, bn_size * growth_rate)[1]
-        self.conv2 = nn.Conv2d(
-            bn_size * growth_rate,
-            growth_rate,
-            kernel_size=3,
-            stride=1,
-            padding=1,
-            bias=False)
+        self.conv2 = nn.Conv2d(bn_size * growth_rate,
+                               growth_rate,
+                               kernel_size=3,
+                               stride=1,
+                               padding=1,
+                               bias=False)
         self.drop_rate = float(drop_rate)
         self.memory_efficient = memory_efficient
 
     def bottleneck_fn(self, xs):
         # type: (List[torch.Tensor]) -> torch.Tensor
         concated_features = torch.cat(xs, 1)
-        bottleneck_output = self.conv1(
-            self.act(self.norm1(concated_features)))  # noqa: T484
+        bottleneck_output = self.conv1(self.act(
+            self.norm1(concated_features)))  # noqa: T484
         return bottleneck_output
 
     # todo: rewrite when torchscript supports any
@@ -88,14 +85,14 @@ class DenseLayer(BaseBackbone):
 
         new_features = self.conv2(self.act(self.norm2(bottleneck_output)))
         if self.drop_rate > 0:
-            new_features = F.dropout(
-                new_features, p=self.drop_rate, training=self.training)
+            new_features = F.dropout(new_features,
+                                     p=self.drop_rate,
+                                     training=self.training)
         return new_features
 
 
 class DenseBlock(nn.Module):
     """DenseNet Blocks."""
-
     def __init__(self,
                  num_layers,
                  in_channels,
@@ -107,14 +104,14 @@ class DenseBlock(nn.Module):
                  memory_efficient=False):
         super(DenseBlock, self).__init__()
         self.block = nn.ModuleList([
-            DenseLayer(
-                in_channels + i * growth_rate,
-                growth_rate=growth_rate,
-                bn_size=bn_size,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                drop_rate=drop_rate,
-                memory_efficient=memory_efficient) for i in range(num_layers)
+            DenseLayer(in_channels + i * growth_rate,
+                       growth_rate=growth_rate,
+                       bn_size=bn_size,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg,
+                       drop_rate=drop_rate,
+                       memory_efficient=memory_efficient)
+            for i in range(num_layers)
         ])
 
     def forward(self, init_features):
@@ -127,7 +124,6 @@ class DenseBlock(nn.Module):
 
 class DenseTransition(nn.Sequential):
     """DenseNet Transition Layers."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -138,9 +134,11 @@ class DenseTransition(nn.Sequential):
         self.add_module('act', build_activation_layer(act_cfg))
         self.add_module(
             'conv',
-            nn.Conv2d(
-                in_channels, out_channels, kernel_size=1, stride=1,
-                bias=False))
+            nn.Conv2d(in_channels,
+                      out_channels,
+                      kernel_size=1,
+                      stride=1,
+                      bias=False))
         self.add_module('pool', nn.AvgPool2d(kernel_size=2, stride=2))
 
 
@@ -255,13 +253,12 @@ class DenseNet(BaseBackbone):
 
         # Set stem layers
         self.stem = nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                self.init_channels,
-                kernel_size=7,
-                stride=2,
-                padding=3,
-                bias=False),
+            nn.Conv2d(in_channels,
+                      self.init_channels,
+                      kernel_size=7,
+                      stride=2,
+                      padding=3,
+                      bias=False),
             build_norm_layer(norm_cfg, self.init_channels)[1], self.act,
             nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
 
@@ -273,15 +270,14 @@ class DenseNet(BaseBackbone):
         for i in range(self.num_stages):
             depth = self.depths[i]
 
-            stage = DenseBlock(
-                num_layers=depth,
-                in_channels=channels,
-                bn_size=bn_size,
-                growth_rate=self.growth_rate,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                drop_rate=drop_rate,
-                memory_efficient=memory_efficient)
+            stage = DenseBlock(num_layers=depth,
+                               in_channels=channels,
+                               bn_size=bn_size,
+                               growth_rate=self.growth_rate,
+                               norm_cfg=norm_cfg,
+                               act_cfg=act_cfg,
+                               drop_rate=drop_rate,
+                               memory_efficient=memory_efficient)
             self.stages.append(stage)
             channels += depth * self.growth_rate
 

@@ -10,8 +10,8 @@ def parse_args():
         'the required format in MMPretrain.')
     parser.add_argument(
         'input', help='Input list file, downloaded from SimCLR github repo.')
-    parser.add_argument(
-        'output', help='Output list file with the required format.')
+    parser.add_argument('output',
+                        help='Output list file with the required format.')
     args = parser.parse_args()
     return args
 

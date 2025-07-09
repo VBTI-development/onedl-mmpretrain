@@ -8,37 +8,33 @@ temperature = 1.0
 model = dict(
     type='MoCoV3',
     base_momentum=0.01,  # 0.01 for 100e and 300e, 0.004 for 1000e
-    backbone=dict(
-        type='ResNet',
-        depth=50,
-        norm_cfg=dict(type='SyncBN'),
-        zero_init_residual=False),
-    neck=dict(
-        type='NonLinearNeck',
-        in_channels=2048,
-        hid_channels=4096,
-        out_channels=256,
-        num_layers=2,
-        with_bias=False,
-        with_last_bn=True,
-        with_last_bn_affine=False,
-        with_last_bias=False,
-        with_avg_pool=True),
-    head=dict(
-        type='MoCoV3Head',
-        predictor=dict(
-            type='NonLinearNeck',
-            in_channels=256,
-            hid_channels=4096,
-            out_channels=256,
-            num_layers=2,
-            with_bias=False,
-            with_last_bn=False,
-            with_last_bn_affine=False,
-            with_last_bias=False,
-            with_avg_pool=False),
-        loss=dict(type='CrossEntropyLoss', loss_weight=2 * temperature),
-        temperature=temperature))
+    backbone=dict(type='ResNet',
+                  depth=50,
+                  norm_cfg=dict(type='SyncBN'),
+                  zero_init_residual=False),
+    neck=dict(type='NonLinearNeck',
+              in_channels=2048,
+              hid_channels=4096,
+              out_channels=256,
+              num_layers=2,
+              with_bias=False,
+              with_last_bn=True,
+              with_last_bn_affine=False,
+              with_last_bias=False,
+              with_avg_pool=True),
+    head=dict(type='MoCoV3Head',
+              predictor=dict(type='NonLinearNeck',
+                             in_channels=256,
+                             hid_channels=4096,
+                             out_channels=256,
+                             num_layers=2,
+                             with_bias=False,
+                             with_last_bn=False,
+                             with_last_bn_affine=False,
+                             with_last_bias=False,
+                             with_avg_pool=False),
+              loss=dict(type='CrossEntropyLoss', loss_weight=2 * temperature),
+              temperature=temperature))
 
 # optimizer
 optim_wrapper = dict(
@@ -56,20 +52,18 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=90,
-        by_epoch=True,
-        begin=10,
-        end=100,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=90,
+         by_epoch=True,
+         begin=10,
+         end=100,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

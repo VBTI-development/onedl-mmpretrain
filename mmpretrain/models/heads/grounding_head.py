@@ -12,7 +12,7 @@ from mmpretrain.registry import MODELS, TOKENIZER
 
 @MODELS.register_module()
 class GroundingHead(BaseModule):
-    """bbox Coordination generation head for multi-modal pre-trained task,
+    """Bbox Coordination generation head for multi-modal pre-trained task,
     adapted by BLIP. Normally used for visual grounding.
 
     Args:
@@ -21,7 +21,6 @@ class GroundingHead(BaseModule):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(
         self,
         decoder: dict = None,
@@ -31,12 +30,12 @@ class GroundingHead(BaseModule):
         init_cfg: Optional[dict] = None,
     ) -> None:
         super(GroundingHead, self).__init__(init_cfg=init_cfg)
-        ''' init the decoder from med_config'''
+        """Init the decoder from med_config."""
         self.decoder = None
         if decoder:
             self.decoder = MODELS.build(decoder)
-        self.loss_fn = torch.nn.CrossEntropyLoss(
-            reduction='none', ignore_index=-100)
+        self.loss_fn = torch.nn.CrossEntropyLoss(reduction='none',
+                                                 ignore_index=-100)
 
         self.box_l1_loss_coeff = box_l1_loss_coeff
         self.box_giou_loss_coeff = box_giou_loss_coeff
@@ -139,16 +138,15 @@ class GroundingHead(BaseModule):
             shifted_prediction_scores.view(-1, vocab_size), labels.view(-1))
 
         with torch.no_grad():
-            pred_box = (torch.argmax(
-                prediction_scores[:, :-1, :].contiguous(), dim=-1) -
+            pred_box = (torch.argmax(prediction_scores[:, :-1, :].contiguous(),
+                                     dim=-1) -
                         self.bin_start_idx) / self.image_res
             weight_bbox = F.l1_loss(
                 pred_box, decoder_targets, reduction='none').clamp(
                     0, 5) * self.box_l1_loss_coeff
             weight_giou = (1 - torch.diag(
-                generalized_box_iou(
-                    box_cxcywh_to_xyxy(pred_box),
-                    box_cxcywh_to_xyxy(decoder_targets)))
+                generalized_box_iou(box_cxcywh_to_xyxy(pred_box),
+                                    box_cxcywh_to_xyxy(decoder_targets)))
                            ) * self.box_giou_loss_coeff
             bs = text_embedding.shape[0]
             loss_seq = loss_seq_init[:].view(bs, -1, 4)

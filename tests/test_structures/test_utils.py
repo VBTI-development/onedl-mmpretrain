@@ -8,7 +8,6 @@ from mmpretrain.structures import (batch_label_to_onehot, cat_batch_labels,
 
 
 class TestStructureUtils(TestCase):
-
     def test_tensor_split(self):
         tensor = torch.tensor([0, 1, 2, 3, 4, 5, 6])
         split_indices = [0, 2, 6, 6]
@@ -54,8 +53,9 @@ class TestStructureUtils(TestCase):
         ]
 
         batch_label, split_indices = cat_batch_labels(labels)
-        batch_score = batch_label_to_onehot(
-            batch_label, split_indices, num_classes=5)
+        batch_score = batch_label_to_onehot(batch_label,
+                                            split_indices,
+                                            num_classes=5)
         self.assertEqual(batch_score[0].tolist(), [0, 1, 0, 0, 0])
         self.assertEqual(batch_score[1].tolist(), [0, 0, 1, 1, 0])
         self.assertEqual(batch_score[2].tolist(), [1, 1, 0, 0, 1])

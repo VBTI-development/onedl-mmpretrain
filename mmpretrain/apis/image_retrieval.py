@@ -70,8 +70,10 @@ class ImageRetrievalInferencer(BaseInferencer):
         device: Union[str, torch.device, None] = None,
         **kwargs,
     ) -> None:
-        super().__init__(
-            model=model, pretrained=pretrained, device=device, **kwargs)
+        super().__init__(model=model,
+                         pretrained=pretrained,
+                         device=device,
+                         **kwargs)
 
         self.prototype_dataset = self._prepare_prototype(
             prototype, prototype_cache, prepare_batch_size)
@@ -91,13 +93,15 @@ class ImageRetrievalInferencer(BaseInferencer):
 
         if isinstance(prototype, str):
             # A directory path of images
-            prototype = dict(
-                type='CustomDataset', with_label=False, data_root=prototype)
+            prototype = dict(type='CustomDataset',
+                             with_label=False,
+                             data_root=prototype)
 
         if isinstance(prototype, list):
             test_pipeline = [dict(type='LoadImageFromFile'), self.pipeline]
-            dataset = BaseDataset(
-                lazy_init=True, serialize_data=False, pipeline=test_pipeline)
+            dataset = BaseDataset(lazy_init=True,
+                                  serialize_data=False,
+                                  pipeline=test_pipeline)
             dataset.data_list = [{
                 'sample_idx': i,
                 'img_path': file
@@ -183,7 +187,6 @@ class ImageRetrievalInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[InputType], batch_size: int = 1):
-
         def load_image(input_):
             img = imread(input_)
             if img is None:
@@ -232,17 +235,16 @@ class ImageRetrievalInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_image_retrieval(
-                image,
-                data_sample,
-                self.prototype_dataset,
-                topk=topk,
-                resize=resize,
-                draw_score=draw_score,
-                show=show,
-                wait_time=wait_time,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_image_retrieval(image,
+                                                      data_sample,
+                                                      self.prototype_dataset,
+                                                      topk=topk,
+                                                      resize=resize,
+                                                      draw_score=draw_score,
+                                                      show=show,
+                                                      wait_time=wait_time,
+                                                      name=name,
+                                                      out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

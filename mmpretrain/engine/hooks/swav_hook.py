@@ -36,7 +36,6 @@ class SwAVHook(Hook):
             The key-value pair is layer name and its frozen iters. If frozen,
             the layers don't need gradient. Defaults to dict().
     """
-
     def __init__(
         self,
         batch_size: int,

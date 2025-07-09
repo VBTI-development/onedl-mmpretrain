@@ -32,7 +32,6 @@ class MaskFeatMaskGenerator3D(BaseTransform):
         min_aspect (float, optional): The minimum aspect ratio of mask blocks.
             Defaults to None.
     """
-
     def __init__(self,
                  input_size: int,
                  num_masking_patches: int,
@@ -44,9 +43,8 @@ class MaskFeatMaskGenerator3D(BaseTransform):
         self.temporal, self.height, self.width = input_size
         self.num_masking_patches = num_masking_patches
         self.min_num_patches = min_num_patches
-        self.max_num_patches = (
-            num_masking_patches
-            if max_num_patches is None else max_num_patches)
+        self.max_num_patches = (num_masking_patches if max_num_patches is None
+                                else max_num_patches)
         max_aspect = max_aspect or 1 / min_aspect
         self.log_aspect_ratio = (math.log(min_aspect), math.log(max_aspect))
 

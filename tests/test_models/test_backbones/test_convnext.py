@@ -42,12 +42,11 @@ def test_convnext():
     assert feat[3].shape == torch.Size([1, 768])
 
     # Test with custom arch
-    model = ConvNeXt(
-        arch={
-            'depths': [2, 3, 4, 5, 6],
-            'channels': [16, 32, 64, 128, 256]
-        },
-        out_indices=(0, 1, 2, 3, 4))
+    model = ConvNeXt(arch={
+        'depths': [2, 3, 4, 5, 6],
+        'channels': [16, 32, 64, 128, 256]
+    },
+                     out_indices=(0, 1, 2, 3, 4))
     model.init_weights()
     model.train()
 
@@ -61,8 +60,9 @@ def test_convnext():
     assert feat[4].shape == torch.Size([1, 256])
 
     # Test without gap before final norm
-    model = ConvNeXt(
-        arch='small', out_indices=(0, 1, 2, 3), gap_before_final_norm=False)
+    model = ConvNeXt(arch='small',
+                     out_indices=(0, 1, 2, 3),
+                     gap_before_final_norm=False)
 
     imgs = torch.randn(1, 3, 224, 224)
     feat = model(imgs)

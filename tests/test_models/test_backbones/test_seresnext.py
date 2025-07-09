@@ -12,8 +12,12 @@ def test_bottleneck():
         SEBottleneckX(64, 64, groups=32, width_per_group=4, style='tensorflow')
 
     # Test SEResNeXt Bottleneck structure
-    block = SEBottleneckX(
-        64, 256, groups=32, width_per_group=4, stride=2, style='pytorch')
+    block = SEBottleneckX(64,
+                          256,
+                          groups=32,
+                          width_per_group=4,
+                          stride=2,
+                          style='pytorch')
     assert block.width_per_group == 4
     assert block.conv2.stride == (2, 2)
     assert block.conv2.groups == 32
@@ -21,8 +25,12 @@ def test_bottleneck():
     assert block.conv2.out_channels == block.mid_channels
 
     # Test SEResNeXt Bottleneck structure (groups=1)
-    block = SEBottleneckX(
-        64, 256, groups=1, width_per_group=4, stride=2, style='pytorch')
+    block = SEBottleneckX(64,
+                          256,
+                          groups=1,
+                          width_per_group=4,
+                          stride=2,
+                          style='pytorch')
     assert block.conv2.stride == (2, 2)
     assert block.conv2.groups == 1
     assert block.conv2.out_channels == 64
@@ -30,8 +38,11 @@ def test_bottleneck():
     assert block.conv2.out_channels == block.mid_channels
 
     # Test SEResNeXt Bottleneck forward
-    block = SEBottleneckX(
-        64, 64, base_channels=16, groups=32, width_per_group=4)
+    block = SEBottleneckX(64,
+                          64,
+                          base_channels=16,
+                          groups=32,
+                          width_per_group=4)
     x = torch.randn(1, 64, 56, 56)
     x_out = block(x)
     assert x_out.shape == torch.Size([1, 64, 56, 56])
@@ -43,8 +54,10 @@ def test_seresnext():
         SEResNeXt(depth=18)
 
     # Test SEResNeXt with group 32, width_per_group 4
-    model = SEResNeXt(
-        depth=50, groups=32, width_per_group=4, out_indices=(0, 1, 2, 3))
+    model = SEResNeXt(depth=50,
+                      groups=32,
+                      width_per_group=4,
+                      out_indices=(0, 1, 2, 3))
     for m in model.modules():
         if isinstance(m, SEBottleneckX):
             assert m.conv2.groups == 32
@@ -60,8 +73,10 @@ def test_seresnext():
     assert feat[3].shape == torch.Size([1, 2048, 7, 7])
 
     # Test SEResNeXt with group 32, width_per_group 4 and layers 3 out forward
-    model = SEResNeXt(
-        depth=50, groups=32, width_per_group=4, out_indices=(3, ))
+    model = SEResNeXt(depth=50,
+                      groups=32,
+                      width_per_group=4,
+                      out_indices=(3, ))
     for m in model.modules():
         if isinstance(m, SEBottleneckX):
             assert m.conv2.groups == 32

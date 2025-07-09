@@ -155,8 +155,10 @@ def test_linear_reduction():
     neck = LinearNeck(10, 5, init_cfg=dict(type='Xavier', layer=['Linear']))
 
     # test linear_reduction with `act_cfg` and `norm_cfg`
-    neck = LinearNeck(
-        10, 5, act_cfg=dict(type='ReLU'), norm_cfg=dict(type='BN1d'))
+    neck = LinearNeck(10,
+                      5,
+                      act_cfg=dict(type='ReLU'),
+                      norm_cfg=dict(type='BN1d'))
     neck.eval()
 
     assert isinstance(neck.act, torch.nn.ReLU)

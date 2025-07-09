@@ -150,7 +150,7 @@ optim_wrapper = dict(
 
 ## Customize parameter schedules
 
-In training, the optimzation parameters such as learing rate, momentum, are usually not fixed but changing through iterations or epochs. PyTorch supports several learning rate schedulers, which are not sufficient for complex strategies. In MMPretrain, we provide `param_scheduler` for better controls of different parameter schedules.
+In training, the optimization parameters such as learing rate, momentum, are usually not fixed but changing through iterations or epochs. PyTorch supports several learning rate schedulers, which are not sufficient for complex strategies. In MMPretrain, we provide `param_scheduler` for better controls of different parameter schedules.
 
 ### Customize learning rate schedules
 

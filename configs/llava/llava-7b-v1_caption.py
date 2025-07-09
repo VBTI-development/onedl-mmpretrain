@@ -8,9 +8,8 @@ Describe the image in detail. ASSISTANT:'''
 # model settings
 model = dict(
     type='Llava',
-    tokenizer=dict(
-        type='AutoTokenizer',
-        name_or_path='liuhaotian/LLaVA-Lightning-7B-delta-v1-1'),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='liuhaotian/LLaVA-Lightning-7B-delta-v1-1'),
     vision_encoder=dict(
         type='VisionTransformer',
         arch='l',
@@ -48,11 +47,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(image_size, image_size),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(image_size, image_size),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 

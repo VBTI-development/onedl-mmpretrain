@@ -102,14 +102,14 @@ def main():
     parser = argparse.ArgumentParser(description='Convert model keys')
     parser.add_argument('src', help='src torchvision model path')
     parser.add_argument('dst', help='save path')
-    parser.add_argument(
-        '--bn', action='store_true', help='whether original vgg has BN')
-    parser.add_argument(
-        '--layer-num',
-        type=int,
-        choices=[11, 13, 16, 19],
-        default=11,
-        help='number of VGG layers')
+    parser.add_argument('--bn',
+                        action='store_true',
+                        help='whether original vgg has BN')
+    parser.add_argument('--layer-num',
+                        type=int,
+                        choices=[11, 13, 16, 19],
+                        default=11,
+                        help='number of VGG layers')
     args = parser.parse_args()
     convert(args.src, args.dst, layer_num=args.layer_num, with_bn=args.bn)
 

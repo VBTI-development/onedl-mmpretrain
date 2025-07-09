@@ -7,7 +7,7 @@ import torch
 
 
 def convert_resnet(src_dict, dst_dict):
-    """convert resnet checkpoints from torchvision."""
+    """Convert resnet checkpoints from torchvision."""
     for key, value in src_dict.items():
         if not key.startswith('fc'):
             dst_dict['backbone.' + key] = value
@@ -37,8 +37,9 @@ def main():
     parser = argparse.ArgumentParser(description='Convert model keys')
     parser.add_argument('src', help='src detectron model path')
     parser.add_argument('dst', help='save path')
-    parser.add_argument(
-        'model', type=str, help='The algorithm needs to change the keys.')
+    parser.add_argument('model',
+                        type=str,
+                        help='The algorithm needs to change the keys.')
     args = parser.parse_args()
 
     dst = Path(args.dst)

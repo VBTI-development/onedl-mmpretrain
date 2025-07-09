@@ -61,7 +61,7 @@ class TestClsHead(TestCase):
                          {'loss', 'accuracy_top-1', 'accuracy_top-2'})
         self.assertGreater(losses['loss'].item(), 0)
 
-        # test assertion when cal_acc but data is batch agumented.
+        # test assertion when cal_acc but data is batch augmented.
         data_samples = [
             sample.set_gt_score(torch.rand(10)) for sample in data_samples
         ]
@@ -119,8 +119,9 @@ class TestLinearClsHead(TestCase):
 
 
 class TestVisionTransformerClsHead(TestCase):
-    DEFAULT_ARGS = dict(
-        type='VisionTransformerClsHead', in_channels=10, num_classes=5)
+    DEFAULT_ARGS = dict(type='VisionTransformerClsHead',
+                        in_channels=10,
+                        num_classes=5)
     fake_feats = ([torch.rand(4, 7, 7, 16), torch.rand(4, 10)], )
 
     def test_initialize(self):
@@ -192,8 +193,9 @@ class TestDeiTClsHead(TestVisionTransformerClsHead):
 
 
 class TestConformerHead(TestCase):
-    DEFAULT_ARGS = dict(
-        type='ConformerHead', in_channels=[64, 96], num_classes=5)
+    DEFAULT_ARGS = dict(type='ConformerHead',
+                        in_channels=[64, 96],
+                        num_classes=5)
     fake_feats = ([torch.rand(4, 64), torch.rand(4, 96)], )
 
     def test_initialize(self):
@@ -242,7 +244,7 @@ class TestConformerHead(TestCase):
                          {'loss', 'accuracy_top-1', 'accuracy_top-2'})
         self.assertGreater(losses['loss'].item(), 0)
 
-        # test assertion when cal_acc but data is batch agumented.
+        # test assertion when cal_acc but data is batch augmented.
         data_samples = [
             sample.set_gt_score(torch.rand(5)) for sample in data_samples
         ]
@@ -275,8 +277,9 @@ class TestConformerHead(TestCase):
 
 
 class TestStackedLinearClsHead(TestCase):
-    DEFAULT_ARGS = dict(
-        type='StackedLinearClsHead', in_channels=10, num_classes=5)
+    DEFAULT_ARGS = dict(type='StackedLinearClsHead',
+                        in_channels=10,
+                        num_classes=5)
     fake_feats = (torch.rand(4, 10), )
 
     def test_initialize(self):
@@ -427,11 +430,10 @@ class TestMultiLabelClsHead(TestCase):
 
 
 class EfficientFormerClsHead(TestClsHead):
-    DEFAULT_ARGS = dict(
-        type='EfficientFormerClsHead',
-        in_channels=10,
-        num_classes=10,
-        distillation=False)
+    DEFAULT_ARGS = dict(type='EfficientFormerClsHead',
+                        in_channels=10,
+                        num_classes=10,
+                        distillation=False)
     FAKE_FEATS = (torch.rand(4, 10), )
 
     def test_forward(self):
@@ -468,8 +470,9 @@ class EfficientFormerClsHead(TestClsHead):
 
 
 class TestMultiLabelLinearClsHead(TestMultiLabelClsHead):
-    DEFAULT_ARGS = dict(
-        type='MultiLabelLinearClsHead', num_classes=10, in_channels=10)
+    DEFAULT_ARGS = dict(type='MultiLabelLinearClsHead',
+                        num_classes=10,
+                        in_channels=10)
 
     def test_forward(self):
         head = MODELS.build(self.DEFAULT_ARGS)
@@ -496,12 +499,11 @@ class TestMultiTaskHead(TestCase):
         type='MultiTaskHead',  # <- Head config, depends on #675
         task_heads={
             'task0':
-            dict(
-                type='MultiTaskHead',
-                task_heads={
-                    'task00': dict(type='LinearClsHead', num_classes=3),
-                    'task01': dict(type='LinearClsHead', num_classes=6),
-                }),
+            dict(type='MultiTaskHead',
+                 task_heads={
+                     'task00': dict(type='LinearClsHead', num_classes=3),
+                     'task01': dict(type='LinearClsHead', num_classes=6),
+                 }),
             'task1':
             dict(type='LinearClsHead', num_classes=6)
         },

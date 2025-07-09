@@ -80,7 +80,6 @@ class ImageCaptionInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[InputType], batch_size: int = 1):
-
         def load_image(input_):
             img = imread(input_)
             if img is None:
@@ -127,14 +126,13 @@ class ImageCaptionInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_image_caption(
-                image,
-                data_sample,
-                resize=resize,
-                show=show,
-                wait_time=wait_time,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_image_caption(image,
+                                                    data_sample,
+                                                    resize=resize,
+                                                    show=show,
+                                                    wait_time=wait_time,
+                                                    name=name,
+                                                    out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

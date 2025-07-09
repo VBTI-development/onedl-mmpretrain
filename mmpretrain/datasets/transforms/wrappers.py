@@ -51,7 +51,6 @@ class MultiView(BaseTransform):
         >>>         ])
         >>> ]
     """
-
     def __init__(self, transforms: List[List[Transform]],
                  num_views: Union[int, List[int]]) -> None:
 
@@ -112,7 +111,6 @@ class ApplyToList(BaseTransform):
             transformation, and the other fields will be adopted from the
             first data dict.
     """
-
     def __init__(self, transforms, scatter_key, collate_keys):
         super().__init__()
 

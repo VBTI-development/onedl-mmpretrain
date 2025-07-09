@@ -31,7 +31,6 @@ class InvertedResidual(BaseModule):
             memory while slowing down the training speed. Defaults to False.
         init_cfg (dict | list[dict], optional): Initialization config dict.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -58,36 +57,33 @@ class InvertedResidual(BaseModule):
             assert isinstance(se_cfg, dict)
 
         if self.with_expand_conv:
-            self.expand_conv = ConvModule(
-                in_channels=in_channels,
-                out_channels=mid_channels,
-                kernel_size=1,
-                stride=1,
-                padding=0,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg)
-        self.depthwise_conv = ConvModule(
-            in_channels=mid_channels,
-            out_channels=mid_channels,
-            kernel_size=kernel_size,
-            stride=stride,
-            padding=kernel_size // 2,
-            groups=mid_channels,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+            self.expand_conv = ConvModule(in_channels=in_channels,
+                                          out_channels=mid_channels,
+                                          kernel_size=1,
+                                          stride=1,
+                                          padding=0,
+                                          conv_cfg=conv_cfg,
+                                          norm_cfg=norm_cfg,
+                                          act_cfg=act_cfg)
+        self.depthwise_conv = ConvModule(in_channels=mid_channels,
+                                         out_channels=mid_channels,
+                                         kernel_size=kernel_size,
+                                         stride=stride,
+                                         padding=kernel_size // 2,
+                                         groups=mid_channels,
+                                         conv_cfg=conv_cfg,
+                                         norm_cfg=norm_cfg,
+                                         act_cfg=act_cfg)
         if self.with_se:
             self.se = SELayer(**se_cfg)
-        self.linear_conv = ConvModule(
-            in_channels=mid_channels,
-            out_channels=out_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=None)
+        self.linear_conv = ConvModule(in_channels=mid_channels,
+                                      out_channels=out_channels,
+                                      kernel_size=1,
+                                      stride=1,
+                                      padding=0,
+                                      conv_cfg=conv_cfg,
+                                      norm_cfg=norm_cfg,
+                                      act_cfg=None)
 
     def forward(self, x):
         """Forward function.
@@ -98,7 +94,6 @@ class InvertedResidual(BaseModule):
         Returns:
             torch.Tensor: The output tensor.
         """
-
         def _inner_forward(x):
             out = x
 

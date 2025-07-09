@@ -11,16 +11,14 @@ queue_len = 32
 feat_dim = 2
 momentum = 0.001
 backbone = dict(type='ResNet', depth=18, norm_cfg=dict(type='BN'))
-neck = dict(
-    type='MoCoV2Neck',
-    in_channels=512,
-    hid_channels=2,
-    out_channels=2,
-    with_avg_pool=True)
-head = dict(
-    type='ContrastiveHead',
-    loss=dict(type='CrossEntropyLoss'),
-    temperature=0.2)
+neck = dict(type='MoCoV2Neck',
+            in_channels=512,
+            hid_channels=2,
+            out_channels=2,
+            with_avg_pool=True)
+head = dict(type='ContrastiveHead',
+            loss=dict(type='CrossEntropyLoss'),
+            temperature=0.2)
 
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
@@ -31,14 +29,13 @@ def test_moco():
         'to_rgb': True
     }
 
-    alg = MoCo(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        queue_len=queue_len,
-        feat_dim=feat_dim,
-        momentum=momentum,
-        data_preprocessor=data_preprocessor)
+    alg = MoCo(backbone=backbone,
+               neck=neck,
+               head=head,
+               queue_len=queue_len,
+               feat_dim=feat_dim,
+               momentum=momentum,
+               data_preprocessor=data_preprocessor)
     assert alg.queue.size() == torch.Size([feat_dim, queue_len])
 
     fake_data = {

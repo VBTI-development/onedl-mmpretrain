@@ -37,8 +37,10 @@ def all_gather_concat(data: torch.Tensor) -> torch.Tensor:
     max_length = max(sizes_list)
     size_diff = max_length.item() - data_size.item()
     if size_diff:
-        padding = torch.zeros(
-            size_diff, *data.size()[1:], device=data.device, dtype=data.dtype)
+        padding = torch.zeros(size_diff,
+                              *data.size()[1:],
+                              device=data.device,
+                              dtype=data.dtype)
         data = torch.cat((data, padding))
 
     gather_list = dist.all_gather(data)
@@ -94,7 +96,6 @@ class BlipRetrieval(BaseModel):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_backbone: dict,
                  text_backbone: dict,
@@ -118,8 +119,8 @@ class BlipRetrieval(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
 
         self.vision_backbone = MODELS.build(vision_backbone)
         self.text_backbone = MODELS.build(text_backbone)
@@ -329,8 +330,8 @@ class BlipRetrieval(BaseModel):
         if modality == 'images':
             # extract image features
             image_embeds = self.vision_backbone(inputs)[0]
-            image_feat = F.normalize(
-                self.vision_neck(image_embeds[:, 0, :]), dim=-1)
+            image_feat = F.normalize(self.vision_neck(image_embeds[:, 0, :]),
+                                     dim=-1)
             return {'image_embeds': image_embeds, 'image_feat': image_feat}
         elif modality == 'texts':
             # extract text features
@@ -342,8 +343,8 @@ class BlipRetrieval(BaseModel):
                 mode='text',
             )
             text_embeds = text_output.last_hidden_state
-            text_feat = F.normalize(
-                self.text_neck(text_embeds[:, 0, :]), dim=-1)
+            text_feat = F.normalize(self.text_neck(text_embeds[:, 0, :]),
+                                    dim=-1)
             return {'text_embeds': text_embeds, 'text_feat': text_feat}
         else:
             raise RuntimeError(f'Invalid modality "{modality}".')
@@ -375,15 +376,16 @@ class BlipRetrieval(BaseModel):
         image_feat = output['image_feat']
         text_feat = output['text_feat']
 
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(self.device)
 
         # get momentum features
         with torch.no_grad():
             self._momentum_update()
             image_embeds_m = self.vision_backbone_m(images)[0]
-            image_feat_m = F.normalize(
-                self.vision_neck_m(image_embeds_m[:, 0, :]), dim=-1)
+            image_feat_m = F.normalize(self.vision_neck_m(
+                image_embeds_m[:, 0, :]),
+                                       dim=-1)
 
             text_output_m = self.text_backbone_m(
                 text_ids,
@@ -393,8 +395,8 @@ class BlipRetrieval(BaseModel):
                 mode='text',
             )
             text_embeds_m = text_output_m.last_hidden_state
-            text_feat_m = F.normalize(
-                self.text_neck_m(text_embeds_m[:, 0, :]), dim=-1)
+            text_feat_m = F.normalize(self.text_neck_m(text_embeds_m[:, 0, :]),
+                                      dim=-1)
 
         loss = self.head.loss(
             ([image_feat, text_feat, image_feat_m, text_feat_m], ),
@@ -493,8 +495,10 @@ class BlipRetrieval(BaseModel):
     def predict(self, images, data_samples, cal_i2t=True, cal_t2i=True):
         feats = self.extract_feat(images, data_samples)
 
-        return self.predict_all(
-            feats, data_samples, cal_i2t=cal_i2t, cal_t2i=cal_t2i)
+        return self.predict_all(feats,
+                                data_samples,
+                                cal_i2t=cal_i2t,
+                                cal_t2i=cal_t2i)
 
     def predict_all(self,
                     feats,
@@ -571,14 +575,14 @@ class BlipRetrieval(BaseModel):
 
         score_matrix_i2t = torch.full((img_feats.size(0), text_feats.size(0)),
                                       -100.0).to(self.device)
-        for i in track_on_main_process(
-                range(img_feats.size(0)), 'Compute I2T scores...'):
+        for i in track_on_main_process(range(img_feats.size(0)),
+                                       'Compute I2T scores...'):
             sims = sim_matrix_i2t[i]
             topk_sim, topk_idx = sims.topk(k=self.topk, dim=0)
 
             encoder_output = img_embeds[i].repeat(self.topk, 1, 1)
-            encoder_att = torch.ones(
-                encoder_output.size()[:-1], dtype=torch.long).to(self.device)
+            encoder_att = torch.ones(encoder_output.size()[:-1],
+                                     dtype=torch.long).to(self.device)
             output = self.text_backbone(
                 text_ids[topk_idx],
                 attention_mask=text_atts[topk_idx],
@@ -618,14 +622,14 @@ class BlipRetrieval(BaseModel):
 
         score_matrix_t2i = torch.full((text_feats.size(0), img_feats.size(0)),
                                       -100.0).to(self.device)
-        for i in track_on_main_process(
-                range(text_feats.size(0)), 'Compute T2I scores...'):
+        for i in track_on_main_process(range(text_feats.size(0)),
+                                       'Compute T2I scores...'):
             sims = sim_matrix_t2i[i]
             topk_sim, topk_idx = sims.topk(k=self.topk, dim=0)
 
             encoder_output = img_embeds[topk_idx]
-            encoder_att = torch.ones(
-                encoder_output.size()[:-1], dtype=torch.long).to(self.device)
+            encoder_att = torch.ones(encoder_output.size()[:-1],
+                                     dtype=torch.long).to(self.device)
             output = self.text_backbone(
                 text_ids[i].repeat(self.topk, 1),
                 attention_mask=text_atts[i].repeat(self.topk, 1),

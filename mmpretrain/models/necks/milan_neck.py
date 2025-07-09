@@ -38,7 +38,6 @@ class PromptTransformerEncoderLayer(TransformerEncoderLayer):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims: int,
                  num_heads: int,
@@ -51,25 +50,25 @@ class PromptTransformerEncoderLayer(TransformerEncoderLayer):
                  act_cfg: dict = dict(type='GELU'),
                  norm_cfg: dict = dict(type='LN'),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            feedforward_channels=feedforward_channels,
-            drop_rate=drop_rate,
-            attn_drop_rate=attn_drop_rate,
-            drop_path_rate=drop_path_rate,
-            num_fcs=num_fcs,
-            qkv_bias=qkv_bias,
-            act_cfg=act_cfg,
-            norm_cfg=norm_cfg,
-            init_cfg=init_cfg)
-        self.attn = PromptMultiheadAttention(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            attn_drop=attn_drop_rate,
-            proj_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            qkv_bias=qkv_bias)
+        super().__init__(embed_dims=embed_dims,
+                         num_heads=num_heads,
+                         feedforward_channels=feedforward_channels,
+                         drop_rate=drop_rate,
+                         attn_drop_rate=attn_drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         num_fcs=num_fcs,
+                         qkv_bias=qkv_bias,
+                         act_cfg=act_cfg,
+                         norm_cfg=norm_cfg,
+                         init_cfg=init_cfg)
+        self.attn = PromptMultiheadAttention(embed_dims=embed_dims,
+                                             num_heads=num_heads,
+                                             attn_drop=attn_drop_rate,
+                                             proj_drop=drop_rate,
+                                             dropout_layer=dict(
+                                                 type='DropPath',
+                                                 drop_prob=drop_path_rate),
+                                             qkv_bias=qkv_bias)
 
     def forward(self, x: torch.Tensor, visible_tokens: torch.Tensor,
                 ids_restore: torch.Tensor) -> torch.Tensor:
@@ -115,7 +114,6 @@ class MILANPretrainDecoder(MAEPretrainDecoder):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
-
     def __init__(self,
                  num_patches: int = 196,
                  patch_size: int = 16,
@@ -128,32 +126,32 @@ class MILANPretrainDecoder(MAEPretrainDecoder):
                  mlp_ratio: int = 4,
                  norm_cfg: dict = dict(type='LN', eps=1e-6),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            num_patches=num_patches,
-            patch_size=patch_size,
-            in_chans=in_chans,
-            embed_dim=embed_dim,
-            decoder_embed_dim=decoder_embed_dim,
-            decoder_depth=decoder_depth,
-            decoder_num_heads=decoder_num_heads,
-            mlp_ratio=mlp_ratio,
-            norm_cfg=norm_cfg,
-            init_cfg=init_cfg)
+        super().__init__(num_patches=num_patches,
+                         patch_size=patch_size,
+                         in_chans=in_chans,
+                         embed_dim=embed_dim,
+                         decoder_embed_dim=decoder_embed_dim,
+                         decoder_depth=decoder_depth,
+                         decoder_num_heads=decoder_num_heads,
+                         mlp_ratio=mlp_ratio,
+                         norm_cfg=norm_cfg,
+                         init_cfg=init_cfg)
 
         # map the dim of features from decoder to the dim compatible with
         # that of CLIP
-        self.decoder_pred = nn.Linear(
-            decoder_embed_dim, predict_feature_dim, bias=True)
+        self.decoder_pred = nn.Linear(decoder_embed_dim,
+                                      predict_feature_dim,
+                                      bias=True)
 
         # use prompt transformer encoder layer, instead of the conventional
         # transformer encoder layer
         self.decoder_blocks = nn.ModuleList([
-            PromptTransformerEncoderLayer(
-                decoder_embed_dim,
-                decoder_num_heads,
-                int(mlp_ratio * decoder_embed_dim),
-                qkv_bias=True,
-                norm_cfg=norm_cfg) for _ in range(decoder_depth)
+            PromptTransformerEncoderLayer(decoder_embed_dim,
+                                          decoder_num_heads,
+                                          int(mlp_ratio * decoder_embed_dim),
+                                          qkv_bias=True,
+                                          norm_cfg=norm_cfg)
+            for _ in range(decoder_depth)
         ])
 
     def forward(self, x: torch.Tensor, ids_restore: torch.Tensor,
@@ -179,10 +177,10 @@ class MILANPretrainDecoder(MAEPretrainDecoder):
         mask_tokens = self.mask_token.repeat(
             x.shape[0], ids_restore.shape[1] + 1 - x.shape[1], 1)
         x_ = torch.cat([x[:, 1:, :], mask_tokens], dim=1)
-        x_ = torch.gather(
-            x_,
-            dim=1,
-            index=ids_restore.unsqueeze(-1).repeat(1, 1, x.shape[2]))
+        x_ = torch.gather(x_,
+                          dim=1,
+                          index=ids_restore.unsqueeze(-1).repeat(
+                              1, 1, x.shape[2]))
         x = torch.cat([x[:, :1, :], x_], dim=1)
 
         # add pos embed
@@ -191,27 +189,26 @@ class MILANPretrainDecoder(MAEPretrainDecoder):
         # split mask tokens and visible tokens
         visible_tokens = torch.cat([
             x[:, :1, :],
-            torch.gather(
-                x[:, 1:, :],
-                dim=1,
-                index=ids_keep.unsqueeze(-1).repeat(1, 1, x.shape[-1]))
+            torch.gather(x[:, 1:, :],
+                         dim=1,
+                         index=ids_keep.unsqueeze(-1).repeat(
+                             1, 1, x.shape[-1]))
         ],
                                    dim=1)
-        x = torch.gather(
-            x[:, 1:, :],
-            dim=1,
-            index=ids_dump.unsqueeze(-1).repeat(1, 1, x.shape[-1]))
+        x = torch.gather(x[:, 1:, :],
+                         dim=1,
+                         index=ids_dump.unsqueeze(-1).repeat(
+                             1, 1, x.shape[-1]))
 
         for blk in self.decoder_blocks:
             x = blk(x, visible_tokens, ids_restore)
 
         # full sequence recovery
         x_ = torch.cat([visible_tokens[:, 1:, :], x], dim=1)
-        x_ = torch.gather(
-            x_,
-            dim=1,
-            index=ids_restore.unsqueeze(-1).repeat(1, 1,
-                                                   x.shape[-1]))  # unshuffle
+        x_ = torch.gather(x_,
+                          dim=1,
+                          index=ids_restore.unsqueeze(-1).repeat(
+                              1, 1, x.shape[-1]))  # unshuffle
         x = torch.cat([visible_tokens[:, :1, :], x_], dim=1)
 
         x = self.decoder_norm(x)

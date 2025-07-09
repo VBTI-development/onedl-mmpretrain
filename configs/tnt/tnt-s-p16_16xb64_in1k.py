@@ -15,12 +15,11 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=248,
-        edge='short',
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='ResizeEdge',
+         scale=248,
+         edge='short',
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='CenterCrop', crop_size=224),
     dict(type='PackInputs'),
 ]

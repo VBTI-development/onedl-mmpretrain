@@ -35,8 +35,8 @@ def scaled_dot_product_attention_pyimpl(query,
                                         is_causal=False):
     scale = scale or query.size(-1)**0.5
     if is_causal and attn_mask is not None:
-        attn_mask = torch.ones(
-            query.size(-2), key.size(-2), dtype=torch.bool).tril(diagonal=0)
+        attn_mask = torch.ones(query.size(-2), key.size(-2),
+                               dtype=torch.bool).tril(diagonal=0)
     if attn_mask is not None and attn_mask.dtype == torch.bool:
         attn_mask = attn_mask.masked_fill(not attn_mask, -float('inf'))
 
@@ -72,7 +72,6 @@ class WindowMSA(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  window_size,
@@ -188,7 +187,6 @@ class WindowMSAV2(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  window_size,
@@ -207,35 +205,33 @@ class WindowMSAV2(BaseModule):
 
         # Use small network for continuous relative position bias
         self.cpb_mlp = nn.Sequential(
-            nn.Linear(
-                in_features=2, out_features=cpb_mlp_hidden_dims, bias=True),
-            nn.ReLU(inplace=True),
-            nn.Linear(
-                in_features=cpb_mlp_hidden_dims,
-                out_features=num_heads,
-                bias=False))
+            nn.Linear(in_features=2,
+                      out_features=cpb_mlp_hidden_dims,
+                      bias=True), nn.ReLU(inplace=True),
+            nn.Linear(in_features=cpb_mlp_hidden_dims,
+                      out_features=num_heads,
+                      bias=False))
 
         # Add learnable scalar for cosine attention
-        self.logit_scale = nn.Parameter(
-            torch.log(10 * torch.ones((num_heads, 1, 1))), requires_grad=True)
+        self.logit_scale = nn.Parameter(torch.log(10 * torch.ones(
+            (num_heads, 1, 1))),
+                                        requires_grad=True)
 
         # get relative_coords_table
-        relative_coords_h = torch.arange(
-            -(self.window_size[0] - 1),
-            self.window_size[0],
-            dtype=torch.float32)
-        relative_coords_w = torch.arange(
-            -(self.window_size[1] - 1),
-            self.window_size[1],
-            dtype=torch.float32)
+        relative_coords_h = torch.arange(-(self.window_size[0] - 1),
+                                         self.window_size[0],
+                                         dtype=torch.float32)
+        relative_coords_w = torch.arange(-(self.window_size[1] - 1),
+                                         self.window_size[1],
+                                         dtype=torch.float32)
         relative_coords_table = torch.stack(
             torch_meshgrid([relative_coords_h, relative_coords_w])).permute(
                 1, 2, 0).contiguous().unsqueeze(0)  # 1, 2*Wh-1, 2*Ww-1, 2
         if pretrained_window_size[0] > 0:
-            relative_coords_table[:, :, :, 0] /= (
-                pretrained_window_size[0] - 1)
-            relative_coords_table[:, :, :, 1] /= (
-                pretrained_window_size[1] - 1)
+            relative_coords_table[:, :, :,
+                                  0] /= (pretrained_window_size[0] - 1)
+            relative_coords_table[:, :, :,
+                                  1] /= (pretrained_window_size[1] - 1)
         else:
             relative_coords_table[:, :, :, 0] /= (self.window_size[0] - 1)
             relative_coords_table[:, :, :, 1] /= (self.window_size[1] - 1)
@@ -248,8 +244,8 @@ class WindowMSAV2(BaseModule):
         # for each token inside the window
         indexes_h = torch.arange(self.window_size[0])
         indexes_w = torch.arange(self.window_size[1])
-        coordinates = torch.stack(
-            torch_meshgrid([indexes_h, indexes_w]), dim=0)  # 2, Wh, Ww
+        coordinates = torch.stack(torch_meshgrid([indexes_h, indexes_w]),
+                                  dim=0)  # 2, Wh, Ww
         coordinates = torch.flatten(coordinates, start_dim=1)  # 2, Wh*Ww
         # 2, Wh*Ww, Wh*Ww
         relative_coordinates = coordinates[:, :, None] - coordinates[:,
@@ -290,9 +286,9 @@ class WindowMSAV2(BaseModule):
         qkv_bias = None
         if self.q_bias is not None:
             qkv_bias = torch.cat(
-                (self.q_bias,
-                 torch.zeros_like(self.v_bias,
-                                  requires_grad=False), self.v_bias))
+                (self.q_bias, torch.zeros_like(self.v_bias,
+                                               requires_grad=False),
+                 self.v_bias))
         qkv = F.linear(input=x, weight=self.qkv.weight, bias=qkv_bias)
         qkv = qkv.reshape(B_, N, 3, self.num_heads,
                           C // self.num_heads).permute(2, 0, 3, 1, 4)
@@ -302,8 +298,8 @@ class WindowMSAV2(BaseModule):
         # cosine attention
         attn = (
             F.normalize(q, dim=-1) @ F.normalize(k, dim=-1).transpose(-2, -1))
-        logit_scale = torch.clamp(
-            self.logit_scale, max=np.log(1. / 0.01)).exp()
+        logit_scale = torch.clamp(self.logit_scale,
+                                  max=np.log(1. / 0.01)).exp()
         attn = attn * logit_scale
 
         relative_position_bias_table = self.cpb_mlp(
@@ -359,7 +355,6 @@ class ShiftWindowMSA(BaseModule):
         **kwargs: Other keyword arguments to build the window multi-head
             attention module.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -419,8 +414,9 @@ class ShiftWindowMSA(BaseModule):
 
         # cyclic shift
         if shift_size > 0:
-            query = torch.roll(
-                query, shifts=(-shift_size, -shift_size), dims=(1, 2))
+            query = torch.roll(query,
+                               shifts=(-shift_size, -shift_size),
+                               dims=(1, 2))
 
         attn_mask = self.get_attn_mask((H_pad, W_pad),
                                        window_size=window_size,
@@ -443,8 +439,9 @@ class ShiftWindowMSA(BaseModule):
                                         window_size)
         # reverse cyclic shift
         if self.shift_size > 0:
-            x = torch.roll(
-                shifted_x, shifts=(shift_size, shift_size), dims=(1, 2))
+            x = torch.roll(shifted_x,
+                           shifts=(shift_size, shift_size),
+                           dims=(1, 2))
         else:
             x = shifted_x
 
@@ -535,7 +532,6 @@ class MultiheadAttention(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -626,7 +622,6 @@ class BEiTAttention(BaseModule):
         init_cfg (dict | None, optional): The Config for initialization.
             Default: None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -684,16 +679,16 @@ class BEiTAttention(BaseModule):
             coords = torch.stack(torch_meshgrid([coords_h, coords_w]))
             # coords_flatten shape is (2, Wh*Ww)
             coords_flatten = torch.flatten(coords, 1)
-            relative_coords = (
-                coords_flatten[:, :, None] - coords_flatten[:, None, :])
+            relative_coords = (coords_flatten[:, :, None] -
+                               coords_flatten[:, None, :])
             # relative_coords shape is (Wh*Ww, Wh*Ww, 2)
             relative_coords = relative_coords.permute(1, 2, 0).contiguous()
             # shift to start from 0
             relative_coords[:, :, 0] += Wh - 1
             relative_coords[:, :, 1] += Ww - 1
             relative_coords[:, :, 0] *= 2 * Ww - 1
-            relative_position_index = torch.zeros(
-                size=(Wh * Ww + 1, ) * 2, dtype=relative_coords.dtype)
+            relative_position_index = torch.zeros(size=(Wh * Ww + 1, ) * 2,
+                                                  dtype=relative_coords.dtype)
             # relative_position_index shape is (Wh*Ww, Wh*Ww)
             relative_position_index[1:, 1:] = relative_coords.sum(-1)
             relative_position_index[0, 0:] = self.num_relative_distance - 3
@@ -785,7 +780,6 @@ class ChannelMultiheadAttention(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads=8,
@@ -856,7 +850,6 @@ class LeAttention(BaseModule):
         resolution (tuple[int]): Input resolution. Default: (16, 16).
         init_cfg (dict, optional): The Config for initialization.
     """
-
     def __init__(self,
                  dim,
                  key_dim,
@@ -893,10 +886,9 @@ class LeAttention(BaseModule):
                 idxs.append(attention_offsets[offset])
         self.attention_biases = torch.nn.Parameter(
             torch.zeros(num_heads, len(attention_offsets)))
-        self.register_buffer(
-            'attention_bias_idxs',
-            torch.LongTensor(idxs).view(N, N),
-            persistent=False)
+        self.register_buffer('attention_bias_idxs',
+                             torch.LongTensor(idxs).view(N, N),
+                             persistent=False)
 
     @torch.no_grad()
     def train(self, mode=True):
@@ -949,7 +941,6 @@ class CrossMultiheadAttention(BaseModule):
         proj_drop (float): Dropout rate of the dropout layer after the
             output projection. Defaults to 0.
     """
-
     def __init__(self,
                  embed_dims: int,
                  num_heads: int = 8,
@@ -994,10 +985,10 @@ class CrossMultiheadAttention(BaseModule):
             k_bias = torch.zeros_like(self.v_bias, requires_grad=False)
             v_bias = self.v_bias
 
-        q = F.linear(
-            input=x, weight=self.q.weight, bias=q_bias)  # (B, N_q, dim)
-        k = F.linear(
-            input=k, weight=self.k.weight, bias=k_bias)  # (B, N_k, dim)
+        q = F.linear(input=x, weight=self.q.weight,
+                     bias=q_bias)  # (B, N_q, dim)
+        k = F.linear(input=k, weight=self.k.weight,
+                     bias=k_bias)  # (B, N_k, dim)
         v = F.linear(input=v, weight=self.v.weight, bias=v_bias)
 
         q = q.reshape(B, N, 1, self.num_heads,
@@ -1055,7 +1046,6 @@ class PromptMultiheadAttention(MultiheadAttention):
         init_cfg (Union[List[dict], dict], optional): The Config for
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  embed_dims: int,
                  num_heads: int,
@@ -1069,19 +1059,18 @@ class PromptMultiheadAttention(MultiheadAttention):
                  v_shortcut: bool = False,
                  use_layer_scale: bool = False,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            input_dims=input_dims,
-            attn_drop=attn_drop,
-            proj_drop=proj_drop,
-            dropout_layer=dropout_layer,
-            qkv_bias=qkv_bias,
-            qk_scale=qk_scale,
-            proj_bias=proj_bias,
-            v_shortcut=v_shortcut,
-            use_layer_scale=use_layer_scale,
-            init_cfg=init_cfg)
+        super().__init__(embed_dims=embed_dims,
+                         num_heads=num_heads,
+                         input_dims=input_dims,
+                         attn_drop=attn_drop,
+                         proj_drop=proj_drop,
+                         dropout_layer=dropout_layer,
+                         qkv_bias=qkv_bias,
+                         qk_scale=qk_scale,
+                         proj_bias=proj_bias,
+                         v_shortcut=v_shortcut,
+                         use_layer_scale=use_layer_scale,
+                         init_cfg=init_cfg)
         # no longer need qkv
         del self.qkv
 
@@ -1106,10 +1095,10 @@ class PromptMultiheadAttention(MultiheadAttention):
         """
         x_ = torch.cat([visible_tokens[:, 1:, :], x], dim=1)
         assert x_.shape[1] == ids_restore.shape[1]
-        x_ = torch.gather(
-            x_,
-            dim=1,
-            index=ids_restore.unsqueeze(-1).repeat(1, 1, x.shape[-1]))
+        x_ = torch.gather(x_,
+                          dim=1,
+                          index=ids_restore.unsqueeze(-1).repeat(
+                              1, 1, x.shape[-1]))
         x_ = torch.cat([visible_tokens[:, :1, :], x_], dim=1)
 
         # full sequence shape

@@ -12,11 +12,12 @@ from .base import BaseSelfSupervisor
 class SimSiam(BaseSelfSupervisor):
     """SimSiam.
 
-    Implementation of `Exploring Simple Siamese Representation Learning
-    <https://arxiv.org/abs/2011.10566>`_. The operation of fixing learning rate
+    Implementation of
+    `Exploring Simple Siamese Representation Learning`
+    `<https://arxiv.org/abs/2011.10566>`_.
+    The operation of fixing learning rate
     of predictor is in `engine/hooks/simsiam_hook.py`.
     """
-
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

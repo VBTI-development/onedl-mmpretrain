@@ -25,33 +25,30 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=32,
     num_workers=4,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/inshop',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/inshop',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
 
 query_dataloader = dict(
     batch_size=32,
     num_workers=4,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/inshop',
-        split='query',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/inshop',
+                 split='query',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 
 gallery_dataloader = dict(
     batch_size=32,
     num_workers=4,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/inshop',
-        split='gallery',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/inshop',
+                 split='gallery',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 val_dataloader = query_dataloader

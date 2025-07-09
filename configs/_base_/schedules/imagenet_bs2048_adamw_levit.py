@@ -1,18 +1,16 @@
 # for batch in each gpu is 256, 8 gpu
 # lr = 5e-4 * 256 * 8 / 512 = 0.002
 optim_wrapper = dict(
-    optimizer=dict(
-        type='AdamW',
-        lr=0.002,
-        weight_decay=0.025,
-        eps=1e-8,
-        betas=(0.9, 0.999)),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.attention_biases': dict(decay_mult=0.0),
-        }),
+    optimizer=dict(type='AdamW',
+                   lr=0.002,
+                   weight_decay=0.025,
+                   eps=1e-8,
+                   betas=(0.9, 0.999)),
+    paramwise_cfg=dict(norm_decay_mult=0.0,
+                       bias_decay_mult=0.0,
+                       custom_keys={
+                           '.attention_biases': dict(decay_mult=0.0),
+                       }),
 )
 
 # learning policy

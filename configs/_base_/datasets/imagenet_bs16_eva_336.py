@@ -11,23 +11,21 @@ data_preprocessor = dict(
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=336,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=336,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='PackInputs'),
 ]
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=336,
-        edge='short',
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='ResizeEdge',
+         scale=336,
+         edge='short',
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='CenterCrop', crop_size=336),
     dict(type='PackInputs'),
 ]
@@ -35,22 +33,20 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=16,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
 
 val_dataloader = dict(
     batch_size=16,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        split='val',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 split='val',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 val_evaluator = dict(type='Accuracy', topk=(1, 5))

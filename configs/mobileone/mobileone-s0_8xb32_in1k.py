@@ -12,9 +12,8 @@ val_dataloader = dict(batch_size=256)
 test_dataloader = dict(batch_size=256)
 
 custom_hooks = [
-    dict(
-        type='EMAHook',
-        momentum=5e-4,
-        priority='ABOVE_NORMAL',
-        update_buffers=True)
+    dict(type='EMAHook',
+         momentum=5e-4,
+         priority='ABOVE_NORMAL',
+         update_buffers=True)
 ]

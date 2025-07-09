@@ -145,8 +145,9 @@ def get_clip_model():
             layer_cfgs=dict(act_cfg=dict(type='mmpretrain.QuickGELU')),
             pre_norm=True,
         ),
-        projection=dict(
-            type='CLIPProjection', in_channels=768, out_channels=512),
+        projection=dict(type='CLIPProjection',
+                        in_channels=768,
+                        out_channels=512),
         text_backbone=dict(
             type='CLIPTransformer',
             width=512,
@@ -154,10 +155,9 @@ def get_clip_model():
             heads=8,
             attn_mask=True,
         ),
-        tokenizer=dict(
-            type='AutoTokenizer',
-            name_or_path='openai/clip-vit-base-patch16',
-            use_fast=False),
+        tokenizer=dict(type='AutoTokenizer',
+                       name_or_path='openai/clip-vit-base-patch16',
+                       use_fast=False),
         vocab_size=49408,
         transformer_width=512,
         proj_dim=512,
@@ -186,9 +186,9 @@ def build_openset_label_embedding(categories=None, clip_ckpt_path=''):
         openset_label_embedding = []
         for category in categories:
             texts = [
-                template.format(
-                    processed_name(category, rm_dot=True),
-                    article=article(category)) for template in templates
+                template.format(processed_name(category, rm_dot=True),
+                                article=article(category))
+                for template in templates
             ]
             texts = [
                 'This is ' + text

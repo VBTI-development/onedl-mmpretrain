@@ -6,7 +6,7 @@
 
 ## Introduction
 
-**RevViT** is initially described in [Reversible Vision Tranformers](https://openaccess.thecvf.com/content/CVPR2022/papers/Mangalam_Reversible_Vision_Transformers_CVPR_2022_paper.pdf), which introduce the reversible idea into vision transformer, to reduce the GPU memory footprint required for training.
+**RevViT** is initially described in [Reversible Vision Transformers](https://openaccess.thecvf.com/content/CVPR2022/papers/Mangalam_Reversible_Vision_Transformers_CVPR_2022_paper.pdf), which introduce the reversible idea into vision transformer, to reduce the GPU memory footprint required for training.
 
 <!-- [IMAGE] -->
 

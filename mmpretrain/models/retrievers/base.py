@@ -39,15 +39,15 @@ class BaseRetriever(BaseModel, metaclass=ABCMeta):
             extra data pre-processing module, which processes data from
             dataloader to the format accepted by :meth:`forward`.
     """
-
     def __init__(
         self,
         prototype: Union[DataLoader, dict, str, torch.Tensor] = None,
         data_preprocessor: Optional[dict] = None,
         init_cfg: Optional[dict] = None,
     ):
-        super(BaseRetriever, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BaseRetriever,
+              self).__init__(init_cfg=init_cfg,
+                             data_preprocessor=data_preprocessor)
         self.prototype = prototype
         self.prototype_inited = False
 

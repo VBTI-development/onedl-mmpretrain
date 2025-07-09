@@ -13,8 +13,8 @@ from .single_label import _precision_recall_f1_support, to_tensor
 
 @METRICS.register_module()
 class MultiLabelMetric(BaseMetric):
-    r"""A collection of precision, recall, f1-score and support for
-    multi-label tasks.
+    r"""A collection of precision, recall, f1-score and support for multi-label
+    tasks.
 
     The collection of metrics is for single-label multi-class classification.
     And all these metrics are based on the confusion matrix of every category:
@@ -113,7 +113,7 @@ class MultiLabelMetric(BaseMetric):
         >>> MultiLabelMetric.calculate(y_pred, y_true, topk=1)
         (tensor(62.5000), tensor(31.2500), tensor(39.1667), tensor(8))
         >>>
-        >>> # ------------------- Use with Evalutor -------------------
+        >>> # ------------------- Use with Evaluator -------------------
         >>> from mmpretrain.structures import DataSample
         >>> from mmengine.evaluator import Evaluator
         >>> data_sampels = [
@@ -212,14 +212,13 @@ class MultiLabelMetric(BaseMetric):
         target = torch.stack([res['gt_score'] for res in results])
         pred = torch.stack([res['pred_score'] for res in results])
 
-        metric_res = self.calculate(
-            pred,
-            target,
-            pred_indices=False,
-            target_indices=False,
-            average=self.average,
-            thr=self.thr,
-            topk=self.topk)
+        metric_res = self.calculate(pred,
+                                    target,
+                                    pred_indices=False,
+                                    target_indices=False,
+                                    average=self.average,
+                                    thr=self.thr,
+                                    topk=self.topk)
 
         def pack_results(precision, recall, f1_score, support):
             single_metrics = {}
@@ -316,7 +315,7 @@ class MultiLabelMetric(BaseMetric):
             f'please specicy from {average_options}.'
 
         def _format_label(label, is_indices):
-            """format various label to torch.Tensor."""
+            """Format various label to torch.Tensor."""
             if isinstance(label, np.ndarray):
                 assert label.ndim == 2, 'The shape `pred` and `target` ' \
                     'array must be (N, num_classes).'
@@ -475,7 +474,7 @@ class AveragePrecision(BaseMetric):
         ...                        [1, 0, 0, 0]])
         >>> AveragePrecision.calculate(y_pred, y_true)
         tensor(70.833)
-        >>> # ------------------- Use with Evalutor -------------------
+        >>> # ------------------- Use with Evaluator -------------------
         >>> from mmpretrain.structures import DataSample
         >>> from mmengine.evaluator import Evaluator
         >>> data_samples = [

@@ -22,14 +22,13 @@ from ..utils import LayerScale
 
 
 def get_dwconv(dim, kernel_size, bias=True):
-    """build a pepth-wise convolution."""
-    return nn.Conv2d(
-        dim,
-        dim,
-        kernel_size=kernel_size,
-        padding=(kernel_size - 1) // 2,
-        bias=bias,
-        groups=dim)
+    """Build a pepth-wise convolution."""
+    return nn.Conv2d(dim,
+                     dim,
+                     kernel_size=kernel_size,
+                     padding=(kernel_size - 1) // 2,
+                     bias=bias,
+                     groups=dim)
 
 
 class HorNetLayerNorm(nn.Module):
@@ -48,7 +47,6 @@ class HorNetLayerNorm(nn.Module):
             shape (batch_size, channels, height, width).
             Defaults to 'channels_last'.
     """
-
     def __init__(self,
                  normalized_shape,
                  eps=1e-6,
@@ -85,22 +83,22 @@ class GlobalLocalFilter(nn.Module):
         w (int): Width of complex_weight.
             Defaults to 8.
     """
-
     def __init__(self, dim, h=14, w=8):
         super().__init__()
-        self.dw = nn.Conv2d(
-            dim // 2,
-            dim // 2,
-            kernel_size=3,
-            padding=1,
-            bias=False,
-            groups=dim // 2)
+        self.dw = nn.Conv2d(dim // 2,
+                            dim // 2,
+                            kernel_size=3,
+                            padding=1,
+                            bias=False,
+                            groups=dim // 2)
         self.complex_weight = nn.Parameter(
             torch.randn(dim // 2, h, w, 2, dtype=torch.float32) * 0.02)
-        self.pre_norm = HorNetLayerNorm(
-            dim, eps=1e-6, data_format='channels_first')
-        self.post_norm = HorNetLayerNorm(
-            dim, eps=1e-6, data_format='channels_first')
+        self.pre_norm = HorNetLayerNorm(dim,
+                                        eps=1e-6,
+                                        data_format='channels_first')
+        self.post_norm = HorNetLayerNorm(dim,
+                                         eps=1e-6,
+                                         data_format='channels_first')
 
     def forward(self, x):
         x = self.pre_norm(x)
@@ -113,11 +111,10 @@ class GlobalLocalFilter(nn.Module):
 
         weight = self.complex_weight
         if not weight.shape[1:3] == x2.shape[2:4]:
-            weight = F.interpolate(
-                weight.permute(3, 0, 1, 2),
-                size=x2.shape[2:4],
-                mode='bilinear',
-                align_corners=True).permute(1, 2, 3, 0)
+            weight = F.interpolate(weight.permute(3, 0, 1, 2),
+                                   size=x2.shape[2:4],
+                                   mode='bilinear',
+                                   align_corners=True).permute(1, 2, 3, 0)
 
         weight = torch.view_as_complex(weight.contiguous())
 
@@ -142,7 +139,6 @@ class gnConv(nn.Module):
         scale (float): Scaling parameter of gflayer outputs.
             Defaults to 1.0.
     """
-
     def __init__(self,
                  dim,
                  order=5,
@@ -204,7 +200,6 @@ class HorNetBlock(nn.Module):
         use_layer_scale (bool): Whether to use use_layer_scale in HorNet
              block. Defaults to True.
     """
-
     def __init__(self,
                  dim,
                  order=5,
@@ -215,8 +210,9 @@ class HorNetBlock(nn.Module):
         super().__init__()
         self.out_channels = dim
 
-        self.norm1 = HorNetLayerNorm(
-            dim, eps=1e-6, data_format='channels_first')
+        self.norm1 = HorNetLayerNorm(dim,
+                                     eps=1e-6,
+                                     data_format='channels_first')
         self.gnconv = gnConv(dim, order, dw_cfg, scale)
         self.norm2 = HorNetLayerNorm(dim, eps=1e-6)
         self.pwconv1 = nn.Linear(dim, 4 * dim)
@@ -407,8 +403,9 @@ class HorNet(BaseBackbone):
         self.downsample_layers.append(stem)
         for i in range(3):
             downsample_layer = nn.Sequential(
-                HorNetLayerNorm(
-                    dims[i], eps=1e-6, data_format='channels_first'),
+                HorNetLayerNorm(dims[i],
+                                eps=1e-6,
+                                data_format='channels_first'),
                 nn.Conv2d(dims[i], dims[i + 1], kernel_size=2, stride=2),
             )
             self.downsample_layers.append(downsample_layer)
@@ -422,13 +419,12 @@ class HorNet(BaseBackbone):
         self.stages = nn.ModuleList()
         for i in range(4):
             stage = nn.Sequential(*[
-                HorNetBlock(
-                    dim=dims[i],
-                    order=self.arch_settings['orders'][i],
-                    dw_cfg=self.arch_settings['dw_cfg'][i],
-                    scale=self.scale,
-                    drop_path_rate=dpr[cur_block_idx + j],
-                    use_layer_scale=use_layer_scale)
+                HorNetBlock(dim=dims[i],
+                            order=self.arch_settings['orders'][i],
+                            dw_cfg=self.arch_settings['dw_cfg'][i],
+                            scale=self.scale,
+                            drop_path_rate=dpr[cur_block_idx + j],
+                            use_layer_scale=use_layer_scale)
                 for j in range(self.arch_settings['depths'][i])
             ])
             self.stages.append(stage)
@@ -447,8 +443,9 @@ class HorNet(BaseBackbone):
                 f'Invalid out_indices {index}.'
         self.out_indices = out_indices
 
-        norm_layer = partial(
-            HorNetLayerNorm, eps=1e-6, data_format='channels_first')
+        norm_layer = partial(HorNetLayerNorm,
+                             eps=1e-6,
+                             data_format='channels_first')
         for i_layer in out_indices:
             layer = norm_layer(dims[i_layer])
             layer_name = f'norm{i_layer}'

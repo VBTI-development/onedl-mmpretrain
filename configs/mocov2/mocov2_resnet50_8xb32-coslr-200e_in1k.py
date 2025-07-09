@@ -5,26 +5,22 @@ _base_ = [
 ]
 
 # model settings
-model = dict(
-    type='MoCo',
-    queue_len=65536,
-    feat_dim=128,
-    momentum=0.001,
-    backbone=dict(
-        type='ResNet',
-        depth=50,
-        norm_cfg=dict(type='BN'),
-        zero_init_residual=False),
-    neck=dict(
-        type='MoCoV2Neck',
-        in_channels=2048,
-        hid_channels=2048,
-        out_channels=128,
-        with_avg_pool=True),
-    head=dict(
-        type='ContrastiveHead',
-        loss=dict(type='CrossEntropyLoss'),
-        temperature=0.2))
+model = dict(type='MoCo',
+             queue_len=65536,
+             feat_dim=128,
+             momentum=0.001,
+             backbone=dict(type='ResNet',
+                           depth=50,
+                           norm_cfg=dict(type='BN'),
+                           zero_init_residual=False),
+             neck=dict(type='MoCoV2Neck',
+                       in_channels=2048,
+                       hid_channels=2048,
+                       out_channels=128,
+                       with_avg_pool=True),
+             head=dict(type='ContrastiveHead',
+                       loss=dict(type='CrossEntropyLoss'),
+                       temperature=0.2))
 
 # only keeps the latest 3 checkpoints
 default_hooks = dict(checkpoint=dict(max_keep_ckpts=3))

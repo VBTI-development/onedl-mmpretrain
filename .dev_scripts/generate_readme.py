@@ -103,17 +103,18 @@ DATASET_PRIORITY = {
 def parse_args():
     parser = argparse.ArgumentParser(description=prog_description)
     parser.add_argument('metafile', type=Path, help='The path of metafile')
-    parser.add_argument(
-        '--table', action='store_true', help='Only generate summary tables')
-    parser.add_argument(
-        '--update', type=str, help='Update the specified readme file.')
+    parser.add_argument('--table',
+                        action='store_true',
+                        help='Only generate summary tables')
+    parser.add_argument('--update',
+                        type=str,
+                        help='Update the specified readme file.')
     parser.add_argument('--out', type=str, help='Output to the file.')
-    parser.add_argument(
-        '--update-items',
-        type=str,
-        nargs='+',
-        default=['models'],
-        help='Update the specified readme file.')
+    parser.add_argument('--update-items',
+                        type=str,
+                        nargs='+',
+                        default=['models'],
+                        help='Update the specified readme file.')
     args = parser.parse_args()
     return args
 
@@ -293,10 +294,9 @@ def generate_model_table(models,
 
         rows.append(row)
 
-    table_cfg = dict(
-        tablefmt='pipe',
-        floatfmt='.2f',
-        colalign=['left'] + ['center'] * (len(row) - 1))
+    table_cfg = dict(tablefmt='pipe',
+                     floatfmt='.2f',
+                     colalign=['left'] + ['center'] * (len(row) - 1))
     table_string = tabulate(rows, header, **table_cfg) + '\n'
     if any('Converted From' in model.data for model in models):
         table_string += (
@@ -320,11 +320,10 @@ def add_models(metafile):
     if pretrain_models:
         content.append('### Pretrained models\n')
         content.append(
-            generate_model_table(
-                pretrain_models,
-                algo_folder,
-                with_pretrain=False,
-                with_metric=False))
+            generate_model_table(pretrain_models,
+                                 algo_folder,
+                                 with_pretrain=False,
+                                 with_metric=False))
 
     # Classification models
     tasks = [
@@ -343,8 +342,8 @@ def add_models(metafile):
         task_models = filter_models_by_task(models, task=task)
         if task_models:
             datasets = {model.results[0].dataset for model in task_models}
-            datasets = sorted(
-                list(datasets), key=lambda x: DATASET_PRIORITY.get(x, 50))
+            datasets = sorted(list(datasets),
+                              key=lambda x: DATASET_PRIORITY.get(x, 50))
             for dataset in datasets:
                 content.append(f'### {task} on {dataset}\n')
                 dataset_models = [
@@ -352,10 +351,9 @@ def add_models(metafile):
                     if model.results[0].dataset == dataset
                 ]
                 content.append(
-                    generate_model_table(
-                        dataset_models,
-                        algo_folder,
-                        pretrained_models=pretrain_models))
+                    generate_model_table(dataset_models,
+                                         algo_folder,
+                                         pretrained_models=pretrain_models))
     return '\n'.join(content)
 
 
@@ -365,8 +363,9 @@ def parse_readme(readme):
 
     content = {}
 
-    for img_match in re.finditer(
-            '^<div.*\n.*\n</div>\n', file, flags=re.MULTILINE):
+    for img_match in re.finditer('^<div.*\n.*\n</div>\n',
+                                 file,
+                                 flags=re.MULTILINE):
         content['image'] = img_match.group()
         start, end = img_match.span()
         file = file[:start] + file[end:]

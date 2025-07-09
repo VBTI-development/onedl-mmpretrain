@@ -12,7 +12,7 @@ def FeedForward(dim, mult: int = 4):
     """Feedforward layers.
 
     Args:
-        mult (int): Layer expansion muliplier. Defaults to 4.
+        mult (int): Layer expansion multiplier. Defaults to 4.
     """
     inner_dim = int(dim * mult)
     return nn.Sequential(
@@ -31,7 +31,6 @@ class PerceiverAttention(nn.Module):
         dim_head (int): Number of dimension heads. Defaults to 64.
         heads (int): Number of heads. Defaults to 8.
     """
-
     def __init__(self, *, dim: int, dim_head: int = 64, heads: int = 8):
         super().__init__()
         self.scale = dim_head**-0.5
@@ -90,7 +89,6 @@ class PerceiverResampler(nn.Module):
             Defaults to None.
         ff_mult (int): Feed forward multiplier. Defaults to 4.
     """
-
     def __init__(
         self,
         *,
@@ -105,19 +103,17 @@ class PerceiverResampler(nn.Module):
     ):
         super().__init__()
         self.latents = nn.Parameter(torch.randn(num_latents, dim))
-        self.frame_embs = (
-            nn.Parameter(torch.randn(max_num_frames, dim))
-            if max_num_frames is not None else None)
-        self.media_time_embs = (
-            nn.Parameter(torch.randn(max_num_media, 1, dim))
-            if max_num_media is not None else None)
+        self.frame_embs = (nn.Parameter(torch.randn(max_num_frames, dim))
+                           if max_num_frames is not None else None)
+        self.media_time_embs = (nn.Parameter(torch.randn(
+            max_num_media, 1, dim)) if max_num_media is not None else None)
 
         self.layers = nn.ModuleList([])
         for _ in range(depth):
             self.layers.append(
                 nn.ModuleList([
-                    PerceiverAttention(
-                        dim=dim, dim_head=dim_head, heads=heads),
+                    PerceiverAttention(dim=dim, dim_head=dim_head,
+                                       heads=heads),
                     FeedForward(dim=dim, mult=ff_mult),
                 ]))
 
@@ -136,8 +132,11 @@ class PerceiverResampler(nn.Module):
 
         # frame and media time embeddings
         if self.frame_embs is not None:
-            frame_embs = repeat(
-                self.frame_embs[:F], 'F d -> b T F v d', b=b, T=T, v=v)
+            frame_embs = repeat(self.frame_embs[:F],
+                                'F d -> b T F v d',
+                                b=b,
+                                T=T,
+                                v=v)
             x = x + frame_embs
         x = rearrange(x, 'b T F v d -> b T (F v) d'
                       )  # flatten the frame and spatial dimensions
@@ -163,7 +162,6 @@ class MaskedCrossAttention(nn.Module):
         only_attend_immediate_media (bool): Whether attend immediate media.
             Defaults to True.
     """
-
     def __init__(
         self,
         *,
@@ -277,7 +275,6 @@ class GatedCrossAttentionBlock(nn.Module):
         only_attend_immediate_media (bool): Whether attend immediate media.
             Defaults to True.
     """
-
     def __init__(
         self,
         *,
@@ -318,13 +315,12 @@ class GatedCrossAttentionBlock(nn.Module):
                 image and starts attending when following image.
                 Defaults to True.
         """
-        x = (
-            self.attn(
-                x,
-                media,
-                media_locations=media_locations,
-                attend_previous=attend_previous,
-            ) * self.attn_gate.tanh() + x)
+        x = (self.attn(
+            x,
+            media,
+            media_locations=media_locations,
+            attend_previous=attend_previous,
+        ) * self.attn_gate.tanh() + x)
         x = self.ff(x) * self.ff_gate.tanh() + x
 
         return x
@@ -337,7 +333,6 @@ class FlamingoLayer(nn.Module):
         gated_cross_attn_layer (nn.Module): Gated cross attention layer.
         decoder_layer (nn.Module): Decoder layer.
     """
-
     def __init__(self, gated_cross_attn_layer: nn.Module,
                  decoder_layer: nn.Module):
         super().__init__()
@@ -377,8 +372,9 @@ class FlamingoLayer(nn.Module):
             **decoder_layer_kwargs: Other decoder layer keyword arguments.
         """
         if self.gated_cross_attn_layer is None:
-            return self.decoder_layer(
-                lang_x, attention_mask=attention_mask, **decoder_layer_kwargs)
+            return self.decoder_layer(lang_x,
+                                      attention_mask=attention_mask,
+                                      **decoder_layer_kwargs)
 
         if self.vis_x is None:
             raise ValueError('vis_x must be conditioned before forward pass')
@@ -393,6 +389,7 @@ class FlamingoLayer(nn.Module):
             media_locations=self.media_locations,
             attend_previous=self.attend_previous,
         )
-        lang_x = self.decoder_layer(
-            lang_x, attention_mask=attention_mask, **decoder_layer_kwargs)
+        lang_x = self.decoder_layer(lang_x,
+                                    attention_mask=attention_mask,
+                                    **decoder_layer_kwargs)
         return lang_x

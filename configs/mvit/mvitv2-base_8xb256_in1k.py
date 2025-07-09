@@ -13,14 +13,13 @@ test_dataloader = dict(batch_size=256)
 # schedule settings
 optim_wrapper = dict(
     optimizer=dict(lr=2.5e-4),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.pos_embed': dict(decay_mult=0.0),
-            '.rel_pos_h': dict(decay_mult=0.0),
-            '.rel_pos_w': dict(decay_mult=0.0)
-        }),
+    paramwise_cfg=dict(norm_decay_mult=0.0,
+                       bias_decay_mult=0.0,
+                       custom_keys={
+                           '.pos_embed': dict(decay_mult=0.0),
+                           '.rel_pos_h': dict(decay_mult=0.0),
+                           '.rel_pos_w': dict(decay_mult=0.0)
+                       }),
     clip_grad=dict(max_norm=1.0),
 )
 

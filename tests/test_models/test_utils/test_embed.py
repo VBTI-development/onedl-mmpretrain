@@ -69,8 +69,10 @@ def test_patch_merging():
     assert out.shape == (1, cal_unfold_dim(56, 6, stride=3)**2, 32)
 
     # test padding
-    downsample = PatchMerging(
-        in_channels=16, out_channels=32, kernel_size=6, padding=2)
+    downsample = PatchMerging(in_channels=16,
+                              out_channels=32,
+                              kernel_size=6,
+                              padding=2)
     out, output_size = downsample(inputs, input_size=(56, 56))
     assert downsample.sampler.padding == (2, 2)
     assert out.shape == (1, cal_unfold_dim(56, 6, 6, padding=2)**2, 32)

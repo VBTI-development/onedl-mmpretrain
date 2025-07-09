@@ -8,8 +8,8 @@ prompt_tmpl = f'''{meta_prompt} User: <image>
 # model settings
 model = dict(
     type='Llava',
-    tokenizer=dict(
-        type='AutoTokenizer', name_or_path='liuhaotian/llava-v1.5-7b'),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='liuhaotian/llava-v1.5-7b'),
     vision_encoder=dict(
         type='VisionTransformer',
         arch='l',
@@ -46,11 +46,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(image_size, image_size),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(image_size, image_size),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id', 'question']),
 ]
 

@@ -16,7 +16,6 @@ from mmpretrain.registry import MODELS
 
 
 class to_channels_first(nn.Module):
-
     def __init__(self):
         super().__init__()
 
@@ -25,7 +24,6 @@ class to_channels_first(nn.Module):
 
 
 class to_channels_last(nn.Module):
-
     def __init__(self):
         super().__init__()
 
@@ -74,7 +72,6 @@ class AttentiveBlock(nn.Module):
             Default: dict(type='LN')
         out_dim (int, optional): Dimension of output. Default: None.
     """
-
     def __init__(self,
                  dim,
                  num_heads,
@@ -114,7 +111,6 @@ class AttentiveBlock(nn.Module):
 
 
 class AttentionPoolingBlock(AttentiveBlock):
-
     def forward(self, x):
         x_q = x.mean(1, keepdim=True)
         x_kv = x
@@ -131,16 +127,14 @@ class DownsampleLayer(nn.Module):
         channels (int): number of input channels
         norm_layer (str): normalization layer
     """
-
     def __init__(self, channels, norm_layer='LN'):
         super().__init__()
-        self.conv = nn.Conv2d(
-            channels,
-            2 * channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            bias=False)
+        self.conv = nn.Conv2d(channels,
+                              2 * channels,
+                              kernel_size=3,
+                              stride=2,
+                              padding=1,
+                              bias=False)
         self.norm = build_norm_layer(2 * channels, norm_layer,
                                      'channels_first', 'channels_last')
 
@@ -167,7 +161,6 @@ class InternImageLayer(nn.Module):
         offset_scale (float): offset scale
         with_cp (bool): whether to use checkpoint
     """
-
     def __init__(
         self,
         core_op,
@@ -213,26 +206,24 @@ class InternImageLayer(nn.Module):
             else nn.Identity()
         self.norm2 = build_norm_layer(channels, 'LN')
 
-        self.mlp = FFN(
-            embed_dims=channels,
-            feedforward_channels=int(channels * mlp_ratio),
-            act_cfg=act_cfg,
-            ffn_drop=drop,
-            add_identity=False)
+        self.mlp = FFN(embed_dims=channels,
+                       feedforward_channels=int(channels * mlp_ratio),
+                       act_cfg=act_cfg,
+                       ffn_drop=drop,
+                       add_identity=False)
 
         self.layer_scale = layer_scale is not None
         if self.layer_scale:
-            self.gamma1 = nn.Parameter(
-                layer_scale * torch.ones(channels), requires_grad=True)
-            self.gamma2 = nn.Parameter(
-                layer_scale * torch.ones(channels), requires_grad=True)
+            self.gamma1 = nn.Parameter(layer_scale * torch.ones(channels),
+                                       requires_grad=True)
+            self.gamma2 = nn.Parameter(layer_scale * torch.ones(channels),
+                                       requires_grad=True)
         self.res_post_norm = res_post_norm
         if res_post_norm:
             self.res_post_norm1 = build_norm_layer(channels, 'LN')
             self.res_post_norm2 = build_norm_layer(channels, 'LN')
 
     def forward(self, x):
-
         def _inner_forward(x):
             if not self.layer_scale:
                 if self.post_norm:
@@ -280,7 +271,6 @@ class InternImageBlock(nn.Module):
         offset_scale (float): offset scale
         with_cp (bool): whether to use checkpoint
     """
-
     def __init__(
         self,
         core_op,
@@ -472,27 +462,24 @@ class InternImage(BaseBackbone):
         # Conv Head
         if not use_clip_projector:
             self.conv_head = nn.Sequential(
-                nn.Conv2d(
-                    self.num_features,
-                    int(self.num_features * cls_scale),
-                    kernel_size=1,
-                    bias=False),
-                build_norm_layer(
-                    int(self.num_features * cls_scale), 'BN', 'channels_first',
-                    'channels_first'), build_activation_layer(act_cfg))
+                nn.Conv2d(self.num_features,
+                          int(self.num_features * cls_scale),
+                          kernel_size=1,
+                          bias=False),
+                build_norm_layer(int(self.num_features * cls_scale), 'BN',
+                                 'channels_first', 'channels_first'),
+                build_activation_layer(act_cfg))
 
         else:
             pretrain_embed_dim, _stride, attnpool_num_heads, clip_embed_dim \
                 = 1024, 2, 16, 768
             self.dcnv3_head_x4 = nn.Sequential(
-                nn.Conv2d(
-                    in_channels=self.num_features,
-                    out_channels=pretrain_embed_dim * (_stride**2),
-                    kernel_size=1), nn.PixelShuffle(_stride))
-            self.dcnv3_head_x3 = nn.Conv2d(
-                in_channels=self.num_features // 2,
-                out_channels=pretrain_embed_dim,
-                kernel_size=1)
+                nn.Conv2d(in_channels=self.num_features,
+                          out_channels=pretrain_embed_dim * (_stride**2),
+                          kernel_size=1), nn.PixelShuffle(_stride))
+            self.dcnv3_head_x3 = nn.Conv2d(in_channels=self.num_features // 2,
+                                           out_channels=pretrain_embed_dim,
+                                           kernel_size=1)
             self.clip_projector = AttentionPoolingBlock(
                 dim=pretrain_embed_dim,
                 num_heads=attnpool_num_heads,
@@ -503,8 +490,9 @@ class InternImage(BaseBackbone):
                 norm_cfg=norm_cfg,
                 out_dim=clip_embed_dim)
             norm_layer = norm_cfg['type']
-            self.fc_norm = build_norm_layer(
-                clip_embed_dim, norm_layer, eps=1e-6)
+            self.fc_norm = build_norm_layer(clip_embed_dim,
+                                            norm_layer,
+                                            eps=1e-6)
 
     def init_weights(self):
         super(InternImage, self).init_weights()
@@ -524,21 +512,19 @@ class InternImage(BaseBackbone):
     def _make_stem_layer(self, in_channels, stem_channels):
         norm_layer = self.norm_cfg['type']
         self.patch_embed = nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                stem_channels // 2,
-                kernel_size=3,
-                stride=2,
-                padding=1),
+            nn.Conv2d(in_channels,
+                      stem_channels // 2,
+                      kernel_size=3,
+                      stride=2,
+                      padding=1),
             build_norm_layer(stem_channels // 2, norm_layer, 'channels_first',
                              'channels_first'),
             build_activation_layer(self.act_cfg),
-            nn.Conv2d(
-                stem_channels // 2,
-                stem_channels,
-                kernel_size=3,
-                stride=2,
-                padding=1),
+            nn.Conv2d(stem_channels // 2,
+                      stem_channels,
+                      kernel_size=3,
+                      stride=2,
+                      padding=1),
             build_norm_layer(stem_channels, norm_layer, 'channels_first',
                              'channels_last'),
         )
@@ -594,7 +580,6 @@ class InternImage(BaseBackbone):
     @staticmethod
     def _checkpoint_filter(state_dict, prefix, local_metadata, strict,
                            missing_keys, unexpected_keys, error_msgs):
-
         def internimage_to_mmpretrain():
             for k, v in state_dict['model'].items():
                 if 'head.' in k and 'conv_head' not in k:

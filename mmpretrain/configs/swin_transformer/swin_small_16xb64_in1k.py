@@ -13,16 +13,17 @@ with read_base():
 
 # model settings
 model.update(
-    backbone=dict(
-        arch='small', img_size=224, drop_path_rate=0.3, stage_cfgs=None),
+    backbone=dict(arch='small',
+                  img_size=224,
+                  drop_path_rate=0.3,
+                  stage_cfgs=None),
     head=dict(
         in_channels=768,
         init_cfg=None,  # suppress the default init_cfg of LinearClsHead.
-        loss=dict(
-            type=LabelSmoothLoss,
-            label_smooth_val=0.1,
-            mode='original',
-            loss_weight=0),
+        loss=dict(type=LabelSmoothLoss,
+                  label_smooth_val=0.1,
+                  mode='original',
+                  loss_weight=0),
         topk=None,
         cal_acc=False),
     init_cfg=[

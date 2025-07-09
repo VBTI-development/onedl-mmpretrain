@@ -18,13 +18,13 @@ class HOGGenerator3d(HOGGenerator):
         pool (float): Number of cell. Defaults to 8.
         gaussian_window (int): Size of gaussian kernel. Defaults to 16.
     """
-
     def __init__(self,
                  nbins: int = 9,
                  pool: int = 8,
                  gaussian_window: int = 16) -> None:
-        super().__init__(
-            nbins=nbins, pool=pool, gaussian_window=gaussian_window)
+        super().__init__(nbins=nbins,
+                         pool=pool,
+                         gaussian_window=gaussian_window)
 
     def _reshape(self, hog_feat: torch.Tensor) -> torch.Tensor:
         """Reshape HOG Features for output."""

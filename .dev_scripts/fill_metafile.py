@@ -35,8 +35,10 @@ def prompt(message,
         console.print(message, end='')
 
     message = ANSI(capture.get())
-    ask = partial(
-        _prompt, message=message, default=default or '', completer=completer)
+    ask = partial(_prompt,
+                  message=message,
+                  default=default or '',
+                  completer=completer)
 
     out = ask()
 
@@ -58,26 +60,27 @@ def prompt(message,
 
 
 class MyDumper(yaml.Dumper):
-
     def increase_indent(self, flow=False, indentless=False):
         return super(MyDumper, self).increase_indent(flow, False)
 
 
-yaml_dump = partial(
-    yaml.dump, Dumper=MyDumper, default_flow_style=False, sort_keys=False)
+yaml_dump = partial(yaml.dump,
+                    Dumper=MyDumper,
+                    default_flow_style=False,
+                    sort_keys=False)
 
 
 def parse_args():
     parser = argparse.ArgumentParser(description=prog_description)
     parser.add_argument('--src', type=Path, help='The path of the matafile.')
     parser.add_argument('--out', '-o', type=Path, help='The output path.')
-    parser.add_argument(
-        '--inplace',
-        '-i',
-        action='store_true',
-        help='Modify the source metafile inplace.')
-    parser.add_argument(
-        '--view', action='store_true', help='Only pretty print the metafile.')
+    parser.add_argument('--inplace',
+                        '-i',
+                        action='store_true',
+                        help='Modify the source metafile inplace.')
+    parser.add_argument('--view',
+                        action='store_true',
+                        help='Only pretty print the metafile.')
     parser.add_argument('--csv', type=str, help='Use a csv to update models.')
     args = parser.parse_args()
     if args.inplace:
@@ -140,8 +143,8 @@ def get_flops_params(config_path):
 
 def fill_collection(collection: dict):
     if collection.get('Name') is None:
-        name = prompt(
-            'Please input the collection [red]name[/]: ', allow_empty=False)
+        name = prompt('Please input the collection [red]name[/]: ',
+                      allow_empty=False)
         collection['Name'] = name
 
     if collection.get('Metadata', {}).get('Architecture') is None:
@@ -165,10 +168,9 @@ def fill_collection(collection: dict):
     collection['Paper'] = paper
 
     if collection.get('README') is None:
-        readme = prompt(
-            'Please input the [red]README[/] file path: ',
-            completer=PathCompleter(file_filter=lambda name: Path(name).is_dir(
-            ) or 'README.md' in name))
+        readme = prompt('Please input the [red]README[/] file path: ',
+                        completer=PathCompleter(file_filter=lambda name: Path(
+                            name).is_dir() or 'README.md' in name))
         if readme is not None:
             collection['README'] = str(
                 Path(readme).absolute().relative_to(MMCLS_ROOT))
@@ -186,8 +188,8 @@ def fill_collection(collection: dict):
 def fill_model_by_prompt(model: dict, defaults: dict):
     # Name
     if model.get('Name') is None:
-        name = prompt(
-            'Please input the model [red]name[/]: ', allow_empty=False)
+        name = prompt('Please input the model [red]name[/]: ',
+                      allow_empty=False)
         model['Name'] = name
 
     # In Collection
@@ -196,9 +198,8 @@ def fill_model_by_prompt(model: dict, defaults: dict):
     # Config
     config = model.get('Config')
     if config is None:
-        config = prompt(
-            'Please input the [red]config[/] file path: ',
-            completer=FuzzyCompleter(PathCompleter()))
+        config = prompt('Please input the [red]config[/] file path: ',
+                        completer=FuzzyCompleter(PathCompleter()))
         if config is not None:
             config = str(Path(config).absolute().relative_to(MMCLS_ROOT))
     model['Config'] = config
@@ -239,13 +240,11 @@ def fill_model_by_prompt(model: dict, defaults: dict):
 
     results = model.get('Results')
     if results is None:
-        test_dataset = prompt(
-            'Please input the [red]test dataset[/]: ',
-            completer=dataset_completer)
+        test_dataset = prompt('Please input the [red]test dataset[/]: ',
+                              completer=dataset_completer)
         if test_dataset is not None:
-            task = Prompt.ask(
-                'Please input the [red]test task[/]',
-                default='Image Classification')
+            task = Prompt.ask('Please input the [red]test task[/]',
+                              default='Image Classification')
             if task == 'Image Classification':
                 metrics = {}
                 top1 = prompt('Please input the [red]top-1 accuracy[/]: ')
@@ -396,18 +395,16 @@ def update_model_by_dict(model: dict, update_dict: dict, defaults: dict):
 
 def format_collection(collection: dict):
     yaml_str = yaml_dump(collection)
-    return Panel(
-        Syntax(yaml_str, 'yaml', background_color='default'),
-        width=150,
-        title='Collection')
+    return Panel(Syntax(yaml_str, 'yaml', background_color='default'),
+                 width=150,
+                 title='Collection')
 
 
 def format_model(model: dict):
     yaml_str = yaml_dump(model)
-    return Panel(
-        Syntax(yaml_str, 'yaml', background_color='default'),
-        width=150,
-        title='Model')
+    return Panel(Syntax(yaml_str, 'yaml', background_color='default'),
+                 width=150,
+                 title='Model')
 
 
 def order_models(model):

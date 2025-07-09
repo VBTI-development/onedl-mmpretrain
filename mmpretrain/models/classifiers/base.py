@@ -24,12 +24,12 @@ class BaseClassifier(BaseModel, metaclass=ABCMeta):
             extra data pre-processing module, which processes data from
             dataloader to the format accepted by :meth:`forward`.
     """
-
     def __init__(self,
                  init_cfg: Optional[dict] = None,
                  data_preprocessor: Optional[dict] = None):
-        super(BaseClassifier, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BaseClassifier,
+              self).__init__(init_cfg=init_cfg,
+                             data_preprocessor=data_preprocessor)
 
     @property
     def with_neck(self) -> bool:

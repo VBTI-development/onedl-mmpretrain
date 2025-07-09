@@ -105,16 +105,15 @@ class Lamb(Optimizer):
                  max_grad_norm=1.0,
                  trust_clip=False,
                  always_adapt=False):
-        defaults = dict(
-            lr=lr,
-            bias_correction=bias_correction,
-            betas=betas,
-            eps=eps,
-            weight_decay=weight_decay,
-            grad_averaging=grad_averaging,
-            max_grad_norm=max_grad_norm,
-            trust_clip=trust_clip,
-            always_adapt=always_adapt)
+        defaults = dict(lr=lr,
+                        bias_correction=bias_correction,
+                        betas=betas,
+                        eps=eps,
+                        weight_decay=weight_decay,
+                        grad_averaging=grad_averaging,
+                        max_grad_norm=max_grad_norm,
+                        trust_clip=trust_clip,
+                        always_adapt=always_adapt)
         super().__init__(params, defaults)
 
     @torch.no_grad()
@@ -150,8 +149,8 @@ class Lamb(Optimizer):
         # FIXME it'd be nice to remove explicit tensor conversion of scalars
         #  when torch.where promotes
         # scalar types properly https://github.com/pytorch/pytorch/issues/9190
-        max_grad_norm = torch.tensor(
-            self.defaults['max_grad_norm'], device=device)
+        max_grad_norm = torch.tensor(self.defaults['max_grad_norm'],
+                                     device=device)
         clip_global_grad_norm = torch.where(global_grad_norm > max_grad_norm,
                                             global_grad_norm / max_grad_norm,
                                             one_tensor)
@@ -193,8 +192,8 @@ class Lamb(Optimizer):
 
                 # Decay the first and second moment running average coefficient
                 exp_avg.mul_(beta1).add_(grad, alpha=beta3)  # m_t
-                exp_avg_sq.mul_(beta2).addcmul_(
-                    grad, grad, value=1 - beta2)  # v_t
+                exp_avg_sq.mul_(beta2).addcmul_(grad, grad,
+                                                value=1 - beta2)  # v_t
 
                 denom = (exp_avg_sq.sqrt() / math.sqrt(bias_correction2)).add_(
                     group['eps'])

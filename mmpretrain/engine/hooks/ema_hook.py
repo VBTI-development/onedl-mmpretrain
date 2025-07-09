@@ -59,12 +59,11 @@ class EMAHook(BaseEMAHook):
                  evaluate_on_ema: bool = True,
                  evaluate_on_origin: bool = False,
                  **kwargs):
-        super().__init__(
-            ema_type=ema_type,
-            strict_load=strict_load,
-            begin_iter=begin_iter,
-            begin_epoch=begin_epoch,
-            **kwargs)
+        super().__init__(ema_type=ema_type,
+                         strict_load=strict_load,
+                         begin_iter=begin_iter,
+                         begin_epoch=begin_epoch,
+                         **kwargs)
 
         if not evaluate_on_ema and not evaluate_on_origin:
             warnings.warn(
@@ -188,16 +187,15 @@ class EMAHook(BaseEMAHook):
             # The original model parameters are actually saved in ema
             # field swap the weights back to resume ema state.
             self._swap_ema_state_dict(checkpoint)
-            self.ema_model.load_state_dict(
-                checkpoint['ema_state_dict'], strict=self.strict_load)
+            self.ema_model.load_state_dict(checkpoint['ema_state_dict'],
+                                           strict=self.strict_load)
             self.load_ema_from_ckpt = True
 
         # Support load checkpoint without ema state dict.
         else:
-            load_state_dict(
-                self.ema_model.module,
-                copy.deepcopy(checkpoint['state_dict']),
-                strict=self.strict_load)
+            load_state_dict(self.ema_model.module,
+                            copy.deepcopy(checkpoint['state_dict']),
+                            strict=self.strict_load)
 
     @property
     def _src_params(self):

@@ -78,8 +78,8 @@ class TimmClassifier(BaseClassifier):
             # Set batch augmentations by `train_cfg`
             data_preprocessor['batch_augments'] = train_cfg
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
         from timm.models import create_model
         self.model = create_model(*args, **kwargs)
 

@@ -53,7 +53,6 @@ class RefCOCO(BaseDataset):
         pipeline (Sequence): Processing pipeline. Defaults to an empty tuple.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root,
                  ann_file,

@@ -36,7 +36,6 @@ class TransformerBlock(BaseModule):
             (batch, n, embed_dim) is common case in CV.  Defaults to False
         init_cfg (dict, optional): Initialization config dict. Defaults to None
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -53,22 +52,23 @@ class TransformerBlock(BaseModule):
         super(TransformerBlock, self).__init__(init_cfg=init_cfg)
 
         self.norm_attn = build_norm_layer(norm_cfg, embed_dims)[1]
-        self.attn = MultiheadAttention(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            attn_drop=attn_drop_rate,
-            proj_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            batch_first=batch_first)
+        self.attn = MultiheadAttention(embed_dims=embed_dims,
+                                       num_heads=num_heads,
+                                       attn_drop=attn_drop_rate,
+                                       proj_drop=drop_rate,
+                                       dropout_layer=dict(
+                                           type='DropPath',
+                                           drop_prob=drop_path_rate),
+                                       batch_first=batch_first)
 
         self.norm_ffn = build_norm_layer(norm_cfg, embed_dims)[1]
-        self.ffn = FFN(
-            embed_dims=embed_dims,
-            feedforward_channels=embed_dims * ffn_ratio,
-            num_fcs=num_fcs,
-            ffn_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            act_cfg=act_cfg)
+        self.ffn = FFN(embed_dims=embed_dims,
+                       feedforward_channels=embed_dims * ffn_ratio,
+                       num_fcs=num_fcs,
+                       ffn_drop=drop_rate,
+                       dropout_layer=dict(type='DropPath',
+                                          drop_prob=drop_path_rate),
+                       act_cfg=act_cfg)
 
         if not qkv_bias:
             self.attn.attn.in_proj_bias = None
@@ -97,7 +97,6 @@ class TnTLayer(BaseModule):
             layer normalization
         init_cfg (dict, optional): Initialization config dict. Defaults to None
     """
-
     def __init__(self,
                  num_pixel,
                  embed_dims_inner,
@@ -110,19 +109,18 @@ class TnTLayer(BaseModule):
                  init_cfg=None):
         super(TnTLayer, self).__init__(init_cfg=init_cfg)
 
-        self.inner_block = TransformerBlock(
-            embed_dims=embed_dims_inner,
-            num_heads=num_heads_inner,
-            **inner_block_cfg)
+        self.inner_block = TransformerBlock(embed_dims=embed_dims_inner,
+                                            num_heads=num_heads_inner,
+                                            **inner_block_cfg)
 
         self.norm_proj = build_norm_layer(norm_cfg, embed_dims_inner)[1]
-        self.projection = nn.Linear(
-            embed_dims_inner * num_pixel, embed_dims_outer, bias=True)
+        self.projection = nn.Linear(embed_dims_inner * num_pixel,
+                                    embed_dims_outer,
+                                    bias=True)
 
-        self.outer_block = TransformerBlock(
-            embed_dims=embed_dims_outer,
-            num_heads=num_heads_outer,
-            **outer_block_cfg)
+        self.outer_block = TransformerBlock(embed_dims=embed_dims_outer,
+                                            num_heads=num_heads_outer,
+                                            **outer_block_cfg)
 
     def forward(self, pixel_embed, patch_embed):
         pixel_embed = self.inner_block(pixel_embed)
@@ -148,7 +146,6 @@ class PixelEmbed(BaseModule):
             and a unfold layer to implement image to pixel embedding.
         init_cfg (dict, optional): Initialization config dict
     """
-
     def __init__(self,
                  img_size=224,
                  patch_size=16,
@@ -173,14 +170,13 @@ class PixelEmbed(BaseModule):
         new_patch_size = [math.ceil(ps / stride) for ps in patch_size]
         self.new_patch_size = new_patch_size
 
-        self.proj = nn.Conv2d(
-            in_channels,
-            self.embed_dims_inner,
-            kernel_size=7,
-            padding=3,
-            stride=stride)
-        self.unfold = nn.Unfold(
-            kernel_size=new_patch_size, stride=new_patch_size)
+        self.proj = nn.Conv2d(in_channels,
+                              self.embed_dims_inner,
+                              kernel_size=7,
+                              padding=3,
+                              stride=stride)
+        self.unfold = nn.Unfold(kernel_size=new_patch_size,
+                                stride=new_patch_size)
 
     def forward(self, x, pixel_pos):
         B, C, H, W = x.shape
@@ -213,7 +209,7 @@ class TNT(BaseBackbone):
         arch (str | dict): Vision Transformer architecture
             Default: 'b'
         img_size (int | tuple): Input image size. Defaults to 224
-        patch_size (int | tuple): The patch size. Deault to 16
+        patch_size (int | tuple): The patch size. Default to 16
         in_channels (int): Number of input channels. Defaults to 3
         ffn_ratio (int): A ratio to calculate the hidden_dims in ffn layer.
             Default: 4
@@ -292,12 +288,11 @@ class TNT(BaseBackbone):
         self.num_heads_inner = self.arch_settings['num_heads_inner']
         self.num_heads_outer = self.arch_settings['num_heads_outer']
 
-        self.pixel_embed = PixelEmbed(
-            img_size=img_size,
-            patch_size=patch_size,
-            in_channels=in_channels,
-            embed_dims_inner=self.embed_dims_inner,
-            stride=first_stride)
+        self.pixel_embed = PixelEmbed(img_size=img_size,
+                                      patch_size=patch_size,
+                                      in_channels=in_channels,
+                                      embed_dims_inner=self.embed_dims_inner,
+                                      stride=first_stride)
         num_patches = self.pixel_embed.num_patches
         self.num_patches = num_patches
         new_patch_size = self.pixel_embed.new_patch_size
@@ -323,25 +318,23 @@ class TNT(BaseBackbone):
         ]  # stochastic depth decay rule
         self.layers = ModuleList()
         for i in range(self.num_layers):
-            block_cfg = dict(
-                ffn_ratio=ffn_ratio,
-                drop_rate=drop_rate,
-                attn_drop_rate=attn_drop_rate,
-                drop_path_rate=dpr[i],
-                num_fcs=num_fcs,
-                qkv_bias=qkv_bias,
-                norm_cfg=norm_cfg,
-                batch_first=True)
+            block_cfg = dict(ffn_ratio=ffn_ratio,
+                             drop_rate=drop_rate,
+                             attn_drop_rate=attn_drop_rate,
+                             drop_path_rate=dpr[i],
+                             num_fcs=num_fcs,
+                             qkv_bias=qkv_bias,
+                             norm_cfg=norm_cfg,
+                             batch_first=True)
             self.layers.append(
-                TnTLayer(
-                    num_pixel=num_pixel,
-                    embed_dims_inner=self.embed_dims_inner,
-                    embed_dims_outer=self.embed_dims_outer,
-                    num_heads_inner=self.num_heads_inner,
-                    num_heads_outer=self.num_heads_outer,
-                    inner_block_cfg=block_cfg,
-                    outer_block_cfg=block_cfg,
-                    norm_cfg=norm_cfg))
+                TnTLayer(num_pixel=num_pixel,
+                         embed_dims_inner=self.embed_dims_inner,
+                         embed_dims_outer=self.embed_dims_outer,
+                         num_heads_inner=self.num_heads_inner,
+                         num_heads_outer=self.num_heads_outer,
+                         inner_block_cfg=block_cfg,
+                         outer_block_cfg=block_cfg,
+                         norm_cfg=norm_cfg))
 
         self.norm = build_norm_layer(norm_cfg, self.embed_dims_outer)[1]
 

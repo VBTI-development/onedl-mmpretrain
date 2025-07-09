@@ -40,7 +40,6 @@ class RepVGGBlock(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Default: None
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -74,17 +73,16 @@ class RepVGGBlock(BaseModule):
         self.deploy = deploy
 
         if deploy:
-            self.branch_reparam = build_conv_layer(
-                conv_cfg,
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=3,
-                stride=stride,
-                padding=padding,
-                dilation=dilation,
-                groups=groups,
-                bias=True,
-                padding_mode=padding_mode)
+            self.branch_reparam = build_conv_layer(conv_cfg,
+                                                   in_channels=in_channels,
+                                                   out_channels=out_channels,
+                                                   kernel_size=3,
+                                                   stride=stride,
+                                                   padding=padding,
+                                                   dilation=dilation,
+                                                   groups=groups,
+                                                   bias=True,
+                                                   padding_mode=padding_mode)
         else:
             # judge if input shape and output shape are the same.
             # If true, add a normalized identity shortcut.
@@ -112,16 +110,15 @@ class RepVGGBlock(BaseModule):
         conv_bn = Sequential()
         conv_bn.add_module(
             'conv',
-            build_conv_layer(
-                self.conv_cfg,
-                in_channels=self.in_channels,
-                out_channels=self.out_channels,
-                kernel_size=kernel_size,
-                stride=self.stride,
-                dilation=dilation,
-                padding=padding,
-                groups=self.groups,
-                bias=False))
+            build_conv_layer(self.conv_cfg,
+                             in_channels=self.in_channels,
+                             out_channels=self.out_channels,
+                             kernel_size=kernel_size,
+                             stride=self.stride,
+                             dilation=dilation,
+                             padding=padding,
+                             groups=self.groups,
+                             bias=False))
         conv_bn.add_module(
             'norm',
             build_norm_layer(self.norm_cfg, num_features=self.out_channels)[1])
@@ -129,7 +126,6 @@ class RepVGGBlock(BaseModule):
         return conv_bn
 
     def forward(self, x):
-
         def _inner_forward(inputs):
             if self.deploy:
                 return self.branch_reparam(inputs)
@@ -164,16 +160,15 @@ class RepVGGBlock(BaseModule):
             "Switch is not allowed when norm_cfg['type'] != 'BN'."
 
         reparam_weight, reparam_bias = self.reparameterize()
-        self.branch_reparam = build_conv_layer(
-            self.conv_cfg,
-            self.in_channels,
-            self.out_channels,
-            kernel_size=3,
-            stride=self.stride,
-            padding=self.padding,
-            dilation=self.dilation,
-            groups=self.groups,
-            bias=True)
+        self.branch_reparam = build_conv_layer(self.conv_cfg,
+                                               self.in_channels,
+                                               self.out_channels,
+                                               kernel_size=3,
+                                               stride=self.stride,
+                                               padding=self.padding,
+                                               dilation=self.dilation,
+                                               groups=self.groups,
+                                               bias=True)
         self.branch_reparam.weight.data = reparam_weight
         self.branch_reparam.bias.data = reparam_bias
 
@@ -268,7 +263,6 @@ class MTSPPF(BaseModule):
             Default: dict(type='ReLU').
         kernel_size (int): Kernel size of pooling. Default: 5.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -277,22 +271,21 @@ class MTSPPF(BaseModule):
                  kernel_size=5):
         super().__init__()
         hidden_features = in_channels // 2  # hidden channels
-        self.conv1 = ConvModule(
-            in_channels,
-            hidden_features,
-            1,
-            stride=1,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
-        self.conv2 = ConvModule(
-            hidden_features * 4,
-            out_channels,
-            1,
-            stride=1,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
-        self.maxpool = nn.MaxPool2d(
-            kernel_size=kernel_size, stride=1, padding=kernel_size // 2)
+        self.conv1 = ConvModule(in_channels,
+                                hidden_features,
+                                1,
+                                stride=1,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
+        self.conv2 = ConvModule(hidden_features * 4,
+                                out_channels,
+                                1,
+                                stride=1,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
+        self.maxpool = nn.MaxPool2d(kernel_size=kernel_size,
+                                    stride=1,
+                                    padding=kernel_size // 2)
 
     def forward(self, x):
         x = self.conv1(x)
@@ -359,97 +352,82 @@ class RepVGG(BaseBackbone):
 
     arch_settings = {
         'A0':
-        dict(
-            num_blocks=[2, 4, 14, 1],
-            width_factor=[0.75, 0.75, 0.75, 2.5],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[2, 4, 14, 1],
+             width_factor=[0.75, 0.75, 0.75, 2.5],
+             group_layer_map=None,
+             se_cfg=None),
         'A1':
-        dict(
-            num_blocks=[2, 4, 14, 1],
-            width_factor=[1, 1, 1, 2.5],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[2, 4, 14, 1],
+             width_factor=[1, 1, 1, 2.5],
+             group_layer_map=None,
+             se_cfg=None),
         'A2':
-        dict(
-            num_blocks=[2, 4, 14, 1],
-            width_factor=[1.5, 1.5, 1.5, 2.75],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[2, 4, 14, 1],
+             width_factor=[1.5, 1.5, 1.5, 2.75],
+             group_layer_map=None,
+             se_cfg=None),
         'B0':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[1, 1, 1, 2.5],
-            group_layer_map=None,
-            se_cfg=None,
-            stem_channels=64),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[1, 1, 1, 2.5],
+             group_layer_map=None,
+             se_cfg=None,
+             stem_channels=64),
         'B1':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2, 2, 2, 4],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2, 2, 2, 4],
+             group_layer_map=None,
+             se_cfg=None),
         'B1g2':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2, 2, 2, 4],
-            group_layer_map=g2_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2, 2, 2, 4],
+             group_layer_map=g2_layer_map,
+             se_cfg=None),
         'B1g4':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2, 2, 2, 4],
-            group_layer_map=g4_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2, 2, 2, 4],
+             group_layer_map=g4_layer_map,
+             se_cfg=None),
         'B2':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2.5, 2.5, 2.5, 5],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2.5, 2.5, 2.5, 5],
+             group_layer_map=None,
+             se_cfg=None),
         'B2g2':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2.5, 2.5, 2.5, 5],
-            group_layer_map=g2_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2.5, 2.5, 2.5, 5],
+             group_layer_map=g2_layer_map,
+             se_cfg=None),
         'B2g4':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[2.5, 2.5, 2.5, 5],
-            group_layer_map=g4_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[2.5, 2.5, 2.5, 5],
+             group_layer_map=g4_layer_map,
+             se_cfg=None),
         'B3':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[3, 3, 3, 5],
-            group_layer_map=None,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[3, 3, 3, 5],
+             group_layer_map=None,
+             se_cfg=None),
         'B3g2':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[3, 3, 3, 5],
-            group_layer_map=g2_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[3, 3, 3, 5],
+             group_layer_map=g2_layer_map,
+             se_cfg=None),
         'B3g4':
-        dict(
-            num_blocks=[4, 6, 16, 1],
-            width_factor=[3, 3, 3, 5],
-            group_layer_map=g4_layer_map,
-            se_cfg=None),
+        dict(num_blocks=[4, 6, 16, 1],
+             width_factor=[3, 3, 3, 5],
+             group_layer_map=g4_layer_map,
+             se_cfg=None),
         'D2se':
-        dict(
-            num_blocks=[8, 14, 24, 1],
-            width_factor=[2.5, 2.5, 2.5, 5],
-            group_layer_map=None,
-            se_cfg=dict(ratio=16, divisor=1)),
+        dict(num_blocks=[8, 14, 24, 1],
+             width_factor=[2.5, 2.5, 2.5, 5],
+             group_layer_map=None,
+             se_cfg=dict(ratio=16, divisor=1)),
         'yolox-pai-small':
-        dict(
-            num_blocks=[3, 5, 7, 3],
-            width_factor=[1, 1, 1, 1],
-            group_layer_map=None,
-            se_cfg=None,
-            stem_channels=32),
+        dict(num_blocks=[3, 5, 7, 3],
+             width_factor=[1, 1, 1, 1],
+             group_layer_map=None,
+             se_cfg=None,
+             stem_channels=32),
     }
 
     def __init__(self,
@@ -469,10 +447,9 @@ class RepVGG(BaseBackbone):
                  add_ppf=False,
                  init_cfg=[
                      dict(type='Kaiming', layer=['Conv2d']),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ]):
         super(RepVGG, self).__init__(init_cfg)
 
@@ -511,19 +488,17 @@ class RepVGG(BaseBackbone):
         # defaults to 64 to prevert BC-breaking if stem_channels
         # not in arch dict;
         # the stem channels should not be larger than that of stage1.
-        channels = min(
-            arch.get('stem_channels', 64),
-            int(self.base_channels * self.arch['width_factor'][0]))
-        self.stem = RepVGGBlock(
-            self.in_channels,
-            channels,
-            stride=2,
-            se_cfg=arch['se_cfg'],
-            with_cp=with_cp,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg,
-            deploy=deploy)
+        channels = min(arch.get('stem_channels', 64),
+                       int(self.base_channels * self.arch['width_factor'][0]))
+        self.stem = RepVGGBlock(self.in_channels,
+                                channels,
+                                stride=2,
+                                se_cfg=arch['se_cfg'],
+                                with_cp=with_cp,
+                                conv_cfg=conv_cfg,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg,
+                                deploy=deploy)
 
         next_create_block_idx = 1
         self.stages = []
@@ -544,12 +519,11 @@ class RepVGG(BaseBackbone):
             channels = out_channels
 
         if add_ppf:
-            self.ppf = MTSPPF(
-                out_channels,
-                out_channels,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                kernel_size=5)
+            self.ppf = MTSPPF(out_channels,
+                              out_channels,
+                              norm_cfg=norm_cfg,
+                              act_cfg=act_cfg,
+                              kernel_size=5)
         else:
             self.ppf = nn.Identity()
 
@@ -564,20 +538,19 @@ class RepVGG(BaseBackbone):
                 next_create_block_idx,
                 1) if self.arch['group_layer_map'] is not None else 1
             blocks.append(
-                RepVGGBlock(
-                    in_channels,
-                    out_channels,
-                    stride=strides[i],
-                    padding=dilations[i],
-                    dilation=dilations[i],
-                    groups=groups,
-                    se_cfg=self.arch['se_cfg'],
-                    with_cp=self.with_cp,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    deploy=self.deploy,
-                    init_cfg=init_cfg))
+                RepVGGBlock(in_channels,
+                            out_channels,
+                            stride=strides[i],
+                            padding=dilations[i],
+                            dilation=dilations[i],
+                            groups=groups,
+                            se_cfg=self.arch['se_cfg'],
+                            with_cp=self.with_cp,
+                            conv_cfg=self.conv_cfg,
+                            norm_cfg=self.norm_cfg,
+                            act_cfg=self.act_cfg,
+                            deploy=self.deploy,
+                            init_cfg=init_cfg))
             in_channels = out_channels
             next_create_block_idx += 1
 

@@ -10,12 +10,12 @@ from .run.inference import inference
 
 parser = argparse.ArgumentParser(
     description='RAM(Recognize Anything Model) demo')
-parser.add_argument(
-    'ram_ckpt', type=str, help='pretrained file for ram (absolute path)')
-parser.add_argument(
-    'clip_ckpt',
-    type=str,
-    help='clip vit-base-p16 pretrained file (absolute path)')
+parser.add_argument('ram_ckpt',
+                    type=str,
+                    help='pretrained file for ram (absolute path)')
+parser.add_argument('clip_ckpt',
+                    type=str,
+                    help='clip vit-base-p16 pretrained file (absolute path)')
 args = parser.parse_args()
 
 if torch.cuda.is_available():
@@ -53,10 +53,9 @@ def ram_inference(image, tag_list, mode, threshold):
             categories = categories.strip().split()
         else:
             categories = None
-        model.set_openset(
-            categories=categories,
-            clip_ckpt=args.clip_ckpt,
-            threshold=threshold)
+        model.set_openset(categories=categories,
+                          clip_ckpt=args.clip_ckpt,
+                          threshold=threshold)
 
     sample = dict(img=image)
     result = inference(sample, model, test_transforms, mode=mode)
@@ -89,8 +88,11 @@ def build_gradio():
         gr.components.Radio(['normal', 'openset'],
                             label='mode',
                             value='normal'),
-        gr.components.Slider(
-            minimum=0, maximum=1, value=0.68, step=0.01, label='threshold')
+        gr.components.Slider(minimum=0,
+                             maximum=1,
+                             value=0.68,
+                             step=0.01,
+                             label='threshold')
     ]
     return gr.Interface(
         fn=ram_inference,

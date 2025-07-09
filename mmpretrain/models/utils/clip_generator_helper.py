@@ -13,7 +13,6 @@ from mmpretrain.registry import MODELS
 
 class LayerNorm(nn.LayerNorm):
     """Subclass torch's LayerNorm to handle fp16."""
-
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
         orig_type = x.dtype
@@ -24,7 +23,6 @@ class LayerNorm(nn.LayerNorm):
 @MODELS.register_module()
 class QuickGELU(nn.Module):
     """A faster version of GELU."""
-
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
         return x * torch.sigmoid(1.702 * x)
@@ -43,7 +41,6 @@ class ResidualAttentionBlock(nn.Module):
         attn_mask (torch.Tensor, optional): The attention mask.
             Defaults to None.
     """
-
     def __init__(self,
                  d_model: int,
                  n_head: int,
@@ -68,19 +65,17 @@ class ResidualAttentionBlock(nn.Module):
             dtype=x.dtype,
             device=x.device) if self.attn_mask is not None else None
         if self.return_attention:
-            return self.attn(
-                x,
-                x,
-                x,
-                need_weights=self.return_attention,
-                attn_mask=self.attn_mask)
+            return self.attn(x,
+                             x,
+                             x,
+                             need_weights=self.return_attention,
+                             attn_mask=self.attn_mask)
         else:
-            return self.attn(
-                x,
-                x,
-                x,
-                need_weights=self.return_attention,
-                attn_mask=self.attn_mask)[0]
+            return self.attn(x,
+                             x,
+                             x,
+                             need_weights=self.return_attention,
+                             attn_mask=self.attn_mask)[0]
 
     def forward(
         self, x: torch.Tensor
@@ -108,7 +103,6 @@ class Transformer(nn.Module):
         heads (int): The number of attention heads.
         attn_mask (torch.Tensor, optional): The attention mask.
     """
-
     def __init__(self,
                  width: int,
                  layers: int,
@@ -122,8 +116,10 @@ class Transformer(nn.Module):
             self.resblocks.append(
                 ResidualAttentionBlock(width, heads, attn_mask))
         self.resblocks.append(
-            ResidualAttentionBlock(
-                width, heads, attn_mask, return_attention=True))
+            ResidualAttentionBlock(width,
+                                   heads,
+                                   attn_mask,
+                                   return_attention=True))
 
     def forward(
             self, x: torch.Tensor
@@ -153,7 +149,6 @@ class VisionTransformer(nn.Module):
         fineturn (bool): Whether to fineturn the model.
         average_target (bool): Whether to average the target.
     """
-
     def __init__(self,
                  input_resolution: int,
                  patch_size: int,
@@ -166,12 +161,11 @@ class VisionTransformer(nn.Module):
         super().__init__()
         self.input_resolution = input_resolution
         self.output_dim = output_dim
-        self.conv1 = nn.Conv2d(
-            in_channels=3,
-            out_channels=width,
-            kernel_size=patch_size,
-            stride=patch_size,
-            bias=False)
+        self.conv1 = nn.Conv2d(in_channels=3,
+                               out_channels=width,
+                               kernel_size=patch_size,
+                               stride=patch_size,
+                               bias=False)
 
         scale = width**-0.5
         self.class_embedding = nn.Parameter(scale * torch.randn(width))
@@ -231,7 +225,6 @@ class CLIP(nn.Module):
         fineturn (bool): Whether to fineturn the model.
         average_target (bool): Whether to average the target.
     """
-
     def __init__(
         self,
         embed_dim: int,
@@ -263,11 +256,10 @@ class CLIP(nn.Module):
             average_targets=average_targets,
         )
 
-        self.transformer = Transformer(
-            width=transformer_width,
-            layers=transformer_layers,
-            heads=transformer_heads,
-            attn_mask=self.build_attention_mask())
+        self.transformer = Transformer(width=transformer_width,
+                                       layers=transformer_layers,
+                                       heads=transformer_heads,
+                                       attn_mask=self.build_attention_mask())
 
         self.vocab_size = vocab_size
         self.token_embedding = nn.Embedding(vocab_size, transformer_width)
@@ -301,8 +293,8 @@ class CLIP(nn.Module):
             nn.init.normal_(block.mlp.c_proj.weight, std=proj_std)
 
         if self.text_projection is not None:
-            nn.init.normal_(
-                self.text_projection, std=self.transformer.width**-0.5)
+            nn.init.normal_(self.text_projection,
+                            std=self.transformer.width**-0.5)
 
     def build_attention_mask(self) -> torch.Tensor:
         """Build the attention mask."""

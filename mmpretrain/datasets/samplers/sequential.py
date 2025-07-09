@@ -25,7 +25,6 @@ class SequentialSampler(DefaultSampler):
               For instance, 8 examples on 2 GPUs,
               GPU0: [0,1,2,3], GPU1: [4,5,6,7]
     """
-
     def __init__(self, subsample_type: str = 'default', **kwargs) -> None:
         super().__init__(shuffle=False, **kwargs)
 

@@ -1,11 +1,10 @@
 # model settings
 model = dict(
     type='iTPN',
-    backbone=dict(
-        type='iTPNHiViT',
-        arch='base',
-        reconstruction_type='pixel',
-        mask_ratio=0.75),
+    backbone=dict(type='iTPNHiViT',
+                  arch='base',
+                  reconstruction_type='pixel',
+                  mask_ratio=0.75),
     neck=dict(
         type='iTPNPretrainDecoder',
         num_patches=196,
@@ -22,11 +21,10 @@ model = dict(
         fpn_depth=2,
         num_outs=3,
     ),
-    head=dict(
-        type='MAEPretrainHead',
-        norm_pix=True,
-        patch_size=16,
-        loss=dict(type='PixelReconstructionLoss', criterion='L2')),
+    head=dict(type='MAEPretrainHead',
+              norm_pix=True,
+              patch_size=16,
+              loss=dict(type='PixelReconstructionLoss', criterion='L2')),
     init_cfg=[
         dict(type='Xavier', layer='Linear', distribution='uniform'),
         dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)

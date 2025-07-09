@@ -29,48 +29,44 @@ model = dict(
         upsample_ratio=32,  # equal to downsample_raito
         mid_channels=0,
         last_act=False),
-    head=dict(
-        type='SparKPretrainHead',
-        loss=dict(type='PixelReconstructionLoss', criterion='L2')))
+    head=dict(type='SparKPretrainHead',
+              loss=dict(type='PixelReconstructionLoss', criterion='L2')))
 
 # optimizer wrapper
-optimizer = dict(
-    type='Lamb', lr=2e-4 * 4096 / 512, betas=(0.9, 0.95), weight_decay=0.04)
-optim_wrapper = dict(
-    type='AmpOptimWrapper',
-    optimizer=optimizer,
-    clip_grad=dict(max_norm=5.0),
-    paramwise_cfg=dict(
-        bias_decay_mult=0.0,
-        flat_decay_mult=0.0,
-        custom_keys={
-            'mask_token': dict(decay_mult=0.),
-        }))
+optimizer = dict(type='Lamb',
+                 lr=2e-4 * 4096 / 512,
+                 betas=(0.9, 0.95),
+                 weight_decay=0.04)
+optim_wrapper = dict(type='AmpOptimWrapper',
+                     optimizer=optimizer,
+                     clip_grad=dict(max_norm=5.0),
+                     paramwise_cfg=dict(bias_decay_mult=0.0,
+                                        flat_decay_mult=0.0,
+                                        custom_keys={
+                                            'mask_token': dict(decay_mult=0.),
+                                        }))
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=20,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=780,
-        by_epoch=True,
-        begin=20,
-        end=800,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingWeightDecay',
-        eta_min=0.2,
-        T_max=800,
-        by_epoch=True,
-        begin=0,
-        end=800,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=20,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=780,
+         by_epoch=True,
+         begin=20,
+         end=800,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingWeightDecay',
+         eta_min=0.2,
+         T_max=800,
+         by_epoch=True,
+         begin=0,
+         end=800,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

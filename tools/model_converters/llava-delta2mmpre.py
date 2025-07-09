@@ -28,9 +28,8 @@ def load_checkpoint(path: Path):
         return torch.load(path)
 
     state_dict = OrderedDict()
-    for ckpt in chain(
-            path.rglob('*.bin'), path.rglob('*.pth'),
-            path.rglob('*.safetensors')):
+    for ckpt in chain(path.rglob('*.bin'), path.rglob('*.pth'),
+                      path.rglob('*.safetensors')):
         state_dict.update(load_state_dict(str(ckpt)))
 
     return state_dict
@@ -42,8 +41,8 @@ def main():
     if Path(args.src).exists():
         src_path = args.src
     else:
-        src_path = snapshot_download(
-            args.src, allow_patterns='pytorch_model*.bin')
+        src_path = snapshot_download(args.src,
+                                     allow_patterns='pytorch_model*.bin')
     src_state_dict = load_checkpoint(src_path)
 
     if args.delta is None:
@@ -51,8 +50,8 @@ def main():
     elif Path(args.delta).exists():
         delta_state_dict = load_checkpoint(args.delta)
     else:
-        delta_path = snapshot_download(
-            args.delta, allow_patterns='pytorch_model*.bin')
+        delta_path = snapshot_download(args.delta,
+                                       allow_patterns='pytorch_model*.bin')
         delta_state_dict = load_checkpoint(delta_path)
 
     new_state_dict = OrderedDict()

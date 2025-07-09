@@ -33,22 +33,20 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=16,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/VOC2007',
-        split='trainval',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/VOC2007',
+                 split='trainval',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
 
 val_dataloader = dict(
     batch_size=16,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/VOC2007',
-        split='test',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/VOC2007',
+                 split='test',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 

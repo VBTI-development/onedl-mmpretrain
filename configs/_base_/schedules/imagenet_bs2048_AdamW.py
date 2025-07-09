@@ -22,11 +22,10 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        eta_min=1e-5,
-        by_epoch=True,
-        begin=warmup_epochs)
+    dict(type='CosineAnnealingLR',
+         eta_min=1e-5,
+         by_epoch=True,
+         begin=warmup_epochs)
 ]
 
 # train, val, test setting

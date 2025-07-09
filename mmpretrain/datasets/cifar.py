@@ -99,8 +99,10 @@ class CIFAR10(BaseDataset):
                                    f'please manually handle it.')
 
             if self.download:
-                download_and_extract_archive(
-                    self.url, root, filename=self.filename, md5=self.tgz_md5)
+                download_and_extract_archive(self.url,
+                                             root,
+                                             filename=self.filename,
+                                             md5=self.tgz_md5)
             else:
                 raise RuntimeError(
                     f'Cannot find {self.__class__.__name__} dataset in '

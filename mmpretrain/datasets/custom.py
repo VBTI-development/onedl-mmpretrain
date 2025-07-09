@@ -186,7 +186,6 @@ class CustomDataset(BaseDataset):
             ``lazy_init=False``. Defaults to False.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root: str = '',
                  data_prefix: Union[str, dict] = '',
@@ -219,7 +218,7 @@ class CustomDataset(BaseDataset):
             self.full_init()
 
     def _find_samples(self):
-        """find samples from ``data_prefix``."""
+        """Find samples from ``data_prefix``."""
         if self.with_label:
             classes, folder_to_idx = find_folders(self.img_prefix)
             samples, empty_classes = get_samples(

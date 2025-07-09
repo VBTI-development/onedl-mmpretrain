@@ -35,11 +35,13 @@ repos:
           - mdformat_frontmatter
           - linkify-it-py
   - repo: https://github.com/codespell-project/codespell
-    rev: v2.1.0
+    rev: v2.4.1
     hooks:
       - id: codespell
+        additional_dependencies:
+          - tomli
   - repo: https://github.com/myint/docformatter
-    rev: v1.3.1
+    rev: 06907d0
     hooks:
       - id: docformatter
         args: ["--in-place", "--wrap-descriptions", "79"]

@@ -19,14 +19,12 @@ model.merge(
         head=dict(in_channels=960, mid_channels=[1280]),
     ))
 # schedule settings
-optim_wrapper = dict(
-    optimizer=dict(
-        type=RMSprop,
-        lr=0.064,
-        alpha=0.9,
-        momentum=0.9,
-        eps=0.0316,
-        weight_decay=1e-5))
+optim_wrapper = dict(optimizer=dict(type=RMSprop,
+                                    lr=0.064,
+                                    alpha=0.9,
+                                    momentum=0.9,
+                                    eps=0.0316,
+                                    weight_decay=1e-5))
 
 param_scheduler = dict(type=StepLR, by_epoch=True, step_size=2, gamma=0.973)
 

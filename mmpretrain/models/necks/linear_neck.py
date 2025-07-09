@@ -26,7 +26,6 @@ class LinearNeck(BaseModule):
         init_cfg (dict, optional): dictionary to initialize weights.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -66,7 +65,7 @@ class LinearNeck(BaseModule):
 
     def forward(self, inputs: Union[Tuple,
                                     torch.Tensor]) -> Tuple[torch.Tensor]:
-        """forward function.
+        """Forward function.
 
         Args:
             inputs (Union[Tuple, torch.Tensor]): The features extracted from

@@ -40,8 +40,8 @@ def sigmoid_focal_loss(pred,
     pt = (1 - pred_sigmoid) * target + pred_sigmoid * (1 - target)
     focal_weight = (alpha * target + (1 - alpha) *
                     (1 - target)) * pt.pow(gamma)
-    loss = F.binary_cross_entropy_with_logits(
-        pred, target, reduction='none') * focal_weight
+    loss = F.binary_cross_entropy_with_logits(pred, target,
+                                              reduction='none') * focal_weight
     if weight is not None:
         assert weight.dim() == 1
         weight = weight.float()
@@ -64,7 +64,6 @@ class FocalLoss(nn.Module):
             a scalar. Options are "none" and "mean". Defaults to 'mean'.
         loss_weight (float): Weight of loss. Defaults to 1.0.
     """
-
     def __init__(self,
                  gamma=2.0,
                  alpha=0.25,
@@ -101,16 +100,15 @@ class FocalLoss(nn.Module):
             torch.Tensor: Loss.
         """
         assert reduction_override in (None, 'none', 'mean', 'sum')
-        reduction = (
-            reduction_override if reduction_override else self.reduction)
+        reduction = (reduction_override
+                     if reduction_override else self.reduction)
         if target.dim() == 1 or (target.dim() == 2 and target.shape[1] == 1):
             target = convert_to_one_hot(target.view(-1, 1), pred.shape[-1])
-        loss_cls = self.loss_weight * sigmoid_focal_loss(
-            pred,
-            target,
-            weight,
-            gamma=self.gamma,
-            alpha=self.alpha,
-            reduction=reduction,
-            avg_factor=avg_factor)
+        loss_cls = self.loss_weight * sigmoid_focal_loss(pred,
+                                                         target,
+                                                         weight,
+                                                         gamma=self.gamma,
+                                                         alpha=self.alpha,
+                                                         reduction=reduction,
+                                                         avg_factor=avg_factor)
         return loss_cls

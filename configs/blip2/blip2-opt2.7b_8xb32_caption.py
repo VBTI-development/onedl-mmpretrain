@@ -6,9 +6,9 @@ _base_ = [
 # model settings
 model = dict(
     type='Blip2Caption',
-    tokenizer=dict(
-        type='AutoTokenizer', name_or_path='facebook/opt-2.7b',
-        use_fast=False),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='facebook/opt-2.7b',
+                   use_fast=False),
     vision_backbone=dict(
         type='BEiTViT',
         # eva-g without the final layer
@@ -28,15 +28,14 @@ model = dict(
         final_norm=False,
         use_shared_rel_pos_bias=False,
         out_type='raw'),
-    text_backbone=dict(
-        type='OPTForCausalLM', name_or_path='facebook/opt-2.7b'),
-    multimodal_backbone=dict(
-        type='Qformer',
-        model_style='bert-base-uncased',
-        vision_model_width=1408,
-        add_cross_attention=True,
-        cross_attention_freq=2,
-        num_query_token=32),
+    text_backbone=dict(type='OPTForCausalLM',
+                       name_or_path='facebook/opt-2.7b'),
+    multimodal_backbone=dict(type='Qformer',
+                             model_style='bert-base-uncased',
+                             vision_model_width=1408,
+                             add_cross_attention=True,
+                             cross_attention_freq=2,
+                             num_query_token=32),
     vision_neck=dict(
         type='LinearClsHead',
         in_channels=768,
@@ -64,11 +63,10 @@ test_cfg = dict()
 # dataset settings
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(364, 364),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(364, 364),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 

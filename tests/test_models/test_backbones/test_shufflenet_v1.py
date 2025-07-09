@@ -54,8 +54,12 @@ def test_shufflenetv1_shuffleuint():
     assert x_out.shape == torch.Size((1, 240, 28, 28))
 
     # Test ShuffleUnit with checkpoint forward
-    block = ShuffleUnit(
-        24, 24, groups=3, first_block=True, combine='add', with_cp=True)
+    block = ShuffleUnit(24,
+                        24,
+                        groups=3,
+                        first_block=True,
+                        combine='add',
+                        with_cp=True)
     assert block.with_cp
     x = torch.randn(1, 24, 56, 56)
     x.requires_grad = True
@@ -184,10 +188,11 @@ def test_shufflenetv1_backbone():
     assert feat[2].shape == torch.Size((1, 1536, 7, 7))
 
     # Test ShuffleNetV1 forward with GroupNorm forward
-    model = ShuffleNetV1(
-        groups=3,
-        norm_cfg=dict(type='GN', num_groups=2, requires_grad=True),
-        out_indices=(0, 1, 2))
+    model = ShuffleNetV1(groups=3,
+                         norm_cfg=dict(type='GN',
+                                       num_groups=2,
+                                       requires_grad=True),
+                         out_indices=(0, 1, 2))
     model.init_weights()
     model.train()
 

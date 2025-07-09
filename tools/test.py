@@ -20,11 +20,10 @@ def parse_args():
         '--work-dir',
         help='the directory to save the file containing evaluation metrics')
     parser.add_argument('--out', help='the file to output results.')
-    parser.add_argument(
-        '--out-item',
-        choices=['metrics', 'pred'],
-        help='To output whether metrics or predictions. '
-        'Defaults to output predictions.')
+    parser.add_argument('--out-item',
+                        choices=['metrics', 'pred'],
+                        help='To output whether metrics or predictions. '
+                        'Defaults to output predictions.')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
@@ -35,10 +34,9 @@ def parse_args():
         'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
         'Note that the quotation marks are necessary and that no white space '
         'is allowed.')
-    parser.add_argument(
-        '--amp',
-        action='store_true',
-        help='enable automatic-mixed-precision test')
+    parser.add_argument('--amp',
+                        action='store_true',
+                        help='enable automatic-mixed-precision test')
     parser.add_argument(
         '--show-dir',
         help='directory where the visualization images will be saved.')
@@ -46,16 +44,14 @@ def parse_args():
         '--show',
         action='store_true',
         help='whether to display the prediction results in a window.')
-    parser.add_argument(
-        '--interval',
-        type=int,
-        default=1,
-        help='visualize per interval samples.')
-    parser.add_argument(
-        '--wait-time',
-        type=float,
-        default=2,
-        help='display time of every window. (second)')
+    parser.add_argument('--interval',
+                        type=int,
+                        default=1,
+                        help='visualize per interval samples.')
+    parser.add_argument('--wait-time',
+                        type=float,
+                        default=2,
+                        help='display time of every window. (second)')
     parser.add_argument(
         '--no-pin-memory',
         action='store_true',
@@ -67,11 +63,10 @@ def parse_args():
         'has `tta_pipeline` and `tta_model` fields, use them to determine the '
         'TTA transforms and how to merge the TTA results. Otherwise, use flip '
         'TTA by averaging classification score.')
-    parser.add_argument(
-        '--launcher',
-        choices=['none', 'pytorch', 'slurm', 'mpi'],
-        default='none',
-        help='job launcher')
+    parser.add_argument('--launcher',
+                        choices=['none', 'pytorch', 'slurm', 'mpi'],
+                        default='none',
+                        help='job launcher')
     # When using PyTorch version >= 2.0.0, the `torch.distributed.launch`
     # will pass the `--local-rank` parameter to `tools/train.py` instead
     # of `--local_rank`.
@@ -120,15 +115,14 @@ def merge_args(cfg, args):
         if 'tta_pipeline' not in cfg:
             test_pipeline = cfg.test_dataloader.dataset.pipeline
             cfg.tta_pipeline = deepcopy(test_pipeline)
-            flip_tta = dict(
-                type='TestTimeAug',
-                transforms=[
-                    [
-                        dict(type='RandomFlip', prob=1.),
-                        dict(type='RandomFlip', prob=0.)
-                    ],
-                    [test_pipeline[-1]],
-                ])
+            flip_tta = dict(type='TestTimeAug',
+                            transforms=[
+                                [
+                                    dict(type='RandomFlip', prob=1.),
+                                    dict(type='RandomFlip', prob=0.)
+                                ],
+                                [test_pipeline[-1]],
+                            ])
             cfg.tta_pipeline[-1] = flip_tta
         cfg.model = ConfigDict(**cfg.tta_model, module=cfg.model)
         cfg.test_dataloader.dataset.pipeline = cfg.tta_pipeline

@@ -56,8 +56,9 @@ class DistilledVisionTransformer(VisionTransformer):
 
             Defaults to ``"cls_token"``.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+            embedding vector resize. Defaults to "bicubic".
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
@@ -82,12 +83,11 @@ class DistilledVisionTransformer(VisionTransformer):
         cls_tokens = self.cls_token.expand(B, -1, -1)
         dist_token = self.dist_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, dist_token, x), dim=1)
-        x = x + self.resize_pos_embed(
-            self.pos_embed,
-            self.patch_resolution,
-            patch_resolution,
-            mode=self.interpolate_mode,
-            num_extra_tokens=self.num_extra_tokens)
+        x = x + self.resize_pos_embed(self.pos_embed,
+                                      self.patch_resolution,
+                                      patch_resolution,
+                                      mode=self.interpolate_mode,
+                                      num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         outs = []

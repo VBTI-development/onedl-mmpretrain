@@ -25,7 +25,6 @@ DEFAULT_IM_END_TOKEN = '<im_end>'
 
 
 class LlavaLlamaForCausalLM(PreTrainedModel):
-
     def __init__(self,
                  vision_encoder,
                  lang_encoder,
@@ -80,15 +79,13 @@ class LlavaLlamaForCausalLM(PreTrainedModel):
         images: Optional[torch.FloatTensor] = None,
         return_dict: Optional[bool] = None,
     ):
-        output_attentions = (
-            output_attentions if output_attentions is not None else
-            self.config.output_attentions)
-        output_hidden_states = (
-            output_hidden_states if output_hidden_states is not None else
-            self.config.output_hidden_states)
-        return_dict = (
-            return_dict
-            if return_dict is not None else self.config.use_return_dict)
+        output_attentions = (output_attentions if output_attentions is not None
+                             else self.config.output_attentions)
+        output_hidden_states = (output_hidden_states
+                                if output_hidden_states is not None else
+                                self.config.output_hidden_states)
+        return_dict = (return_dict if return_dict is not None else
+                       self.config.use_return_dict)
 
         (input_ids, attention_mask, past_key_values, inputs_embeds,
          labels) = self.forward_vision_tower(input_ids, attention_mask,

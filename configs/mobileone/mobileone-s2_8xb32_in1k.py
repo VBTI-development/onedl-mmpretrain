@@ -18,14 +18,13 @@ base_train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='RandomResizedCrop', scale=224, backend='pillow'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
-    dict(
-        type='RandAugment',
-        policies='timm_increasing',
-        num_policies=2,
-        total_level=10,
-        magnitude_level=7,
-        magnitude_std=0.5,
-        hparams=dict(pad_val=[round(x) for x in bgr_mean])),
+    dict(type='RandAugment',
+         policies='timm_increasing',
+         num_policies=2,
+         total_level=10,
+         magnitude_level=7,
+         magnitude_std=0.5,
+         hparams=dict(pad_val=[round(x) for x in bgr_mean])),
     dict(type='PackInputs')
 ]
 
@@ -51,15 +50,13 @@ train_pipeline_112e[1]['scale'] = 224
 train_pipeline_112e[3]['magnitude_level'] *= 1.0
 
 custom_hooks = [
-    dict(
-        type='SwitchRecipeHook',
-        schedule=[
-            dict(action_epoch=37, pipeline=train_pipeline_37e),
-            dict(action_epoch=112, pipeline=train_pipeline_112e),
-        ]),
-    dict(
-        type='EMAHook',
-        momentum=5e-4,
-        priority='ABOVE_NORMAL',
-        update_buffers=True)
+    dict(type='SwitchRecipeHook',
+         schedule=[
+             dict(action_epoch=37, pipeline=train_pipeline_37e),
+             dict(action_epoch=112, pipeline=train_pipeline_112e),
+         ]),
+    dict(type='EMAHook',
+         momentum=5e-4,
+         priority='ABOVE_NORMAL',
+         update_buffers=True)
 ]

@@ -23,7 +23,6 @@ class MoCoV3Head(BaseModule):
             controls the concentration level of the distribution.
             Defaults to 1.0.
     """
-
     def __init__(self,
                  predictor: dict,
                  loss: dict,

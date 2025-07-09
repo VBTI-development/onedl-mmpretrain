@@ -10,8 +10,8 @@ zeroshot_prompt = (
 # model settings
 model = dict(
     type='Flamingo',
-    tokenizer=dict(
-        type='LlamaTokenizer', name_or_path='decapoda-research/llama-7b-hf'),
+    tokenizer=dict(type='LlamaTokenizer',
+                   name_or_path='decapoda-research/llama-7b-hf'),
     vision_encoder=dict(
         type='VisionTransformer',
         arch='l',
@@ -26,15 +26,13 @@ model = dict(
             'vit-large-p14_clip-openai-pre_3rdparty_20230517-95e2af0b.pth'),
     ),
     lang_encoder=dict(
-        base=dict(
-            type='AutoModelForCausalLM',
-            name_or_path='decapoda-research/llama-7b-hf',
-            local_files_only=True),
-        adapter=dict(
-            type='FlamingoLMAdapter',
-            vis_hidden_size=1024,
-            cross_attn_every_n_layers=4,
-            use_media_placement_augmentation=False),
+        base=dict(type='AutoModelForCausalLM',
+                  name_or_path='decapoda-research/llama-7b-hf',
+                  local_files_only=True),
+        adapter=dict(type='FlamingoLMAdapter',
+                     vis_hidden_size=1024,
+                     cross_attn_every_n_layers=4,
+                     use_media_placement_augmentation=False),
     ),
     task='caption',
     zeroshot_prompt=zeroshot_prompt,
@@ -52,11 +50,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=224,
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='ResizeEdge',
+         scale=224,
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='CenterCrop', crop_size=(224, 224)),
     dict(
         type='PackInputs',
@@ -82,9 +79,8 @@ val_dataloader = dict(
     persistent_workers=True,
 )
 
-val_evaluator = dict(
-    type='COCOCaption',
-    ann_file='data/coco/annotations/captions_train2014.json')
+val_evaluator = dict(type='COCOCaption',
+                     ann_file='data/coco/annotations/captions_train2014.json')
 
 # If you want standard test, please manually configure the test dataset
 test_dataloader = val_dataloader

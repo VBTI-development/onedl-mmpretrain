@@ -41,7 +41,6 @@ class DummyDataset(Dataset):
 
 @MODELS.register_module()
 class DenseCLDummyLayer(BaseModule):
-
     def __init__(self, init_cfg=None):
         super().__init__(init_cfg)
         self.linear = nn.Linear(2, 1)
@@ -51,7 +50,6 @@ class DenseCLDummyLayer(BaseModule):
 
 
 class ToyModel(BaseSelfSupervisor):
-
     def __init__(self):
         super().__init__(backbone=dict(type='DenseCLDummyLayer'))
         self.loss_lambda = 0.5
@@ -68,7 +66,6 @@ class ToyModel(BaseSelfSupervisor):
 
 
 class TestDenseCLHook(TestCase):
-
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
 
@@ -86,24 +83,24 @@ class TestDenseCLHook(TestCase):
         densecl_hook = DenseCLHook(start_iters=1)
 
         # test DenseCLHook with model wrapper
-        runner = Runner(
-            model=toy_model,
-            work_dir=self.temp_dir.name,
-            train_dataloader=dict(
-                dataset=dummy_dataset,
-                sampler=dict(type='DefaultSampler', shuffle=True),
-                collate_fn=dict(type='default_collate'),
-                batch_size=1,
-                num_workers=0),
-            optim_wrapper=OptimWrapper(
-                torch.optim.Adam(toy_model.parameters())),
-            param_scheduler=dict(type='MultiStepLR', milestones=[1]),
-            train_cfg=dict(by_epoch=True, max_epochs=2),
-            custom_hooks=[densecl_hook],
-            default_hooks=dict(logger=None),
-            log_processor=dict(window_size=1),
-            experiment_name='test_densecl_hook',
-            default_scope='mmpretrain')
+        runner = Runner(model=toy_model,
+                        work_dir=self.temp_dir.name,
+                        train_dataloader=dict(
+                            dataset=dummy_dataset,
+                            sampler=dict(type='DefaultSampler', shuffle=True),
+                            collate_fn=dict(type='default_collate'),
+                            batch_size=1,
+                            num_workers=0),
+                        optim_wrapper=OptimWrapper(
+                            torch.optim.Adam(toy_model.parameters())),
+                        param_scheduler=dict(type='MultiStepLR',
+                                             milestones=[1]),
+                        train_cfg=dict(by_epoch=True, max_epochs=2),
+                        custom_hooks=[densecl_hook],
+                        default_hooks=dict(logger=None),
+                        log_processor=dict(window_size=1),
+                        experiment_name='test_densecl_hook',
+                        default_scope='mmpretrain')
 
         runner.train()
 

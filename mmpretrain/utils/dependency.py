@@ -44,7 +44,6 @@ def require(dep, install=None):
         install (str, optional): The installation command hint. Defaults
             to None, which means to use "pip install dep".
     """
-
     def wrapper(fn):
         assert isfunction(fn)
 

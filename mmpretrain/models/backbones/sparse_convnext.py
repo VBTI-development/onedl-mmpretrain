@@ -24,9 +24,7 @@ class SparseConvNeXtBlock(ConvNeXtBlock):
         As default, we use the second to align with the official repository.
         And it may be slightly faster.
     """
-
     def forward(self, x):
-
         def _inner_forward(x):
             shortcut = x
             x = self.depthwise_conv(x)
@@ -123,14 +121,14 @@ class SparseConvNeXt(ConvNeXt):
                  gap_before_output: bool = True,
                  with_cp: bool = False,
                  init_cfg: Optional[Union[dict, List[dict]]] = [
-                     dict(
-                         type='TruncNormal',
-                         layer=['Conv2d', 'Linear'],
-                         std=.02,
-                         bias=0.),
-                     dict(
-                         type='Constant', layer=['LayerNorm'], val=1.,
-                         bias=0.),
+                     dict(type='TruncNormal',
+                          layer=['Conv2d', 'Linear'],
+                          std=.02,
+                          bias=0.),
+                     dict(type='Constant',
+                          layer=['LayerNorm'],
+                          val=1.,
+                          bias=0.),
                  ]):
         super(ConvNeXt, self).__init__(init_cfg=init_cfg)
 
@@ -171,11 +169,10 @@ class SparseConvNeXt(ConvNeXt):
         # 4 downsample layers between stages, including the stem layer.
         self.downsample_layers = ModuleList()
         stem = nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                self.channels[0],
-                kernel_size=stem_patch_size,
-                stride=stem_patch_size),
+            nn.Conv2d(in_channels,
+                      self.channels[0],
+                      kernel_size=stem_patch_size,
+                      stride=stem_patch_size),
             build_norm_layer(norm_cfg, self.channels[0]),
         )
         self.downsample_layers.append(stem)
@@ -197,11 +194,10 @@ class SparseConvNeXt(ConvNeXt):
             if i >= 1:
                 downsample_layer = nn.Sequential(
                     build_norm_layer(norm_cfg, self.channels[i - 1]),
-                    nn.Conv2d(
-                        self.channels[i - 1],
-                        channels,
-                        kernel_size=2,
-                        stride=2),
+                    nn.Conv2d(self.channels[i - 1],
+                              channels,
+                              kernel_size=2,
+                              stride=2),
                 )
                 self.downsample_layers.append(downsample_layer)
 
@@ -259,23 +255,21 @@ class SparseConvNeXt(ConvNeXt):
 
         elif isinstance(m, nn.MaxPool2d):
             m: nn.MaxPool2d
-            output = SparseMaxPooling(
-                m.kernel_size,
-                stride=m.stride,
-                padding=m.padding,
-                dilation=m.dilation,
-                return_indices=m.return_indices,
-                ceil_mode=m.ceil_mode)
+            output = SparseMaxPooling(m.kernel_size,
+                                      stride=m.stride,
+                                      padding=m.padding,
+                                      dilation=m.dilation,
+                                      return_indices=m.return_indices,
+                                      ceil_mode=m.ceil_mode)
 
         elif isinstance(m, nn.AvgPool2d):
             m: nn.AvgPool2d
-            output = SparseAvgPooling(
-                m.kernel_size,
-                m.stride,
-                m.padding,
-                ceil_mode=m.ceil_mode,
-                count_include_pad=m.count_include_pad,
-                divisor_override=m.divisor_override)
+            output = SparseAvgPooling(m.kernel_size,
+                                      m.stride,
+                                      m.padding,
+                                      ceil_mode=m.ceil_mode,
+                                      count_include_pad=m.count_include_pad,
+                                      divisor_override=m.divisor_override)
 
         # elif isinstance(m, (nn.BatchNorm2d, nn.SyncBatchNorm)):
         #     m: nn.BatchNorm2d

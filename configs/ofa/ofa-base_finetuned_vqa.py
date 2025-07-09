@@ -40,11 +40,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(480, 480),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(480, 480),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='OFAAddObjects'),
     dict(
         type='PackInputs',

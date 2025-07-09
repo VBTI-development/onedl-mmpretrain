@@ -91,10 +91,9 @@ class MobileNetV3(BaseBackbone):
                  norm_eval=False,
                  with_cp=False,
                  init_cfg=[
-                     dict(
-                         type='Kaiming',
-                         layer=['Conv2d'],
-                         nonlinearity='leaky_relu'),
+                     dict(type='Kaiming',
+                          layer=['Conv2d'],
+                          nonlinearity='leaky_relu'),
                      dict(type='Normal', layer=['Linear'], std=0.01),
                      dict(type='Constant', layer=['BatchNorm2d'], val=1)
                  ]):
@@ -129,15 +128,14 @@ class MobileNetV3(BaseBackbone):
         layer_setting = self.arch_settings[self.arch]
         in_channels = 16
 
-        layer = ConvModule(
-            in_channels=3,
-            out_channels=in_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            conv_cfg=self.conv_cfg,
-            norm_cfg=self.norm_cfg,
-            act_cfg=dict(type='HSwish'))
+        layer = ConvModule(in_channels=3,
+                           out_channels=in_channels,
+                           kernel_size=3,
+                           stride=2,
+                           padding=1,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=dict(type='HSwish'))
         self.add_module('layer0', layer)
         layers.append('layer0')
 
@@ -145,30 +143,27 @@ class MobileNetV3(BaseBackbone):
             (kernel_size, mid_channels, out_channels, with_se, act,
              stride) = params
             if with_se:
-                se_cfg = dict(
-                    channels=mid_channels,
-                    ratio=4,
-                    act_cfg=(dict(type='ReLU'),
-                             dict(
-                                 type='HSigmoid',
-                                 bias=3,
-                                 divisor=6,
-                                 min_value=0,
-                                 max_value=1)))
+                se_cfg = dict(channels=mid_channels,
+                              ratio=4,
+                              act_cfg=(dict(type='ReLU'),
+                                       dict(type='HSigmoid',
+                                            bias=3,
+                                            divisor=6,
+                                            min_value=0,
+                                            max_value=1)))
             else:
                 se_cfg = None
 
-            layer = InvertedResidual(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                mid_channels=mid_channels,
-                kernel_size=kernel_size,
-                stride=stride,
-                se_cfg=se_cfg,
-                conv_cfg=self.conv_cfg,
-                norm_cfg=self.norm_cfg,
-                act_cfg=dict(type=act),
-                with_cp=self.with_cp)
+            layer = InvertedResidual(in_channels=in_channels,
+                                     out_channels=out_channels,
+                                     mid_channels=mid_channels,
+                                     kernel_size=kernel_size,
+                                     stride=stride,
+                                     se_cfg=se_cfg,
+                                     conv_cfg=self.conv_cfg,
+                                     norm_cfg=self.norm_cfg,
+                                     act_cfg=dict(type=act),
+                                     with_cp=self.with_cp)
             in_channels = out_channels
             layer_name = 'layer{}'.format(i + 1)
             self.add_module(layer_name, layer)
@@ -176,15 +171,14 @@ class MobileNetV3(BaseBackbone):
 
         # Build the last layer before pooling
         # TODO: No dilation
-        layer = ConvModule(
-            in_channels=in_channels,
-            out_channels=mid_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            conv_cfg=self.conv_cfg,
-            norm_cfg=self.norm_cfg,
-            act_cfg=dict(type='HSwish'))
+        layer = ConvModule(in_channels=in_channels,
+                           out_channels=mid_channels,
+                           kernel_size=1,
+                           stride=1,
+                           padding=0,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=dict(type='HSwish'))
         layer_name = 'layer{}'.format(len(layer_setting) + 1)
         self.add_module(layer_name, layer)
         layers.append(layer_name)

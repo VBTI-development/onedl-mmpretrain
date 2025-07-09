@@ -13,8 +13,8 @@ with read_base():
     from .._base_.schedules.imagenet_bs4096_adamw import *
 
 # model setting
-model.update(
-    backbone=dict(img_size=384, patch_size=32), head=dict(topk=(1, 5)))
+model.update(backbone=dict(img_size=384, patch_size=32),
+             head=dict(topk=(1, 5)))
 
 model.head.loss = dict(type=CrossEntropyLoss, loss_weight=1.0)
 

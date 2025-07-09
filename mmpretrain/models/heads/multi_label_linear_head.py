@@ -27,17 +27,19 @@ class MultiLabelLinearClsHead(MultiLabelClsHead):
         positive predictions. If neither is set, use ``thr=0.5`` as
         default.
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
                  loss: Dict = dict(type='CrossEntropyLoss', use_sigmoid=True),
                  thr: Optional[float] = None,
                  topk: Optional[int] = None,
-                 init_cfg: Optional[dict] = dict(
-                     type='Normal', layer='Linear', std=0.01)):
-        super(MultiLabelLinearClsHead, self).__init__(
-            loss=loss, thr=thr, topk=topk, init_cfg=init_cfg)
+                 init_cfg: Optional[dict] = dict(type='Normal',
+                                                 layer='Linear',
+                                                 std=0.01)):
+        super(MultiLabelLinearClsHead, self).__init__(loss=loss,
+                                                      thr=thr,
+                                                      topk=topk,
+                                                      init_cfg=init_cfg)
 
         assert num_classes > 0, f'num_classes ({num_classes}) must be a ' \
             'positive integer.'

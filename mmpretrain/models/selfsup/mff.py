@@ -44,8 +44,9 @@ class MFFViT(MAEViT):
 
             It only works without input mask. Defaults to ``"avg_featmap"``.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+            embedding vector resize. Defaults to "bicubic".
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         mask_ratio (bool): The ratio of total number of patches to be masked.
@@ -53,7 +54,6 @@ class MFFViT(MAEViT):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
-
     def __init__(self,
                  arch: Union[str, dict] = 'b',
                  img_size: int = 224,
@@ -69,21 +69,20 @@ class MFFViT(MAEViT):
                  layer_cfgs: dict = dict(),
                  mask_ratio: float = 0.75,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            arch=arch,
-            img_size=img_size,
-            patch_size=patch_size,
-            out_indices=out_indices,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            norm_cfg=norm_cfg,
-            final_norm=final_norm,
-            out_type=out_type,
-            interpolate_mode=interpolate_mode,
-            patch_cfg=patch_cfg,
-            layer_cfgs=layer_cfgs,
-            mask_ratio=mask_ratio,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         img_size=img_size,
+                         patch_size=patch_size,
+                         out_indices=out_indices,
+                         drop_rate=drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         norm_cfg=norm_cfg,
+                         final_norm=final_norm,
+                         out_type=out_type,
+                         interpolate_mode=interpolate_mode,
+                         patch_cfg=patch_cfg,
+                         layer_cfgs=layer_cfgs,
+                         mask_ratio=mask_ratio,
+                         init_cfg=init_cfg)
         proj_layers = [
             torch.nn.Linear(self.embed_dims, self.embed_dims)
             for _ in range(len(self.out_indices) - 1)
@@ -167,7 +166,6 @@ class MFF(MAE):
     Implementation of `Improving Pixel-based MIM by Reducing Wasted Modeling
     Capability`.
     """
-
     def loss(self, inputs: torch.Tensor, data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

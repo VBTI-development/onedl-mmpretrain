@@ -35,7 +35,6 @@ class BlipNLVR(BaseModel):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_backbone: dict,
                  multimodal_backbone: dict,
@@ -49,8 +48,8 @@ class BlipNLVR(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
         if tokenizer is not None:
             self.tokenizer = TOKENIZER.build(tokenizer)
         self.vision_backbone = MODELS.build(vision_backbone)
@@ -135,8 +134,8 @@ class BlipNLVR(BaseModel):
         # prepare inputs for decoder generation.
         image_embeds = self.vision_backbone(images)[0]
         texts = self.preprocess_text(data_samples)
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(self.device)
 
         image0_embeds, image1_embeds = torch.split(image_embeds,
                                                    texts.input_ids.size(0))
@@ -179,8 +178,8 @@ class BlipNLVR(BaseModel):
         # prepare inputs for decoder generation.
         image_embeds = self.vision_backbone(images)[0]
         texts = self.preprocess_text(data_samples)
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(self.device)
         image0_embeds, image1_embeds = torch.split(image_embeds,
                                                    texts.input_ids.size(0))
 

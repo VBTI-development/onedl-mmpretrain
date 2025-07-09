@@ -18,8 +18,7 @@ from rich.progress import BarColumn, MofNCompleteColumn, Progress, TextColumn
 
 
 class SimpleModel(BaseModel):
-    """simple model that do nothing in train_step."""
-
+    """Simple model that do nothing in train_step."""
     def __init__(self):
         super(SimpleModel, self).__init__()
         self.data_preprocessor = nn.Identity()
@@ -33,7 +32,6 @@ class SimpleModel(BaseModel):
 
 
 class ParamRecordHook(Hook):
-
     def __init__(self, by_epoch):
         super().__init__()
         self.by_epoch = by_epoch
@@ -47,12 +45,14 @@ class ParamRecordHook(Hook):
     def before_train(self, runner):
         if self.by_epoch:
             total = runner.train_loop.max_epochs
-            self.task_id = self.progress.add_task(
-                'epochs', start=True, total=total)
+            self.task_id = self.progress.add_task('epochs',
+                                                  start=True,
+                                                  total=total)
         else:
             total = runner.train_loop.max_iters
-            self.task_id = self.progress.add_task(
-                'iters', start=True, total=total)
+            self.task_id = self.progress.add_task('iters',
+                                                  start=True,
+                                                  total=total)
         self.progress.start()
 
     def after_train_epoch(self, runner):
@@ -90,28 +90,25 @@ def parse_args():
         type=int,
         help='The size of the dataset. If specify, `build_dataset` will '
         'be skipped and use this size as the dataset size.')
-    parser.add_argument(
-        '-n',
-        '--ngpus',
-        type=int,
-        default=1,
-        help='The number of GPUs used in training.')
-    parser.add_argument(
-        '-s',
-        '--save-path',
-        type=Path,
-        help='The learning rate curve plot save path')
+    parser.add_argument('-n',
+                        '--ngpus',
+                        type=int,
+                        default=1,
+                        help='The number of GPUs used in training.')
+    parser.add_argument('-s',
+                        '--save-path',
+                        type=Path,
+                        help='The learning rate curve plot save path')
     parser.add_argument(
         '--log-level',
         default='WARNING',
         help='The log level of the handler and logger. Defaults to '
         'WARNING.')
     parser.add_argument('--title', type=str, help='title of figure')
-    parser.add_argument(
-        '--style',
-        type=str,
-        default='whitegrid',
-        help='style of the figure, need `seaborn` package.')
+    parser.add_argument('--style',
+                        type=str,
+                        default='whitegrid',
+                        help='style of the figure, need `seaborn` package.')
     parser.add_argument('--not-show', default=False, action='store_true')
     parser.add_argument(
         '--window-size',
@@ -154,10 +151,9 @@ def plot_curve(lr_list, args, param_name, iters_per_epoch, by_epoch=True):
         ax.xaxis.tick_top()
         ax.set_xlabel('Iters')
         ax.xaxis.set_label_position('top')
-        sec_ax = ax.secondary_xaxis(
-            'bottom',
-            functions=(lambda x: x / iters_per_epoch,
-                       lambda y: y * iters_per_epoch))
+        sec_ax = ax.secondary_xaxis('bottom',
+                                    functions=(lambda x: x / iters_per_epoch,
+                                               lambda y: y * iters_per_epoch))
         sec_ax.set_xlabel('Epochs')
     else:
         plt.xlabel('Iters')
@@ -172,34 +168,31 @@ def plot_curve(lr_list, args, param_name, iters_per_epoch, by_epoch=True):
 def simulate_train(data_loader, cfg, by_epoch):
     model = SimpleModel()
     param_record_hook = ParamRecordHook(by_epoch=by_epoch)
-    default_hooks = dict(
-        param_scheduler=cfg.default_hooks['param_scheduler'],
-        runtime_info=None,
-        timer=None,
-        logger=None,
-        checkpoint=None,
-        sampler_seed=None,
-        param_record=param_record_hook)
+    default_hooks = dict(param_scheduler=cfg.default_hooks['param_scheduler'],
+                         runtime_info=None,
+                         timer=None,
+                         logger=None,
+                         checkpoint=None,
+                         sampler_seed=None,
+                         param_record=param_record_hook)
 
-    runner = Runner(
-        model=model,
-        work_dir=cfg.work_dir,
-        train_dataloader=data_loader,
-        train_cfg=cfg.train_cfg,
-        log_level=cfg.log_level,
-        optim_wrapper=cfg.optim_wrapper,
-        param_scheduler=cfg.param_scheduler,
-        default_scope=cfg.default_scope,
-        default_hooks=default_hooks,
-        visualizer=MagicMock(spec=Visualizer),
-        custom_hooks=cfg.get('custom_hooks', None))
+    runner = Runner(model=model,
+                    work_dir=cfg.work_dir,
+                    train_dataloader=data_loader,
+                    train_cfg=cfg.train_cfg,
+                    log_level=cfg.log_level,
+                    optim_wrapper=cfg.optim_wrapper,
+                    param_scheduler=cfg.param_scheduler,
+                    default_scope=cfg.default_scope,
+                    default_hooks=default_hooks,
+                    visualizer=MagicMock(spec=Visualizer),
+                    custom_hooks=cfg.get('custom_hooks', None))
 
     runner.train()
 
-    param_dict = dict(
-        lr=param_record_hook.lr_list,
-        momentum=param_record_hook.momentum_list,
-        wd=param_record_hook.wd_list)
+    param_dict = dict(lr=param_record_hook.lr_list,
+                      momentum=param_record_hook.momentum_list,
+                      wd=param_record_hook.wd_list)
 
     return param_dict
 

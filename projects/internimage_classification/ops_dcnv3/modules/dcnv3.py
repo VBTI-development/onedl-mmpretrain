@@ -19,7 +19,6 @@ from ..functions import DCNv3Function, dcnv3_core_pytorch
 
 
 class to_channels_first(nn.Module):
-
     def __init__(self):
         super().__init__()
 
@@ -28,7 +27,6 @@ class to_channels_first(nn.Module):
 
 
 class to_channels_last(nn.Module):
-
     def __init__(self):
         super().__init__()
 
@@ -81,7 +79,6 @@ def _is_power_of_2(n):
 
 
 class CenterFeatureScaleModule(nn.Module):
-
     def forward(self, query, center_feature_scale_proj_weight,
                 center_feature_scale_proj_bias):
         center_feature_scale = F.linear(
@@ -92,7 +89,6 @@ class CenterFeatureScaleModule(nn.Module):
 
 
 class DCNv3_pytorch(nn.Module):
-
     def __init__(
         self,
         channels=64,
@@ -149,13 +145,12 @@ class DCNv3_pytorch(nn.Module):
         self.remove_center = int(remove_center)
 
         self.dw_conv = nn.Sequential(
-            nn.Conv2d(
-                channels,
-                channels,
-                kernel_size=dw_kernel_size,
-                stride=1,
-                padding=(dw_kernel_size - 1) // 2,
-                groups=channels),
+            nn.Conv2d(channels,
+                      channels,
+                      kernel_size=dw_kernel_size,
+                      stride=1,
+                      padding=(dw_kernel_size - 1) // 2,
+                      groups=channels),
             build_norm_layer(channels, norm_layer, 'channels_first',
                              'channels_last'), build_act_layer(act_layer))
         self.offset = nn.Linear(
@@ -186,10 +181,8 @@ class DCNv3_pytorch(nn.Module):
         constant_(self.output_proj.bias.data, 0.)
 
     def forward(self, input):
-        """
-        :param query                       (N, H, W, C)
-        :return output                     (N, H, W, C)
-        """
+        """:param query                       (N, H, W, C) :return output (N,
+        H, W, C)"""
         N, H, W, _ = input.shape
 
         x = self.input_proj(input)
@@ -223,7 +216,6 @@ class DCNv3_pytorch(nn.Module):
 
 
 class DCNv3(nn.Module):
-
     def __init__(
         self,
         channels=64,
@@ -284,13 +276,12 @@ class DCNv3(nn.Module):
                 'remove_center is only compatible with odd kernel size.')
 
         self.dw_conv = nn.Sequential(
-            nn.Conv2d(
-                channels,
-                channels,
-                kernel_size=dw_kernel_size,
-                stride=1,
-                padding=(dw_kernel_size - 1) // 2,
-                groups=channels),
+            nn.Conv2d(channels,
+                      channels,
+                      kernel_size=dw_kernel_size,
+                      stride=1,
+                      padding=(dw_kernel_size - 1) // 2,
+                      groups=channels),
             build_norm_layer(channels, norm_layer, 'channels_first',
                              'channels_last'), build_act_layer(act_layer))
         self.offset = nn.Linear(
@@ -321,10 +312,8 @@ class DCNv3(nn.Module):
         constant_(self.output_proj.bias.data, 0.)
 
     def forward(self, input):
-        """
-        :param query                       (N, H, W, C)
-        :return output                     (N, H, W, C)
-        """
+        """:param query                       (N, H, W, C) :return output (N,
+        H, W, C)"""
         N, H, W, _ = input.shape
 
         x = self.input_proj(input)

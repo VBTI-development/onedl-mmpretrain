@@ -8,7 +8,6 @@ from mmpretrain.models.backbones import MixMIMTransformer
 
 
 class TestMixMIM(TestCase):
-
     def setUp(self):
         self.cfg = dict(arch='b', drop_rate=0.0, drop_path_rate=0.1)
 

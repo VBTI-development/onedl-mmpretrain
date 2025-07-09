@@ -20,7 +20,6 @@ class OCRVQA(BaseDataset):
         split (str): 'train', 'val' or 'test'.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self, data_root: str, data_prefix: str, ann_file: str,
                  split: str, **kwarg):
 

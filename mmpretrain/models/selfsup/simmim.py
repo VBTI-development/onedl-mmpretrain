@@ -52,7 +52,6 @@ class SimMIMSwinTransformer(SwinTransformer):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  arch: Union[str, dict] = 'T',
                  img_size: Union[Tuple[int, int], int] = 224,
@@ -69,22 +68,21 @@ class SimMIMSwinTransformer(SwinTransformer):
                  patch_cfg: dict = dict(),
                  pad_small_map: bool = False,
                  init_cfg: Optional[dict] = None) -> None:
-        super().__init__(
-            arch=arch,
-            img_size=img_size,
-            in_channels=in_channels,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            out_indices=out_indices,
-            use_abs_pos_embed=use_abs_pos_embed,
-            with_cp=with_cp,
-            frozen_stages=frozen_stages,
-            norm_eval=norm_eval,
-            norm_cfg=norm_cfg,
-            stage_cfgs=stage_cfgs,
-            patch_cfg=patch_cfg,
-            pad_small_map=pad_small_map,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         img_size=img_size,
+                         in_channels=in_channels,
+                         drop_rate=drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         out_indices=out_indices,
+                         use_abs_pos_embed=use_abs_pos_embed,
+                         with_cp=with_cp,
+                         frozen_stages=frozen_stages,
+                         norm_eval=norm_eval,
+                         norm_cfg=norm_cfg,
+                         stage_cfgs=stage_cfgs,
+                         patch_cfg=patch_cfg,
+                         pad_small_map=pad_small_map,
+                         init_cfg=init_cfg)
 
         self.mask_token = nn.Parameter(torch.zeros(1, 1, self.embed_dims))
 
@@ -165,10 +163,9 @@ class SimMIMSwinTransformer(SwinTransformer):
 class SimMIM(BaseSelfSupervisor):
     """SimMIM.
 
-    Implementation of `SimMIM: A Simple Framework for Masked Image Modeling
+    Implementation of `SimMIM: A Simple Framework for Masked Image Modeling` `
     <https://arxiv.org/abs/2111.09886>`_.
     """
-
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 

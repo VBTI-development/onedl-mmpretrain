@@ -9,8 +9,8 @@ from mmpretrain.registry import HOOKS
 
 @HOOKS.register_module()
 class SetAdaptiveMarginsHook(Hook):
-    r"""Set adaptive-margins in ArcFaceClsHead based on the power of
-    category-wise count.
+    r"""Set adaptive-margins in ArcFaceClsHead based on the power of category-
+    wise count.
 
     A PyTorch implementation of paper `Google Landmark Recognition 2020
     Competition Third Place Solution <https://arxiv.org/abs/2010.05350>`_.
@@ -23,7 +23,6 @@ class SetAdaptiveMarginsHook(Hook):
         margin_max (float): Upper bound of margins. Defaults to 0.5.
         power (float): The power of category freqercy. Defaults to -0.25.
     """
-
     def __init__(self, margin_min=0.05, margin_max=0.5, power=-0.25) -> None:
         self.margin_min = margin_min
         self.margin_max = margin_max
@@ -31,7 +30,7 @@ class SetAdaptiveMarginsHook(Hook):
         self.p = power
 
     def before_train(self, runner):
-        """change the margins in ArcFaceClsHead.
+        """Change the margins in ArcFaceClsHead.
 
         Args:
             runner (obj: `Runner`): Runner.

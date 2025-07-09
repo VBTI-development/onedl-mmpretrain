@@ -62,7 +62,7 @@ tensor([[1, 0, 0, 0],
 >>> plt.show()
 ```
 
-## **Use with Evalutor**
+## **Use with Evaluator**
 
 ```python
 >>> import torch

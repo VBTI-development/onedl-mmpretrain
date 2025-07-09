@@ -4397,9 +4397,9 @@ msgstr ""
 #: ../../papers/mobilevit.md:14
 msgid ""
 "The MobileViTBlock reckons transformers as convolutions to perform a global representation, meanwhile "
-"conbined with original convolution layers for local representation to build a block with global receptive "
+"combined with original convolution layers for local representation to build a block with global receptive "
 "field. This is different from ViT, which adds an extra class token and position embeddings for learning "
-"relative relationship. Without any position embeddings, MobileViT can benfit from multi-scale inputs during "
+"relative relationship. Without any position embeddings, MobileViT can benefit from multi-scale inputs during "
 "training."
 msgstr ""
 

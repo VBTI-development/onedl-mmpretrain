@@ -36,7 +36,6 @@ class AttentionWithRoPE(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -125,7 +124,6 @@ class EVA02EndcoderLayer(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -146,16 +144,15 @@ class EVA02EndcoderLayer(BaseModule):
 
         self.norm1 = build_norm_layer(norm_cfg, embed_dims)
 
-        self.attn = AttentionWithRoPE(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            attn_drop=attn_drop,
-            proj_drop=proj_drop,
-            qkv_bias=qkv_bias,
-            qk_scale=qk_scale,
-            proj_bias=proj_bias,
-            rope=rope,
-            with_cls_token=with_cls_token)
+        self.attn = AttentionWithRoPE(embed_dims=embed_dims,
+                                      num_heads=num_heads,
+                                      attn_drop=attn_drop,
+                                      proj_drop=proj_drop,
+                                      qkv_bias=qkv_bias,
+                                      qk_scale=qk_scale,
+                                      proj_bias=proj_bias,
+                                      rope=rope,
+                                      with_cls_token=with_cls_token)
 
         self.drop_path = build_dropout(
             dict(type='DropPath', drop_prob=drop_path_rate))
@@ -280,20 +277,19 @@ class ViTEVA02(VisionTransformer):
                  layer_cfgs=dict(),
                  **kwargs):
         # set essential args for Vision Transformer
-        kwargs.update(
-            arch=arch,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            norm_cfg=norm_cfg,
-            with_cls_token=with_cls_token)
+        kwargs.update(arch=arch,
+                      drop_rate=drop_rate,
+                      drop_path_rate=drop_path_rate,
+                      norm_cfg=norm_cfg,
+                      with_cls_token=with_cls_token)
         super(ViTEVA02, self).__init__(**kwargs)
 
         self.num_heads = self.arch_settings['num_heads']
 
         # Set RoPE
         head_dim = self.embed_dims // self.num_heads
-        self.rope = RotaryEmbeddingFast(
-            embed_dims=head_dim, patch_resolution=self.patch_resolution)
+        self.rope = RotaryEmbeddingFast(embed_dims=head_dim,
+                                        patch_resolution=self.patch_resolution)
 
         # stochastic depth decay rule
         dpr = np.linspace(0, drop_path_rate, self.num_layers)
@@ -301,20 +297,19 @@ class ViTEVA02(VisionTransformer):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(
-                embed_dims=self.embed_dims,
-                num_heads=self.num_heads,
-                feedforward_channels=self.
-                arch_settings['feedforward_channels'],
-                sub_ln=sub_ln,
-                norm_cfg=norm_cfg,
-                proj_drop=proj_drop_rate,
-                attn_drop=attn_drop_rate,
-                drop_rate=drop_rate,
-                qkv_bias=qkv_bias,
-                rope=self.rope,
-                with_cls_token=with_cls_token,
-                drop_path_rate=dpr[i])
+            _layer_cfg = dict(embed_dims=self.embed_dims,
+                              num_heads=self.num_heads,
+                              feedforward_channels=self.
+                              arch_settings['feedforward_channels'],
+                              sub_ln=sub_ln,
+                              norm_cfg=norm_cfg,
+                              proj_drop=proj_drop_rate,
+                              attn_drop=attn_drop_rate,
+                              drop_rate=drop_rate,
+                              qkv_bias=qkv_bias,
+                              rope=self.rope,
+                              with_cls_token=with_cls_token,
+                              drop_path_rate=dpr[i])
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(EVA02EndcoderLayer(**_layer_cfg))
 
@@ -327,12 +322,11 @@ class ViTEVA02(VisionTransformer):
             cls_tokens = self.cls_token.expand(B, -1, -1)
             x = torch.cat((cls_tokens, x), dim=1)
 
-        x = x + resize_pos_embed(
-            self.pos_embed,
-            self.patch_resolution,
-            patch_resolution,
-            mode=self.interpolate_mode,
-            num_extra_tokens=self.num_extra_tokens)
+        x = x + resize_pos_embed(self.pos_embed,
+                                 self.patch_resolution,
+                                 patch_resolution,
+                                 mode=self.interpolate_mode,
+                                 num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         x = self.pre_norm(x)

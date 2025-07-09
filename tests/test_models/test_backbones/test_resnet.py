@@ -85,8 +85,8 @@ def test_basic_block():
     assert x_out.shape == torch.Size([1, 64, 56, 56])
 
     # BasicBlock with stride 1 and downsample
-    downsample = nn.Sequential(
-        nn.Conv2d(64, 128, kernel_size=1, bias=False), nn.BatchNorm2d(128))
+    downsample = nn.Sequential(nn.Conv2d(64, 128, kernel_size=1, bias=False),
+                               nn.BatchNorm2d(128))
     block = BasicBlock(64, 128, downsample=downsample)
     assert block.in_channels == 64
     assert block.mid_channels == 128
@@ -165,8 +165,8 @@ def test_bottleneck():
     assert x_out.shape == (1, 64, 56, 56)
 
     # Bottleneck with stride 1 and downsample
-    downsample = nn.Sequential(
-        nn.Conv2d(64, 128, kernel_size=1), nn.BatchNorm2d(128))
+    downsample = nn.Sequential(nn.Conv2d(64, 128, kernel_size=1),
+                               nn.BatchNorm2d(128))
     block = Bottleneck(64, 128, style='pytorch', downsample=downsample)
     assert block.in_channels == 64
     assert block.mid_channels == 32
@@ -185,10 +185,13 @@ def test_bottleneck():
     assert x_out.shape == (1, 128, 56, 56)
 
     # Bottleneck with stride 2 and downsample
-    downsample = nn.Sequential(
-        nn.Conv2d(64, 128, kernel_size=1, stride=2), nn.BatchNorm2d(128))
-    block = Bottleneck(
-        64, 128, stride=2, style='pytorch', downsample=downsample)
+    downsample = nn.Sequential(nn.Conv2d(64, 128, kernel_size=1, stride=2),
+                               nn.BatchNorm2d(128))
+    block = Bottleneck(64,
+                       128,
+                       stride=2,
+                       style='pytorch',
+                       downsample=downsample)
     x = torch.randn(1, 64, 56, 56)
     x_out = block(x)
     assert x_out.shape == (1, 128, 28, 28)
@@ -405,10 +408,10 @@ def test_resnet():
     assert check_norm_state(model.modules(), False)
 
     # Test ResNet50 with torchvision pretrained weight
-    model = ResNet(
-        depth=50,
-        norm_eval=True,
-        init_cfg=dict(type='Pretrained', checkpoint='torchvision://resnet50'))
+    model = ResNet(depth=50,
+                   norm_eval=True,
+                   init_cfg=dict(type='Pretrained',
+                                 checkpoint='torchvision://resnet50'))
     model.init_weights()
     model.train()
     assert check_norm_state(model.modules(), False)

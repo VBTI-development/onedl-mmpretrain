@@ -44,7 +44,6 @@ class iTPNHiViT(HiViT):
         reconstruction_type (str): The reconstruction of self-supervised
             learning. Defaults to 'pixel'.
     """
-
     def __init__(
         self,
         arch='base',
@@ -116,7 +115,6 @@ class iTPNHiViT(HiViT):
 
     def rescale_init_weight(self) -> None:
         """Rescale the initialized weights."""
-
         def rescale(param, layer_id):
             param.div_(math.sqrt(2.0 * layer_id))
 
@@ -130,8 +128,8 @@ class iTPNHiViT(HiViT):
         N, L = batch_size, self.pos_embed.size(1)
         len_keep = int(L * (1 - mask_ratio))
 
-        noise = torch.rand(
-            N, L, device=self.pos_embed.device)  # noise in [0, 1]
+        noise = torch.rand(N, L,
+                           device=self.pos_embed.device)  # noise in [0, 1]
 
         # sort noise for each sample
         ids_shuffle = torch.argsort(
@@ -187,11 +185,10 @@ class iTPNHiViT(HiViT):
 
             x = self.patch_embed(x)
 
-            x = torch.gather(
-                x,
-                dim=1,
-                index=ids_keep[:, :, None, None,
-                               None].expand(-1, -1, *x.shape[2:]))
+            x = torch.gather(x,
+                             dim=1,
+                             index=ids_keep[:, :, None, None,
+                                            None].expand(-1, -1, *x.shape[2:]))
 
             outs = []
             for blk in self.blocks[:-self.num_main_blocks]:
@@ -316,9 +313,9 @@ class iTPN(BaseSelfSupervisor):
     """iTPN.
 
     Implementation of `iTPN: Integrally Pre-Trained Transformer Pyramid
-    Networks <https://arxiv.org/abs/2211.12735>`_.
+    Networks
+    <https://arxiv.org/abs/2211.12735>`_.
     """
-
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 

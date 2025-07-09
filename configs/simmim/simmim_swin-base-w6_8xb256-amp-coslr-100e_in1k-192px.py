@@ -4,28 +4,27 @@ _base_ = [
 ]
 
 # model settings
-model = dict(
-    type='SimMIM',
-    backbone=dict(
-        type='SimMIMSwinTransformer',
-        arch='base',
-        img_size=192,
-        stage_cfgs=dict(block_cfgs=dict(window_size=6))),
-    neck=dict(
-        type='SimMIMLinearDecoder', in_channels=128 * 2**3, encoder_stride=32),
-    head=dict(
-        type='SimMIMHead',
-        patch_size=4,
-        loss=dict(type='PixelReconstructionLoss', criterion='L1', channel=3)))
+model = dict(type='SimMIM',
+             backbone=dict(type='SimMIMSwinTransformer',
+                           arch='base',
+                           img_size=192,
+                           stage_cfgs=dict(block_cfgs=dict(window_size=6))),
+             neck=dict(type='SimMIMLinearDecoder',
+                       in_channels=128 * 2**3,
+                       encoder_stride=32),
+             head=dict(type='SimMIMHead',
+                       patch_size=4,
+                       loss=dict(type='PixelReconstructionLoss',
+                                 criterion='L1',
+                                 channel=3)))
 
 # optimizer wrapper
 optim_wrapper = dict(
     type='AmpOptimWrapper',
-    optimizer=dict(
-        type='AdamW',
-        lr=2e-4 * 2048 / 512,
-        betas=(0.9, 0.999),
-        weight_decay=0.05),
+    optimizer=dict(type='AdamW',
+                   lr=2e-4 * 2048 / 512,
+                   betas=(0.9, 0.999),
+                   weight_decay=0.05),
     clip_grad=dict(max_norm=5.0),
     paramwise_cfg=dict(
         custom_keys={
@@ -37,21 +36,19 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-6 / 2e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=90,
-        eta_min=1e-5 * 2048 / 512,
-        by_epoch=True,
-        begin=10,
-        end=100,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-6 / 2e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=90,
+         eta_min=1e-5 * 2048 / 512,
+         by_epoch=True,
+         begin=10,
+         end=100,
+         convert_to_iter_based=True)
 ]
 
 # runtime

@@ -20,7 +20,7 @@ class NocapsSave(COCOCaption):
     """Nocaps evaluation wrapper.
 
     Save the generated captions and transform into coco format.
-    The dumped file can be submitted to the official evluation system.
+    The dumped file can be submitted to the official evaluation system.
 
     Args:
         collect_device (str): Device name used for collecting results from
@@ -32,14 +32,13 @@ class NocapsSave(COCOCaption):
             will be used instead. Should be modified according to the
             `retrieval_type` for unambiguous results. Defaults to TR.
     """
-
     @require('pycocoevalcap')
     def __init__(self,
                  save_dir: str = './',
                  collect_device: str = 'cpu',
                  prefix: Optional[str] = None):
-        super(COCOCaption, self).__init__(
-            collect_device=collect_device, prefix=prefix)
+        super(COCOCaption, self).__init__(collect_device=collect_device,
+                                          prefix=prefix)
         self.save_dir = save_dir
 
     def compute_metrics(self, results: List):

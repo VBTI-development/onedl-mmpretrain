@@ -48,7 +48,6 @@ class MultiTasksMetric(BaseMetric):
             'task1_accuracy/top3': 100.0
         }
     """
-
     def __init__(self,
                  task_metrics: Dict,
                  collect_device: str = 'cpu') -> None:

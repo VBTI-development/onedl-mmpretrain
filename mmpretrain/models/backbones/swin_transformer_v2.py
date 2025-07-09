@@ -47,7 +47,6 @@ class SwinBlockV2(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -102,7 +101,6 @@ class SwinBlockV2(BaseModule):
             self.norm3 = build_norm_layer(norm_cfg, embed_dims)[1]
 
     def forward(self, x, hw_shape):
-
         def _inner_forward(x):
             # Use post normalization
             identity = x
@@ -158,7 +156,6 @@ class SwinBlockV2Sequence(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  depth,
@@ -262,7 +259,7 @@ class SwinTransformerV2(BaseBackbone):
         use_abs_pos_embed (bool): If True, add absolute position embedding to
             the patch embedding. Defaults to False.
         interpolate_mode (str): Select the interpolate mode for absolute
-            position embeding vector resize. Defaults to "bicubic".
+            position embedding vector resize. Defaults to "bicubic".
         with_cp (bool): Use checkpoint or not. Using checkpoint will save some
             memory while slowing down the training speed. Defaults to False.
         frozen_stages (int): Stages to be frozen (stop grad and set eval mode).
@@ -427,8 +424,8 @@ class SwinTransformerV2(BaseBackbone):
 
         self.stages = ModuleList()
         embed_dims = [self.embed_dims]
-        for i, (depth,
-                num_heads) in enumerate(zip(self.depths, self.num_heads)):
+        for i, (depth, num_heads) in enumerate(zip(self.depths,
+                                                   self.num_heads)):
             if isinstance(stage_cfgs, Sequence):
                 stage_cfg = stage_cfgs[i]
             else:

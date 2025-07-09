@@ -14,7 +14,6 @@ init_default_scope('mmpretrain')
 
 
 class TestMultiLabel(TestCase):
-
     def test_calculate(self):
         """Test using the metric from static method."""
 
@@ -40,12 +39,11 @@ class TestMultiLabel(TestCase):
         ])
 
         # Test with sequence of category indexes
-        res = MultiLabelMetric.calculate(
-            y_pred,
-            y_true,
-            pred_indices=True,
-            target_indices=True,
-            num_classes=4)
+        res = MultiLabelMetric.calculate(y_pred,
+                                         y_true,
+                                         pred_indices=True,
+                                         target_indices=True,
+                                         num_classes=4)
         self.assertIsInstance(res, tuple)
         precision, recall, f1_score, support = res
         expect_precision = sklearn.metrics.precision_score(
@@ -71,8 +69,11 @@ class TestMultiLabel(TestCase):
         self.assertTensorEqual(support, 7)
 
         # Test with topk argument
-        res = MultiLabelMetric.calculate(
-            y_pred_score, y_true, target_indices=True, topk=1, num_classes=4)
+        res = MultiLabelMetric.calculate(y_pred_score,
+                                         y_true,
+                                         target_indices=True,
+                                         topk=1,
+                                         num_classes=4)
         self.assertIsInstance(res, tuple)
         precision, recall, f1_score, support = res
         # Expected values come from sklearn
@@ -94,8 +95,11 @@ class TestMultiLabel(TestCase):
         self.assertTensorEqual(support, 7)
 
         # Test with thr argument
-        res = MultiLabelMetric.calculate(
-            y_pred_score, y_true, target_indices=True, thr=0.25, num_classes=4)
+        res = MultiLabelMetric.calculate(y_pred_score,
+                                         y_true,
+                                         target_indices=True,
+                                         thr=0.25,
+                                         num_classes=4)
         self.assertIsInstance(res, tuple)
         precision, recall, f1_score, support = res
         # Expected values come from sklearn
@@ -123,8 +127,10 @@ class TestMultiLabel(TestCase):
         # Test with invalid input
         with self.assertRaisesRegex(AssertionError,
                                     'Invalid `average` argument,'):
-            MultiLabelMetric.calculate(
-                y_pred, y_true, average='m', num_classes=10)
+            MultiLabelMetric.calculate(y_pred,
+                                       y_true,
+                                       average='m',
+                                       num_classes=10)
 
         y_true_binary = np.array([[1, 0, 0, 0], [0, 1, 0, 1]])
         y_pred_binary = np.array([[1, 0, 0, 1], [1, 0, 1, 0], [0, 1, 1, 0]])
@@ -233,12 +239,15 @@ class TestMultiLabel(TestCase):
             y_true_binary, thr05_y_pred, average='micro') * 100
         expect_f1 = sklearn.metrics.f1_score(
             y_true_binary, thr05_y_pred, average='micro') * 100
-        self.assertAlmostEqual(
-            res['multi-label/precision_micro'], expect_precision, places=4)
-        self.assertAlmostEqual(
-            res['multi-label/recall_micro'], expect_recall, places=4)
-        self.assertAlmostEqual(
-            res['multi-label/f1-score_micro'], expect_f1, places=4)
+        self.assertAlmostEqual(res['multi-label/precision_micro'],
+                               expect_precision,
+                               places=4)
+        self.assertAlmostEqual(res['multi-label/recall_micro'],
+                               expect_recall,
+                               places=4)
+        self.assertAlmostEqual(res['multi-label/f1-score_micro'],
+                               expect_f1,
+                               places=4)
 
         # Test with average None
         evaluator = Evaluator(dict(type='MultiLabelMetric', average=None))
@@ -287,9 +296,8 @@ class TestMultiLabel(TestCase):
 
 
 class TestAveragePrecision(TestCase):
-
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
         y_pred = torch.tensor([
             [0.9, 0.8, 0.3, 0.2],
             [0.1, 0.2, 0.2, 0.1],

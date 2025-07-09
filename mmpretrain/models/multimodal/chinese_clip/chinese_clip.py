@@ -43,12 +43,11 @@ class Bottleneck(nn.Module):
             self.downsample = nn.Sequential(
                 OrderedDict([('-1', nn.AvgPool2d(stride)),
                              ('0',
-                              nn.Conv2d(
-                                  inplanes,
-                                  planes * self.expansion,
-                                  1,
-                                  stride=1,
-                                  bias=False)),
+                              nn.Conv2d(inplanes,
+                                        planes * self.expansion,
+                                        1,
+                                        stride=1,
+                                        bias=False)),
                              ('1', nn.BatchNorm2d(planes * self.expansion))]))
 
     def forward(self, x: torch.Tensor):
@@ -68,7 +67,6 @@ class Bottleneck(nn.Module):
 
 
 class AttentionPool2d(nn.Module):
-
     def __init__(self,
                  spacial_dim: int,
                  embed_dim: int,
@@ -142,27 +140,24 @@ class ModifiedResNet(BaseModule):
         self.block, stage_blocks = self.arch_settings[depth]
 
         # the 3-layer stem
-        self.conv1 = nn.Conv2d(
-            3,
-            base_channels // 2,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            bias=False)
+        self.conv1 = nn.Conv2d(3,
+                               base_channels // 2,
+                               kernel_size=3,
+                               stride=2,
+                               padding=1,
+                               bias=False)
         self.bn1 = nn.BatchNorm2d(base_channels // 2)
-        self.conv2 = nn.Conv2d(
-            base_channels // 2,
-            base_channels // 2,
-            kernel_size=3,
-            padding=1,
-            bias=False)
+        self.conv2 = nn.Conv2d(base_channels // 2,
+                               base_channels // 2,
+                               kernel_size=3,
+                               padding=1,
+                               bias=False)
         self.bn2 = nn.BatchNorm2d(base_channels // 2)
-        self.conv3 = nn.Conv2d(
-            base_channels // 2,
-            base_channels,
-            kernel_size=3,
-            padding=1,
-            bias=False)
+        self.conv3 = nn.Conv2d(base_channels // 2,
+                               base_channels,
+                               kernel_size=3,
+                               padding=1,
+                               bias=False)
         self.bn3 = nn.BatchNorm2d(base_channels)
         self.avgpool = nn.AvgPool2d(2)
         self.relu = nn.ReLU(inplace=True)
@@ -171,12 +166,15 @@ class ModifiedResNet(BaseModule):
         # this is a *mutable* variable used during construction
         self._inplanes = base_channels
         self.layer1 = self._make_layer(base_channels, stage_blocks[0])
-        self.layer2 = self._make_layer(
-            base_channels * 2, stage_blocks[1], stride=2)
-        self.layer3 = self._make_layer(
-            base_channels * 4, stage_blocks[2], stride=2)
-        self.layer4 = self._make_layer(
-            base_channels * 8, stage_blocks[3], stride=2)
+        self.layer2 = self._make_layer(base_channels * 2,
+                                       stage_blocks[1],
+                                       stride=2)
+        self.layer3 = self._make_layer(base_channels * 4,
+                                       stage_blocks[2],
+                                       stride=2)
+        self.layer4 = self._make_layer(base_channels * 8,
+                                       stage_blocks[3],
+                                       stride=2)
 
         embed_dim = base_channels * 32
         self.attnpool = AttentionPool2d(input_size // 32, embed_dim,
@@ -192,7 +190,6 @@ class ModifiedResNet(BaseModule):
         return nn.Sequential(*layers)
 
     def forward(self, x):
-
         def stem(x):
             for conv, bn in [(self.conv1, self.bn1), (self.conv2, self.bn2),
                              (self.conv3, self.bn3)]:
@@ -232,7 +229,6 @@ class ChineseCLIP(BaseModel):
         init_cfg (dict, optional): The config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_backbone: dict,
                  text_backbone: dict,
@@ -248,8 +244,8 @@ class ChineseCLIP(BaseModel):
         data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
         data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            data_preprocessor=data_preprocessor, init_cfg=init_cfg)
+        super().__init__(data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         self.vision_backbone = MODELS.build(vision_backbone)
         self.text_backbone = MODELS.build(text_backbone)
@@ -331,17 +327,17 @@ class ChineseCLIP(BaseModel):
         image_features = self.extract_image_feat(images)
         text_features = self.extract_text_feat(texts)
 
-        image_features = image_features / image_features.norm(
-            dim=-1, keepdim=True)
-        text_features = text_features / text_features.norm(
-            dim=-1, keepdim=True)
+        image_features = image_features / image_features.norm(dim=-1,
+                                                              keepdim=True)
+        text_features = text_features / text_features.norm(dim=-1,
+                                                           keepdim=True)
 
         return image_features, text_features
 
     def compute_similarity(self, images, texts):
         """Extract images and texts features and compute cosine similarity."""
-        image_features, text_features = self.extract_feat(
-            images=images, texts=texts)
+        image_features, text_features = self.extract_feat(images=images,
+                                                          texts=texts)
 
         # cosine similarity as logits
         logit_scale = self.logit_scale.exp()
@@ -407,8 +403,8 @@ class ChineseCLIP(BaseModel):
             class_feature = class_features.mean(dim=0)
             class_feature /= class_feature.norm()
             class_embeddings.append(class_feature)
-        self.text_prototype_embeds = torch.stack(
-            class_embeddings, dim=1).to(device)
+        self.text_prototype_embeds = torch.stack(class_embeddings,
+                                                 dim=1).to(device)
 
     def tokenize(self, texts: Union[str, List[str]]) -> torch.LongTensor:
         """Returns the tokenized representation of given input string(s)
@@ -436,8 +432,9 @@ class ChineseCLIP(BaseModel):
                     self.tokenizer.tokenize(text))[:self.context_length - 2] +
                 [self.tokenizer.vocab['[SEP]']])
 
-        result = torch.zeros(
-            len(all_tokens), self.context_length, dtype=torch.long)
+        result = torch.zeros(len(all_tokens),
+                             self.context_length,
+                             dtype=torch.long)
 
         for i, tokens in enumerate(all_tokens):
             assert len(tokens) <= self.context_length

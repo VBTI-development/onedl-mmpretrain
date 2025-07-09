@@ -38,7 +38,6 @@ class MixMIMWindowAttention(WindowMSA):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  window_size,
@@ -49,15 +48,14 @@ class MixMIMWindowAttention(WindowMSA):
                  proj_drop_rate=0.,
                  init_cfg=None):
 
-        super().__init__(
-            embed_dims=embed_dims,
-            window_size=window_size,
-            num_heads=num_heads,
-            qkv_bias=qkv_bias,
-            qk_scale=qk_scale,
-            attn_drop=attn_drop_rate,
-            proj_drop=proj_drop_rate,
-            init_cfg=init_cfg)
+        super().__init__(embed_dims=embed_dims,
+                         window_size=window_size,
+                         num_heads=num_heads,
+                         qkv_bias=qkv_bias,
+                         qk_scale=qk_scale,
+                         attn_drop=attn_drop_rate,
+                         proj_drop=proj_drop_rate,
+                         init_cfg=init_cfg)
 
     def forward(self, x, mask=None):
 
@@ -125,7 +123,6 @@ class MixMIMBlock(TransformerEncoderLayer):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  input_resolution,
@@ -141,18 +138,17 @@ class MixMIMBlock(TransformerEncoderLayer):
                  norm_cfg=dict(type='LN'),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
 
-        super().__init__(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            feedforward_channels=int(mlp_ratio * embed_dims),
-            drop_rate=proj_drop_rate,
-            attn_drop_rate=attn_drop_rate,
-            drop_path_rate=drop_path_rate,
-            num_fcs=num_fcs,
-            qkv_bias=qkv_bias,
-            act_cfg=act_cfg,
-            norm_cfg=norm_cfg,
-            init_cfg=init_cfg)
+        super().__init__(embed_dims=embed_dims,
+                         num_heads=num_heads,
+                         feedforward_channels=int(mlp_ratio * embed_dims),
+                         drop_rate=proj_drop_rate,
+                         attn_drop_rate=attn_drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         num_fcs=num_fcs,
+                         qkv_bias=qkv_bias,
+                         act_cfg=act_cfg,
+                         norm_cfg=norm_cfg,
+                         init_cfg=init_cfg)
 
         self.embed_dims = embed_dims
         self.input_resolution = input_resolution
@@ -163,13 +159,13 @@ class MixMIMBlock(TransformerEncoderLayer):
         if min(self.input_resolution) <= self.window_size:
             self.window_size = min(self.input_resolution)
 
-        self.attn = MixMIMWindowAttention(
-            embed_dims=embed_dims,
-            window_size=to_2tuple(self.window_size),
-            num_heads=num_heads,
-            qkv_bias=qkv_bias,
-            attn_drop_rate=attn_drop_rate,
-            proj_drop_rate=proj_drop_rate)
+        self.attn = MixMIMWindowAttention(embed_dims=embed_dims,
+                                          window_size=to_2tuple(
+                                              self.window_size),
+                                          num_heads=num_heads,
+                                          qkv_bias=qkv_bias,
+                                          attn_drop_rate=attn_drop_rate,
+                                          proj_drop_rate=proj_drop_rate)
 
         self.drop_path = DropPath(
             drop_path_rate) if drop_path_rate > 0. else nn.Identity()
@@ -257,7 +253,6 @@ class MixMIMLayer(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims: int,
                  input_resolution: int,
@@ -283,23 +278,21 @@ class MixMIMLayer(BaseModule):
         self.blocks = nn.ModuleList()
         for i in range(depth):
             self.blocks.append(
-                MixMIMBlock(
-                    embed_dims=embed_dims,
-                    input_resolution=input_resolution,
-                    num_heads=num_heads,
-                    window_size=window_size,
-                    mlp_ratio=mlp_ratio,
-                    qkv_bias=qkv_bias,
-                    proj_drop_rate=proj_drop_rate,
-                    attn_drop_rate=attn_drop_rate,
-                    drop_path_rate=drop_path_rate[i],
-                    norm_cfg=norm_cfg))
+                MixMIMBlock(embed_dims=embed_dims,
+                            input_resolution=input_resolution,
+                            num_heads=num_heads,
+                            window_size=window_size,
+                            mlp_ratio=mlp_ratio,
+                            qkv_bias=qkv_bias,
+                            proj_drop_rate=proj_drop_rate,
+                            attn_drop_rate=attn_drop_rate,
+                            drop_path_rate=drop_path_rate[i],
+                            norm_cfg=norm_cfg))
         # patch merging layer
         if downsample is not None:
-            self.downsample = downsample(
-                in_channels=embed_dims,
-                out_channels=2 * embed_dims,
-                norm_cfg=norm_cfg)
+            self.downsample = downsample(in_channels=embed_dims,
+                                         out_channels=2 * embed_dims,
+                                         norm_cfg=norm_cfg)
         else:
             self.downsample = None
 
@@ -469,9 +462,9 @@ class MixMIMTransformer(BaseBackbone):
 
         self.avgpool = nn.AdaptiveAvgPool1d(1)
         self.num_patches = self.patch_resolution[0] * self.patch_resolution[1]
-        self.absolute_pos_embed = nn.Parameter(
-            torch.zeros(1, self.num_patches, self.embed_dims),
-            requires_grad=False)
+        self.absolute_pos_embed = nn.Parameter(torch.zeros(
+            1, self.num_patches, self.embed_dims),
+                                               requires_grad=False)
 
         _, self.norm = build_norm_layer(norm_cfg, self.num_features)
 

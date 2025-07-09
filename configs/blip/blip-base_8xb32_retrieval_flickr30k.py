@@ -16,24 +16,23 @@ model = dict(
     ),
     text_backbone=dict(
         type='XBertEncoder',
-        med_config=dict(
-            architectures=['BertModel'],
-            attention_probs_dropout_prob=0.1,
-            hidden_act='gelu',
-            hidden_dropout_prob=0.1,
-            hidden_size=768,
-            initializer_range=0.02,
-            intermediate_size=3072,
-            layer_norm_eps=1e-12,
-            max_position_embeddings=512,
-            model_type='bert',
-            num_attention_heads=12,
-            num_hidden_layers=12,
-            pad_token_id=0,
-            add_type_embeddings=False,
-            vocab_size=30524,
-            encoder_width=768,
-            add_cross_attention=True),
+        med_config=dict(architectures=['BertModel'],
+                        attention_probs_dropout_prob=0.1,
+                        hidden_act='gelu',
+                        hidden_dropout_prob=0.1,
+                        hidden_size=768,
+                        initializer_range=0.02,
+                        intermediate_size=3072,
+                        layer_norm_eps=1e-12,
+                        max_position_embeddings=512,
+                        model_type='bert',
+                        num_attention_heads=12,
+                        num_hidden_layers=12,
+                        pad_token_id=0,
+                        add_type_embeddings=False,
+                        vocab_size=30524,
+                        encoder_width=768,
+                        add_cross_attention=True),
     ),
     vision_neck=dict(
         type='Linear',
@@ -75,9 +74,8 @@ randomness = dict(seed=42)
 default_hooks = dict(logger=dict(interval=1))
 
 custom_hooks = [
-    dict(
-        type='WarmupParamHook',
-        param_name='alpha',
-        module_name='head',
-        warmup_epochs=2)
+    dict(type='WarmupParamHook',
+         param_name='alpha',
+         module_name='head',
+         warmup_epochs=2)
 ]

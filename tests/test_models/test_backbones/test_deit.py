@@ -13,20 +13,20 @@ from .utils import timm_resize_pos_embed
 
 
 class TestDeiT(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            arch='deit-tiny', img_size=224, patch_size=16, drop_rate=0.1)
+        self.cfg = dict(arch='deit-tiny',
+                        img_size=224,
+                        patch_size=16,
+                        drop_rate=0.1)
 
     def test_init_weights(self):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = DistilledVisionTransformer(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()
@@ -53,8 +53,9 @@ class TestDeiT(TestCase):
         cfg['img_size'] = 384
         model = DistilledVisionTransformer(**cfg)
         load_checkpoint(model, checkpoint, strict=True)
-        resized_pos_embed = timm_resize_pos_embed(
-            pretrain_pos_embed, model.pos_embed, num_tokens=2)
+        resized_pos_embed = timm_resize_pos_embed(pretrain_pos_embed,
+                                                  model.pos_embed,
+                                                  num_tokens=2)
         self.assertTrue(torch.allclose(model.pos_embed, resized_pos_embed))
 
         os.remove(checkpoint)

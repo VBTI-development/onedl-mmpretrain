@@ -23,7 +23,7 @@ def to_tensor(value):
 
 
 def _precision_recall_f1_support(pred_positive, gt_positive, average):
-    """calculate base classification task metrics, such as  precision, recall,
+    """Calculate base classification task metrics, such as  precision, recall,
     f1_score, support."""
     average_options = ['micro', 'macro', None]
     assert average in average_options, 'Invalid `average` argument, ' \
@@ -103,7 +103,7 @@ class Accuracy(BaseMetric):
         >>> Accuracy.calculate(y_score, y_true, topk=(1, 5))
         [[tensor([9.9000])], [tensor([51.5000])]]
         >>>
-        >>> # ------------------- Use with Evalutor -------------------
+        >>> # ------------------- Use with Evaluator -------------------
         >>> from mmpretrain.structures import DataSample
         >>> from mmengine.evaluator import Evaluator
         >>> data_samples = [
@@ -278,8 +278,8 @@ class Accuracy(BaseMetric):
 
 @METRICS.register_module()
 class SingleLabelMetric(BaseMetric):
-    r"""A collection of precision, recall, f1-score and support for
-    single-label tasks.
+    r"""A collection of precision, recall, f1-score and support for single-label
+    tasks.
 
     The collection of metrics is for single-label multi-class classification.
     And all these metrics are based on the confusion matrix of every category:
@@ -355,7 +355,7 @@ class SingleLabelMetric(BaseMetric):
         [(tensor(10.), tensor(0.9500), tensor(1.7352), tensor(1000)),
          (tensor(10.), tensor(0.5500), tensor(1.0427), tensor(1000))]
         >>>
-        >>> # ------------------- Use with Evalutor -------------------
+        >>> # ------------------- Use with Evaluator -------------------
         >>> from mmpretrain.structures import DataSample
         >>> from mmengine.evaluator import Evaluator
         >>> data_samples = [
@@ -460,8 +460,10 @@ class SingleLabelMetric(BaseMetric):
         target = torch.cat([res['gt_label'] for res in results])
         if 'pred_score' in results[0]:
             pred = torch.stack([res['pred_score'] for res in results])
-            metrics_list = self.calculate(
-                pred, target, thrs=self.thrs, average=self.average)
+            metrics_list = self.calculate(pred,
+                                          target,
+                                          thrs=self.thrs,
+                                          average=self.average)
 
             multi_thrs = len(self.thrs) > 1
             for i, thr in enumerate(self.thrs):
@@ -475,11 +477,10 @@ class SingleLabelMetric(BaseMetric):
         else:
             # If only label in the `pred_label`.
             pred = torch.cat([res['pred_label'] for res in results])
-            res = self.calculate(
-                pred,
-                target,
-                average=self.average,
-                num_classes=results[0]['num_classes'])
+            res = self.calculate(pred,
+                                 target,
+                                 average=self.average,
+                                 num_classes=results[0]['num_classes'])
             metrics = pack_results(*res)
 
         result_metrics = dict()
@@ -749,8 +750,12 @@ class ConfusionMatrix(BaseMetric):
                 if len(text_d) < len(text_cm):
                     text_cm = text_d
 
-                text_[i, j] = ax.text(
-                    j, i, text_cm, ha='center', va='center', color=color)
+                text_[i, j] = ax.text(j,
+                                      i,
+                                      text_cm,
+                                      ha='center',
+                                      va='center',
+                                      color=color)
 
         display_labels = classes or np.arange(num_classes)
 

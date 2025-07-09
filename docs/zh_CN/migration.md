@@ -719,7 +719,7 @@ model = dict(
 | MMSelfSup 0.x            | MMPretrain 1.x      | Remark                                                                                                                                                        |
 | ------------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | apis                     | /                   | 目前 `apis` 文件夹已暂时被**移除**，在未来可能会再添加回来。                                                                                                  |
-| core                     | engine              | `core` 文件夹重命名为 `engine`，包含了 `hooks`，`opimizers`。([API link](mmpretrain.engine))                                                                  |
+| core                     | engine              | `core` 文件夹重命名为 `engine`，包含了 `hooks`，`optimizers`。([API link](mmpretrain.engine))                                                                 |
 | datasets                 | datasets            | 数据集相关类主要基于不同的数据集实现，例如 ImageNet，Places205。([API link](mmpretrain.datasets))                                                             |
 | datasets/data_sources    | /                   | `data_sources` 已经被**移除**，并且现在 `datasets` 的逻辑和 OpenMMLab 其它项目保持一致。                                                                      |
 | datasets/pipelines       | datasets/transforms | `pipelines` 文件夹已经重命名为 `transforms`。([API link](mmpretrain.datasets.transforms))                                                                     |

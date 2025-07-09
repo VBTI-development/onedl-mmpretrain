@@ -40,13 +40,12 @@ def test_edgenext():
     assert feat[3].shape == torch.Size([1, 168])
 
     # Test with custom arch
-    model = EdgeNeXt(
-        arch={
-            'depths': [2, 3, 4, 5],
-            'channels': [20, 40, 80, 160],
-            'num_heads': [4, 4, 4, 4]
-        },
-        out_indices=(0, 1, 2, 3))
+    model = EdgeNeXt(arch={
+        'depths': [2, 3, 4, 5],
+        'channels': [20, 40, 80, 160],
+        'num_heads': [4, 4, 4, 4]
+    },
+                     out_indices=(0, 1, 2, 3))
     model.init_weights()
     model.train()
 
@@ -59,8 +58,9 @@ def test_edgenext():
     assert feat[3].shape == torch.Size([1, 160])
 
     # Test without gap before final norm
-    model = EdgeNeXt(
-        arch='small', out_indices=(0, 1, 2, 3), gap_before_final_norm=False)
+    model = EdgeNeXt(arch='small',
+                     out_indices=(0, 1, 2, 3),
+                     gap_before_final_norm=False)
 
     imgs = torch.randn(1, 3, 224, 224)
     feat = model(imgs)

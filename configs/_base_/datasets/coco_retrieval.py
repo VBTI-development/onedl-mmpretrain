@@ -14,64 +14,56 @@ rand_increasing_policies = [
     dict(type='AutoContrast'),
     dict(type='Equalize'),
     dict(type='Rotate', magnitude_key='angle', magnitude_range=(0, 30)),
-    dict(
-        type='Brightness', magnitude_key='magnitude',
-        magnitude_range=(0, 0.0)),
+    dict(type='Brightness',
+         magnitude_key='magnitude',
+         magnitude_range=(0, 0.0)),
     dict(type='Sharpness', magnitude_key='magnitude', magnitude_range=(0, 0)),
-    dict(
-        type='Shear',
-        magnitude_key='magnitude',
-        magnitude_range=(0, 0.3),
-        direction='horizontal'),
-    dict(
-        type='Shear',
-        magnitude_key='magnitude',
-        magnitude_range=(0, 0.3),
-        direction='vertical'),
+    dict(type='Shear',
+         magnitude_key='magnitude',
+         magnitude_range=(0, 0.3),
+         direction='horizontal'),
+    dict(type='Shear',
+         magnitude_key='magnitude',
+         magnitude_range=(0, 0.3),
+         direction='vertical'),
 ]
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=384,
-        crop_ratio_range=(0.5, 1.0),
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=384,
+         crop_ratio_range=(0.5, 1.0),
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
-    dict(
-        type='RandAugment',
-        policies=rand_increasing_policies,
-        num_policies=2,
-        magnitude_level=5),
+    dict(type='RandAugment',
+         policies=rand_increasing_policies,
+         num_policies=2,
+         magnitude_level=5),
     dict(type='CleanCaption', keys='text'),
-    dict(
-        type='PackInputs',
-        algorithm_keys=['text', 'is_matched'],
-        meta_keys=['image_id']),
+    dict(type='PackInputs',
+         algorithm_keys=['text', 'is_matched'],
+         meta_keys=['image_id']),
 ]
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(384, 384),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(384, 384),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='CleanCaption', keys='text'),
-    dict(
-        type='PackInputs',
-        algorithm_keys=['text', 'gt_text_id', 'gt_image_id'],
-        meta_keys=['image_id']),
+    dict(type='PackInputs',
+         algorithm_keys=['text', 'gt_text_id', 'gt_image_id'],
+         meta_keys=['image_id']),
 ]
 
 train_dataloader = dict(
     batch_size=32,
     num_workers=16,
-    dataset=dict(
-        type='COCORetrieval',
-        data_root='data/coco',
-        ann_file='annotations/caption_karpathy_train2014.json',
-        pipeline=train_pipeline),
+    dataset=dict(type='COCORetrieval',
+                 data_root='data/coco',
+                 ann_file='annotations/caption_karpathy_train2014.json',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
     persistent_workers=True,
     drop_last=True,

@@ -68,8 +68,8 @@ class MiniGPT4(BaseModel):
         data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
         data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            data_preprocessor=data_preprocessor, init_cfg=init_cfg)
+        super().__init__(data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
         self.task = task
         logger = MMLogger.get_current_instance()
 
@@ -156,15 +156,14 @@ class MiniGPT4(BaseModel):
             ]
 
         # update generation configs
-        self.generation_cfg = dict(
-            max_new_tokens=300,
-            num_beams=1,
-            do_sample=True,
-            min_length=1,
-            top_p=0.9,
-            repetition_penalty=1.1,
-            length_penalty=1.0,
-            temperature=1.0)
+        self.generation_cfg = dict(max_new_tokens=300,
+                                   num_beams=1,
+                                   do_sample=True,
+                                   min_length=1,
+                                   top_p=0.9,
+                                   repetition_penalty=1.1,
+                                   length_penalty=1.0,
+                                   temperature=1.0)
         self.generation_cfg.update(**generation_cfg)
 
         if hasattr(self, 'register_load_state_dict_post_hook'):
@@ -180,8 +179,8 @@ class MiniGPT4(BaseModel):
         device = images.device
         x = self.vision_encoder(images)[0]
         image_embeds = self.ln_vision(x).to(device)
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(device)
 
         query_tokens = self.query_tokens.expand(image_embeds.shape[0], -1, -1)
         query_output = self.q_former.bert(
@@ -192,8 +191,8 @@ class MiniGPT4(BaseModel):
         )
 
         inputs_llama = self.llama_proj(query_output.last_hidden_state)
-        atts_llama = torch.ones(
-            inputs_llama.size()[:-1], dtype=torch.long).to(images.device)
+        atts_llama = torch.ones(inputs_llama.size()[:-1],
+                                dtype=torch.long).to(images.device)
         return inputs_llama, atts_llama
 
     def prompt_wrap(self, img_embeds: torch.Tensor, atts_img: torch.Tensor,
@@ -221,11 +220,11 @@ class MiniGPT4(BaseModel):
                 return_tensors='pt',
                 padding='longest',
                 add_special_tokens=False).to(img_embeds.device)
-            p_after_tokens = self.llama_tokenizer(
-                p_after_list,
-                return_tensors='pt',
-                padding='longest',
-                add_special_tokens=False).to(img_embeds.device)
+            p_after_tokens = self.llama_tokenizer(p_after_list,
+                                                  return_tensors='pt',
+                                                  padding='longest',
+                                                  add_special_tokens=False).to(
+                                                      img_embeds.device)
             p_before_embeds = self.llama_model.model.embed_tokens(
                 p_before_tokens.input_ids)
             p_after_embeds = self.llama_model.model.embed_tokens(
@@ -267,13 +266,13 @@ class MiniGPT4(BaseModel):
 
         img_embeds, atts_img = self.prompt_wrap(img_embeds, atts_img, prompts)
 
-        to_regress_tokens = self.llama_tokenizer(
-            texts,
-            return_tensors='pt',
-            padding='longest',
-            truncation=True,
-            max_length=self.max_txt_len,
-            add_special_tokens=False).to(images.device)
+        to_regress_tokens = self.llama_tokenizer(texts,
+                                                 return_tensors='pt',
+                                                 padding='longest',
+                                                 truncation=True,
+                                                 max_length=self.max_txt_len,
+                                                 add_special_tokens=False).to(
+                                                     images.device)
 
         targets = to_regress_tokens.input_ids.masked_fill(
             to_regress_tokens.input_ids == self.llama_tokenizer.pad_token_id,
@@ -333,10 +332,9 @@ class MiniGPT4(BaseModel):
         bos_embeds = self.llama_model.model.embed_tokens(bos)
         inputs_embeds = torch.cat([bos_embeds, img_embeds], dim=1)
 
-        outputs = self.llama_model.generate(
-            inputs_embeds=inputs_embeds,
-            eos_token_id=self.end_token_id,
-            **self.generation_cfg)
+        outputs = self.llama_model.generate(inputs_embeds=inputs_embeds,
+                                            eos_token_id=self.end_token_id,
+                                            **self.generation_cfg)
 
         return self.post_process(outputs, data_samples)
 
@@ -353,8 +351,8 @@ class MiniGPT4(BaseModel):
         Returns:
             List[DataSample]: Return list of data samples.
         """
-        outputs = self.llama_tokenizer.batch_decode(
-            outputs, skip_special_tokens=True)
+        outputs = self.llama_tokenizer.batch_decode(outputs,
+                                                    skip_special_tokens=True)
 
         if data_samples is None:
             data_samples = [DataSample() for _ in range(len(outputs))]

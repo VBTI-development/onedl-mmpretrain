@@ -18,8 +18,9 @@ model = dict(
         type='DeiTClsHead',
         num_classes=1000,
         in_channels=768,
-        loss=dict(
-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
+        loss=dict(type='LabelSmoothLoss',
+                  label_smooth_val=0.1,
+                  mode='original'),
     ),
     # Change to the path of the pretrained model
     # init_cfg=dict(type='Pretrained', checkpoint=''),

@@ -29,15 +29,13 @@ def has_huggingface() -> bool:
 
 
 class TestImageClassifier(TestCase):
-    DEFAULT_ARGS = dict(
-        type='ImageClassifier',
-        backbone=dict(type='ResNet', depth=18),
-        neck=dict(type='GlobalAveragePooling'),
-        head=dict(
-            type='LinearClsHead',
-            num_classes=10,
-            in_channels=512,
-            loss=dict(type='CrossEntropyLoss')))
+    DEFAULT_ARGS = dict(type='ImageClassifier',
+                        backbone=dict(type='ResNet', depth=18),
+                        neck=dict(type='GlobalAveragePooling'),
+                        head=dict(type='LinearClsHead',
+                                  num_classes=10,
+                                  in_channels=512,
+                                  loss=dict(type='CrossEntropyLoss')))
 
     def test_initialize(self):
         model = MODELS.build(self.DEFAULT_ARGS)

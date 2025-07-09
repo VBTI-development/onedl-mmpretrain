@@ -53,7 +53,7 @@ We follow the [Google C++ Style Guide](https://google.github.io/styleguide/cppgu
 ## Pre-commit Hook
 
 We use [pre-commit hook](https://pre-commit.com/) that checks and formats for `flake8`, `yapf`, `isort`, `trailing whitespaces`, `markdown files`,
-fixes `end-of-files`, `double-quoted-strings`, `python-encoding-pragma`, `mixed-line-ending`, sorts `requirments.txt` automatically on every commit.
+fixes `end-of-files`, `double-quoted-strings`, `python-encoding-pragma`, `mixed-line-ending`, sorts `requirements.txt` automatically on every commit.
 The config for a pre-commit hook is stored in [.pre-commit-config](https://github.com/open-mmlab/mmpretrain/blob/main/.pre-commit-config.yaml).
 
 After you clone the repository, you will need to install initialize pre-commit hook.

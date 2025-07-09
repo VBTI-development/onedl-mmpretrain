@@ -31,7 +31,6 @@ PROMPT_MAP = {
 
 class LayerNorm(nn.LayerNorm):
     """Subclass torch's LayerNorm to handle fp16."""
-
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
         orig_type = x.dtype
@@ -60,7 +59,6 @@ class CLIP(BaseModel):
         init_cfg (dict, optional): The config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_backbone: dict,
                  projection: dict,
@@ -77,8 +75,8 @@ class CLIP(BaseModel):
         data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
         data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            data_preprocessor=data_preprocessor, init_cfg=init_cfg)
+        super().__init__(data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         self.context_length = context_length
 
@@ -131,8 +129,8 @@ class CLIP(BaseModel):
             nn.init.normal_(block.mlp.c_proj.weight, std=proj_std)
 
         if self.text_projection is not None:
-            nn.init.normal_(
-                self.text_projection, std=self.transformer.width**-0.5)
+            nn.init.normal_(self.text_projection,
+                            std=self.transformer.width**-0.5)
 
     def build_attention_mask(self):
         # lazily create causal attention mask,
@@ -207,17 +205,17 @@ class CLIP(BaseModel):
         image_features = self.extract_image_feat(images)
         text_features = self.extract_text_feat(texts)
 
-        image_features = image_features / image_features.norm(
-            dim=-1, keepdim=True)
-        text_features = text_features / text_features.norm(
-            dim=-1, keepdim=True)
+        image_features = image_features / image_features.norm(dim=-1,
+                                                              keepdim=True)
+        text_features = text_features / text_features.norm(dim=-1,
+                                                           keepdim=True)
 
         return image_features, text_features
 
     def compute_similarity(self, images, texts):
         """Extract images and texts features and compute cosine similarity."""
-        image_features, text_features = self.extract_feat(
-            images=images, texts=texts)
+        image_features, text_features = self.extract_feat(images=images,
+                                                          texts=texts)
 
         # cosine similarity as logits
         logit_scale = self.logit_scale.exp()
@@ -260,8 +258,9 @@ class CLIP(BaseModel):
                     self.tokenizer.tokenize(text))[:self.context_length - 2] +
                 [self.tokenizer.vocab['<|endoftext|>']])
 
-        result = torch.zeros(
-            len(all_tokens), self.context_length, dtype=torch.long)
+        result = torch.zeros(len(all_tokens),
+                             self.context_length,
+                             dtype=torch.long)
 
         for i, tokens in enumerate(all_tokens):
             assert len(tokens) <= self.context_length
@@ -272,7 +271,6 @@ class CLIP(BaseModel):
 
 @MODELS.register_module()
 class CLIPZeroShot(CLIP):
-
     def __init__(
         self,
         vision_backbone: dict,
@@ -360,5 +358,5 @@ class CLIPZeroShot(CLIP):
             class_feature = class_features.mean(dim=0)
             class_feature /= class_feature.norm()
             class_embeddings.append(class_feature)
-        self.text_prototype_embeds = torch.stack(
-            class_embeddings, dim=1).to(device)
+        self.text_prototype_embeds = torch.stack(class_embeddings,
+                                                 dim=1).to(device)

@@ -14,13 +14,11 @@ class SEBottleneck(Bottleneck):
         out_channels (int): The output channel of the SEBottleneck block.
         se_ratio (int): Squeeze ratio in SELayer. Default: 16
     """
-
     def __init__(self, in_channels, out_channels, se_ratio=16, **kwargs):
         super(SEBottleneck, self).__init__(in_channels, out_channels, **kwargs)
         self.se_layer = SELayer(out_channels, ratio=se_ratio)
 
     def forward(self, x):
-
         def _inner_forward(x):
             identity = x
 

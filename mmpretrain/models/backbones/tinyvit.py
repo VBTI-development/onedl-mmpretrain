@@ -37,7 +37,6 @@ class ConvBN2d(Sequential):
         init_cfg (dict): The initialization config of the module.
             Default: None.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -51,15 +50,14 @@ class ConvBN2d(Sequential):
         super().__init__(init_cfg=init_cfg)
         self.add_module(
             'conv2d',
-            nn.Conv2d(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=stride,
-                padding=padding,
-                dilation=dilation,
-                groups=groups,
-                bias=False))
+            nn.Conv2d(in_channels=in_channels,
+                      out_channels=out_channels,
+                      kernel_size=kernel_size,
+                      stride=stride,
+                      padding=padding,
+                      dilation=dilation,
+                      groups=groups,
+                      bias=False))
         bn2d = nn.BatchNorm2d(num_features=out_channels)
         # bn initialization
         torch.nn.init.constant_(bn2d.weight, bn_weight_init)
@@ -74,14 +72,13 @@ class ConvBN2d(Sequential):
         b = bn2d.bias - bn2d.running_mean * bn2d.weight / \
             (bn2d.running_var + bn2d.eps)**0.5
 
-        m = nn.Conv2d(
-            in_channels=w.size(1) * self.c.groups,
-            out_channels=w.size(0),
-            kernel_size=w.shape[2:],
-            stride=self.conv2d.stride,
-            padding=self.conv2d.padding,
-            dilation=self.conv2d.dilation,
-            groups=self.conv2d.groups)
+        m = nn.Conv2d(in_channels=w.size(1) * self.c.groups,
+                      out_channels=w.size(0),
+                      kernel_size=w.shape[2:],
+                      stride=self.conv2d.stride,
+                      padding=self.conv2d.padding,
+                      dilation=self.conv2d.dilation,
+                      groups=self.conv2d.groups)
         m.weight.data.copy_(w)
         m.bias.data.copy_(b)
         return m
@@ -104,7 +101,6 @@ class PatchEmbed(BaseModule):
         act_cfg (dict): The activation config of the module.
             Default: dict(type='GELU').
     """
-
     def __init__(self,
                  in_channels,
                  embed_dim,
@@ -118,15 +114,17 @@ class PatchEmbed(BaseModule):
         self.in_channels = in_channels
         self.embed_dim = embed_dim
         self.seq = nn.Sequential(
-            ConvBN2d(
-                in_channels,
-                embed_dim // 2,
-                kernel_size=3,
-                stride=2,
-                padding=1),
+            ConvBN2d(in_channels,
+                     embed_dim // 2,
+                     kernel_size=3,
+                     stride=2,
+                     padding=1),
             build_activation_layer(act_cfg),
-            ConvBN2d(
-                embed_dim // 2, embed_dim, kernel_size=3, stride=2, padding=1),
+            ConvBN2d(embed_dim // 2,
+                     embed_dim,
+                     kernel_size=3,
+                     stride=2,
+                     padding=1),
         )
 
     def forward(self, x):
@@ -149,7 +147,6 @@ class PatchMerging(nn.Module):
         act_cfg (dict): The activation config of the module.
             Default: dict(type='GELU').
     """
-
     def __init__(self,
                  resolution,
                  in_channels,
@@ -161,13 +158,12 @@ class PatchMerging(nn.Module):
 
         self.act = build_activation_layer(act_cfg)
         self.conv1 = ConvBN2d(in_channels, out_channels, kernel_size=1)
-        self.conv2 = ConvBN2d(
-            out_channels,
-            out_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            groups=out_channels)
+        self.conv2 = ConvBN2d(out_channels,
+                              out_channels,
+                              kernel_size=3,
+                              stride=2,
+                              padding=1,
+                              groups=out_channels)
         self.conv3 = ConvBN2d(out_channels, out_channels, kernel_size=1)
         self.out_resolution = (resolution[0] // 2, resolution[1] // 2)
 
@@ -198,7 +194,6 @@ class MBConvBlock(nn.Module):
         act_cfg (dict): The activation config of the module.
             Default: dict(type='GELU').
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -213,16 +208,17 @@ class MBConvBlock(nn.Module):
         self.conv1 = ConvBN2d(in_channels, hidden_channels, kernel_size=1)
         self.act = build_activation_layer(act_cfg)
         # depthwise conv
-        self.conv2 = ConvBN2d(
-            in_channels=hidden_channels,
-            out_channels=hidden_channels,
-            kernel_size=3,
-            stride=1,
-            padding=1,
-            groups=hidden_channels)
+        self.conv2 = ConvBN2d(in_channels=hidden_channels,
+                              out_channels=hidden_channels,
+                              kernel_size=3,
+                              stride=1,
+                              padding=1,
+                              groups=hidden_channels)
         # linear
-        self.conv3 = ConvBN2d(
-            hidden_channels, out_channels, kernel_size=1, bn_weight_init=0.0)
+        self.conv3 = ConvBN2d(hidden_channels,
+                              out_channels,
+                              kernel_size=1,
+                              bn_weight_init=0.0)
 
         self.drop_path = DropPath(
             drop_path) if drop_path > 0. else nn.Identity()
@@ -267,7 +263,6 @@ class ConvStage(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Default: None.
     """
-
     def __init__(self,
                  in_channels,
                  resolution,
@@ -284,22 +279,20 @@ class ConvStage(BaseModule):
         self.use_checkpoint = use_checkpoint
         # build blocks
         self.blocks = ModuleList([
-            MBConvBlock(
-                in_channels=in_channels,
-                out_channels=in_channels,
-                expand_ratio=conv_expand_ratio,
-                drop_path=drop_path[i]
-                if isinstance(drop_path, list) else drop_path)
+            MBConvBlock(in_channels=in_channels,
+                        out_channels=in_channels,
+                        expand_ratio=conv_expand_ratio,
+                        drop_path=drop_path[i]
+                        if isinstance(drop_path, list) else drop_path)
             for i in range(depth)
         ])
 
         # patch merging layer
         if downsample is not None:
-            self.downsample = downsample(
-                resolution=resolution,
-                in_channels=in_channels,
-                out_channels=out_channels,
-                act_cfg=act_cfg)
+            self.downsample = downsample(resolution=resolution,
+                                         in_channels=in_channels,
+                                         out_channels=out_channels,
+                                         act_cfg=act_cfg)
             self.resolution = self.downsample.out_resolution
         else:
             self.downsample = None
@@ -333,7 +326,6 @@ class MLP(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Default: None.
     """
-
     def __init__(self,
                  in_channels,
                  hidden_channels=None,
@@ -381,7 +373,6 @@ class TinyViTBlock(BaseModule):
         act_cfg (dict): The activation config of the module.
             Default: dict(type='GELU').
     """
-
     def __init__(self,
                  in_channels,
                  resolution,
@@ -408,27 +399,24 @@ class TinyViTBlock(BaseModule):
         head_dim = in_channels // num_heads
 
         window_resolution = (window_size, window_size)
-        self.attn = LeAttention(
-            in_channels,
-            head_dim,
-            num_heads,
-            attn_ratio=1,
-            resolution=window_resolution)
+        self.attn = LeAttention(in_channels,
+                                head_dim,
+                                num_heads,
+                                attn_ratio=1,
+                                resolution=window_resolution)
 
         mlp_hidden_dim = int(in_channels * mlp_ratio)
-        self.mlp = MLP(
-            in_channels=in_channels,
-            hidden_channels=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            drop=drop)
+        self.mlp = MLP(in_channels=in_channels,
+                       hidden_channels=mlp_hidden_dim,
+                       act_cfg=act_cfg,
+                       drop=drop)
 
-        self.local_conv = ConvBN2d(
-            in_channels=in_channels,
-            out_channels=in_channels,
-            kernel_size=local_conv_size,
-            stride=1,
-            padding=local_conv_size // 2,
-            groups=in_channels)
+        self.local_conv = ConvBN2d(in_channels=in_channels,
+                                   out_channels=in_channels,
+                                   kernel_size=local_conv_size,
+                                   stride=1,
+                                   padding=local_conv_size // 2,
+                                   groups=in_channels)
 
     def forward(self, x):
         H, W = self.img_size
@@ -499,7 +487,6 @@ class BasicStage(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Default: None.
     """
-
     def __init__(self,
                  in_channels,
                  resolution,
@@ -519,27 +506,25 @@ class BasicStage(BaseModule):
         self.use_checkpoint = use_checkpoint
         # build blocks
         self.blocks = ModuleList([
-            TinyViTBlock(
-                in_channels=in_channels,
-                resolution=resolution,
-                num_heads=num_heads,
-                window_size=window_size,
-                mlp_ratio=mlp_ratio,
-                drop=drop,
-                local_conv_size=local_conv_size,
-                act_cfg=act_cfg,
-                drop_path=drop_path[i]
-                if isinstance(drop_path, list) else drop_path)
+            TinyViTBlock(in_channels=in_channels,
+                         resolution=resolution,
+                         num_heads=num_heads,
+                         window_size=window_size,
+                         mlp_ratio=mlp_ratio,
+                         drop=drop,
+                         local_conv_size=local_conv_size,
+                         act_cfg=act_cfg,
+                         drop_path=drop_path[i]
+                         if isinstance(drop_path, list) else drop_path)
             for i in range(depth)
         ])
 
         # build patch merging layer
         if downsample is not None:
-            self.downsample = downsample(
-                resolution=resolution,
-                in_channels=in_channels,
-                out_channels=out_channels,
-                act_cfg=act_cfg)
+            self.downsample = downsample(resolution=resolution,
+                                         in_channels=in_channels,
+                                         out_channels=out_channels,
+                                         act_cfg=act_cfg)
             self.resolution = self.downsample.out_resolution
         else:
             self.downsample = None
@@ -676,11 +661,10 @@ class TinyViT(BaseBackbone):
         self.gap_before_final_norm = gap_before_final_norm
         self.layer_lr_decay = layer_lr_decay
 
-        self.patch_embed = PatchEmbed(
-            in_channels=in_channels,
-            embed_dim=self.channels[0],
-            resolution=self.img_size,
-            act_cfg=dict(type='GELU'))
+        self.patch_embed = PatchEmbed(in_channels=in_channels,
+                                      embed_dim=self.channels[0],
+                                      resolution=self.img_size,
+                                      act_cfg=dict(type='GELU'))
         patches_resolution = self.patch_embed.patches_resolution
 
         # stochastic depth decay rule
@@ -700,31 +684,29 @@ class TinyViT(BaseBackbone):
             downsample = PatchMerging if (i < self.num_stages - 1) else None
             out_channels = self.channels[min(i + 1, self.num_stages - 1)]
             if i >= 1:
-                stage = BasicStage(
-                    in_channels=channel,
-                    resolution=curr_resolution,
-                    depth=depth,
-                    num_heads=self.num_heads[i],
-                    window_size=self.widow_sizes[i],
-                    mlp_ratio=mlp_ratio,
-                    drop=drop_rate,
-                    drop_path=drop_path,
-                    downsample=downsample,
-                    use_checkpoint=use_checkpoint,
-                    local_conv_size=local_conv_size,
-                    out_channels=out_channels,
-                    act_cfg=act_cfg)
+                stage = BasicStage(in_channels=channel,
+                                   resolution=curr_resolution,
+                                   depth=depth,
+                                   num_heads=self.num_heads[i],
+                                   window_size=self.widow_sizes[i],
+                                   mlp_ratio=mlp_ratio,
+                                   drop=drop_rate,
+                                   drop_path=drop_path,
+                                   downsample=downsample,
+                                   use_checkpoint=use_checkpoint,
+                                   local_conv_size=local_conv_size,
+                                   out_channels=out_channels,
+                                   act_cfg=act_cfg)
             else:
-                stage = ConvStage(
-                    in_channels=channel,
-                    resolution=curr_resolution,
-                    depth=depth,
-                    act_cfg=act_cfg,
-                    drop_path=drop_path,
-                    downsample=downsample,
-                    use_checkpoint=use_checkpoint,
-                    out_channels=out_channels,
-                    conv_expand_ratio=mbconv_expand_ratio)
+                stage = ConvStage(in_channels=channel,
+                                  resolution=curr_resolution,
+                                  depth=depth,
+                                  act_cfg=act_cfg,
+                                  drop_path=drop_path,
+                                  downsample=downsample,
+                                  use_checkpoint=use_checkpoint,
+                                  out_channels=out_channels,
+                                  conv_expand_ratio=mbconv_expand_ratio)
             self.stages.append(stage)
 
             # add output norm

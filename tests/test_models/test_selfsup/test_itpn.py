@@ -15,11 +15,10 @@ def test_itpn():
         'std': [0.5, 0.5, 0.5],
         'to_rgb': True
     }
-    backbone = dict(
-        type='iTPNHiViT',
-        arch='base',
-        reconstruction_type='pixel',
-        mask_ratio=0.75)
+    backbone = dict(type='iTPNHiViT',
+                    arch='base',
+                    reconstruction_type='pixel',
+                    mask_ratio=0.75)
     neck = dict(
         type='iTPNPretrainDecoder',
         num_patches=196,
@@ -36,17 +35,15 @@ def test_itpn():
         fpn_depth=2,
         num_outs=3,
     )
-    head = dict(
-        type='MAEPretrainHead',
-        norm_pix=True,
-        patch_size=16,
-        loss=dict(type='PixelReconstructionLoss', criterion='L2'))
+    head = dict(type='MAEPretrainHead',
+                norm_pix=True,
+                patch_size=16,
+                loss=dict(type='PixelReconstructionLoss', criterion='L2'))
 
-    alg = iTPN(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = iTPN(backbone=backbone,
+               neck=neck,
+               head=head,
+               data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs': torch.randn((2, 3, 224, 224)),

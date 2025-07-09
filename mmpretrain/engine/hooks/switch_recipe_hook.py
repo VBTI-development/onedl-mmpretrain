@@ -12,7 +12,7 @@ from mmpretrain.registry import HOOKS, MODEL_WRAPPERS, MODELS
 
 @HOOKS.register_module()
 class SwitchRecipeHook(Hook):
-    """switch recipe during the training loop, including train pipeline, batch
+    """Switch recipe during the training loop, including train pipeline, batch
     augments and loss currently.
 
     Args:
@@ -86,7 +86,7 @@ class SwitchRecipeHook(Hook):
         self.schedule = OrderedDict(sorted(recipes.items()))
 
     def before_train(self, runner) -> None:
-        """before run setting. If resume form a checkpoint, do all switch
+        """Before run setting. If resume form a checkpoint, do all switch
         before the current epoch.
 
         Args:
@@ -101,13 +101,13 @@ class SwitchRecipeHook(Hook):
                                 f' (resume recipe of epoch {action_epoch})')
 
     def before_train_epoch(self, runner):
-        """do before train epoch."""
+        """Do before train epoch."""
         recipe = self.schedule.get(runner.epoch + 1, None)
         if recipe is not None:
             self._do_switch(runner, recipe, f' at epoch {runner.epoch + 1}')
 
     def _do_switch(self, runner, recipe, extra_info=''):
-        """do the switch aug process."""
+        """Do the switch aug process."""
         if 'batch_augments' in recipe:
             self._switch_batch_augments(runner, recipe['batch_augments'])
             runner.logger.info(f'Switch batch augments{extra_info}.')
@@ -122,7 +122,7 @@ class SwitchRecipeHook(Hook):
 
     @staticmethod
     def _switch_batch_augments(runner, batch_augments):
-        """switch the train augments."""
+        """Switch the train augments."""
         model = runner.model
         if is_model_wrapper(model):
             model = model.module
@@ -131,8 +131,7 @@ class SwitchRecipeHook(Hook):
 
     @staticmethod
     def _switch_train_pipeline(runner, train_pipeline):
-        """switch the train loader dataset pipeline."""
-
+        """Switch the train loader dataset pipeline."""
         def switch_pipeline(dataset, pipeline):
             if hasattr(dataset, 'pipeline'):
                 # for usual dataset
@@ -156,7 +155,7 @@ class SwitchRecipeHook(Hook):
 
     @staticmethod
     def _switch_loss(runner, loss_module):
-        """switch the loss module."""
+        """Switch the loss module."""
         model = runner.model
         if is_model_wrapper(model, MODEL_WRAPPERS):
             model = model.module

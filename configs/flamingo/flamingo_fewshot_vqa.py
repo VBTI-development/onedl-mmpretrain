@@ -5,8 +5,8 @@ _base_ = [
 # model settings
 model = dict(
     type='Flamingo',
-    tokenizer=dict(
-        type='LlamaTokenizer', name_or_path='decapoda-research/llama-7b-hf'),
+    tokenizer=dict(type='LlamaTokenizer',
+                   name_or_path='decapoda-research/llama-7b-hf'),
     vision_encoder=dict(
         type='VisionTransformer',
         arch='l',
@@ -21,15 +21,13 @@ model = dict(
             'vit-large-p14_clip-openai-pre_3rdparty_20230517-95e2af0b.pth'),
     ),
     lang_encoder=dict(
-        base=dict(
-            type='AutoModelForCausalLM',
-            name_or_path='decapoda-research/llama-7b-hf',
-            local_files_only=True),
-        adapter=dict(
-            type='FlamingoLMAdapter',
-            vis_hidden_size=1024,
-            cross_attn_every_n_layers=4,
-            use_media_placement_augmentation=False),
+        base=dict(type='AutoModelForCausalLM',
+                  name_or_path='decapoda-research/llama-7b-hf',
+                  local_files_only=True),
+        adapter=dict(type='FlamingoLMAdapter',
+                     vis_hidden_size=1024,
+                     cross_attn_every_n_layers=4,
+                     use_media_placement_augmentation=False),
     ),
     task='vqa',
     shot_prompt_tmpl=
@@ -51,19 +49,17 @@ test_pipeline = [
         scatter_key='img_path',
         transforms=[
             dict(type='LoadImageFromFile'),
-            dict(
-                type='ResizeEdge',
-                scale=224,
-                interpolation='bicubic',
-                backend='pillow'),
+            dict(type='ResizeEdge',
+                 scale=224,
+                 interpolation='bicubic',
+                 backend='pillow'),
             dict(type='CenterCrop', crop_size=(224, 224)),
         ],
         collate_keys=['img', 'scale_factor', 'ori_shape'],
     ),
-    dict(
-        type='PackInputs',
-        algorithm_keys=['question', 'gt_answer', 'gt_answer_weight', 'shots'],
-        meta_keys=['image_id']),
+    dict(type='PackInputs',
+         algorithm_keys=['question', 'gt_answer', 'gt_answer_weight', 'shots'],
+         meta_keys=['image_id']),
 ]
 
 val_dataloader = dict(

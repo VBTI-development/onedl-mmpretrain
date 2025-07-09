@@ -6,11 +6,10 @@ _base_ = [
 # dataset settings
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(224, 224),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(224, 224),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 
@@ -51,8 +50,8 @@ model = dict(
         pretrained=  # noqa
         'https://download.openmmlab.com/mmpretrain/v1.0/minigpt4/minigpt-4_qformer_20230615-1dfa889c.pth'  # noqa
     ),
-    lang_encoder=dict(
-        type='AutoModelForCausalLM', name_or_path='YOUR_PATH_TO_VICUNA'),
+    lang_encoder=dict(type='AutoModelForCausalLM',
+                      name_or_path='YOUR_PATH_TO_VICUNA'),
     tokenizer=dict(type='LlamaTokenizer', name_or_path='YOUR_PATH_TO_VICUNA'),
     task='caption',
     prompt_template=dict([('en', '###Ask: {} ###Answer: '),

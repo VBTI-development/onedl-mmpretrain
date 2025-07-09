@@ -16,11 +16,10 @@ model.update(
     backbone=dict(img_size=224, drop_path_rate=0.5, stage_cfgs=None),
     head=dict(
         init_cfg=None,  # suppress the default init_cfg of LinearClsHead.
-        loss=dict(
-            type=LabelSmoothLoss,
-            label_smooth_val=0.1,
-            mode='original',
-            loss_weight=0),
+        loss=dict(type=LabelSmoothLoss,
+                  label_smooth_val=0.1,
+                  mode='original',
+                  loss_weight=0),
         topk=None,
         cal_acc=False),
     init_cfg=[

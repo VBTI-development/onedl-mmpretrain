@@ -37,7 +37,6 @@ class COCOCaption(BaseMetric):
             will be used instead. Should be modified according to the
             `retrieval_type` for unambiguous results. Defaults to TR.
     """
-
     @require('pycocoevalcap')
     def __init__(self,
                  ann_file: str,

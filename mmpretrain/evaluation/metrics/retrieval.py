@@ -47,7 +47,7 @@ class RetrievalRecall(BaseMetric):
         >>> RetrievalRecall.calculate(y_score, y_true, topk=(1, 5))
         [tensor(9.3000), tensor(48.4000)]
         >>>
-        >>> # ------------------- Use with Evalutor -------------------
+        >>> # ------------------- Use with Evaluator -------------------
         >>> from mmpretrain.structures import DataSample
         >>> from mmengine.evaluator import Evaluator
         >>> data_samples = [
@@ -109,8 +109,9 @@ class RetrievalRecall(BaseMetric):
             # compared to the normal classification, to save resources, the
             # evaluation results are computed each batch here and then reduce
             #  all results at the end.
-            result = RetrievalRecall.calculate(
-                pred_score.unsqueeze(0), target.unsqueeze(0), topk=self.topk)
+            result = RetrievalRecall.calculate(pred_score.unsqueeze(0),
+                                               target.unsqueeze(0),
+                                               topk=self.topk)
             self.results.append(result)
 
     def compute_metrics(self, results: List):
@@ -175,8 +176,8 @@ class RetrievalRecall(BaseMetric):
         results = []
         for k in topk:
             recalls = torch.zeros(num_samples)
-            for i, (sample_pred,
-                    sample_target) in enumerate(zip(pred, target)):
+            for i, (sample_pred, sample_target) in enumerate(zip(pred,
+                                                                 target)):
                 sample_pred = np.array(to_tensor(sample_pred).cpu())
                 sample_target = np.array(to_tensor(sample_target).cpu())
                 recalls[i] = int(np.in1d(sample_pred[:k], sample_target).max())
@@ -397,7 +398,7 @@ def _calculateAp_for_sample(pred, target, mode):
 
 
 def _format_pred(label, topk=None, is_indices=False):
-    """format various label to List[indices]."""
+    """Format various label to List[indices]."""
     if is_indices:
         assert isinstance(label, Sequence),  \
                 '`pred` must be Sequence of indices when' \
@@ -421,7 +422,7 @@ def _format_pred(label, topk=None, is_indices=False):
 
 
 def _format_target(label, is_indices=False):
-    """format various label to List[indices]."""
+    """Format various label to List[indices]."""
     if is_indices:
         assert isinstance(label, Sequence),  \
                 '`target` must be Sequence of indices when' \

@@ -39,11 +39,10 @@ def test_channel_shuffle():
                     assert x[b, c, i, j] == out[b, c_out, i, j]
 
 
-@pytest.mark.skipif(
-    digit_version(torch.__version__) < digit_version('1.6.0'),
-    reason='torch.jit.is_tracing is not available before 1.6.0')
+@pytest.mark.skipif(digit_version(torch.__version__) < digit_version('1.6.0'),
+                    reason='torch.jit.is_tracing is not available before 1.6.0'
+                    )
 def test_is_tracing():
-
     def foo(x):
         if is_tracing():
             return x

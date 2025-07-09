@@ -10,7 +10,6 @@ from mmpretrain.registry import BATCH_AUGMENTS
 
 
 class TestRandomBatchAugment(TestCase):
-
     def test_initialize(self):
         # test single augmentation
         augments = dict(type='Mixup', alpha=1.)

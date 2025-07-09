@@ -17,7 +17,6 @@ class CAELoss(BaseModule):
     Args:
         lambd (float): The weight for the align loss.
     """
-
     def __init__(self, lambd: float) -> None:
         super().__init__()
         self.lambd = lambd

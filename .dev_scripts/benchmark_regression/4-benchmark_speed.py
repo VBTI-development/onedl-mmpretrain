@@ -24,11 +24,10 @@ from mmpretrain.models.builder import build_classifier
 
 console = Console()
 MMCLS_ROOT = Path(__file__).absolute().parents[2]
-logger = MMLogger(
-    name='benchmark',
-    logger_name='benchmark',
-    log_file='benchmark_speed.log',
-    log_level=logging.INFO)
+logger = MMLogger(name='benchmark',
+                  logger_name='benchmark',
+                  log_file='benchmark_speed.log',
+                  log_level=logging.INFO)
 
 
 def parse_args():
@@ -37,40 +36,39 @@ def parse_args():
     parser.add_argument(
         '--checkpoint-root',
         help='Checkpoint file root path. If set, load checkpoint before test.')
-    parser.add_argument(
-        '--models', nargs='+', help='models name to inference.')
-    parser.add_argument(
-        '--work-dir',
-        type=Path,
-        default='work_dirs/benchmark_speed',
-        help='the dir to save speed test results')
-    parser.add_argument(
-        '--max-iter', type=int, default=2048, help='num of max iter')
-    parser.add_argument(
-        '--batch-size',
-        type=int,
-        default=64,
-        help='The batch size to inference.')
-    parser.add_argument(
-        '--launcher',
-        choices=['none', 'pytorch', 'slurm', 'mpi'],
-        default='none',
-        help='job launcher')
-    parser.add_argument(
-        '--device', default='cuda', help='Device used for inference')
-    parser.add_argument(
-        '--gpu-id',
-        type=int,
-        default=0,
-        help='id of gpu to use '
-        '(only applicable to non-distributed testing)')
+    parser.add_argument('--models',
+                        nargs='+',
+                        help='models name to inference.')
+    parser.add_argument('--work-dir',
+                        type=Path,
+                        default='work_dirs/benchmark_speed',
+                        help='the dir to save speed test results')
+    parser.add_argument('--max-iter',
+                        type=int,
+                        default=2048,
+                        help='num of max iter')
+    parser.add_argument('--batch-size',
+                        type=int,
+                        default=64,
+                        help='The batch size to inference.')
+    parser.add_argument('--launcher',
+                        choices=['none', 'pytorch', 'slurm', 'mpi'],
+                        default='none',
+                        help='job launcher')
+    parser.add_argument('--device',
+                        default='cuda',
+                        help='Device used for inference')
+    parser.add_argument('--gpu-id',
+                        type=int,
+                        default=0,
+                        help='id of gpu to use '
+                        '(only applicable to non-distributed testing)')
     args = parser.parse_args()
     return args
 
 
 class ToyDataset:
     """A dummy dataset used to provide images for benchmark."""
-
     def __init__(self, num, hw) -> None:
         data = []
         for _ in range(num):

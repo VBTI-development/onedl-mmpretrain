@@ -109,7 +109,7 @@ def test_pcpvt():
         assert hasattr(model, f'norm_after_stage{i}')
         assert isinstance(getattr(model, f'norm_after_stage{i}'), nn.LayerNorm)
 
-    # test norm_after_stage is bool Flase
+    # test norm_after_stage is bool False
     model = PCPVT('small', norm_after_stage=False)
     for i in range(model.num_stage):
         assert hasattr(model, f'norm_after_stage{i}')
@@ -219,7 +219,7 @@ def test_svt():
         assert hasattr(model, f'norm_after_stage{i}')
         assert isinstance(getattr(model, f'norm_after_stage{i}'), nn.LayerNorm)
 
-    # test norm_after_stage is bool Flase
+    # test norm_after_stage is bool False
     model = SVT('small', norm_after_stage=False)
     for i in range(model.num_stage):
         assert hasattr(model, f'norm_after_stage{i}')

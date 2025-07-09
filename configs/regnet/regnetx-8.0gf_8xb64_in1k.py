@@ -1,9 +1,8 @@
 _base_ = ['./regnetx-400mf_8xb128_in1k.py']
 
 # model settings
-model = dict(
-    backbone=dict(type='RegNet', arch='regnetx_8.0gf'),
-    head=dict(in_channels=1920, ))
+model = dict(backbone=dict(type='RegNet', arch='regnetx_8.0gf'),
+             head=dict(in_channels=1920, ))
 
 # dataset settings
 train_dataloader = dict(batch_size=64)

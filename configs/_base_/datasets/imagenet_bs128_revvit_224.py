@@ -14,21 +14,19 @@ bgr_std = data_preprocessor['std'][::-1]
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=224,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=224,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
-    dict(
-        type='RandAugment',
-        policies='timm_increasing',
-        num_policies=2,
-        total_level=10,
-        magnitude_level=7,
-        magnitude_std=0.5,
-        hparams=dict(
-            pad_val=[round(x) for x in bgr_mean], interpolation='bicubic')),
+    dict(type='RandAugment',
+         policies='timm_increasing',
+         num_policies=2,
+         total_level=10,
+         magnitude_level=7,
+         magnitude_std=0.5,
+         hparams=dict(pad_val=[round(x) for x in bgr_mean],
+                      interpolation='bicubic')),
     dict(type='ColorJitter', brightness=0.4, contrast=0.4, saturation=0.4),
     dict(
         type='RandomErasing',
@@ -43,12 +41,11 @@ train_pipeline = [
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=256,
-        edge='short',
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='ResizeEdge',
+         scale=256,
+         edge='short',
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='CenterCrop', crop_size=224),
     dict(type='PackInputs'),
 ]
@@ -56,11 +53,10 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=256,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
     persistent_workers=True,
 )
@@ -68,11 +64,10 @@ train_dataloader = dict(
 val_dataloader = dict(
     batch_size=64,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet',
-        split='val',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet',
+                 split='val',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
     persistent_workers=True,
 )

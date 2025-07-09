@@ -12,19 +12,18 @@ paramwise_cfg = dict(custom_keys={
 
 pretrained = 'https://download.openmmlab.com/mmclassification/v0/vit/pretrain/vit-base-p16_3rdparty_pt-64xb64_in1k-224_20210928-02284250.pth'  # noqa
 
-model = dict(
-    head=dict(
-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0, _delete_=True), ),
-    backbone=dict(
-        img_size=224,
-        init_cfg=dict(
-            type='Pretrained',
-            checkpoint=pretrained,
-            _delete_=True,
-            prefix='backbone')))
+model = dict(head=dict(loss=dict(type='CrossEntropyLoss',
+                                 loss_weight=1.0,
+                                 _delete_=True), ),
+             backbone=dict(img_size=224,
+                           init_cfg=dict(type='Pretrained',
+                                         checkpoint=pretrained,
+                                         _delete_=True,
+                                         prefix='backbone')))
 
-img_norm_cfg = dict(
-    mean=[127.5, 127.5, 127.5], std=[127.5, 127.5, 127.5], to_rgb=True)
+img_norm_cfg = dict(mean=[127.5, 127.5, 127.5],
+                    std=[127.5, 127.5, 127.5],
+                    to_rgb=True)
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
@@ -48,16 +47,15 @@ test_pipeline = [
 ]
 
 # change batch size
-data = dict(
-    samples_per_gpu=17,
-    workers_per_gpu=16,
-    drop_last=True,
-    train=dict(pipeline=train_pipeline),
-    train_dataloader=dict(mode='async'),
-    val=dict(pipeline=test_pipeline, ),
-    val_dataloader=dict(samples_per_gpu=4, workers_per_gpu=1),
-    test=dict(pipeline=test_pipeline),
-    test_dataloader=dict(samples_per_gpu=4, workers_per_gpu=1))
+data = dict(samples_per_gpu=17,
+            workers_per_gpu=16,
+            drop_last=True,
+            train=dict(pipeline=train_pipeline),
+            train_dataloader=dict(mode='async'),
+            val=dict(pipeline=test_pipeline, ),
+            val_dataloader=dict(samples_per_gpu=4, workers_per_gpu=1),
+            test=dict(pipeline=test_pipeline),
+            test_dataloader=dict(samples_per_gpu=4, workers_per_gpu=1))
 
 # optimizer
 optimizer = dict(
@@ -71,12 +69,11 @@ optimizer = dict(
 # learning policy
 param_scheduler = [
     dict(type='LinearLR', start_factor=0.02, by_epoch=False, begin=0, end=800),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=4200,
-        by_epoch=False,
-        begin=800,
-        end=5000)
+    dict(type='CosineAnnealingLR',
+         T_max=4200,
+         by_epoch=False,
+         begin=800,
+         end=5000)
 ]
 
 # ipu cfg
@@ -103,11 +100,10 @@ options_cfg = dict(
 )
 
 # add model partition config and device config to runner
-runner = dict(
-    type='IterBasedRunner',
-    ipu_model_cfg=ipu_model_cfg,
-    options_cfg=options_cfg,
-    max_iters=5000)
+runner = dict(type='IterBasedRunner',
+              ipu_model_cfg=ipu_model_cfg,
+              options_cfg=options_cfg,
+              max_iters=5000)
 
 default_hooks = dict(checkpoint=dict(type='CheckpointHook', interval=1000))
 

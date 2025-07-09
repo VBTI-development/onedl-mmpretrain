@@ -33,7 +33,6 @@ class MixMIMPretrainDecoder(MAEPretrainDecoder):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
-
     def __init__(self,
                  num_patches: int = 196,
                  patch_size: int = 16,
@@ -47,21 +46,20 @@ class MixMIMPretrainDecoder(MAEPretrainDecoder):
                  norm_cfg: dict = dict(type='LN', eps=1e-6),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
 
-        super().__init__(
-            num_patches=num_patches,
-            patch_size=patch_size,
-            in_chans=in_chans,
-            embed_dim=embed_dim,
-            decoder_embed_dim=decoder_embed_dim,
-            decoder_depth=decoder_depth,
-            decoder_num_heads=decoder_num_heads,
-            mlp_ratio=mlp_ratio,
-            norm_cfg=norm_cfg,
-            init_cfg=init_cfg)
+        super().__init__(num_patches=num_patches,
+                         patch_size=patch_size,
+                         in_chans=in_chans,
+                         embed_dim=embed_dim,
+                         decoder_embed_dim=decoder_embed_dim,
+                         decoder_depth=decoder_depth,
+                         decoder_num_heads=decoder_num_heads,
+                         mlp_ratio=mlp_ratio,
+                         norm_cfg=norm_cfg,
+                         init_cfg=init_cfg)
 
-        self.decoder_pos_embed = nn.Parameter(
-            torch.zeros(1, num_patches, decoder_embed_dim),
-            requires_grad=False)
+        self.decoder_pos_embed = nn.Parameter(torch.zeros(
+            1, num_patches, decoder_embed_dim),
+                                              requires_grad=False)
         self.decoder_pred = nn.Linear(decoder_embed_dim, encoder_stride**2 * 3)
 
     def init_weights(self) -> None:

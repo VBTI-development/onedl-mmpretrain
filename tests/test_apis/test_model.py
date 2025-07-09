@@ -10,7 +10,6 @@ from mmpretrain.models import ImageClassifier, MobileNetV2
 
 
 class TestModelHub(TestCase):
-
     def test_mmpretrain_models(self):
         self.assertIn('resnet18_8xb32_in1k', ModelHub._models_dict)
 
@@ -30,8 +29,8 @@ class TestModelHub(TestCase):
 
         # test specify config prefix
         del ModelHub._models_dict['test_model']
-        ModelHub.register_model_index(
-            model_index_path, config_prefix='configs')
+        ModelHub.register_model_index(model_index_path,
+                                      config_prefix='configs')
         self.assertEqual(ModelHub._models_dict['test_model'].config,
                          osp.abspath(osp.join('configs', 'test_config.py')))
 
@@ -42,7 +41,6 @@ class TestModelHub(TestCase):
 
 
 class TestHubAPIs(TestCase):
-
     def test_list_models(self):
         models_names = list_models()
         self.assertIsInstance(models_names, list)

@@ -46,7 +46,6 @@ class GlobalSubsampledAttention(MultiheadAttention):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -68,11 +67,10 @@ class GlobalSubsampledAttention(MultiheadAttention):
         if sr_ratio > 1:
             # use a conv as the spatial-reduction operation, the kernel_size
             # and stride in conv are equal to the sr_ratio.
-            self.sr = Conv2d(
-                in_channels=embed_dims,
-                out_channels=embed_dims,
-                kernel_size=sr_ratio,
-                stride=sr_ratio)
+            self.sr = Conv2d(in_channels=embed_dims,
+                             out_channels=embed_dims,
+                             kernel_size=sr_ratio,
+                             stride=sr_ratio)
             # The ret[0] of build_norm_layer is norm name.
             self.norm = build_norm_layer(norm_cfg, embed_dims)[1]
 
@@ -131,7 +129,6 @@ class GSAEncoderLayer(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -148,25 +145,26 @@ class GSAEncoderLayer(BaseModule):
         super(GSAEncoderLayer, self).__init__(init_cfg=init_cfg)
 
         self.norm1 = build_norm_layer(norm_cfg, embed_dims, postfix=1)[1]
-        self.attn = GlobalSubsampledAttention(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            attn_drop=attn_drop_rate,
-            proj_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            qkv_bias=qkv_bias,
-            norm_cfg=norm_cfg,
-            sr_ratio=sr_ratio)
+        self.attn = GlobalSubsampledAttention(embed_dims=embed_dims,
+                                              num_heads=num_heads,
+                                              attn_drop=attn_drop_rate,
+                                              proj_drop=drop_rate,
+                                              dropout_layer=dict(
+                                                  type='DropPath',
+                                                  drop_prob=drop_path_rate),
+                                              qkv_bias=qkv_bias,
+                                              norm_cfg=norm_cfg,
+                                              sr_ratio=sr_ratio)
 
         self.norm2 = build_norm_layer(norm_cfg, embed_dims, postfix=2)[1]
-        self.ffn = FFN(
-            embed_dims=embed_dims,
-            feedforward_channels=feedforward_channels,
-            num_fcs=num_fcs,
-            ffn_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            act_cfg=act_cfg,
-            add_identity=False)
+        self.ffn = FFN(embed_dims=embed_dims,
+                       feedforward_channels=feedforward_channels,
+                       num_fcs=num_fcs,
+                       ffn_drop=drop_rate,
+                       dropout_layer=dict(type='DropPath',
+                                          drop_prob=drop_path_rate),
+                       act_cfg=act_cfg,
+                       add_identity=False)
 
         self.drop_path = build_dropout(
             dict(type='DropPath', drop_prob=drop_path_rate)
@@ -195,7 +193,6 @@ class LocallyGroupedSelfAttention(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads=8,
@@ -301,7 +298,6 @@ class LSAEncoderLayer(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -326,14 +322,14 @@ class LSAEncoderLayer(BaseModule):
                                                 window_size)
 
         self.norm2 = build_norm_layer(norm_cfg, embed_dims, postfix=2)[1]
-        self.ffn = FFN(
-            embed_dims=embed_dims,
-            feedforward_channels=feedforward_channels,
-            num_fcs=num_fcs,
-            ffn_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            act_cfg=act_cfg,
-            add_identity=False)
+        self.ffn = FFN(embed_dims=embed_dims,
+                       feedforward_channels=feedforward_channels,
+                       num_fcs=num_fcs,
+                       ffn_drop=drop_rate,
+                       dropout_layer=dict(type='DropPath',
+                                          drop_prob=drop_path_rate),
+                       act_cfg=act_cfg,
+                       add_identity=False)
 
         self.drop_path = build_dropout(
             dict(type='DropPath', drop_prob=drop_path_rate)
@@ -487,14 +483,13 @@ class PCPVT(BaseModule):
                 stage_in_channels = self.embed_dims[i - 1]
 
             self.patch_embeds.append(
-                PatchEmbed(
-                    in_channels=stage_in_channels,
-                    embed_dims=self.embed_dims[i],
-                    conv_type='Conv2d',
-                    kernel_size=self.patch_sizes[i],
-                    stride=self.strides[i],
-                    padding='corner',
-                    norm_cfg=dict(type='LN')))
+                PatchEmbed(in_channels=stage_in_channels,
+                           embed_dims=self.embed_dims[i],
+                           conv_type='Conv2d',
+                           kernel_size=self.patch_sizes[i],
+                           stride=self.strides[i],
+                           padding='corner',
+                           norm_cfg=dict(type='LN')))
 
             self.position_encoding_drops.append(nn.Dropout(p=drop_rate))
 
@@ -513,19 +508,19 @@ class PCPVT(BaseModule):
 
         for k in range(len(self.depths)):
             _block = ModuleList([
-                GSAEncoderLayer(
-                    embed_dims=self.embed_dims[k],
-                    num_heads=self.num_heads[k],
-                    feedforward_channels=self.mlp_ratios[k] *
-                    self.embed_dims[k],
-                    attn_drop_rate=attn_drop_rate,
-                    drop_rate=drop_rate,
-                    drop_path_rate=self.dpr[cur + i],
-                    num_fcs=2,
-                    qkv_bias=qkv_bias,
-                    act_cfg=dict(type='GELU'),
-                    norm_cfg=norm_cfg,
-                    sr_ratio=self.sr_ratios[k]) for i in range(self.depths[k])
+                GSAEncoderLayer(embed_dims=self.embed_dims[k],
+                                num_heads=self.num_heads[k],
+                                feedforward_channels=self.mlp_ratios[k] *
+                                self.embed_dims[k],
+                                attn_drop_rate=attn_drop_rate,
+                                drop_rate=drop_rate,
+                                drop_path_rate=self.dpr[cur + i],
+                                num_fcs=2,
+                                qkv_bias=qkv_bias,
+                                act_cfg=dict(type='GELU'),
+                                norm_cfg=norm_cfg,
+                                sr_ratio=self.sr_ratios[k])
+                for i in range(self.depths[k])
             ])
             self.stages.append(_block)
             cur += self.depths[k]
@@ -564,8 +559,10 @@ class PCPVT(BaseModule):
                     fan_out = m.kernel_size[0] * m.kernel_size[
                         1] * m.out_channels
                     fan_out //= m.groups
-                    normal_init(
-                        m, mean=0, std=math.sqrt(2.0 / fan_out), bias=0)
+                    normal_init(m,
+                                mean=0,
+                                std=math.sqrt(2.0 / fan_out),
+                                bias=0)
 
     def forward(self, x):
         outputs = list()

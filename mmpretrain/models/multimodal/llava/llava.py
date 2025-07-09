@@ -65,8 +65,8 @@ class Llava(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
 
         if task not in self.support_tasks:
             raise ValueError(f'Unsupported task {task}, please select '
@@ -184,12 +184,11 @@ class Llava(BaseModel):
 
         input_text = self.preprocess_text(data_samples, device=images.device)
 
-        outputs = self.model.generate(
-            input_text.input_ids,
-            attention_mask=input_text.attention_mask,
-            eos_token_id=self.tokenizer.eos_token_id,
-            images=images,
-            **generation_cfg)
+        outputs = self.model.generate(input_text.input_ids,
+                                      attention_mask=input_text.attention_mask,
+                                      eos_token_id=self.tokenizer.eos_token_id,
+                                      images=images,
+                                      **generation_cfg)
 
         # remove prefix
         outputs = outputs[:, len(input_text.input_ids[0]):]
@@ -244,8 +243,8 @@ class Llava(BaseModel):
         Returns:
             List[DataSample]: Return list of data samples.
         """
-        outputs = self.tokenizer.batch_decode(
-            outputs, skip_special_tokens=True)
+        outputs = self.tokenizer.batch_decode(outputs,
+                                              skip_special_tokens=True)
 
         if data_samples is None:
             data_samples = [DataSample() for _ in range(len(outputs))]

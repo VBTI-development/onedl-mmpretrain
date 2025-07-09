@@ -62,13 +62,12 @@ def test_DenseNet():
     assert feat[3].shape == torch.Size([1, 1024, 7, 7])
 
     # Test with custom arch
-    model = DenseNet(
-        arch={
-            'growth_rate': 20,
-            'depths': [4, 8, 12, 16, 20],
-            'init_channels': 40,
-        },
-        out_indices=(0, 1, 2, 3, 4))
+    model = DenseNet(arch={
+        'growth_rate': 20,
+        'depths': [4, 8, 12, 16, 20],
+        'init_channels': 40,
+    },
+                     out_indices=(0, 1, 2, 3, 4))
     model.init_weights()
     model.train()
 

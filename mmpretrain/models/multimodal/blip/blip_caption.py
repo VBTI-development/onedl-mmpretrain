@@ -30,7 +30,6 @@ class BlipCaption(BaseModel):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  vision_encoder: dict,
                  decoder_head: dict,
@@ -46,8 +45,8 @@ class BlipCaption(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super(BlipCaption, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BlipCaption, self).__init__(init_cfg=init_cfg,
+                                          data_preprocessor=data_preprocessor)
 
         self.tokenizer = TOKENIZER.build(tokenizer)
         self.visual_encoder = MODELS.build(vision_encoder)
@@ -112,9 +111,8 @@ class BlipCaption(BaseModel):
                                                0)
 
         prompt = [self.prompt] * image_embeds.size(0)
-        prompt = self.tokenizer(
-            prompt, padding='longest',
-            return_tensors='pt').to(image_embeds.device)
+        prompt = self.tokenizer(prompt, padding='longest',
+                                return_tensors='pt').to(image_embeds.device)
 
         prompt.input_ids[:, 0] = self.tokenizer.bos_token_id
         prompt.input_ids = prompt.input_ids[:, :-1]
@@ -128,8 +126,8 @@ class BlipCaption(BaseModel):
             return_dict_in_generate=True,
         )
 
-        decode_tokens = self.tokenizer.batch_decode(
-            decoder_out.sequences, skip_special_tokens=True)
+        decode_tokens = self.tokenizer.batch_decode(decoder_out.sequences,
+                                                    skip_special_tokens=True)
 
         out_data_samples = []
         if data_samples is None:
@@ -172,8 +170,8 @@ class BlipCaption(BaseModel):
             text.input_ids == self.tokenizer.pad_token_id, -100)
         labels[:, :self.prompt_length] = -100
         # forward decoder
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(image_embeds.device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(image_embeds.device)
 
         losses = self.seq_gen_head.loss(
             input_ids=text.input_ids,

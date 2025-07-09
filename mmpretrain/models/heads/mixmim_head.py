@@ -15,7 +15,6 @@ class MixMIMPretrainHead(MAEPretrainHead):
             Defaults to False.
         patch_size (int): Patch size. Defaults to 16.
     """
-
     def __init__(self,
                  loss: dict,
                  norm_pix: bool = False,

@@ -24,7 +24,6 @@ def get_path(path):
 
 class RAM(BaseModel):
     """The implementation of `RAM <https://arxiv.org/abs/2306.03514>`_."""
-
     def __init__(self,
                  tokenizer: dict,
                  vision_backbone: dict,
@@ -45,8 +44,8 @@ class RAM(BaseModel):
         data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
         data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            data_preprocessor=data_preprocessor, init_cfg=init_cfg)
+        super().__init__(data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         self.device = device
         # build the visual encoder
@@ -64,8 +63,8 @@ class RAM(BaseModel):
         # encoder_config = BertConfig.from_json_file(med_config)
         # encoder_config.encoder_width = 512
         encoder_config = BertConfig.from_dict(tag_encoder)
-        self.tag_encoder = BertModel(
-            config=encoder_config, add_pooling_layer=False)
+        self.tag_encoder = BertModel(config=encoder_config,
+                                     add_pooling_layer=False)
 
         # build image-tag-text decoder
         # decoder_config = BertConfig.from_json_file(med_config)
@@ -87,8 +86,8 @@ class RAM(BaseModel):
         #               BertConfig.from_json_file(f'{CONFIG_PATH}/configs/q2l_config.json')
         # q2l_config.encoder_width = 512
         q2l_config = BertConfig.from_dict(tagging_head)
-        self.tagging_head = BertModel(
-            config=q2l_config, add_pooling_layer=False)
+        self.tagging_head = BertModel(config=q2l_config,
+                                      add_pooling_layer=False)
         self.tagging_head.resize_token_embeddings(len(self.tokenizer))
         self.label_embed = nn.Parameter(
             torch.zeros(self.num_class, q2l_config.encoder_width))
@@ -145,8 +144,8 @@ class RAM(BaseModel):
         image_embeds = image_embeds.permute(0, 2, 1).contiguous()
         image_embeds = torch.cat([cls_token, image_embeds], dim=1)
         image_embeds = self.image_proj(image_embeds)
-        image_atts = torch.ones(
-            image_embeds.size()[:-1], dtype=torch.long).to(images.device)
+        image_atts = torch.ones(image_embeds.size()[:-1],
+                                dtype=torch.long).to(images.device)
         return image_embeds, image_atts
 
     def image2tag(self, label_embed, image_embeds, image_atts):
@@ -188,7 +187,6 @@ class RAM(BaseModel):
 
 @MODELS.register_module()
 class RAMNormal(RAM):
-
     def __init__(self,
                  tokenizer: dict,
                  vision_backbone: dict,
@@ -262,7 +260,6 @@ class RAMNormal(RAM):
 
 @MODELS.register_module()
 class RAMOpenset(RAMNormal):
-
     def __init__(self,
                  tokenizer: dict,
                  vision_backbone: dict,

@@ -18,13 +18,13 @@ def parse_args():
         description='MMPreTrain evaluate prediction success/fail')
     parser.add_argument('config', help='test config file path')
     parser.add_argument('result', help='test result json/pkl file')
-    parser.add_argument(
-        '--out-dir', required=True, help='dir to store output files')
-    parser.add_argument(
-        '--topk',
-        default=20,
-        type=int,
-        help='Number of images to select for success/fail')
+    parser.add_argument('--out-dir',
+                        required=True,
+                        help='dir to store output files')
+    parser.add_argument('--topk',
+                        default=20,
+                        type=int,
+                        help='Number of images to select for success/fail')
     parser.add_argument(
         '--rescale-factor',
         '-r',
@@ -65,8 +65,9 @@ def save_imgs(result_dir, folder_name, results, dataset, rescale_factor=None):
             raise ValueError('Cannot load images from the dataset infos.')
         if rescale_factor is not None:
             img = mmcv.imrescale(img, rescale_factor)
-        vis.visualize_cls(
-            img, data_sample, out_file=osp.join(full_dir, name + '.png'))
+        vis.visualize_cls(img,
+                          data_sample,
+                          out_file=osp.join(full_dir, name + '.png'))
 
         dump = dict()
         for k, v in data_sample.items():

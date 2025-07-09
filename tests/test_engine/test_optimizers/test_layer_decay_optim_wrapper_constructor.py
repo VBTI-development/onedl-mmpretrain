@@ -39,20 +39,17 @@ class TestLearningRateDecayOptimWrapperConstructor(TestCase):
 
     def test_add_params(self):
         model = ToyViT()
-        optim_wrapper_cfg = dict(
-            type='OptimWrapper',
-            optimizer=dict(
-                type='AdamW',
-                lr=self.base_lr,
-                betas=(0.9, 0.999),
-                weight_decay=self.base_wd))
-        paramwise_cfg = dict(
-            layer_decay_rate=2.0,
-            bias_decay_mult=0.,
-            custom_keys={
-                '.cls_token': dict(decay_mult=0.0),
-                '.pos_embed': dict(decay_mult=0.0),
-            })
+        optim_wrapper_cfg = dict(type='OptimWrapper',
+                                 optimizer=dict(type='AdamW',
+                                                lr=self.base_lr,
+                                                betas=(0.9, 0.999),
+                                                weight_decay=self.base_wd))
+        paramwise_cfg = dict(layer_decay_rate=2.0,
+                             bias_decay_mult=0.,
+                             custom_keys={
+                                 '.cls_token': dict(decay_mult=0.0),
+                                 '.pos_embed': dict(decay_mult=0.0),
+                             })
 
         constructor = LearningRateDecayOptimWrapperConstructor(
             optim_wrapper_cfg=optim_wrapper_cfg,

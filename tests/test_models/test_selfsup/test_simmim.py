@@ -10,10 +10,9 @@ from mmpretrain.structures import DataSample
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
 def test_simmim_swin():
-    backbone = dict(
-        arch='B',
-        img_size=192,
-        stage_cfgs=dict(block_cfgs=dict(window_size=6)))
+    backbone = dict(arch='B',
+                    img_size=192,
+                    stage_cfgs=dict(block_cfgs=dict(window_size=6)))
     simmim_backbone = SimMIMSwinTransformer(**backbone)
     simmim_backbone.init_weights()
     fake_inputs = torch.randn((2, 3, 192, 192))
@@ -38,23 +37,23 @@ def test_simmim():
     }
 
     # model config
-    backbone = dict(
-        type='SimMIMSwinTransformer',
-        arch='B',
-        img_size=192,
-        stage_cfgs=dict(block_cfgs=dict(window_size=6)))
-    neck = dict(
-        type='SimMIMLinearDecoder', in_channels=128 * 2**3, encoder_stride=32)
-    head = dict(
-        type='SimMIMHead',
-        patch_size=4,
-        loss=dict(type='PixelReconstructionLoss', criterion='L1', channel=3))
+    backbone = dict(type='SimMIMSwinTransformer',
+                    arch='B',
+                    img_size=192,
+                    stage_cfgs=dict(block_cfgs=dict(window_size=6)))
+    neck = dict(type='SimMIMLinearDecoder',
+                in_channels=128 * 2**3,
+                encoder_stride=32)
+    head = dict(type='SimMIMHead',
+                patch_size=4,
+                loss=dict(type='PixelReconstructionLoss',
+                          criterion='L1',
+                          channel=3))
 
-    model = SimMIM(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    model = SimMIM(backbone=backbone,
+                   neck=neck,
+                   head=head,
+                   data_preprocessor=data_preprocessor)
 
     # test forward_train
     fake_data_sample = DataSample()

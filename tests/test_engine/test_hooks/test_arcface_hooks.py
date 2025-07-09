@@ -9,7 +9,6 @@ from torch.utils.data import DataLoader, Dataset
 
 
 class ExampleDataset(Dataset):
-
     def __init__(self):
         self.index = 0
         self.metainfo = None
@@ -28,16 +27,16 @@ class ExampleDataset(Dataset):
 
 class TestSetAdaptiveMarginsHook(TestCase):
     DEFAULT_HOOK_CFG = dict(type='SetAdaptiveMarginsHook')
-    DEFAULT_MODEL = dict(
-        type='ImageClassifier',
-        backbone=dict(
-            type='ResNet',
-            depth=34,
-            num_stages=4,
-            out_indices=(3, ),
-            style='pytorch'),
-        neck=dict(type='GlobalAveragePooling'),
-        head=dict(type='ArcFaceClsHead', in_channels=512, num_classes=5))
+    DEFAULT_MODEL = dict(type='ImageClassifier',
+                         backbone=dict(type='ResNet',
+                                       depth=34,
+                                       num_stages=4,
+                                       out_indices=(3, ),
+                                       style='pytorch'),
+                         neck=dict(type='GlobalAveragePooling'),
+                         head=dict(type='ArcFaceClsHead',
+                                   in_channels=512,
+                                   num_classes=5))
 
     def test_before_train(self):
         default_hooks = dict(
@@ -58,8 +57,9 @@ class TestSetAdaptiveMarginsHook(TestCase):
             log_level='WARNING',
             optim_wrapper=dict(
                 optimizer=dict(type='SGD', lr=0.1, momentum=0.9)),
-            param_scheduler=dict(
-                type='MultiStepLR', milestones=[1, 2], gamma=0.1),
+            param_scheduler=dict(type='MultiStepLR',
+                                 milestones=[1, 2],
+                                 gamma=0.1),
             default_scope='mmpretrain',
             default_hooks=default_hooks,
             experiment_name='test_construct_with_arcface',
@@ -92,8 +92,9 @@ class TestSetAdaptiveMarginsHook(TestCase):
             log_level='WARNING',
             optim_wrapper=dict(
                 optimizer=dict(type='SGD', lr=0.1, momentum=0.9)),
-            param_scheduler=dict(
-                type='MultiStepLR', milestones=[1, 2], gamma=0.1),
+            param_scheduler=dict(type='MultiStepLR',
+                                 milestones=[1, 2],
+                                 gamma=0.1),
             default_scope='mmpretrain',
             default_hooks=default_hooks,
             experiment_name='test_construct_wo_arcface',

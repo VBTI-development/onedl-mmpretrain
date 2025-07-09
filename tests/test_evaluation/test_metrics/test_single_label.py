@@ -12,9 +12,8 @@ from mmpretrain.structures import DataSample
 
 
 class TestAccuracy(TestCase):
-
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
         pred = [
             DataSample().set_pred_score(i).set_pred_label(j).set_gt_label(
                 k).to_dict() for i, j, k in zip([
@@ -119,9 +118,8 @@ class TestAccuracy(TestCase):
 
 
 class TestSingleLabel(TestCase):
-
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
         pred = [
             DataSample().set_pred_score(i).set_pred_label(j).set_gt_label(
                 k).to_dict() for i, j, k in zip([
@@ -136,20 +134,21 @@ class TestSingleLabel(TestCase):
 
         # Test with score (use score instead of label if score exists)
         metric = METRICS.build(
-            dict(
-                type='SingleLabelMetric',
-                thrs=0.6,
-                items=('precision', 'recall', 'f1-score', 'support')))
+            dict(type='SingleLabelMetric',
+                 thrs=0.6,
+                 items=('precision', 'recall', 'f1-score', 'support')))
         metric.process(None, pred)
         res = metric.evaluate(6)
         self.assertIsInstance(res, dict)
-        self.assertAlmostEqual(
-            res['single-label/precision'], (1 + 0 + 1 / 3) / 3 * 100, places=4)
-        self.assertAlmostEqual(
-            res['single-label/recall'], (1 / 3 + 0 + 1) / 3 * 100, places=4)
-        self.assertAlmostEqual(
-            res['single-label/f1-score'], (1 / 2 + 0 + 1 / 2) / 3 * 100,
-            places=4)
+        self.assertAlmostEqual(res['single-label/precision'],
+                               (1 + 0 + 1 / 3) / 3 * 100,
+                               places=4)
+        self.assertAlmostEqual(res['single-label/recall'],
+                               (1 / 3 + 0 + 1) / 3 * 100,
+                               places=4)
+        self.assertAlmostEqual(res['single-label/f1-score'],
+                               (1 / 2 + 0 + 1 / 2) / 3 * 100,
+                               places=4)
         self.assertEqual(res['single-label/support'], 6)
 
         # Test with multiple thrs
@@ -171,27 +170,28 @@ class TestSingleLabel(TestCase):
 
         # Test with average mode "micro"
         metric = METRICS.build(
-            dict(
-                type='SingleLabelMetric',
-                average='micro',
-                items=('precision', 'recall', 'f1-score', 'support')))
+            dict(type='SingleLabelMetric',
+                 average='micro',
+                 items=('precision', 'recall', 'f1-score', 'support')))
         metric.process(None, pred)
         res = metric.evaluate(6)
         self.assertIsInstance(res, dict)
-        self.assertAlmostEqual(
-            res['single-label/precision_micro'], 66.666, places=2)
-        self.assertAlmostEqual(
-            res['single-label/recall_micro'], 66.666, places=2)
-        self.assertAlmostEqual(
-            res['single-label/f1-score_micro'], 66.666, places=2)
+        self.assertAlmostEqual(res['single-label/precision_micro'],
+                               66.666,
+                               places=2)
+        self.assertAlmostEqual(res['single-label/recall_micro'],
+                               66.666,
+                               places=2)
+        self.assertAlmostEqual(res['single-label/f1-score_micro'],
+                               66.666,
+                               places=2)
         self.assertEqual(res['single-label/support_micro'], 6)
 
         # Test with average mode None
         metric = METRICS.build(
-            dict(
-                type='SingleLabelMetric',
-                average=None,
-                items=('precision', 'recall', 'f1-score', 'support')))
+            dict(type='SingleLabelMetric',
+                 average=None,
+                 items=('precision', 'recall', 'f1-score', 'support')))
         metric.process(None, pred)
         res = metric.evaluate(6)
         self.assertIsInstance(res, dict)
@@ -300,9 +300,8 @@ class TestSingleLabel(TestCase):
 
 
 class TestConfusionMatrix(TestCase):
-
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
         pred = [
             DataSample().set_pred_score(i).set_pred_label(j).set_gt_label(
                 k).to_dict() for i, j, k in zip([

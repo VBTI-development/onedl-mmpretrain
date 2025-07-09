@@ -22,14 +22,13 @@ def check_norm_state(modules, train_state):
     return True
 
 
-@pytest.mark.skipif(
-    digit_version(torch.__version__) < digit_version('1.7.0'),
-    reason='torch.fft is not available before 1.7.0')
+@pytest.mark.skipif(digit_version(torch.__version__) < digit_version('1.7.0'),
+                    reason='torch.fft is not available before 1.7.0')
 class TestHorNet(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            arch='t', drop_path_rate=0.1, gap_before_final_norm=False)
+        self.cfg = dict(arch='t',
+                        drop_path_rate=0.1,
+                        gap_before_final_norm=False)
 
     def test_arch(self):
         # Test invalid default arch
@@ -76,11 +75,10 @@ class TestHorNet(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = HorNet(**cfg)
         ori_weight = model.downsample_layers[0][0].weight.clone().detach()

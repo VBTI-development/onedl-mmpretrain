@@ -117,7 +117,7 @@ def generate_paper_page(collection):
     content = f'---\ngithub_page: /{collection.readme}\n---\n' + content
 
     def make_tabs(matchobj):
-        """modify the format from emphasis black symbol to tabs."""
+        """Modify the format from emphasis black symbol to tabs."""
         content = matchobj.group()
         content = content.replace('<!-- [TABS-BEGIN] -->', '')
         content = content.replace('<!-- [TABS-END] -->', '')
@@ -196,11 +196,10 @@ def generate_summary_table(task, model_result_pairs, title=None):
             *[METRIC_ALIAS.get(metric, metric) for metric in metrics],
             'Readme',
         ]
-        table_cfg = dict(
-            tablefmt='pipe',
-            floatfmt='.2f',
-            numalign='right',
-            stralign='center')
+        table_cfg = dict(tablefmt='pipe',
+                         floatfmt='.2f',
+                         numalign='right',
+                         stralign='center')
         f.write(tabulate(rows, header, **table_cfg))
         f.write('\n```\n')
 

@@ -8,9 +8,9 @@
 # https://github.com/OpenGVLab/InternImage/blob/master/classification/models/
 
 from __future__ import absolute_import, division, print_function
-import pkg_resources
 
 import DCNv3
+import pkg_resources
 import torch
 import torch.nn.functional as F
 from torch.autograd import Function
@@ -21,7 +21,6 @@ dcn_version = float(pkg_resources.get_distribution('DCNv3').version)
 
 
 class DCNv3Function(Function):
-
     @staticmethod
     @custom_fwd
     def forward(ctx, input, offset, mask, kernel_h, kernel_w, stride_h,
@@ -150,20 +149,18 @@ def _generate_dilation_grids(spatial_shapes, kernel_h, kernel_w, dilation_h,
     _, H_, W_, _ = spatial_shapes
     points_list = []
     x, y = torch.meshgrid(
-        torch.linspace(
-            -((dilation_w * (kernel_w - 1)) // 2),
-            -((dilation_w * (kernel_w - 1)) // 2) +
-            (kernel_w - 1) * dilation_w,
-            kernel_w,
-            dtype=torch.float32,
-            device=device),
-        torch.linspace(
-            -((dilation_h * (kernel_h - 1)) // 2),
-            -((dilation_h * (kernel_h - 1)) // 2) +
-            (kernel_h - 1) * dilation_h,
-            kernel_h,
-            dtype=torch.float32,
-            device=device))
+        torch.linspace(-((dilation_w * (kernel_w - 1)) // 2),
+                       -((dilation_w * (kernel_w - 1)) // 2) +
+                       (kernel_w - 1) * dilation_w,
+                       kernel_w,
+                       dtype=torch.float32,
+                       device=device),
+        torch.linspace(-((dilation_h * (kernel_h - 1)) // 2),
+                       -((dilation_h * (kernel_h - 1)) // 2) +
+                       (kernel_h - 1) * dilation_h,
+                       kernel_h,
+                       dtype=torch.float32,
+                       device=device))
 
     points_list.extend([x / W_, y / H_])
     grid = torch.stack(points_list, -1).reshape(-1, 1, 2).\
@@ -229,12 +226,11 @@ def dcnv3_core_pytorch(input, offset, mask, kernel_h, kernel_w, stride_h,
     sampling_grid_ = sampling_grids.view(N_, H_out*W_out, group, P_, 2).\
         transpose(1, 2).flatten(0, 1)
     # N_*group, group_channels, H_out*W_out, P_
-    sampling_input_ = F.grid_sample(
-        input_,
-        sampling_grid_,
-        mode='bilinear',
-        padding_mode='zeros',
-        align_corners=False)
+    sampling_input_ = F.grid_sample(input_,
+                                    sampling_grid_,
+                                    mode='bilinear',
+                                    padding_mode='zeros',
+                                    align_corners=False)
 
     # (N_, H_out, W_out, group*P_) ->
     # N_, H_out*W_out, group, P_ ->

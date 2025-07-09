@@ -9,7 +9,6 @@ from mmengine.runner import CheckpointLoader
 
 
 def convert_glip(ckpt):
-
     def correct_unfold_reduction_order(x):
         out_channel, in_channel = x.shape
         x = x.reshape(out_channel, 4, in_channel // 4)

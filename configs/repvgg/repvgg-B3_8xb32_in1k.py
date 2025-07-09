@@ -7,13 +7,12 @@ _base_ = [
 
 # schedule settings
 optim_wrapper = dict(
-    paramwise_cfg=dict(
-        bias_decay_mult=0.0,
-        custom_keys={
-            'branch_3x3.norm': dict(decay_mult=0.0),
-            'branch_1x1.norm': dict(decay_mult=0.0),
-            'branch_norm.bias': dict(decay_mult=0.0),
-        }))
+    paramwise_cfg=dict(bias_decay_mult=0.0,
+                       custom_keys={
+                           'branch_3x3.norm': dict(decay_mult=0.0),
+                           'branch_1x1.norm': dict(decay_mult=0.0),
+                           'branch_norm.bias': dict(decay_mult=0.0),
+                       }))
 
 data_preprocessor = dict(
     # RGB format normalization parameters
@@ -30,14 +29,13 @@ train_pipeline = [
     dict(type='LoadImageFromFile'),
     dict(type='RandomResizedCrop', scale=224, backend='pillow'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
-    dict(
-        type='RandAugment',
-        policies='timm_increasing',
-        num_policies=2,
-        total_level=10,
-        magnitude_level=7,
-        magnitude_std=0.5,
-        hparams=dict(pad_val=[round(x) for x in bgr_mean])),
+    dict(type='RandAugment',
+         policies='timm_increasing',
+         num_policies=2,
+         total_level=10,
+         magnitude_level=7,
+         magnitude_std=0.5,
+         hparams=dict(pad_val=[round(x) for x in bgr_mean])),
     dict(type='PackInputs'),
 ]
 
@@ -53,13 +51,12 @@ val_dataloader = dict(dataset=dict(pipeline=test_pipeline))
 test_dataloader = dict(dataset=dict(pipeline=test_pipeline))
 
 # schedule settings
-param_scheduler = dict(
-    type='CosineAnnealingLR',
-    T_max=200,
-    by_epoch=True,
-    begin=0,
-    end=200,
-    convert_to_iter_based=True)
+param_scheduler = dict(type='CosineAnnealingLR',
+                       T_max=200,
+                       by_epoch=True,
+                       begin=0,
+                       end=200,
+                       convert_to_iter_based=True)
 
 train_cfg = dict(by_epoch=True, max_epochs=200)
 
