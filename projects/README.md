@@ -16,6 +16,6 @@ We also provide some documentation listed below:
 
   The guides for new contributors about how to add your projects to MMPreTrain.
 
-- [Discussions](https://github.com/open-mmlab/mmpretrain/discussions)
+- [Discussions](https://github.com/VBTI-development/onedl-mmpretrain/discussions)
 
   Welcome to start discussion!

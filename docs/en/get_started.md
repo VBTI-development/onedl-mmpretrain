@@ -49,7 +49,7 @@ According to your needs, we support two install modes:
 In this case, install mmpretrain from source:
 
 ```shell
-git clone https://github.com/open-mmlab/mmpretrain.git
+git clone https://github.com/VBTI-development/onedl-mmpretrain.git
 cd mmpretrain
 pip install -U openmim && mim install -e .
 ```
@@ -142,7 +142,7 @@ See [the Colab tutorial](https://colab.research.google.com/github/mzr1996/mmclas
 
 ### Using MMPretrain with Docker
 
-We provide a [Dockerfile](https://github.com/open-mmlab/mmpretrain/blob/main/docker/Dockerfile)
+We provide a [Dockerfile](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/docker/Dockerfile)
 to build an image. Ensure that your [docker version](https://docs.docker.com/engine/install/) >=19.03.
 
 ```shell
@@ -160,5 +160,5 @@ docker run --gpus all --shm-size=8g -it -v {DATA_DIR}:/mmpretrain/data mmpretrai
 ## Trouble shooting
 
 If you have some issues during the installation, please first view the [FAQ](./notes/faq.md) page.
-You may [open an issue](https://github.com/open-mmlab/mmpretrain/issues/new/choose)
+You may [open an issue](https://github.com/VBTI-development/onedl-mmpretrain/issues/new/choose)
 on GitHub if no solution is found.

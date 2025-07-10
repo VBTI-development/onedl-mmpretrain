@@ -48,7 +48,7 @@ Prepare your dataset according to the [docs](https://mmpretrain.readthedocs.io/e
 Test:
 
 ```shell
-python tools/test.py configs/cspnet/cspdarknet50_8xb32_in1k.py https://download.openmmlab.com/mmclassification/v0/cspnet/cspdarknet50_3rdparty_8xb32_in1k_20220329-bd275287.pth
+python tools/test.py configs/cspnet/cspdarknet50_8xb32_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/cspnet/cspdarknet50_3rdparty_8xb32_in1k_20220329-bd275287.pth
 ```
 
 <!-- [TABS-END] -->
@@ -59,9 +59,9 @@ python tools/test.py configs/cspnet/cspdarknet50_8xb32_in1k.py https://download.
 
 | Model                                |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                |                                    Download                                     |
 | :----------------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :----------------------------------: | :-----------------------------------------------------------------------------: |
-| `cspdarknet50_3rdparty_8xb32_in1k`\* | From scratch |   27.64    |   5.04    |   80.05   |   95.07   | [config](cspdarknet50_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/cspnet/cspdarknet50_3rdparty_8xb32_in1k_20220329-bd275287.pth) |
-| `cspresnet50_3rdparty_8xb32_in1k`\*  | From scratch |   21.62    |   3.48    |   79.55   |   94.68   | [config](cspresnet50_8xb32_in1k.py)  | [model](https://download.openmmlab.com/mmclassification/v0/cspnet/cspresnet50_3rdparty_8xb32_in1k_20220329-dd6dddfb.pth) |
-| `cspresnext50_3rdparty_8xb32_in1k`\* | From scratch |   20.57    |   3.11    |   79.96   |   94.96   | [config](cspresnext50_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/cspnet/cspresnext50_3rdparty_8xb32_in1k_20220329-2cc84d21.pth) |
+| `cspdarknet50_3rdparty_8xb32_in1k`\* | From scratch |   27.64    |   5.04    |   80.05   |   95.07   | [config](cspdarknet50_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/cspnet/cspdarknet50_3rdparty_8xb32_in1k_20220329-bd275287.pth) |
+| `cspresnet50_3rdparty_8xb32_in1k`\*  | From scratch |   21.62    |   3.48    |   79.55   |   94.68   | [config](cspresnet50_8xb32_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/cspnet/cspresnet50_3rdparty_8xb32_in1k_20220329-dd6dddfb.pth) |
+| `cspresnext50_3rdparty_8xb32_in1k`\* | From scratch |   20.57    |   3.11    |   79.96   |   94.96   | [config](cspresnext50_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/cspnet/cspresnext50_3rdparty_8xb32_in1k_20220329-2cc84d21.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/rwightman/pytorch-image-models). The config files of these models are only for inference. We haven't reproduce the training results.*
 

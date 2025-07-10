@@ -25,7 +25,7 @@ Models:
           Top 1 Accuracy: 74.40
           Top 5 Accuracy: 92.34
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/vig-tiny_3rdparty_in1k_20230117-6414c684.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/vig-tiny_3rdparty_in1k_20230117-6414c684.pth
     Config: configs/vig/vig-tiny_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/vig/vig_ti_74.5.pth
@@ -42,7 +42,7 @@ Models:
           Top 1 Accuracy: 80.61
           Top 5 Accuracy: 95.28
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/vig-small_3rdparty_in1k_20230117-5338bf3b.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/vig-small_3rdparty_in1k_20230117-5338bf3b.pth
     Config: configs/vig/vig-small_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/vig/vig_s_80.6.pth
@@ -59,7 +59,7 @@ Models:
           Top 1 Accuracy: 82.62
           Top 5 Accuracy: 96.04
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/vig-base_3rdparty_in1k_20230117-92f6f12f.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/vig-base_3rdparty_in1k_20230117-92f6f12f.pth
     Config: configs/vig/vig-base_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/vig/vig_b_82.6.pth
@@ -76,7 +76,7 @@ Models:
           Top 1 Accuracy: 78.38
           Top 5 Accuracy: 94.38
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/pvig-tiny_3rdparty_in1k_20230117-eb77347d.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/pvig-tiny_3rdparty_in1k_20230117-eb77347d.pth
     Config: configs/vig/pvig-tiny_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/pyramid-vig/pvig_ti_78.5.pth.tar
@@ -93,7 +93,7 @@ Models:
           Top 1 Accuracy: 82.00
           Top 5 Accuracy: 95.97
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/pvig-small_3rdparty_in1k_20230117-9433dc96.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/pvig-small_3rdparty_in1k_20230117-9433dc96.pth
     Config: configs/vig/pvig-small_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/pyramid-vig/pvig_s_82.1.pth.tar
@@ -110,7 +110,7 @@ Models:
           Top 1 Accuracy: 83.12
           Top 5 Accuracy: 96.35
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/pvig-medium_3rdparty_in1k_20230117-21057a6d.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/pvig-medium_3rdparty_in1k_20230117-21057a6d.pth
     Config: configs/vig/pvig-medium_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/pyramid-vig/pvig_m_83.1.pth.tar
@@ -127,7 +127,7 @@ Models:
           Top 1 Accuracy: 83.59
           Top 5 Accuracy: 96.52
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/vig/pvig-base_3rdparty_in1k_20230117-dbab3c85.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vig/pvig-base_3rdparty_in1k_20230117-dbab3c85.pth
     Config: configs/vig/pvig-base_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/huawei-noah/Efficient-AI-Backbones/releases/download/pyramid-vig/pvig_b_83.66.pth.tar

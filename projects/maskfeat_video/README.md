@@ -130,13 +130,13 @@ mim train mmaction2 configs/mvit-small_ft-8xb8-coslr-100e_k400.py \
     --work-dir work_dirs/benchmarks/maskfeat/training_maskfeat-mvit-k400/ \
     --launcher pytorch -gpus 8 \
     --cfg-options model.backbone.init_cfg.type=Pretrained \
-    model.backbone.init_cfg.checkpoint=https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230131-87d60b6f.pth \
+    model.backbone.init_cfg.checkpoint=https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230131-87d60b6f.pth \
     model.backbone.init_cfg.prefix="backbone." \
     $PY_ARGS
 
 # command example for test
 mim test mmaction2 configs/mvit-small_ft-8xb16-coslr-100e_k400.py \
-  --checkpoint https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth \
+  --checkpoint https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth \
   --work-dir work_dirs/benchmarks/maskfeat/maskfeat-mvit-k400/test/ \
   --launcher pytorch --gpus 8
 ```
@@ -154,7 +154,7 @@ mim train mmaction2 ${CONFIG} \
     $PY_ARGS
 
 mim test mmaction2 ${CONFIG} \
-    --checkpoint https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth
+    --checkpoint https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth
     --work-dir ${WORK_DIR} \
     --launcher slurm --gpus 8 --gpus-per-node 8 \
     --partition ${PARTITION} \
@@ -196,8 +196,8 @@ Due to the version of K400 dataset, our pretraining, fine-tuning and the final t
 	    <td>300</td>
       <td>512</td>
       <td>81.8</td>
-      <td><a href='https://github.com/open-mmlab/mmselfsup/blob/dev-1.x/projects/maskfeat_video/configs/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400.py'>config</a> | <a href='https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230131-87d60b6f.pth'>model</a> | <a href='https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230118_114151.json'>log</a></td>
-      <td><a href='https://github.com/open-mmlab/mmselfsup/blob/dev-1.x/projects/maskfeat_video/configs/mvit-small_ft-8xb16-coslr-100e_k400.py'>config</a> | <a href='https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth'>model</a> | <a href='https://download.openmmlab.com/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230121_142927.json'>log</a></td>
+      <td><a href='https://github.com/open-mmlab/mmselfsup/blob/dev-1.x/projects/maskfeat_video/configs/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400.py'>config</a> | <a href='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230131-87d60b6f.pth'>model</a> | <a href='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400_20230118_114151.json'>log</a></td>
+      <td><a href='https://github.com/open-mmlab/mmselfsup/blob/dev-1.x/projects/maskfeat_video/configs/mvit-small_ft-8xb16-coslr-100e_k400.py'>config</a> | <a href='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230131-5e8303f5.pth'>model</a> | <a href='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_mvit-small_16xb32-amp-coslr-300e_k400/mvit-small_ft-8xb16-coslr-100e_k400/mvit-small_ft-8xb16-coslr-100e_k400_20230121_142927.json'>log</a></td>
 	</tr>
 </tbody>
 </table>
@@ -258,11 +258,11 @@ A project does not necessarily have to be finished in a single PR, but it's esse
 
   - [ ] Type hints and docstrings
 
-    <!-- Ideally *all* the methods should have [type hints](https://www.pythontutorial.net/python-basics/python-type-hints/) and [docstrings](https://google.github.io/styleguide/pyguide.html#381-docstrings). [Example](https://github.com/open-mmlab/mmpretrain/blob/main/mmpretrain/models/selfsup/mae.py) -->
+    <!-- Ideally *all* the methods should have [type hints](https://www.pythontutorial.net/python-basics/python-type-hints/) and [docstrings](https://google.github.io/styleguide/pyguide.html#381-docstrings). [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/mmpretrain/models/selfsup/mae.py) -->
 
   - [ ] Unit tests
 
-    <!-- Unit tests for each module are required. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/tests/test_models/test_selfsup/test_mae.py) -->
+    <!-- Unit tests for each module are required. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/tests/test_models/test_selfsup/test_mae.py) -->
 
   - [ ] Code polishing
 
@@ -270,6 +270,6 @@ A project does not necessarily have to be finished in a single PR, but it's esse
 
   - [ ] `metafile.yml` and `README.md`
 
-    <!-- It will be parsed by MIM and Inferencer. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/configs/mae/metafile.yml). In particular, you may have to refactor this README into a standard one. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/configs/mae/README.md) -->
+    <!-- It will be parsed by MIM and Inferencer. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/configs/mae/metafile.yml). In particular, you may have to refactor this README into a standard one. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/configs/mae/README.md) -->
 
 - [ ] Refactor and Move your modules into the core package following the codebase's file hierarchy structure.

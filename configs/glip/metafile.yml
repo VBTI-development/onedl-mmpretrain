@@ -26,7 +26,7 @@ Models:
         - CC3M
         - SBU
     Results: null
-    Weights: https://download.openmmlab.com/mmclassification/v1/glip/swin-t_glip-pre_3rdparty_20230413-d85813b5.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/glip/swin-t_glip-pre_3rdparty_20230413-d85813b5.pth
     Converted From:
       Weights: https://penzhanwu2bbs.blob.core.windows.net/data/GLIPv1_Open/models/glip_tiny_model_o365_goldg_cc_sbu.pth
       Code: https://github.com/microsoft/GLIP
@@ -42,7 +42,7 @@ Models:
         - CC3M+12M
         - SBU
     Results: null
-    Weights: https://download.openmmlab.com/mmclassification/v1/glip/swin-l_glip-pre_3rdparty_384px_20230413-04b198e8.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/glip/swin-l_glip-pre_3rdparty_384px_20230413-04b198e8.pth
     Converted From:
       Weights: https://penzhanwu2bbs.blob.core.windows.net/data/GLIPv1_Open/models/glip_large_model.pth
       Code: https://github.com/microsoft/GLIP

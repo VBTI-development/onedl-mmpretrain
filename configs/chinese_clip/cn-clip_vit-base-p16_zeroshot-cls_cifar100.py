@@ -65,8 +65,8 @@ model = dict(
                                    layer_norm_eps=1e-12)),
     tokenizer=dict(
         type='FullTokenizer',
-        vocab_file=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/chinese_clip/vocab.txt'
+        vocab_file=
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/chinese_clip/vocab.txt'  # noqa
     ),
     proj_dim=512,
     text_prototype='cifar100',

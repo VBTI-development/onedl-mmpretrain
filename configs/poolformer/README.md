@@ -48,7 +48,7 @@ Prepare your dataset according to the [docs](https://mmpretrain.readthedocs.io/e
 Test:
 
 ```shell
-python tools/test.py configs/poolformer/poolformer-s12_32xb128_in1k.py https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-s12_3rdparty_32xb128_in1k_20220414-f8d83051.pth
+python tools/test.py configs/poolformer/poolformer-s12_32xb128_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-s12_3rdparty_32xb128_in1k_20220414-f8d83051.pth
 ```
 
 <!-- [TABS-END] -->
@@ -59,11 +59,11 @@ python tools/test.py configs/poolformer/poolformer-s12_32xb128_in1k.py https://d
 
 | Model                                    |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                  Config                  |                                Download                                 |
 | :--------------------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :--------------------------------------: | :---------------------------------------------------------------------: |
-| `poolformer-s12_3rdparty_32xb128_in1k`\* | From scratch |   11.92    |   1.87    |   77.24   |   93.51   | [config](poolformer-s12_32xb128_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-s12_3rdparty_32xb128_in1k_20220414-f8d83051.pth) |
-| `poolformer-s24_3rdparty_32xb128_in1k`\* | From scratch |   21.39    |   3.51    |   80.33   |   95.05   | [config](poolformer-s24_32xb128_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-s24_3rdparty_32xb128_in1k_20220414-d7055904.pth) |
-| `poolformer-s36_3rdparty_32xb128_in1k`\* | From scratch |   30.86    |   5.15    |   81.43   |   95.45   | [config](poolformer-s36_32xb128_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-s36_3rdparty_32xb128_in1k_20220414-d78ff3e8.pth) |
-| `poolformer-m36_3rdparty_32xb128_in1k`\* | From scratch |   56.17    |   8.96    |   82.14   |   95.71   | [config](poolformer-m36_32xb128_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-m36_3rdparty_32xb128_in1k_20220414-c55e0949.pth) |
-| `poolformer-m48_3rdparty_32xb128_in1k`\* | From scratch |   73.47    |   11.80   |   82.51   |   95.95   | [config](poolformer-m48_32xb128_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/poolformer/poolformer-m48_3rdparty_32xb128_in1k_20220414-9378f3eb.pth) |
+| `poolformer-s12_3rdparty_32xb128_in1k`\* | From scratch |   11.92    |   1.87    |   77.24   |   93.51   | [config](poolformer-s12_32xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-s12_3rdparty_32xb128_in1k_20220414-f8d83051.pth) |
+| `poolformer-s24_3rdparty_32xb128_in1k`\* | From scratch |   21.39    |   3.51    |   80.33   |   95.05   | [config](poolformer-s24_32xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-s24_3rdparty_32xb128_in1k_20220414-d7055904.pth) |
+| `poolformer-s36_3rdparty_32xb128_in1k`\* | From scratch |   30.86    |   5.15    |   81.43   |   95.45   | [config](poolformer-s36_32xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-s36_3rdparty_32xb128_in1k_20220414-d78ff3e8.pth) |
+| `poolformer-m36_3rdparty_32xb128_in1k`\* | From scratch |   56.17    |   8.96    |   82.14   |   95.71   | [config](poolformer-m36_32xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-m36_3rdparty_32xb128_in1k_20220414-c55e0949.pth) |
+| `poolformer-m48_3rdparty_32xb128_in1k`\* | From scratch |   73.47    |   11.80   |   82.51   |   95.95   | [config](poolformer-m48_32xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/poolformer/poolformer-m48_3rdparty_32xb128_in1k_20220414-9378f3eb.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/sail-sg/poolformer). The config files of these models are only for inference. We haven't reproduce the training results.*
 

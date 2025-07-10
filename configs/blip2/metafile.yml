@@ -33,7 +33,7 @@ Models:
         Dataset: COCO
         Metrics:
           Recall@1: 68.3
-    Weights: https://download.openmmlab.com/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth
     Config: configs/blip2/blip2_8xb32_retrieval.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_opt2.7b.pth
@@ -48,7 +48,7 @@ Models:
         Dataset: VQAv2
         Metrics:
           Accuracy: 53.5
-    Weights: https://download.openmmlab.com/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth
     Config: configs/blip2/blip2-opt2.7b_8xb16_vqa.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_opt2.7b.pth
@@ -64,7 +64,7 @@ Models:
         Metrics:
           BLEU-4: 32.90
           CIDER: 111.10
-    Weights: https://download.openmmlab.com/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth
     Config: configs/blip2/blip2-opt2.7b_8xb32_caption.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP2/blip2_pretrained_opt2.7b.pth

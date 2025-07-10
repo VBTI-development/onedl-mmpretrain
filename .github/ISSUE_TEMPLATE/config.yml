@@ -5,7 +5,7 @@ contact_links:
     url: https://mmpretrain.readthedocs.io/en/latest/
     about: Check if your question is answered in docs
   - name: 💬 General questions (寻求帮助)
-    url: https://github.com/open-mmlab/mmpretrain/discussions
+    url: https://github.com/VBTI-development/onedl-mmpretrain/discussions
     about: Ask general usage questions and discuss with other MMPreTrain community members
   - name: 🌐 Explore OpenMMLab (官网)
     url: https://openmmlab.com/

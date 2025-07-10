@@ -121,7 +121,7 @@ Please ensure the `--out-item` is not specified or `--out-item=pred` to use this
 ```shell
 # Get the prediction results
 python tools/test.py configs/resnet/resnet18_8xb16_cifar10.py \
-    https://download.openmmlab.com/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
+    https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
     --out results.pkl
 
 # Eval the top-1 and top-5 accuracy
@@ -169,7 +169,7 @@ Please ensure the `--out-item` is not specified or `--out-item=pred` to use this
 ```shell
 # Get the prediction results
 python tools/test.py configs/resnet/resnet18_8xb16_cifar10.py \
-    https://download.openmmlab.com/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
+    https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
     --out results.pkl
 
 # Save the confusion matrix in a pickle file
@@ -213,7 +213,7 @@ Please ensure the `--out-item` is not specified or `--out-item=pred` to use this
 ```shell
 # Get the prediction results
 python tools/test.py configs/resnet/resnet18_8xb16_cifar10.py \
-    https://download.openmmlab.com/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
+    https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth \
     --out results.pkl
 
 # Save the top-10 successful and failed predictions. And enlarge the sample images by 10 times.

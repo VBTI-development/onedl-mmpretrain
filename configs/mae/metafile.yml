@@ -22,7 +22,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-300e_in1k/mae_vit-base-p16_8xb512-coslr-300e-fp16_in1k_20220829-c2cf66ba.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-300e_in1k/mae_vit-base-p16_8xb512-coslr-300e-fp16_in1k_20220829-c2cf66ba.pth
     Config: configs/mae/mae_vit-base-p16_8xb512-amp-coslr-300e_in1k.py
     Downstream:
       - vit-base-p16_mae-300e-pre_8xb2048-linear-coslr-90e_in1k
@@ -36,7 +36,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-400e_in1k/mae_vit-base-p16_8xb512-coslr-400e-fp16_in1k_20220825-bc79e40b.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-400e_in1k/mae_vit-base-p16_8xb512-coslr-400e-fp16_in1k_20220825-bc79e40b.pth
     Config: configs/mae/mae_vit-base-p16_8xb512-amp-coslr-400e_in1k.py
     Downstream:
       - vit-base-p16_mae-400e-pre_8xb2048-linear-coslr-90e_in1k
@@ -50,7 +50,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-base-p16_8xb512-coslr-800e-fp16_in1k_20220825-5d81fbc4.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-base-p16_8xb512-coslr-800e-fp16_in1k_20220825-5d81fbc4.pth
     Config: configs/mae/mae_vit-base-p16_8xb512-amp-coslr-800e_in1k.py
     Downstream:
       - vit-base-p16_mae-800e-pre_8xb2048-linear-coslr-90e_in1k
@@ -64,7 +64,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k_20220825-f7569ca2.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k_20220825-f7569ca2.pth
     Config: configs/mae/mae_vit-base-p16_8xb512-amp-coslr-1600e_in1k.py
     Downstream:
       - vit-base-p16_mae-1600e-pre_8xb2048-linear-coslr-90e_in1k
@@ -78,7 +78,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-400e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-400e_in1k_20220825-b11d0425.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-400e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-400e_in1k_20220825-b11d0425.pth
     Config: configs/mae/mae_vit-large-p16_8xb512-amp-coslr-400e_in1k.py
     Downstream:
       - vit-large-p16_mae-400e-pre_8xb2048-linear-coslr-90e_in1k
@@ -92,7 +92,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-800e_in1k_20220825-df72726a.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-800e_in1k_20220825-df72726a.pth
     Config: configs/mae/mae_vit-large-p16_8xb512-amp-coslr-800e_in1k.py
     Downstream:
       - vit-large-p16_mae-800e-pre_8xb2048-linear-coslr-90e_in1k
@@ -106,7 +106,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k_20220825-cc7e98c9.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k_20220825-cc7e98c9.pth
     Config: configs/mae/mae_vit-large-p16_8xb512-amp-coslr-1600e_in1k.py
     Downstream:
       - vit-large-p16_mae-1600e-pre_8xb2048-linear-coslr-90e_in1k
@@ -120,7 +120,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MAE
     Results: null
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k_20220916-ff848775.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k_20220916-ff848775.pth
     Config: configs/mae/mae_vit-huge-p14_8xb512-amp-coslr-1600e_in1k.py
     Downstream:
       - vit-huge-p14_mae-1600e-pre_8xb128-coslr-50e_in1k
@@ -183,7 +183,7 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 83.5
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20220825-cf70aa21.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-1600e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20220825-cf70aa21.pth
     Config: configs/mae/benchmarks/vit-base-p16_8xb128-coslr-100e_in1k.py
   - Name: vit-base-p16_mae-300e-pre_8xb2048-linear-coslr-90e_in1k
     Metadata:
@@ -348,7 +348,7 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 86.9
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/vit-huge-p16_ft-8xb128-coslr-50e_in1k/vit-huge-p16_ft-8xb128-coslr-50e_in1k_20220916-0bfc9bfd.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/vit-huge-p16_ft-8xb128-coslr-50e_in1k/vit-huge-p16_ft-8xb128-coslr-50e_in1k_20220916-0bfc9bfd.pth
     Config: configs/mae/benchmarks/vit-huge-p14_8xb128-coslr-50e_in1k.py
   - Name: vit-huge-p14_mae-1600e-pre_32xb8-coslr-50e_in1k-448px
     Metadata:
@@ -363,5 +363,5 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 87.3
-    Weights: https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/vit-huge-p16_ft-32xb8-coslr-50e_in1k-448/vit-huge-p16_ft-32xb8-coslr-50e_in1k-448_20220916-95b6a0ce.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-huge-p16_8xb512-fp16-coslr-1600e_in1k/vit-huge-p16_ft-32xb8-coslr-50e_in1k-448/vit-huge-p16_ft-32xb8-coslr-50e_in1k-448_20220916-95b6a0ce.pth
     Config: configs/mae/benchmarks/vit-huge-p14_32xb8-coslr-50e_in1k-448px.py

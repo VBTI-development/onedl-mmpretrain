@@ -21,17 +21,17 @@
 
 [![PyPI](https://img.shields.io/pypi/v/mmpretrain)](https://pypi.org/project/mmpretrain)
 [![Docs](https://img.shields.io/badge/docs-latest-blue)](https://mmpretrain.readthedocs.io/en/latest/)
-[![Build Status](https://github.com/open-mmlab/mmpretrain/workflows/build/badge.svg)](https://github.com/open-mmlab/mmpretrain/actions)
-[![codecov](https://codecov.io/gh/open-mmlab/mmpretrain/branch/main/graph/badge.svg)](https://codecov.io/gh/open-mmlab/mmpretrain)
-[![license](https://img.shields.io/github/license/open-mmlab/mmpretrain.svg)](https://github.com/open-mmlab/mmpretrain/blob/main/LICENSE)
-[![open issues](https://isitmaintained.com/badge/open/open-mmlab/mmpretrain.svg)](https://github.com/open-mmlab/mmpretrain/issues)
-[![issue resolution](https://isitmaintained.com/badge/resolution/open-mmlab/mmpretrain.svg)](https://github.com/open-mmlab/mmpretrain/issues)
+[![Build Status](https://github.com/VBTI-development/onedl-mmpretrain/workflows/build/badge.svg)](https://github.com/VBTI-development/onedl-mmpretrain/actions)
+[![codecov](https://codecov.io/gh/VBTI-development/onedl-mmpretrain/branch/main/graph/badge.svg)](https://codecov.io/gh/VBTI-development/onedl-mmpretrain)
+[![license](https://img.shields.io/github/license/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/LICENSE)
+[![open issues](https://isitmaintained.com/badge/open/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
+[![issue resolution](https://isitmaintained.com/badge/resolution/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 
 [📘 Documentation](https://mmpretrain.readthedocs.io/en/latest/) |
 [🛠️ Installation](https://mmpretrain.readthedocs.io/en/latest/get_started.html#installation) |
 [👀 Model Zoo](https://mmpretrain.readthedocs.io/en/latest/modelzoo_statistics.html) |
 [🆕 Update News](https://mmpretrain.readthedocs.io/en/latest/notes/changelog.html) |
-[🤔 Reporting Issues](https://github.com/open-mmlab/mmpretrain/issues/new/choose)
+[🤔 Reporting Issues](https://github.com/VBTI-development/onedl-mmpretrain/issues/new/choose)
 
 <img src="https://user-images.githubusercontent.com/36138628/230307505-4727ad0a-7d71-4069-939d-b499c7e272b7.png" width="400"/>
 
@@ -125,7 +125,7 @@ Below are quick steps for installation:
 conda create -n open-mmlab python=3.8 pytorch==1.10.1 torchvision==0.11.2 cudatoolkit=11.3 -c pytorch -y
 conda activate open-mmlab
 pip install openmim
-git clone https://github.com/open-mmlab/mmpretrain.git
+git clone https://github.com/VBTI-development/onedl-mmpretrain.git
 cd mmpretrain
 mim install -e .
 ```

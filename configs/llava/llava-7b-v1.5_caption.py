@@ -20,8 +20,9 @@ model = dict(
         layer_cfgs=dict(act_cfg=dict(type='mmpretrain.QuickGELU')),
         final_norm=False,
         out_type='raw',
-        pretrained='https://download.openmmlab.com/mmclassification/v0/clip/'
-        'vit-large-p14_clip-openai-pre_336px_20231025-fb1315ed.pth',
+        pretrained=
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/'
+        'v0/clip/vit-large-p14_clip-openai-pre_336px_20231025-fb1315ed.pth',
     ),
     mm_hidden_size=1024,
     use_im_patch=False,

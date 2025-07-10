@@ -7,7 +7,7 @@ _base_ = [
 
 # model settings
 # use pre-train weight converted from https://github.com/Alibaba-MIIL/ImageNet21K # noqa
-pretrained = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_3rdparty-mill_in21k_20220331-faac000b.pth'  # noqa
+pretrained = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_3rdparty-mill_in21k_20220331-faac000b.pth'  # noqa
 
 model = dict(type='ImageClassifier',
              backbone=dict(init_cfg=dict(

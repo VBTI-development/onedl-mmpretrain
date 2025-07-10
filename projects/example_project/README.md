@@ -83,7 +83,7 @@ mim test mmpretrain configs/examplenet_8xb32_in1k.py --checkpoint $CHECKPOINT --
 @misc{2023mmpretrain,
     title={OpenMMLab's Pre-training Toolbox and Benchmark},
     author={MMPreTrain Contributors},
-    howpublished = {\url{https://github.com/open-mmlab/mmpretrain}},
+    howpublished = {\url{https://github.com/VBTI-development/onedl-mmpretrain}},
     year={2023}
 }
 ```
@@ -117,7 +117,7 @@ to MMPreTrain projects.
 
   - [ ] Unit tests
 
-    <!-- Unit tests for the major module are required. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/tests/test_models/test_backbones/test_vision_transformer.py) -->
+    <!-- Unit tests for the major module are required. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/tests/test_models/test_backbones/test_vision_transformer.py) -->
 
   - [ ] Code style
 
@@ -125,4 +125,4 @@ to MMPreTrain projects.
 
   - [ ] `metafile.yml` and `README.md`
 
-    <!-- It will used for MMPreTrain to acquire your models. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/configs/mvit/metafile.yml). In particular, you may have to refactor this README into a standard one. [Example](https://github.com/open-mmlab/mmpretrain/blob/main/configs/swin_transformer/README.md) -->
+    <!-- It will used for MMPreTrain to acquire your models. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/configs/mvit/metafile.yml). In particular, you may have to refactor this README into a standard one. [Example](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/configs/swin_transformer/README.md) -->

@@ -54,7 +54,7 @@ python tools/train.py configs/shufflenet_v2/shufflenet-v2-1x_16xb64_in1k.py
 Test:
 
 ```shell
-python tools/test.py configs/shufflenet_v2/shufflenet-v2-1x_16xb64_in1k.py https://download.openmmlab.com/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth
+python tools/test.py configs/shufflenet_v2/shufflenet-v2-1x_16xb64_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,7 +65,7 @@ python tools/test.py configs/shufflenet_v2/shufflenet-v2-1x_16xb64_in1k.py https
 
 | Model                          |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                  Config                   |                                     Download                                     |
 | :----------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :---------------------------------------: | :------------------------------------------------------------------------------: |
-| `shufflenet-v2-1x_16xb64_in1k` | From scratch |    2.28    |   0.15    |   69.55   |   88.92   | [config](shufflenet-v2-1x_16xb64_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.json) |
+| `shufflenet-v2-1x_16xb64_in1k` | From scratch |    2.28    |   0.15    |   69.55   |   88.92   | [config](shufflenet-v2-1x_16xb64_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.json) |
 
 ## Citation
 

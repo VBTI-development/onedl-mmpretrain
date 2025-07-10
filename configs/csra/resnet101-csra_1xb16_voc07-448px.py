@@ -1,7 +1,7 @@
 _base_ = ['../_base_/datasets/voc_bs16.py', '../_base_/default_runtime.py']
 
 # Pre-trained Checkpoint Path
-checkpoint = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet101_8xb32_in1k_20210831-539c63f8.pth'  # noqa
+checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet101_8xb32_in1k_20210831-539c63f8.pth'  # noqa
 # If you want to use the pre-trained weight of ResNet101-CutMix from the
 # originary repo(https://github.com/Kevinz-code/CSRA). Script of
 # 'tools/model_converters/torchvision_to_mmpretrain.py' can help you convert

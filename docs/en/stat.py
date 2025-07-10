@@ -10,7 +10,8 @@ from tabulate import tabulate
 
 MMPT_ROOT = Path(__file__).absolute().parents[2]
 PAPERS_ROOT = Path('papers')  # Path to save generated paper pages.
-GITHUB_PREFIX = 'https://github.com/open-mmlab/mmpretrain/blob/main/'
+GITHUB_PREFIX = \
+    'https://github.com/VBTI-development/onedl-mmpretrain/blob/main/'
 MODELZOO_TEMPLATE = """\
 # Model Zoo Summary
 

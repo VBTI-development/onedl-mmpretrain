@@ -33,7 +33,7 @@ Prepare your dataset according to the [docs](https://mmpretrain.readthedocs.io/e
 Test:
 
 ```shell
-python tools/test.py configs/blip2/blip2_8xb32_retrieval.py https://download.openmmlab.com/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth
+python tools/test.py configs/blip2/blip2_8xb32_retrieval.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth
 ```
 
 <!-- [TABS-END] -->
@@ -44,19 +44,19 @@ python tools/test.py configs/blip2/blip2_8xb32_retrieval.py https://download.ope
 
 | Model                                       | Params (M) | BLEU-4 | CIDER  |                   Config                   |                                           Download                                            |
 | :------------------------------------------ | :--------: | :----: | :----: | :----------------------------------------: | :-------------------------------------------------------------------------------------------: |
-| `blip2-opt2.7b_3rdparty-zeroshot_caption`\* |  3770.47   | 32.90  | 111.10 | [config](./blip2-opt2.7b_8xb32_caption.py) | [model](https://download.openmmlab.com/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth) |
+| `blip2-opt2.7b_3rdparty-zeroshot_caption`\* |  3770.47   | 32.90  | 111.10 | [config](./blip2-opt2.7b_8xb32_caption.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth) |
 
 ### Visual Question Answering on VQAv2
 
 | Model                                   | Params (M) | Accuracy |                 Config                 |                                                 Download                                                  |
 | :-------------------------------------- | :--------: | :------: | :------------------------------------: | :-------------------------------------------------------------------------------------------------------: |
-| `blip2-opt2.7b_3rdparty-zeroshot_vqa`\* |  3770.47   |  53.50   | [config](./blip2-opt2.7b_8xb16_vqa.py) | [model](https://download.openmmlab.com/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth) |
+| `blip2-opt2.7b_3rdparty-zeroshot_vqa`\* |  3770.47   |  53.50   | [config](./blip2-opt2.7b_8xb16_vqa.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2-opt2.7b_3rdparty_pretrain_20230505-b51db4e1.pth) |
 
 ### Image-To-Text Retrieval on COCO
 
-| Model                        | Params (M) | Recall@1 |                Config                |                                                    Download                                                     |
-| :--------------------------- | :--------: | :------: | :----------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| `blip2_3rdparty_retrieval`\* |  1173.19   |  85.40   | [config](./blip2_8xb32_retrieval.py) | [model](https://download.openmmlab.com/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth) |
+| Model                        | Params (M) | Recall@1 |                Config                |                                                        Download                                                        |
+| :--------------------------- | :--------: | :------: | :----------------------------------: | :--------------------------------------------------------------------------------------------------------------------: |
+| `blip2_3rdparty_retrieval`\* |  1173.19   |  85.40   | [config](./blip2_8xb32_retrieval.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip2/blip2_3rdparty_pretrain_20230505-f7ef4390.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/salesforce/LAVIS). The config files of these models are only for inference. We haven't reproduce the training results.*
 

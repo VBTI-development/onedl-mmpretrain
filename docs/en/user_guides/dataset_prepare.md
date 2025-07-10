@@ -177,7 +177,7 @@ We support two ways of organizing the ImageNet dataset: Subfolder Format and Tex
 
 #### Subfolder Format
 
-We have provided a sample, which you can download and extract from this [link](https://download.openmmlab.com/mmpretrain/datasets/imagenet_1k.zip). The directory structure of the dataset should be as below:
+We have provided a sample, which you can download and extract from this [link](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/datasets/imagenet_1k.zip). The directory structure of the dataset should be as below:
 
 ```text
 data/imagenet/
@@ -202,7 +202,7 @@ data/imagenet/
 
 #### Text Annotation File Format
 
-You can download and untar the meta data from this [link](https://download.openmmlab.com/mmclassification/datasets/imagenet/meta/caffe_ilsvrc12.tar.gz). And re-organize the dataset as below:
+You can download and untar the meta data from this [link](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/datasets/imagenet/meta/caffe_ilsvrc12.tar.gz). And re-organize the dataset as below:
 
 ```text
 data/imagenet/

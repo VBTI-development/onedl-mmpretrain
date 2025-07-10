@@ -81,7 +81,7 @@ model = dict(
         use_shared_rel_pos_bias=False,
         out_type='raw',
         pretrained=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/minigpt4/minigpt-4_eva-g-p14_20230615-e908c021.pth'  # noqa
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/minigpt4/minigpt-4_eva-g-p14_20230615-e908c021.pth'  # noqa
     ),
     q_former_model=dict(
         type='Qformer',
@@ -91,7 +91,7 @@ model = dict(
         cross_attention_freq=2,
         num_query_token=32,
         pretrained=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/minigpt4/minigpt-4_qformer_20230615-1dfa889c.pth'  # noqa
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/minigpt4/minigpt-4_qformer_20230615-1dfa889c.pth'  # noqa
     ),
     lang_encoder=dict(type='AutoModelForCausalLM',
                       name_or_path='baichuan-inc/baichuan-7B',

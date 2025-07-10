@@ -33,7 +33,7 @@ python tools/analysis_tools/confusion_matrix.py \
 ```shell
 python tools/analysis_tools/confusion_matrix.py \
     configs/resnet/resnet50_8xb16_cifar10.py \
-    https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_b16x8_cifar10_20210528-f54bfad9.pth \
+    https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_b16x8_cifar10_20210528-f54bfad9.pth \
     --show
 ```
 

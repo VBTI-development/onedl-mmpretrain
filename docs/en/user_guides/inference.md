@@ -97,11 +97,11 @@ The obtained model is a usual PyTorch module.
 
 ## Inference on given images
 
-Here is an example to inference an [image](https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG) by the ResNet-50 pre-trained classification model.
+Here is an example to inference an [image](https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG) by the ResNet-50 pre-trained classification model.
 
 ```python
 >>> from mmpretrain import inference_model
->>> image = 'https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG'
+>>> image = 'https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG'
 >>> # If you have no graphical interface, please set `show=False`
 >>> result = inference_model('resnet50_8xb32_in1k', image, show=True)
 >>> print(result['pred_class'])
@@ -113,10 +113,10 @@ samples. You can use the inferencers for multiple calling.
 
 ```python
 >>> from mmpretrain import ImageClassificationInferencer
->>> image = 'https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG'
+>>> image = 'https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG'
 >>> inferencer = ImageClassificationInferencer('resnet50_8xb32_in1k')
 >>> # Note that the inferencer output is a list of result even if the input is a single sample.
->>> result = inferencer('https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG')[0]
+>>> result = inferencer('https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG')[0]
 >>> print(result['pred_class'])
 sea snake
 >>>
@@ -145,9 +145,9 @@ inference images by CUDA.
 
 ```python
 >>> from mmpretrain import ImageClassificationInferencer
->>> image = 'https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG'
+>>> image = 'https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG'
 >>> config = 'configs/resnet/resnet50_8xb32_in1k.py'
->>> checkpoint = 'https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth'
+>>> checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth'
 >>> inferencer = ImageClassificationInferencer(model=config, pretrained=checkpoint, device='cuda')
 >>> result = inferencer(image)[0]
 >>> print(result['pred_class'])
@@ -156,7 +156,7 @@ sea snake
 
 ## Inference by a Gradio demo
 
-We also provide a gradio demo for all supported tasks and you can find it in [projects/gradio_demo/launch.py](https://github.com/open-mmlab/mmpretrain/blob/main/projects/gradio_demo/launch.py).
+We also provide a gradio demo for all supported tasks and you can find it in [projects/gradio_demo/launch.py](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/projects/gradio_demo/launch.py).
 
 Please install `gradio` by `pip install -U gradio` at first.
 
@@ -173,7 +173,7 @@ In a word, the input of `model.extract_feat` is `torch.Tensor`, the input of `Fe
 >>> from mmpretrain import FeatureExtractor, get_model
 >>> model = get_model('resnet50_8xb32_in1k', backbone=dict(out_indices=(0, 1, 2, 3)))
 >>> extractor = FeatureExtractor(model)
->>> features = extractor('https://github.com/open-mmlab/mmpretrain/raw/main/demo/demo.JPEG')[0]
+>>> features = extractor('https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG')[0]
 >>> features[0].shape, features[1].shape, features[2].shape, features[3].shape
 (torch.Size([256]), torch.Size([512]), torch.Size([1024]), torch.Size([2048]))
 ```

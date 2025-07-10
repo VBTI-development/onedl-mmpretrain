@@ -44,7 +44,7 @@ python tools/train.py configs/csra/resnet101-csra_1xb16_voc07-448px.py
 Test:
 
 ```shell
-python tools/test.py configs/csra/resnet101-csra_1xb16_voc07-448px.py https://download.openmmlab.com/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth
+python tools/test.py configs/csra/resnet101-csra_1xb16_voc07-448px.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth
 ```
 
 <!-- [TABS-END] -->
@@ -55,7 +55,7 @@ python tools/test.py configs/csra/resnet101-csra_1xb16_voc07-448px.py https://do
 
 | Model                              |   Pretrain   | Params (M) | Flops (G) |  CF1  |  OF1  |  mAP  |                    Config                     |                                  Download                                   |
 | :--------------------------------- | :----------: | :--------: | :-------: | :---: | :---: | :---: | :-------------------------------------------: | :-------------------------------------------------------------------------: |
-| `resnet101-csra_1xb16_voc07-448px` | From scratch |   23.55    |   4.12    | 89.16 | 90.80 | 94.98 | [config](resnet101-csra_1xb16_voc07-448px.py) | [model](https://download.openmmlab.com/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.json) |
+| `resnet101-csra_1xb16_voc07-448px` | From scratch |   23.55    |   4.12    | 89.16 | 90.80 | 94.98 | [config](resnet101-csra_1xb16_voc07-448px.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.json) |
 
 ## Citation
 

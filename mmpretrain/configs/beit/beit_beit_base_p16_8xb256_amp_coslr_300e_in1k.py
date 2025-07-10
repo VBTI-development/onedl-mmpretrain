@@ -89,7 +89,7 @@ model = dict(
         init_cfg=dict(
             type=PretrainedInit,
             checkpoint=  # noqa: E251
-            'https://download.openmmlab.com/mmselfsup/1.x/target_generator_ckpt/dalle_encoder.pth',  # noqa: E501
+            'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/target_generator_ckpt/dalle_encoder.pth',  # noqa: E501
         )))
 
 # optimizer wrapper

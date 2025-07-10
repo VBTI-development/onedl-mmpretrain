@@ -6,7 +6,7 @@ _base_ = [
 # model settings
 
 # load model pretrained on imagenet
-pretrained = 'https://download.openmmlab.com/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth'  # noqa
+pretrained = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth'  # noqa
 
 # use different head for multilabel task
 model = dict(type='ImageClassifier',

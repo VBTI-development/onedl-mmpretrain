@@ -58,11 +58,11 @@ Here are two examples of running t-SNE visualization on ResNet-18 and ResNet-50 
 ```shell
 python tools/visualization/vis_tsne.py \
     configs/resnet/resnet18_8xb16_cifar10.py \
-    --checkpoint https://download.openmmlab.com/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth
+    --checkpoint https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet18_b16x8_cifar10_20210528-bd6371c8.pth
 
 python tools/visualization/vis_tsne.py \
     configs/resnet/resnet50_8xb16_cifar10.py \
-    --checkpoint https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_b16x8_cifar10_20210528-f54bfad9.pth
+    --checkpoint https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_b16x8_cifar10_20210528-f54bfad9.pth
 ```
 
 | ResNet-18                                                                                            | ResNet-50                                                                                            |
@@ -76,10 +76,10 @@ Here is an example of running t-SNE visualization on MAE-ViT-base model, trained
 ```shell
 python tools/visualization/vis_tsne.py \
     configs/mae/mae_vit-base-p16_8xb512-amp-coslr-800e_in1k.py \
-    --checkpoint https://download.openmmlab.com/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-base-p16_8xb512-coslr-800e-fp16_in1k_20220825-5d81fbc4.pth \
+    --checkpoint https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-base-p16_8xb512-fp16-coslr-800e_in1k/mae_vit-base-p16_8xb512-coslr-800e-fp16_in1k_20220825-5d81fbc4.pth \
     --test-cfg configs/_base_/datasets/imagenet_bs32.py
 ```
 
-| MAE-ViT-base                                                                                                                                                  |
-| ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| <div align=center><img src='https://github.com/open-mmlab/mmpretrain/assets/42371271/ee576c0c-abef-43d1-8866-24a5f5fd0cf6' height="auto" width="auto" ></div> |
+| MAE-ViT-base                                                                                                                                                              |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| <div align=center><img src='https://github.com/VBTI-development/onedl-mmpretrain/assets/42371271/ee576c0c-abef-43d1-8866-24a5f5fd0cf6' height="auto" width="auto" ></div> |

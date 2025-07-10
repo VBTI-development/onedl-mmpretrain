@@ -30,7 +30,7 @@ model = dict(
     target_generator=dict(
         type='CLIPGenerator',
         tokenizer_path=  # noqa
-        'https://download.openmmlab.com/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
     ),
 )
 

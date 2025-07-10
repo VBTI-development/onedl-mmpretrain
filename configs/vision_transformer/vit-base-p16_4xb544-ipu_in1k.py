@@ -10,7 +10,7 @@ paramwise_cfg = dict(custom_keys={
     '.pos_embed': dict(decay_mult=0.0)
 })
 
-pretrained = 'https://download.openmmlab.com/mmclassification/v0/vit/pretrain/vit-base-p16_3rdparty_pt-64xb64_in1k-224_20210928-02284250.pth'  # noqa
+pretrained = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/pretrain/vit-base-p16_3rdparty_pt-64xb64_in1k-224_20210928-02284250.pth'  # noqa
 
 model = dict(head=dict(loss=dict(type='CrossEntropyLoss',
                                  loss_weight=1.0,

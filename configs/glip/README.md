@@ -38,10 +38,10 @@ print(type(feats))
 
 The pre-trained models are used to fine-tune, and therefore don't have evaluation results.
 
-| Model                                       |          Pretrain          | resolution |                                                       Download                                                        |
-| :------------------------------------------ | :------------------------: | :--------: | :-------------------------------------------------------------------------------------------------------------------: |
-| GLIP-T (`swin-t_glip-pre_3rdparty`)\*       |    O365,GoldG,CC3M,SBU     |  224x224   |    [model](https://download.openmmlab.com/mmclassification/v1/glip/swin-t_glip-pre_3rdparty_20230413-d85813b5.pth)    |
-| GLIP-L (`swin-l_glip-pre_3rdparty_384px`)\* | FourODs,GoldG,CC3M+12M,SBU |  384x384   | [model](https://download.openmmlab.com/mmclassification/v1/glip/swin-l_glip-pre_3rdparty_384px_20230413-04b198e8.pth) |
+| Model                                       |          Pretrain          | resolution |                                                         Download                                                          |
+| :------------------------------------------ | :------------------------: | :--------: | :-----------------------------------------------------------------------------------------------------------------------: |
+| GLIP-T (`swin-t_glip-pre_3rdparty`)\*       |    O365,GoldG,CC3M,SBU     |  224x224   | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/glip/swin-t_glip-pre_3rdparty_20230413-d85813b5.pth) |
+| GLIP-L (`swin-l_glip-pre_3rdparty_384px`)\* | FourODs,GoldG,CC3M+12M,SBU |  384x384   | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/glip/swin-l_glip-pre_3rdparty_384px_20230413-04b198e8.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/microsoft/GLIP).*
 

@@ -39,9 +39,9 @@ print(type(feats))
 
 | Model                                          | Params (M) | Flops (G) |                 Config                  |                                             Download                                             |
 | :--------------------------------------------- | :--------: | :-------: | :-------------------------------------: | :----------------------------------------------------------------------------------------------: |
-| `vit-base-p16_sam-pre_3rdparty_sa1b-1024px`\*  |   89.67    |  486.00   | [config](vit-base-p16_sam_headless.py)  | [model](https://download.openmmlab.com/mmclassification/v1/vit_sam/vit-base-p16_sam-pre_3rdparty_sa1b-1024px_20230411-2320f9cc.pth) |
-| `vit-large-p16_sam-pre_3rdparty_sa1b-1024px`\* |   308.00   |  1494.00  | [config](vit-large-p16_sam_headless.py) | [model](https://download.openmmlab.com/mmclassification/v1/vit_sam/vit-large-p16_sam-pre_3rdparty_sa1b-1024px_20230411-595feafd.pth) |
-| `vit-huge-p16_sam-pre_3rdparty_sa1b-1024px`\*  |   637.00   |  2982.00  | [config](vit-huge-p16_sam_headless.py)  | [model](https://download.openmmlab.com/mmclassification/v1/vit_sam/vit-huge-p16_sam-pre_3rdparty_sa1b-1024px_20230411-3f13c653.pth) |
+| `vit-base-p16_sam-pre_3rdparty_sa1b-1024px`\*  |   89.67    |  486.00   | [config](vit-base-p16_sam_headless.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-base-p16_sam-pre_3rdparty_sa1b-1024px_20230411-2320f9cc.pth) |
+| `vit-large-p16_sam-pre_3rdparty_sa1b-1024px`\* |   308.00   |  1494.00  | [config](vit-large-p16_sam_headless.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-large-p16_sam-pre_3rdparty_sa1b-1024px_20230411-595feafd.pth) |
+| `vit-huge-p16_sam-pre_3rdparty_sa1b-1024px`\*  |   637.00   |  2982.00  | [config](vit-huge-p16_sam_headless.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-huge-p16_sam-pre_3rdparty_sa1b-1024px_20230411-3f13c653.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/facebookresearch/segment-anything/). The config files of these models are only for inference. We haven't reproduce the training results.*
 

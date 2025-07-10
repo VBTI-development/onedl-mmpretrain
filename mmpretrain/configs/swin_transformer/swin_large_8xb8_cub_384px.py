@@ -14,7 +14,7 @@ with read_base():
     from .._base_.schedules.cub_bs64 import *
 
 # model settings
-checkpoint = 'https://download.openmmlab.com/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
+checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
 
 model.update(backbone=dict(arch='large',
                            init_cfg=dict(type=PretrainedInit,
