@@ -37,4 +37,4 @@ jobs:
       - name: Build and install
         run: uv run mim install .
       - name: test commands of mim
-        run: uv run mim search mmpretrain
+        run: uv run mim search onedl-mmpretrain
