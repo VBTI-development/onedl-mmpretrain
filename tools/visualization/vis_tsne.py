@@ -234,7 +234,7 @@ def main():
                       perplexity=args.perplexity,
                       early_exaggeration=args.early_exaggeration,
                       learning_rate=args.learning_rate,
-                      n_iter=args.n_iter,
+                      max_iter=args.n_iter,
                       n_iter_without_progress=args.n_iter_without_progress,
                       init=args.init)
 

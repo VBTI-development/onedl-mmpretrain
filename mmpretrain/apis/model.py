@@ -81,8 +81,10 @@ class ModelHub:
     def _register_mmpretrain_models(cls):
         # register models in mmpretrain
         if not cls.__mmpretrain_registered:
-            from importlib_metadata import distribution
-            root = distribution('mmpretrain').locate_file('mmpretrain')
+            from pathlib import Path
+
+            import mmpretrain
+            root = Path(mmpretrain.__file__).parent
             model_index_path = root / '.mim' / 'model-index.yml'
             ModelHub.register_model_index(model_index_path,
                                           config_prefix=root / '.mim')

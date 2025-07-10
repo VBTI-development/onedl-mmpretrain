@@ -1,13 +1,13 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import argparse
 import copy
+import importlib.metadata
 import math
 from functools import partial
 from pathlib import Path
 
 import mmcv
 import numpy as np
-import pkg_resources
 import torch.nn as nn
 from mmcv.transforms import Compose
 from mmengine.config import Config, DictAction
@@ -146,9 +146,10 @@ def init_cam(method, model, target_layers, use_cuda, reshape_transform):
     """Construct the CAM object once, In order to be compatible with
     mmpretrain, here we modify the ActivationsAndGradients object."""
     GradCAM_Class = METHOD_MAP[method.lower()]
-    cam = GradCAM_Class(model=model,
-                        target_layers=target_layers,
-                        use_cuda=use_cuda)
+    cam = GradCAM_Class(
+        model=model,
+        target_layers=target_layers,
+    )
     # Release the original hooks in ActivationsAndGradients to use
     # ActivationsAndGradients.
     cam.activations_and_grads.release()
@@ -251,7 +252,10 @@ def main():
     # to fix the bug in #654.
     targets = None
     if args.target_category:
-        grad_cam_v = pkg_resources.get_distribution('grad_cam').version
+        try:
+            grad_cam_v = importlib.metadata.version('grad-cam')
+        except importlib.metadata.PackageNotFoundError:
+            grad_cam_v = '0.0.0'
         if digit_version(grad_cam_v) >= digit_version('1.3.7'):
             from pytorch_grad_cam.utils.model_targets import \
                 ClassifierOutputTarget
