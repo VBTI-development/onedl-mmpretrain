@@ -23,8 +23,8 @@ sys.path.insert(0, os.path.abspath('../../'))
 # -- Project information -----------------------------------------------------
 
 project = 'MMPretrain'
-copyright = '2020, OpenMMLab'
-author = 'MMPretrain Authors'
+copyright = '2025, VBTI'
+author = 'VBTI Authors'
 
 # The full version, including alpha/beta/rc tags
 version_file = '../../mmpretrain/version.py'
@@ -103,17 +103,6 @@ html_theme_options = {
                 {'name': 'Train and inference with Python APIs',
                  'url': 'https://colab.research.google.com/github/mzr1996/mmpretrain-tutorial/blob/master/1.x/MMPretrain_python.ipynb'},
             ]
-        },
-        {
-            'name': 'Version',
-            'children': [
-                {'name': 'MMPreTrain 0.x',
-                 'url': 'https://mmpretrain.readthedocs.io/en/0.x/',
-                 'description': '0.x branch'},
-                {'name': 'MMPreTrain 1.x',
-                 'url': 'https://mmpretrain.readthedocs.io/en/latest/',
-                 'description': 'Main branch'},
-            ],
         }
     ],
     # Specify the language of shared menu

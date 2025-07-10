@@ -10,10 +10,10 @@ import torch.nn.functional as F
 from mmcv.cnn.bricks import DropPath
 from mmengine.model import BaseModule
 from mmengine.utils import digit_version
+from transformers.generation.utils import GenerationMixin
 from transformers.modeling_outputs import (
     BaseModelOutputWithPastAndCrossAttentions, ModelOutput, Seq2SeqLMOutput)
-from transformers.modeling_utils import (GenerationConfig, GenerationMixin,
-                                         PretrainedConfig)
+from transformers.modeling_utils import GenerationConfig, PretrainedConfig
 
 from mmpretrain.registry import MODELS
 from ...backbones.resnet import Bottleneck, ResNet

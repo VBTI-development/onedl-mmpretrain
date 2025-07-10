@@ -52,12 +52,12 @@ docs = [
     "tabulate",
 ]
 readthedocs = [
-    "mmcv-lite>=2.0.0rc4",
-    "mmengine",
+    "onedl-mmcv",
+    "onedl-mmengine",
     "pycocotools",
     "torch",
     "torchvision",
-    "transformers",
+    "transformers>=4.28.0",
 ]
 
 [project.optional-dependencies]
