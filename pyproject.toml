@@ -34,10 +34,6 @@ tests = [
     "pytest",
     ##
     "opencv-python",
-    "torch", "torchvision",
-    "scikit-learn>=1.5",
-    "requests",
-    "grad-cam>=1.3.6"
 ]
 docs = [
     "docutils==0.18.1",
@@ -73,7 +69,7 @@ optional = [
     "albumentations>=0.3.2",
     "grad-cam>=1.3.7,<1.5.0",
     "requests",
-    "scikit-learn"
+    "scikit-learn>=1.5"
 ]
 torch = [ "torch<2.6", "torchvision" ]
 
