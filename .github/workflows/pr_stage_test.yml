@@ -48,6 +48,7 @@ jobs:
         run: |
           set -e
           uv run coverage run --branch --source mmpretrain -m pytest tests/
+          uv run coverage xml
           uv run coverage report -m
       - name: Code Coverage Summary Report
         uses: irongut/CodeCoverageSummary@v1.3.0
