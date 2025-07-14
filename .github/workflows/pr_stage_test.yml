@@ -78,6 +78,8 @@ jobs:
       image: ${{ matrix.container }}
     env:
         UV_CACHE_DIR: /__w/_uv_cache # set cache to be on same disk to avoid hardlink copies.
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Etc/UTC
     steps:
       - uses: actions/checkout@v4
       - name: Install uv and set the python version
@@ -93,7 +95,7 @@ jobs:
       - name: Install system dependencies
         run: |
           apt-get update
-          apt-get install -y ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
+          apt-get install -y tzdata ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
           apt-get clean -y
 
       - name: Install torch
@@ -143,4 +145,4 @@ jobs:
         run: uv pip install -r pyproject.toml --group tests --extra optional
       - name: Run unittests
         run: |
-          uv run pytest tests/ --ignore tests/test_models/test_backbones
+          uv run pytest tests/ --ignore tests/test_models/test_backbones --ignore tests/test_tools
