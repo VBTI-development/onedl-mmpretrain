@@ -13,7 +13,6 @@ file = 'mmpretrain.datasets.samplers.repeat_aug.'
 
 
 class MockDist:
-
     def __init__(self, dist_info=(0, 1), seed=7):
         self.dist_info = dist_info
         self.seed = seed
@@ -29,7 +28,6 @@ class MockDist:
 
 
 class TestRepeatAugSampler(TestCase):
-
     def setUp(self):
         self.data_length = 100
         self.dataset = list(range(self.data_length))
@@ -63,8 +61,8 @@ class TestRepeatAugSampler(TestCase):
                          math.ceil(self.data_length / 3))
         self.assertEqual(len(sampler), sampler.num_selected_samples)
         indices = [x for x in range(self.data_length) for _ in range(3)]
-        self.assertEqual(
-            list(sampler), indices[2::3][:sampler.num_selected_samples])
+        self.assertEqual(list(sampler),
+                         indices[2::3][:sampler.num_selected_samples])
 
         logger = MMLogger.get_current_instance()
         with patch.object(logger, 'warning') as mock_log:

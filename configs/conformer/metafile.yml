@@ -27,7 +27,7 @@ Models:
           Top 1 Accuracy: 81.31
           Top 5 Accuracy: 95.60
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth
     Converted From:
       Weights: https://drive.google.com/file/d/19SxGhKcWOR5oQSxNUWUM2MGYiaWMrF1z/view?usp=sharing
       Code: https://github.com/pengzhiliang/Conformer/blob/main/models.py#L65
@@ -43,7 +43,7 @@ Models:
           Top 1 Accuracy: 83.32
           Top 5 Accuracy: 96.46
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/conformer/conformer-small-p16_3rdparty_8xb128_in1k_20211206-3065dcf5.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-small-p16_3rdparty_8xb128_in1k_20211206-3065dcf5.pth
     Converted From:
       Weights: https://drive.google.com/file/d/1mpOlbLaVxOfEwV4-ha78j_1Ebqzj2B83/view?usp=sharing
       Code: https://github.com/pengzhiliang/Conformer/blob/main/models.py#L73
@@ -59,7 +59,7 @@ Models:
           Top 1 Accuracy: 81.96
           Top 5 Accuracy: 96.02
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/conformer/conformer-small-p32_8xb128_in1k_20211206-947a0816.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-small-p32_8xb128_in1k_20211206-947a0816.pth
   - Name: conformer-base-p16_3rdparty_in1k
     In Collection: Conformer
     Config: configs/conformer/conformer-base-p16_8xb128_in1k.py
@@ -72,7 +72,7 @@ Models:
           Top 1 Accuracy: 83.82
           Top 5 Accuracy: 96.59
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/conformer/conformer-base-p16_3rdparty_8xb128_in1k_20211206-bfdf8637.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-base-p16_3rdparty_8xb128_in1k_20211206-bfdf8637.pth
     Converted From:
       Weights: https://drive.google.com/file/d/1oeQ9LSOGKEUaYGu7WTlUGl3KDsQIi0MA/view?usp=sharing
       Code: https://github.com/pengzhiliang/Conformer/blob/main/models.py#L89

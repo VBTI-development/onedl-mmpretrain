@@ -18,7 +18,6 @@ class VOCMetricMixin:
             set to False, map difficult gt labels to negative ones(0).
             Defaults to None, the difficult labels will be set to '-1'.
     """
-
     def __init__(self,
                  *arg,
                  difficult_as_positive: Optional[bool] = None,

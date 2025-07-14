@@ -41,14 +41,13 @@ def test_convmixer():
         assert f.shape == torch.Size([1, 768, 32, 32])
 
     # Test with custom arch
-    model = ConvMixer(
-        arch={
-            'embed_dims': 99,
-            'depth': 5,
-            'patch_size': 5,
-            'kernel_size': 9
-        },
-        out_indices=range(5))
+    model = ConvMixer(arch={
+        'embed_dims': 99,
+        'depth': 5,
+        'patch_size': 5,
+        'kernel_size': 9
+    },
+                      out_indices=range(5))
     model.init_weights()
     model.train()
 

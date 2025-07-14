@@ -14,31 +14,29 @@ with read_base():
     from .._base_.schedules.cub_bs64 import *
 
 # model settings
-checkpoint = 'https://download.openmmlab.com/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
+checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
 
-model.update(
-    backbone=dict(
-        arch='large',
-        init_cfg=dict(
-            type=PretrainedInit, checkpoint=checkpoint, prefix='backbone')),
-    head=dict(num_classes=200, in_channels=1536))
+model.update(backbone=dict(arch='large',
+                           init_cfg=dict(type=PretrainedInit,
+                                         checkpoint=checkpoint,
+                                         prefix='backbone')),
+             head=dict(num_classes=200, in_channels=1536))
 
 # schedule settings
 optim_wrapper = dict(
-    optimizer=dict(
-        _delete_=True,
-        type=AdamW,
-        lr=5e-6,
-        weight_decay=0.0005,
-        eps=1e-8,
-        betas=(0.9, 0.999)),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.absolute_pos_embed': dict(decay_mult=0.0),
-            '.relative_position_bias_table': dict(decay_mult=0.0)
-        }),
+    optimizer=dict(_delete_=True,
+                   type=AdamW,
+                   lr=5e-6,
+                   weight_decay=0.0005,
+                   eps=1e-8,
+                   betas=(0.9, 0.999)),
+    paramwise_cfg=dict(norm_decay_mult=0.0,
+                       bias_decay_mult=0.0,
+                       custom_keys={
+                           '.absolute_pos_embed': dict(decay_mult=0.0),
+                           '.relative_position_bias_table':
+                           dict(decay_mult=0.0)
+                       }),
     clip_grad=dict(max_norm=5.0),
 )
 

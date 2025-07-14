@@ -133,8 +133,14 @@ def test_mobileoneblock():
     assert torch.allclose(y, y_deploy, atol=1e-5, rtol=1e-4)
 
     # # Test MobileOneBlock with padding == dilation == 2
-    block = MobileOneBlock(
-        10, 10, 3, 4, stride=1, groups=10, padding=2, dilation=2)
+    block = MobileOneBlock(10,
+                           10,
+                           3,
+                           4,
+                           stride=1,
+                           groups=10,
+                           padding=2,
+                           dilation=2)
     x = torch.randn(1, 10, 16, 16)
     block.eval()
     y = block(x)
@@ -182,8 +188,14 @@ def test_mobileoneblock():
 
     # Test MobileOneBlock with deploy == True
     se_cfg = dict(ratio=4, divisor=1)
-    block = MobileOneBlock(
-        32, 32, 3, 4, stride=1, se_cfg=se_cfg, groups=32, deploy=True)
+    block = MobileOneBlock(32,
+                           32,
+                           3,
+                           4,
+                           stride=1,
+                           se_cfg=se_cfg,
+                           groups=32,
+                           deploy=True)
     x = torch.randn(1, 32, 16, 16)
     block.eval()
     assert hasattr(block, 'branch_reparam')
@@ -210,11 +222,10 @@ def test_mobileone_backbone():
 
     # Test  len(arch['num_blocks']) == len(arch['width_factor'])
     with pytest.raises(AssertionError):
-        arch = dict(
-            num_blocks=[2, 4, 14, 1],
-            width_factor=[0.75, 0.75, 0.75],
-            num_conv_branches=[1, 1, 1, 1],
-            num_se_blocks=[0, 0, 5, 1])
+        arch = dict(num_blocks=[2, 4, 14, 1],
+                    width_factor=[0.75, 0.75, 0.75],
+                    num_conv_branches=[1, 1, 1, 1],
+                    num_se_blocks=[0, 0, 5, 1])
         MobileOne(arch=arch)
 
     # Test max(out_indices) < len(arch['num_blocks'])

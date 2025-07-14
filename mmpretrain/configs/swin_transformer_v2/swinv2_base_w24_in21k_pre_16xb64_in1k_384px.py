@@ -9,6 +9,5 @@ with read_base():
     from .._base_.schedules.imagenet_bs1024_adamw_swin import *
 
 # model settings
-model.update(
-    backbone=dict(
-        window_size=[24, 24, 24, 12], pretrained_window_sizes=[12, 12, 12, 6]))
+model.update(backbone=dict(window_size=[24, 24, 24, 12],
+                           pretrained_window_sizes=[12, 12, 12, 6]))

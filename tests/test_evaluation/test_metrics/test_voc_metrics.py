@@ -13,7 +13,6 @@ init_default_scope('mmpretrain')
 
 
 class TestVOCMultiLabel(TestCase):
-
     def test_evaluate(self):
         # prepare input data
         y_true_label = [[0], [1, 3], [0, 1, 2], [3]]
@@ -133,9 +132,8 @@ class TestVOCMultiLabel(TestCase):
 
 
 class TestVOCAveragePrecision(TestCase):
-
     def test_evaluate(self):
-        """Test using the metric in the same way as Evalutor."""
+        """Test using the metric in the same way as Evaluator."""
         # prepare input data
         y_true_difficult = [[0], [2], [1], []]
         y_pred_score = torch.tensor([
@@ -178,10 +176,9 @@ class TestVOCAveragePrecision(TestCase):
                 sklearn.metrics.average_precision_score(
                     gt_per_class, pred_per_class))
 
-        self.assertAlmostEqual(
-            res['multi-label/mAP'],
-            sum(expected_res) * 100 / len(expected_res),
-            places=4)
+        self.assertAlmostEqual(res['multi-label/mAP'],
+                               sum(expected_res) * 100 / len(expected_res),
+                               places=4)
 
         # 2. Test with `difficult_as_positive`=False argument
         evaluator = Evaluator(
@@ -200,10 +197,9 @@ class TestVOCAveragePrecision(TestCase):
                 sklearn.metrics.average_precision_score(
                     gt_per_class, pred_per_class))
 
-        self.assertAlmostEqual(
-            res['multi-label/mAP'],
-            sum(expected_res) * 100 / len(expected_res),
-            places=4)
+        self.assertAlmostEqual(res['multi-label/mAP'],
+                               sum(expected_res) * 100 / len(expected_res),
+                               places=4)
 
         # 3. Test with `difficult_as_positive`=True argument
         evaluator = Evaluator(
@@ -222,7 +218,6 @@ class TestVOCAveragePrecision(TestCase):
                 sklearn.metrics.average_precision_score(
                     gt_per_class, pred_per_class))
 
-        self.assertAlmostEqual(
-            res['multi-label/mAP'],
-            sum(expected_res) * 100 / len(expected_res),
-            places=4)
+        self.assertAlmostEqual(res['multi-label/mAP'],
+                               sum(expected_res) * 100 / len(expected_res),
+                               places=4)

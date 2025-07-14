@@ -37,7 +37,6 @@ def _ntuple(n):
     Args:
         n (int): The number of the target length.
     """
-
     def parse(x):
         if isinstance(x, collections.abc.Iterable):
             return x

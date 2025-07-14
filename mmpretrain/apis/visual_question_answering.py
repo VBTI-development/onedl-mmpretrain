@@ -98,7 +98,6 @@ class VisualQuestionAnsweringInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[dict], batch_size: int = 1):
-
         def load_image(input_: dict):
             img = imread(input_['img'])
             if img is None:
@@ -141,14 +140,13 @@ class VisualQuestionAnsweringInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_vqa(
-                image,
-                data_sample,
-                resize=resize,
-                show=show,
-                wait_time=wait_time,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_vqa(image,
+                                          data_sample,
+                                          resize=resize,
+                                          show=show,
+                                          wait_time=wait_time,
+                                          name=name,
+                                          out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

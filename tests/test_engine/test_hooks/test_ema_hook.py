@@ -21,7 +21,6 @@ from mmpretrain.engine import EMAHook
 
 
 class SimpleModel(BaseModel):
-
     def __init__(self):
         super().__init__()
         self.para = nn.Parameter(torch.zeros(1))
@@ -50,7 +49,6 @@ class DummyDataset(Dataset):
 
 
 class TestEMAHook(TestCase):
-
     def setUp(self):
         self.temp_dir = tempfile.TemporaryDirectory()
         state_dict = OrderedDict(
@@ -76,11 +74,11 @@ class TestEMAHook(TestCase):
         ema_hook = EMAHook()
         runner = Runner(
             model=model,
-            train_dataloader=dict(
-                dataset=DummyDataset(),
-                sampler=dict(type='DefaultSampler', shuffle=False),
-                batch_size=3,
-                num_workers=0),
+            train_dataloader=dict(dataset=DummyDataset(),
+                                  sampler=dict(type='DefaultSampler',
+                                               shuffle=False),
+                                  batch_size=3,
+                                  num_workers=0),
             optim_wrapper=OptimWrapper(
                 optimizer=torch.optim.Adam(model.parameters(), lr=0.)),
             train_cfg=dict(by_epoch=True, max_epochs=2),
@@ -101,63 +99,60 @@ class TestEMAHook(TestCase):
 
         # Test validate on ema model
         evaluator = Evaluator([MagicMock()])
-        runner = Runner(
-            model=model,
-            val_dataloader=dict(
-                dataset=DummyDataset(),
-                sampler=dict(type='DefaultSampler', shuffle=False),
-                batch_size=3,
-                num_workers=0),
-            val_evaluator=evaluator,
-            val_cfg=dict(),
-            work_dir=self.temp_dir.name,
-            load_from=self.ckpt,
-            default_hooks=dict(logger=None),
-            custom_hooks=[dict(type='EMAHook')],
-            default_scope='mmpretrain',
-            experiment_name='validate_on_ema')
+        runner = Runner(model=model,
+                        val_dataloader=dict(dataset=DummyDataset(),
+                                            sampler=dict(type='DefaultSampler',
+                                                         shuffle=False),
+                                            batch_size=3,
+                                            num_workers=0),
+                        val_evaluator=evaluator,
+                        val_cfg=dict(),
+                        work_dir=self.temp_dir.name,
+                        load_from=self.ckpt,
+                        default_hooks=dict(logger=None),
+                        custom_hooks=[dict(type='EMAHook')],
+                        default_scope='mmpretrain',
+                        experiment_name='validate_on_ema')
         runner.val()
         evaluator.metrics[0].process.assert_has_calls([
             call(ANY, [torch.tensor([1.]).to(device)]),
         ])
-        self.assertNotIn(
-            call(ANY, [torch.tensor([2.]).to(device)]),
-            evaluator.metrics[0].process.mock_calls)
+        self.assertNotIn(call(ANY, [torch.tensor([2.]).to(device)]),
+                         evaluator.metrics[0].process.mock_calls)
 
         # Test test on ema model
         evaluator = Evaluator([MagicMock()])
-        runner = Runner(
-            model=model,
-            test_dataloader=dict(
-                dataset=DummyDataset(),
-                sampler=dict(type='DefaultSampler', shuffle=False),
-                batch_size=3,
-                num_workers=0),
-            test_evaluator=evaluator,
-            test_cfg=dict(),
-            work_dir=self.temp_dir.name,
-            load_from=self.ckpt,
-            default_hooks=dict(logger=None),
-            custom_hooks=[dict(type='EMAHook')],
-            default_scope='mmpretrain',
-            experiment_name='test_on_ema')
+        runner = Runner(model=model,
+                        test_dataloader=dict(dataset=DummyDataset(),
+                                             sampler=dict(
+                                                 type='DefaultSampler',
+                                                 shuffle=False),
+                                             batch_size=3,
+                                             num_workers=0),
+                        test_evaluator=evaluator,
+                        test_cfg=dict(),
+                        work_dir=self.temp_dir.name,
+                        load_from=self.ckpt,
+                        default_hooks=dict(logger=None),
+                        custom_hooks=[dict(type='EMAHook')],
+                        default_scope='mmpretrain',
+                        experiment_name='test_on_ema')
         runner.test()
         evaluator.metrics[0].process.assert_has_calls([
             call(ANY, [torch.tensor([1.]).to(device)]),
         ])
-        self.assertNotIn(
-            call(ANY, [torch.tensor([2.]).to(device)]),
-            evaluator.metrics[0].process.mock_calls)
+        self.assertNotIn(call(ANY, [torch.tensor([2.]).to(device)]),
+                         evaluator.metrics[0].process.mock_calls)
 
         # Test validate on both models
         evaluator = Evaluator([MagicMock()])
         runner = Runner(
             model=model,
-            val_dataloader=dict(
-                dataset=DummyDataset(),
-                sampler=dict(type='DefaultSampler', shuffle=True),
-                batch_size=3,
-                num_workers=0),
+            val_dataloader=dict(dataset=DummyDataset(),
+                                sampler=dict(type='DefaultSampler',
+                                             shuffle=True),
+                                batch_size=3,
+                                num_workers=0),
             val_evaluator=evaluator,
             val_cfg=dict(),
             work_dir=self.temp_dir.name,
@@ -177,11 +172,11 @@ class TestEMAHook(TestCase):
         evaluator = Evaluator([MagicMock()])
         runner = Runner(
             model=model,
-            test_dataloader=dict(
-                dataset=DummyDataset(),
-                sampler=dict(type='DefaultSampler', shuffle=True),
-                batch_size=3,
-                num_workers=0),
+            test_dataloader=dict(dataset=DummyDataset(),
+                                 sampler=dict(type='DefaultSampler',
+                                              shuffle=True),
+                                 batch_size=3,
+                                 num_workers=0),
             test_evaluator=evaluator,
             test_cfg=dict(),
             work_dir=self.temp_dir.name,
@@ -202,11 +197,11 @@ class TestEMAHook(TestCase):
         with self.assertWarnsRegex(UserWarning, 'evaluate_on_origin'):
             runner = Runner(
                 model=model,
-                test_dataloader=dict(
-                    dataset=DummyDataset(),
-                    sampler=dict(type='DefaultSampler', shuffle=False),
-                    batch_size=3,
-                    num_workers=0),
+                test_dataloader=dict(dataset=DummyDataset(),
+                                     sampler=dict(type='DefaultSampler',
+                                                  shuffle=False),
+                                     batch_size=3,
+                                     num_workers=0),
                 test_evaluator=evaluator,
                 test_cfg=dict(),
                 work_dir=self.temp_dir.name,
@@ -219,6 +214,5 @@ class TestEMAHook(TestCase):
         evaluator.metrics[0].process.assert_has_calls([
             call(ANY, [torch.tensor([2.]).to(device)]),
         ])
-        self.assertNotIn(
-            call(ANY, [torch.tensor([1.]).to(device)]),
-            evaluator.metrics[0].process.mock_calls)
+        self.assertNotIn(call(ANY, [torch.tensor([1.]).to(device)]),
+                         evaluator.metrics[0].process.mock_calls)

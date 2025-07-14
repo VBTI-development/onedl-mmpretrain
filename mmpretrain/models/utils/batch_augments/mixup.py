@@ -27,7 +27,6 @@ class Mixup:
         a mixing ratio (marked as :math:`\lambda`, ``lam``) from the random
         distribution.
     """
-
     def __init__(self, alpha: float):
         assert isinstance(alpha, float) and alpha > 0
 

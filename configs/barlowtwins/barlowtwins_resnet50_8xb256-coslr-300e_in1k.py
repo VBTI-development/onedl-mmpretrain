@@ -6,28 +6,25 @@ _base_ = [
 train_dataloader = dict(batch_size=256)
 
 # model settings
-model = dict(
-    type='BarlowTwins',
-    backbone=dict(
-        type='ResNet',
-        depth=50,
-        norm_cfg=dict(type='SyncBN'),
-        zero_init_residual=True),
-    neck=dict(
-        type='NonLinearNeck',
-        in_channels=2048,
-        hid_channels=8192,
-        out_channels=8192,
-        num_layers=3,
-        with_last_bn=False,
-        with_last_bn_affine=False,
-        with_avg_pool=True,
-        init_cfg=dict(
-            type='Kaiming', distribution='uniform', layer=['Linear'])),
-    head=dict(
-        type='LatentCrossCorrelationHead',
-        in_channels=8192,
-        loss=dict(type='CrossCorrelationLoss')))
+model = dict(type='BarlowTwins',
+             backbone=dict(type='ResNet',
+                           depth=50,
+                           norm_cfg=dict(type='SyncBN'),
+                           zero_init_residual=True),
+             neck=dict(type='NonLinearNeck',
+                       in_channels=2048,
+                       hid_channels=8192,
+                       out_channels=8192,
+                       num_layers=3,
+                       with_last_bn=False,
+                       with_last_bn_affine=False,
+                       with_avg_pool=True,
+                       init_cfg=dict(type='Kaiming',
+                                     distribution='uniform',
+                                     layer=['Linear'])),
+             head=dict(type='LatentCrossCorrelationHead',
+                       in_channels=8192,
+                       loss=dict(type='CrossCorrelationLoss')))
 
 # optimizer
 optim_wrapper = dict(
@@ -44,21 +41,19 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1.6e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=290,
-        eta_min=0.0016,
-        by_epoch=True,
-        begin=10,
-        end=300,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1.6e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=290,
+         eta_min=0.0016,
+         by_epoch=True,
+         begin=10,
+         end=300,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

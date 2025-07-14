@@ -15,7 +15,6 @@ class Blip2VQA(Blip2Caption):
     Module for BLIP2 VQA task. For more details about the initialization
     params, please refer to :class:`Blip2Caption`.
     """
-
     def predict(self,
                 images: torch.Tensor,
                 data_samples: Optional[list] = None,
@@ -51,16 +50,17 @@ class Blip2VQA(Blip2Caption):
             return_dict=True,
         )
         inputs_opt = self.vision_neck([query_outputs.last_hidden_state])
-        attns_opt = torch.ones(
-            inputs_opt.size()[:-1], dtype=torch.long).to(images.device)
+        attns_opt = torch.ones(inputs_opt.size()[:-1],
+                               dtype=torch.long).to(images.device)
 
         prompt = [self.prompt.format(q) for q in questions]
 
         # use left padding
         self.tokenizer.padding_side = 'left'
 
-        opt_tokens = self.tokenizer(
-            prompt, return_tensors='pt', padding='longest').to(images.device)
+        opt_tokens = self.tokenizer(prompt,
+                                    return_tensors='pt',
+                                    padding='longest').to(images.device)
         input_ids = opt_tokens.input_ids
         attention_mask = torch.cat([attns_opt, opt_tokens.attention_mask],
                                    dim=1)
@@ -80,8 +80,8 @@ class Blip2VQA(Blip2Caption):
             length_penalty=-1.0,
         )
 
-        output_text = self.tokenizer.batch_decode(
-            outputs, skip_special_tokens=True)
+        output_text = self.tokenizer.batch_decode(outputs,
+                                                  skip_special_tokens=True)
         output_text = [text.strip() for text in output_text]
 
         out_data_samples = []

@@ -21,7 +21,6 @@ from .base import BaseSelfSupervisor
 
 class Conv2d(nn.Module):
     """Rewrite Conv2d module according to DALL-E code."""
-
     def __init__(self,
                  n_in: int,
                  n_out: int,
@@ -62,7 +61,6 @@ class Conv2d(nn.Module):
 
 class EncoderBlock(nn.Module):
     """Rewrite EncoderBlock module according to DALL-E code."""
-
     def __init__(self,
                  n_in: int,
                  n_out: int,
@@ -109,7 +107,6 @@ class DALLEEncoder(BaseModule):
         init_cfg (Union[List[dict], dict], optional): Config dict for weight
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  group_count: int = 4,
                  n_hid: int = 256,
@@ -125,11 +122,10 @@ class DALLEEncoder(BaseModule):
         blk_range = range(n_blk_per_group)
         n_layers = group_count * n_blk_per_group
         make_conv = partial(Conv2d, device=device, requires_grad=requires_grad)
-        make_blk = partial(
-            EncoderBlock,
-            n_layers=n_layers,
-            device=device,
-            requires_grad=requires_grad)
+        make_blk = partial(EncoderBlock,
+                           n_layers=n_layers,
+                           device=device,
+                           requires_grad=requires_grad)
 
         self.blocks = nn.Sequential(
             OrderedDict([
@@ -169,8 +165,10 @@ class DALLEEncoder(BaseModule):
                      OrderedDict([
                          ('relu', nn.ReLU()),
                          ('conv',
-                          make_conv(
-                              8 * n_hid, vocab_size, 1, use_float16=False)),
+                          make_conv(8 * n_hid,
+                                    vocab_size,
+                                    1,
+                                    use_float16=False)),
                      ]))),
             ]))
 
@@ -229,16 +227,16 @@ class CAEPretrainViT(BEiTViT):
 
             It only works without input mask. Defaults to ``"avg_featmap"``.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
+            embedding vector resize. Defaults to "bicubic".
         layer_scale_init_value (float, optional): The init value of gamma in
             BEiTTransformerEncoderLayer.
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(
         self,
         arch: str = 'b',
@@ -266,28 +264,27 @@ class CAEPretrainViT(BEiTViT):
             dict(type='Xavier', distribution='uniform', layer=['Linear'])
         ]
     ) -> None:
-        super().__init__(
-            arch=arch,
-            img_size=img_size,
-            patch_size=patch_size,
-            in_channels=in_channels,
-            out_indices=out_indices,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            bias=bias,
-            norm_cfg=norm_cfg,
-            final_norm=final_norm,
-            out_type=out_type,
-            with_cls_token=True,
-            frozen_stages=frozen_stages,
-            use_abs_pos_emb=use_abs_pos_emb,
-            use_rel_pos_bias=use_rel_pos_bias,
-            use_shared_rel_pos_bias=use_shared_rel_pos_bias,
-            layer_scale_init_value=layer_scale_init_value,
-            interpolate_mode=interpolate_mode,
-            patch_cfg=patch_cfg,
-            layer_cfgs=layer_cfgs,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         img_size=img_size,
+                         patch_size=patch_size,
+                         in_channels=in_channels,
+                         out_indices=out_indices,
+                         drop_rate=drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         bias=bias,
+                         norm_cfg=norm_cfg,
+                         final_norm=final_norm,
+                         out_type=out_type,
+                         with_cls_token=True,
+                         frozen_stages=frozen_stages,
+                         use_abs_pos_emb=use_abs_pos_emb,
+                         use_rel_pos_bias=use_rel_pos_bias,
+                         use_shared_rel_pos_bias=use_shared_rel_pos_bias,
+                         layer_scale_init_value=layer_scale_init_value,
+                         interpolate_mode=interpolate_mode,
+                         patch_cfg=patch_cfg,
+                         layer_cfgs=layer_cfgs,
+                         init_cfg=init_cfg)
         self.pos_embed.requires_grad = False
         self.num_patches = self.patch_resolution[0] * self.patch_resolution[1]
 
@@ -382,7 +379,6 @@ class CAE(BaseSelfSupervisor):
         init_cfg (Union[List[dict], dict], optional): Config dict for weight
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  backbone: dict,
                  neck: dict,
@@ -391,13 +387,12 @@ class CAE(BaseSelfSupervisor):
                  base_momentum: float = 0.0,
                  data_preprocessor: Optional[dict] = None,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            target_generator=target_generator,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         target_generator=target_generator,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         self.momentum = base_momentum
         self.teacher = MODELS.build(backbone)

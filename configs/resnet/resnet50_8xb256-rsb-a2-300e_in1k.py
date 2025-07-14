@@ -6,16 +6,15 @@ _base_ = [
 ]
 
 # model settings
-model = dict(
-    backbone=dict(
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
-        drop_path_rate=0.05,
-    ),
-    head=dict(loss=dict(use_sigmoid=True)),
-    train_cfg=dict(augments=[
-        dict(type='Mixup', alpha=0.1),
-        dict(type='CutMix', alpha=1.0)
-    ]))
+model = dict(backbone=dict(
+    norm_cfg=dict(type='SyncBN', requires_grad=True),
+    drop_path_rate=0.05,
+),
+             head=dict(loss=dict(use_sigmoid=True)),
+             train_cfg=dict(augments=[
+                 dict(type='Mixup', alpha=0.1),
+                 dict(type='CutMix', alpha=1.0)
+             ]))
 
 # dataset settings
 train_dataloader = dict(sampler=dict(type='RepeatAugSampler', shuffle=True))
@@ -35,12 +34,11 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=295,
-        eta_min=1.0e-6,
-        by_epoch=True,
-        begin=5,
-        end=300)
+    dict(type='CosineAnnealingLR',
+         T_max=295,
+         eta_min=1.0e-6,
+         by_epoch=True,
+         begin=5,
+         end=300)
 ]
 train_cfg = dict(by_epoch=True, max_epochs=300)

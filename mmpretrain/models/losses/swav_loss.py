@@ -68,7 +68,6 @@ class MultiPrototypes(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  output_dim: int,
                  num_prototypes: List[int],
@@ -112,7 +111,6 @@ class SwAVLoss(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  feat_dim: int,
                  sinkhorn_iterations: int = 3,

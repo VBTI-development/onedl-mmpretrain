@@ -90,8 +90,10 @@ class TextToImageRetrievalInferencer(BaseInferencer):
                  pretrained: Union[bool, str] = True,
                  device: Union[str, torch.device, None] = None,
                  **kwargs) -> None:
-        super().__init__(
-            model=model, pretrained=pretrained, device=device, **kwargs)
+        super().__init__(model=model,
+                         pretrained=pretrained,
+                         device=device,
+                         **kwargs)
 
         self.img_pipeline, self.text_pipeline = self.pipeline
 
@@ -116,13 +118,15 @@ class TextToImageRetrievalInferencer(BaseInferencer):
 
         if isinstance(prototype, str):
             # A directory path of images
-            prototype = dict(
-                type='CustomDataset', with_label=False, data_root=prototype)
+            prototype = dict(type='CustomDataset',
+                             with_label=False,
+                             data_root=prototype)
 
         if isinstance(prototype, list):
             test_pipeline = [dict(type='LoadImageFromFile'), self.img_pipeline]
-            dataset = BaseDataset(
-                lazy_init=True, serialize_data=False, pipeline=test_pipeline)
+            dataset = BaseDataset(lazy_init=True,
+                                  serialize_data=False,
+                                  pipeline=test_pipeline)
             dataset.data_list = [{
                 'sample_idx': i,
                 'img_path': file
@@ -138,8 +142,9 @@ class TextToImageRetrievalInferencer(BaseInferencer):
             dataloader = build_dataloader(dataset)
         elif isinstance(prototype, list):
             test_pipeline = [dict(type='LoadImageFromFile'), self.img_pipeline]
-            dataset = BaseDataset(
-                lazy_init=True, serialize_data=False, pipeline=test_pipeline)
+            dataset = BaseDataset(lazy_init=True,
+                                  serialize_data=False,
+                                  pipeline=test_pipeline)
             dataset.data_list = [{
                 'sample_idx': i,
                 'img_path': file
@@ -235,12 +240,11 @@ class TextToImageRetrievalInferencer(BaseInferencer):
         return img_pipeline, text_pipeline
 
     def preprocess(self, inputs: List[str], batch_size: int = 1):
-
         def process_text(input_: str):
             return self.text_pipeline({'text': input_})
 
-        chunked_data = self._get_chunk_data(
-            map(process_text, inputs), batch_size)
+        chunked_data = self._get_chunk_data(map(process_text, inputs),
+                                            batch_size)
         yield from map(default_collate, chunked_data)
 
     def visualize(self,
@@ -381,8 +385,10 @@ class ImageToTextRetrievalInferencer(BaseInferencer):
                  pretrained: Union[bool, str] = True,
                  device: Union[str, torch.device, None] = None,
                  **kwargs) -> None:
-        super().__init__(
-            model=model, pretrained=pretrained, device=device, **kwargs)
+        super().__init__(model=model,
+                         pretrained=pretrained,
+                         device=device,
+                         **kwargs)
 
         self.img_pipeline, self.text_pipeline = self.pipeline
 
@@ -487,8 +493,9 @@ class ImageToTextRetrievalInferencer(BaseInferencer):
         data = self.model.data_preprocessor(data, False)
         feats = self.prototype.copy()
         feats.update(self.model.extract_feat(images=data['images']))
-        return self.model.predict_all(
-            feats, data['data_samples'], cal_t2i=False)[0]
+        return self.model.predict_all(feats,
+                                      data['data_samples'],
+                                      cal_t2i=False)[0]
 
     def _init_pipeline(self, cfg: Config) -> Callable:
         test_pipeline_cfg = cfg.test_dataloader.dataset.pipeline
@@ -500,7 +507,6 @@ class ImageToTextRetrievalInferencer(BaseInferencer):
         return img_pipeline, text_pipeline
 
     def preprocess(self, inputs: List[ImageType], batch_size: int = 1):
-
         def load_image(input_):
             img = imread(input_)
             if img is None:
@@ -549,17 +555,16 @@ class ImageToTextRetrievalInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_i2t_retrieval(
-                image,
-                data_sample,
-                self.prototype_dataset,
-                topk=topk,
-                resize=resize,
-                draw_score=draw_score,
-                show=show,
-                wait_time=wait_time,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_i2t_retrieval(image,
+                                                    data_sample,
+                                                    self.prototype_dataset,
+                                                    topk=topk,
+                                                    resize=resize,
+                                                    draw_score=draw_score,
+                                                    show=show,
+                                                    wait_time=wait_time,
+                                                    name=name,
+                                                    out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

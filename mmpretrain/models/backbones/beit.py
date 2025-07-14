@@ -29,7 +29,6 @@ class RelativePositionBias(BaseModule):
         with_cls_token (bool): To indicate the backbone has cls_token or not.
             Defaults to True.
     """
-
     def __init__(
         self,
         window_size: Sequence[int],
@@ -130,7 +129,6 @@ class BEiTTransformerEncoderLayer(TransformerEncoderLayer):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims: int,
                  num_heads: int,
@@ -148,17 +146,16 @@ class BEiTTransformerEncoderLayer(TransformerEncoderLayer):
                  attn_cfg: dict = dict(),
                  ffn_cfg: dict = dict(add_identity=False),
                  init_cfg: Optional[Union[dict, List[dict]]] = None) -> None:
-        super().__init__(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            feedforward_channels=feedforward_channels,
-            attn_drop_rate=attn_drop_rate,
-            drop_path_rate=0.,
-            drop_rate=0.,
-            num_fcs=num_fcs,
-            act_cfg=act_cfg,
-            norm_cfg=norm_cfg,
-            init_cfg=init_cfg)
+        super().__init__(embed_dims=embed_dims,
+                         num_heads=num_heads,
+                         feedforward_channels=feedforward_channels,
+                         attn_drop_rate=attn_drop_rate,
+                         drop_path_rate=0.,
+                         drop_rate=0.,
+                         num_fcs=num_fcs,
+                         act_cfg=act_cfg,
+                         norm_cfg=norm_cfg,
+                         init_cfg=init_cfg)
 
         attn_cfg = {
             'window_size': window_size,
@@ -191,12 +188,12 @@ class BEiTTransformerEncoderLayer(TransformerEncoderLayer):
             dropout_layer) if dropout_layer else nn.Identity()
 
         if layer_scale_init_value > 0:
-            self.gamma_1 = nn.Parameter(
-                layer_scale_init_value * torch.ones((embed_dims)),
-                requires_grad=True)
-            self.gamma_2 = nn.Parameter(
-                layer_scale_init_value * torch.ones((embed_dims)),
-                requires_grad=True)
+            self.gamma_1 = nn.Parameter(layer_scale_init_value * torch.ones(
+                (embed_dims)),
+                                        requires_grad=True)
+            self.gamma_2 = nn.Parameter(layer_scale_init_value * torch.ones(
+                (embed_dims)),
+                                        requires_grad=True)
         else:
             self.gamma_1, self.gamma_2 = None, None
 
@@ -277,8 +274,9 @@ class BEiTViT(BaseBackbone):
         layer_scale_init_value (float): The initialization value for
             the learnable scaling of attention and FFN. Defaults to 0.1.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+            embedding vector resize. Defaults to "bicubic".
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
@@ -458,18 +456,17 @@ class BEiTViT(BaseBackbone):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(
-                embed_dims=self.embed_dims,
-                num_heads=self.arch_settings['num_heads'],
-                feedforward_channels=self.
-                arch_settings['feedforward_channels'],
-                layer_scale_init_value=layer_scale_init_value,
-                window_size=self.patch_resolution,
-                use_rel_pos_bias=use_rel_pos_bias,
-                drop_rate=drop_rate,
-                drop_path_rate=dpr[i],
-                bias=bias,
-                norm_cfg=norm_cfg)
+            _layer_cfg = dict(embed_dims=self.embed_dims,
+                              num_heads=self.arch_settings['num_heads'],
+                              feedforward_channels=self.
+                              arch_settings['feedforward_channels'],
+                              layer_scale_init_value=layer_scale_init_value,
+                              window_size=self.patch_resolution,
+                              use_rel_pos_bias=use_rel_pos_bias,
+                              drop_rate=drop_rate,
+                              drop_path_rate=dpr[i],
+                              bias=bias,
+                              norm_cfg=norm_cfg)
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(BEiTTransformerEncoderLayer(**_layer_cfg))
 
@@ -576,12 +573,11 @@ class BEiTViT(BaseBackbone):
             x = torch.cat((cls_token, x), dim=1)
 
         if self.pos_embed is not None:
-            x = x + resize_pos_embed(
-                self.pos_embed,
-                self.patch_resolution,
-                patch_resolution,
-                mode=self.interpolate_mode,
-                num_extra_tokens=self.num_extra_tokens)
+            x = x + resize_pos_embed(self.pos_embed,
+                                     self.patch_resolution,
+                                     patch_resolution,
+                                     mode=self.interpolate_mode,
+                                     num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         rel_pos_bias = self.rel_pos_bias() \

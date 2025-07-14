@@ -67,7 +67,6 @@ class COCORetrieval(BaseDataset):
              Annotation file: 	/coco2014/annotations/captions_val2014.json
              Prefix of images: 	/coco2014/
     """
-
     def __init__(self,
                  ann_file: str,
                  test_mode: bool = False,

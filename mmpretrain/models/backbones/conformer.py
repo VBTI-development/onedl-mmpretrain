@@ -43,7 +43,6 @@ class ConvBlock(BaseModule):
         init_cfg (dict, optional): The extra config to initialize the module.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -59,45 +58,41 @@ class ConvBlock(BaseModule):
         expansion = 4
         mid_channels = out_channels // expansion
 
-        self.conv1 = nn.Conv2d(
-            in_channels,
-            mid_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            bias=False)
+        self.conv1 = nn.Conv2d(in_channels,
+                               mid_channels,
+                               kernel_size=1,
+                               stride=1,
+                               padding=0,
+                               bias=False)
         self.bn1 = build_norm_layer(norm_cfg, mid_channels)[1]
         self.act1 = build_activation_layer(act_cfg)
 
-        self.conv2 = nn.Conv2d(
-            mid_channels,
-            mid_channels,
-            kernel_size=3,
-            stride=stride,
-            groups=groups,
-            padding=1,
-            bias=False)
+        self.conv2 = nn.Conv2d(mid_channels,
+                               mid_channels,
+                               kernel_size=3,
+                               stride=stride,
+                               groups=groups,
+                               padding=1,
+                               bias=False)
         self.bn2 = build_norm_layer(norm_cfg, mid_channels)[1]
         self.act2 = build_activation_layer(act_cfg)
 
-        self.conv3 = nn.Conv2d(
-            mid_channels,
-            out_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            bias=False)
+        self.conv3 = nn.Conv2d(mid_channels,
+                               out_channels,
+                               kernel_size=1,
+                               stride=1,
+                               padding=0,
+                               bias=False)
         self.bn3 = build_norm_layer(norm_cfg, out_channels)[1]
         self.act3 = build_activation_layer(act_cfg)
 
         if with_residual_conv:
-            self.residual_conv = nn.Conv2d(
-                in_channels,
-                out_channels,
-                kernel_size=1,
-                stride=stride,
-                padding=0,
-                bias=False)
+            self.residual_conv = nn.Conv2d(in_channels,
+                                           out_channels,
+                                           kernel_size=1,
+                                           stride=stride,
+                                           padding=0,
+                                           bias=False)
             self.residual_bn = build_norm_layer(norm_cfg, out_channels)[1]
 
         self.with_residual_conv = with_residual_conv
@@ -140,7 +135,6 @@ class ConvBlock(BaseModule):
 
 class FCUDown(BaseModule):
     """CNN feature maps -> Transformer patch embeddings."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -153,10 +147,13 @@ class FCUDown(BaseModule):
         self.down_stride = down_stride
         self.with_cls_token = with_cls_token
 
-        self.conv_project = nn.Conv2d(
-            in_channels, out_channels, kernel_size=1, stride=1, padding=0)
-        self.sample_pooling = nn.AvgPool2d(
-            kernel_size=down_stride, stride=down_stride)
+        self.conv_project = nn.Conv2d(in_channels,
+                                      out_channels,
+                                      kernel_size=1,
+                                      stride=1,
+                                      padding=0)
+        self.sample_pooling = nn.AvgPool2d(kernel_size=down_stride,
+                                           stride=down_stride)
 
         self.ln = build_norm_layer(norm_cfg, out_channels)[1]
         self.act = build_activation_layer(act_cfg)
@@ -176,7 +173,6 @@ class FCUDown(BaseModule):
 
 class FCUUp(BaseModule):
     """Transformer patch embeddings -> CNN feature maps."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -190,8 +186,11 @@ class FCUUp(BaseModule):
         self.up_stride = up_stride
         self.with_cls_token = with_cls_token
 
-        self.conv_project = nn.Conv2d(
-            in_channels, out_channels, kernel_size=1, stride=1, padding=0)
+        self.conv_project = nn.Conv2d(in_channels,
+                                      out_channels,
+                                      kernel_size=1,
+                                      stride=1,
+                                      padding=0)
         self.bn = build_norm_layer(norm_cfg, out_channels)[1]
         self.act = build_activation_layer(act_cfg)
 
@@ -205,8 +204,8 @@ class FCUUp(BaseModule):
 
         x_r = self.act(self.bn(self.conv_project(x_r)))
 
-        return F.interpolate(
-            x_r, size=(H * self.up_stride, W * self.up_stride))
+        return F.interpolate(x_r,
+                             size=(H * self.up_stride, W * self.up_stride))
 
 
 class ConvTransBlock(BaseModule):
@@ -242,7 +241,6 @@ class ConvTransBlock(BaseModule):
         init_cfg (dict, optional): The extra config to initialize the module.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -262,39 +260,34 @@ class ConvTransBlock(BaseModule):
                  init_cfg=None):
         super(ConvTransBlock, self).__init__(init_cfg=init_cfg)
         expansion = 4
-        self.cnn_block = ConvBlock(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            with_residual_conv=with_residual_conv,
-            stride=conv_stride,
-            groups=groups)
+        self.cnn_block = ConvBlock(in_channels=in_channels,
+                                   out_channels=out_channels,
+                                   with_residual_conv=with_residual_conv,
+                                   stride=conv_stride,
+                                   groups=groups)
 
         if last_fusion:
-            self.fusion_block = ConvBlock(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                stride=2,
-                with_residual_conv=True,
-                groups=groups,
-                drop_path_rate=drop_path_rate)
+            self.fusion_block = ConvBlock(in_channels=out_channels,
+                                          out_channels=out_channels,
+                                          stride=2,
+                                          with_residual_conv=True,
+                                          groups=groups,
+                                          drop_path_rate=drop_path_rate)
         else:
-            self.fusion_block = ConvBlock(
-                in_channels=out_channels,
-                out_channels=out_channels,
-                groups=groups,
-                drop_path_rate=drop_path_rate)
+            self.fusion_block = ConvBlock(in_channels=out_channels,
+                                          out_channels=out_channels,
+                                          groups=groups,
+                                          drop_path_rate=drop_path_rate)
 
-        self.squeeze_block = FCUDown(
-            in_channels=out_channels // expansion,
-            out_channels=embed_dims,
-            down_stride=down_stride,
-            with_cls_token=with_cls_token)
+        self.squeeze_block = FCUDown(in_channels=out_channels // expansion,
+                                     out_channels=embed_dims,
+                                     down_stride=down_stride,
+                                     with_cls_token=with_cls_token)
 
-        self.expand_block = FCUUp(
-            in_channels=embed_dims,
-            out_channels=out_channels // expansion,
-            up_stride=down_stride,
-            with_cls_token=with_cls_token)
+        self.expand_block = FCUUp(in_channels=embed_dims,
+                                  out_channels=out_channels // expansion,
+                                  up_stride=down_stride,
+                                  with_cls_token=with_cls_token)
 
         self.trans_block = TransformerEncoderLayer(
             embed_dims=embed_dims,
@@ -324,8 +317,9 @@ class ConvTransBlock(BaseModule):
         # Convert the transformer output embedding to feature map
         trans_features = self.expand_block(trans_output, H // self.down_stride,
                                            W // self.down_stride)
-        x = self.fusion_block(
-            x, fusion_features=trans_features, out_conv2=False)
+        x = self.fusion_block(x,
+                              fusion_features=trans_features,
+                              out_conv2=False)
 
         return x, trans_output
 
@@ -432,13 +426,16 @@ class Conformer(BaseBackbone):
         ]
 
         # Stem stage: get the feature maps by conv block
-        self.conv1 = nn.Conv2d(
-            3, 64, kernel_size=7, stride=2, padding=3,
-            bias=False)  # 1 / 2 [112, 112]
+        self.conv1 = nn.Conv2d(3,
+                               64,
+                               kernel_size=7,
+                               stride=2,
+                               padding=3,
+                               bias=False)  # 1 / 2 [112, 112]
         self.bn1 = nn.BatchNorm2d(64)
         self.act1 = nn.ReLU(inplace=True)
-        self.maxpool = nn.MaxPool2d(
-            kernel_size=3, stride=2, padding=1)  # 1 / 4 [56, 56]
+        self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2,
+                                    padding=1)  # 1 / 4 [56, 56]
 
         assert patch_size % 16 == 0, 'The patch size of Conformer must ' \
             'be divisible by 16.'
@@ -450,17 +447,15 @@ class Conformer(BaseBackbone):
 
         # 1 stage
         stage1_channels = int(base_channels * self.channel_ratio)
-        self.conv_1 = ConvBlock(
-            in_channels=64,
-            out_channels=stage1_channels,
-            with_residual_conv=True,
-            stride=1)
-        self.trans_patch_conv = nn.Conv2d(
-            64,
-            self.embed_dims,
-            kernel_size=trans_down_stride,
-            stride=trans_down_stride,
-            padding=0)
+        self.conv_1 = ConvBlock(in_channels=64,
+                                out_channels=stage1_channels,
+                                with_residual_conv=True,
+                                stride=1)
+        self.trans_patch_conv = nn.Conv2d(64,
+                                          self.embed_dims,
+                                          kernel_size=trans_down_stride,
+                                          stride=trans_down_stride,
+                                          padding=0)
 
         self.trans_1 = TransformerEncoderLayer(
             embed_dims=self.embed_dims,
@@ -476,18 +471,17 @@ class Conformer(BaseBackbone):
         for i in range(init_stage, fin_stage):
             self.add_module(
                 f'conv_trans_{i}',
-                ConvTransBlock(
-                    in_channels=stage1_channels,
-                    out_channels=stage1_channels,
-                    embed_dims=self.embed_dims,
-                    conv_stride=1,
-                    with_residual_conv=False,
-                    down_stride=trans_down_stride,
-                    num_heads=self.num_heads,
-                    mlp_ratio=mlp_ratio,
-                    qkv_bias=qkv_bias,
-                    drop_path_rate=self.trans_dpr[i - 1],
-                    with_cls_token=self.with_cls_token))
+                ConvTransBlock(in_channels=stage1_channels,
+                               out_channels=stage1_channels,
+                               embed_dims=self.embed_dims,
+                               conv_stride=1,
+                               with_residual_conv=False,
+                               down_stride=trans_down_stride,
+                               num_heads=self.num_heads,
+                               mlp_ratio=mlp_ratio,
+                               qkv_bias=qkv_bias,
+                               drop_path_rate=self.trans_dpr[i - 1],
+                               with_cls_token=self.with_cls_token))
 
         stage2_channels = int(base_channels * self.channel_ratio * 2)
         # 5~8 stage
@@ -504,18 +498,17 @@ class Conformer(BaseBackbone):
             with_residual_conv = True if i == init_stage else False
             self.add_module(
                 f'conv_trans_{i}',
-                ConvTransBlock(
-                    in_channels=in_channels,
-                    out_channels=stage2_channels,
-                    embed_dims=self.embed_dims,
-                    conv_stride=conv_stride,
-                    with_residual_conv=with_residual_conv,
-                    down_stride=trans_down_stride // 2,
-                    num_heads=self.num_heads,
-                    mlp_ratio=mlp_ratio,
-                    qkv_bias=qkv_bias,
-                    drop_path_rate=self.trans_dpr[i - 1],
-                    with_cls_token=self.with_cls_token))
+                ConvTransBlock(in_channels=in_channels,
+                               out_channels=stage2_channels,
+                               embed_dims=self.embed_dims,
+                               conv_stride=conv_stride,
+                               with_residual_conv=with_residual_conv,
+                               down_stride=trans_down_stride // 2,
+                               num_heads=self.num_heads,
+                               mlp_ratio=mlp_ratio,
+                               qkv_bias=qkv_bias,
+                               drop_path_rate=self.trans_dpr[i - 1],
+                               with_cls_token=self.with_cls_token))
 
         stage3_channels = int(base_channels * self.channel_ratio * 2 * 2)
         # 9~12 stage
@@ -535,19 +528,18 @@ class Conformer(BaseBackbone):
 
             self.add_module(
                 f'conv_trans_{i}',
-                ConvTransBlock(
-                    in_channels=in_channels,
-                    out_channels=stage3_channels,
-                    embed_dims=self.embed_dims,
-                    conv_stride=conv_stride,
-                    with_residual_conv=with_residual_conv,
-                    down_stride=trans_down_stride // 4,
-                    num_heads=self.num_heads,
-                    mlp_ratio=mlp_ratio,
-                    qkv_bias=qkv_bias,
-                    drop_path_rate=self.trans_dpr[i - 1],
-                    with_cls_token=self.with_cls_token,
-                    last_fusion=last_fusion))
+                ConvTransBlock(in_channels=in_channels,
+                               out_channels=stage3_channels,
+                               embed_dims=self.embed_dims,
+                               conv_stride=conv_stride,
+                               with_residual_conv=with_residual_conv,
+                               down_stride=trans_down_stride // 4,
+                               num_heads=self.num_heads,
+                               mlp_ratio=mlp_ratio,
+                               qkv_bias=qkv_bias,
+                               drop_path_rate=self.trans_dpr[i - 1],
+                               with_cls_token=self.with_cls_token,
+                               last_fusion=last_fusion))
         self.fin_stage = fin_stage
 
         self.pooling = nn.AdaptiveAvgPool2d(1)
@@ -565,8 +557,9 @@ class Conformer(BaseBackbone):
             nn.init.constant_(m.bias, 0)
             nn.init.constant_(m.weight, 1.0)
         elif isinstance(m, nn.Conv2d):
-            nn.init.kaiming_normal_(
-                m.weight, mode='fan_out', nonlinearity='relu')
+            nn.init.kaiming_normal_(m.weight,
+                                    mode='fan_out',
+                                    nonlinearity='relu')
         elif isinstance(m, nn.BatchNorm2d):
             nn.init.constant_(m.weight, 1.)
             nn.init.constant_(m.bias, 0.)

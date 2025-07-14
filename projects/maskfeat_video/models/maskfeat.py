@@ -14,9 +14,9 @@ class VideoMaskFeat(BaseSelfSupervisor):
     """MaskFeat.
 
     Implementation of `Masked Feature Prediction for Self-Supervised Visual
-    Pre-Training <https://arxiv.org/abs/2112.09133>`_.
+    Pre-Training
+    <https://arxiv.org/abs/2112.09133>`_.
     """
-
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

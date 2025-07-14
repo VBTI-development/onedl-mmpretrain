@@ -73,11 +73,10 @@ class NLVRInferencer(BaseInferencer):
             assert isinstance(input_, tuple)
             assert len(input_) == 3
 
-        return super().__call__(
-            inputs,
-            return_datasamples=return_datasamples,
-            batch_size=batch_size,
-            **kwargs)
+        return super().__call__(inputs,
+                                return_datasamples=return_datasamples,
+                                batch_size=batch_size,
+                                **kwargs)
 
     def _init_pipeline(self, cfg: Config) -> Callable:
         test_pipeline_cfg = cfg.test_dataloader.dataset.pipeline
@@ -95,7 +94,6 @@ class NLVRInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: InputsType, batch_size: int = 1):
-
         def load_image(input_):
             img1 = imread(input_[0])
             img2 = imread(input_[1])

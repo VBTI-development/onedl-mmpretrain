@@ -38,7 +38,6 @@ class MoCoV3ViT(VisionTransformer):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  stop_grad_conv1: bool = False,
                  frozen_stages: int = -1,
@@ -159,7 +158,6 @@ class MoCoV3(BaseSelfSupervisor):
         init_cfg (Union[List[dict], dict], optional): Config dict for weight
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  backbone: dict,
                  neck: dict,
@@ -168,17 +166,17 @@ class MoCoV3(BaseSelfSupervisor):
                  pretrained: Optional[str] = None,
                  data_preprocessor: Optional[dict] = None,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            pretrained=pretrained,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         pretrained=pretrained,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         # create momentum model
-        self.momentum_encoder = CosineEMA(
-            nn.Sequential(self.backbone, self.neck), momentum=base_momentum)
+        self.momentum_encoder = CosineEMA(nn.Sequential(
+            self.backbone, self.neck),
+                                          momentum=base_momentum)
 
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:

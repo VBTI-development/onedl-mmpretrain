@@ -31,7 +31,7 @@ Models:
           Top 1 Accuracy: 78.14
           Top 5 Accuracy: 93.85
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/res2net/res2net50-w14-s8_3rdparty_8xb32_in1k_20210927-bc967bf1.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/res2net/res2net50-w14-s8_3rdparty_8xb32_in1k_20210927-bc967bf1.pth
     Converted From:
       Weights: https://1drv.ms/u/s!AkxDDnOtroRPdOTqhF8ne_aakDI?e=EVb8Ri
       Code: https://github.com/Res2Net/Res2Net-PretrainedModels/blob/master/res2net.py#L221
@@ -47,7 +47,7 @@ Models:
           Top 1 Accuracy: 79.20
           Top 5 Accuracy: 94.36
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/res2net/res2net50-w26-s8_3rdparty_8xb32_in1k_20210927-f547a94b.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/res2net/res2net50-w26-s8_3rdparty_8xb32_in1k_20210927-f547a94b.pth
     Converted From:
       Weights: https://1drv.ms/u/s!AkxDDnOtroRPdTrAd_Afzc26Z7Q?e=slYqsR
       Code: https://github.com/Res2Net/Res2Net-PretrainedModels/blob/master/res2net.py#L201
@@ -63,7 +63,7 @@ Models:
           Top 1 Accuracy: 79.19
           Top 5 Accuracy: 94.44
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/res2net/res2net101-w26-s4_3rdparty_8xb32_in1k_20210927-870b6c36.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/res2net/res2net101-w26-s4_3rdparty_8xb32_in1k_20210927-870b6c36.pth
     Converted From:
       Weights: https://1drv.ms/u/s!AkxDDnOtroRPcJRgTLkahL0cFYw?e=nwbnic
       Code: https://github.com/Res2Net/Res2Net-PretrainedModels/blob/master/res2net.py#L181

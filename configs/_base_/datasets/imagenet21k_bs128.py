@@ -19,10 +19,9 @@ train_pipeline = [
 train_dataloader = dict(
     batch_size=128,
     num_workers=5,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/imagenet21k',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/imagenet21k',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )

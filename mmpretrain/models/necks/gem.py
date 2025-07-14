@@ -28,7 +28,6 @@ class GeneralizedMeanPooling(nn.Module):
         p_trainable (bool): Toggle whether Parameter p is trainable or not.
             Defaults to True.
     """
-
     def __init__(self, p=3., eps=1e-6, clamp=True, p_trainable=True):
         assert p >= 1, "'p' must be a value greater than 1"
         super(GeneralizedMeanPooling, self).__init__()

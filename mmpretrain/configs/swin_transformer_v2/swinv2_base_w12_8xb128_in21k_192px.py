@@ -13,8 +13,9 @@ with read_base():
 
 # model settings
 model.update(
-    backbone=dict(
-        img_size=192, drop_path_rate=0.5, window_size=[12, 12, 12, 6]),
+    backbone=dict(img_size=192,
+                  drop_path_rate=0.5,
+                  window_size=[12, 12, 12, 6]),
     head=dict(num_classes=21841),
     init_cfg=[
         dict(type=TruncNormalInit, layer='Linear', std=0.02, bias=0.),

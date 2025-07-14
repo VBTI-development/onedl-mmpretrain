@@ -47,7 +47,6 @@ class Adan(Optimizer):
         foreach (bool): if True would use torch._foreach implementation.
             It's faster but uses slightly more memory.
     """
-
     def __init__(self,
                  params,
                  lr=1e-3,
@@ -72,14 +71,13 @@ class Adan(Optimizer):
         if not 0.0 <= betas[2] < 1.0:
             raise ValueError('Invalid beta parameter at index 2: {}'.format(
                 betas[2]))
-        defaults = dict(
-            lr=lr,
-            betas=betas,
-            eps=eps,
-            weight_decay=weight_decay,
-            max_grad_norm=max_grad_norm,
-            no_prox=no_prox,
-            foreach=foreach)
+        defaults = dict(lr=lr,
+                        betas=betas,
+                        eps=eps,
+                        weight_decay=weight_decay,
+                        max_grad_norm=max_grad_norm,
+                        no_prox=no_prox,
+                        foreach=foreach)
         super().__init__(params, defaults)
 
     def __setstate__(self, state):
@@ -110,8 +108,8 @@ class Adan(Optimizer):
             device = self.param_groups[0]['params'][0].device
             global_grad_norm = torch.zeros(1, device=device)
 
-            max_grad_norm = torch.tensor(
-                self.defaults['max_grad_norm'], device=device)
+            max_grad_norm = torch.tensor(self.defaults['max_grad_norm'],
+                                         device=device)
             for group in self.param_groups:
 
                 for p in group['params']:
@@ -288,8 +286,8 @@ def _multi_tensor_adan(
     torch._foreach_add_(exp_avg_diffs, diff, alpha=1 - beta2)  # diff_t
 
     torch._foreach_mul_(exp_avg_sqs, beta3)
-    torch._foreach_addcmul_(
-        exp_avg_sqs, update, update, value=1 - beta3)  # n_t
+    torch._foreach_addcmul_(exp_avg_sqs, update, update,
+                            value=1 - beta3)  # n_t
 
     denom = torch._foreach_sqrt(exp_avg_sqs)
     torch._foreach_div_(denom, bias_correction3_sqrt)

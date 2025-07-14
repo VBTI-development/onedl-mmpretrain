@@ -17,17 +17,15 @@ class Affine(nn.Module):
     Args:
         in_features (int): Input dimension.
     """
-
     def __init__(self, in_features):
         super().__init__()
-        self.affine = nn.Conv2d(
-            in_features,
-            in_features,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            groups=in_features,
-            bias=True)
+        self.affine = nn.Conv2d(in_features,
+                                in_features,
+                                kernel_size=1,
+                                stride=1,
+                                padding=0,
+                                groups=in_features,
+                                bias=True)
 
     def forward(self, x):
         return self.affine(x) - x
@@ -50,7 +48,6 @@ class RIFormerBlock(BaseModule):
         deploy (bool): Whether to switch the model structure to
             deployment mode. Default: False.
     """
-
     def __init__(self,
                  dim,
                  mlp_ratio=4.,
@@ -70,19 +67,20 @@ class RIFormerBlock(BaseModule):
             self.token_mixer = Affine(in_features=dim)
         self.norm2 = build_norm_layer(norm_cfg, dim)[1]
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = Mlp(
-            in_features=dim,
-            hidden_features=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            drop=drop)
+        self.mlp = Mlp(in_features=dim,
+                       hidden_features=mlp_hidden_dim,
+                       act_cfg=act_cfg,
+                       drop=drop)
 
         # The following two techniques are useful to train deep RIFormers.
         self.drop_path = DropPath(drop_path) if drop_path > 0. \
             else nn.Identity()
-        self.layer_scale_1 = nn.Parameter(
-            layer_scale_init_value * torch.ones((dim)), requires_grad=True)
-        self.layer_scale_2 = nn.Parameter(
-            layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+        self.layer_scale_1 = nn.Parameter(layer_scale_init_value * torch.ones(
+            (dim)),
+                                          requires_grad=True)
+        self.layer_scale_2 = nn.Parameter(layer_scale_init_value * torch.ones(
+            (dim)),
+                                          requires_grad=True)
         self.norm_cfg = norm_cfg
         self.dim = dim
         self.deploy = deploy
@@ -139,11 +137,11 @@ def basic_blocks(dim,
                  drop_path_rate=0.,
                  layer_scale_init_value=1e-5,
                  deploy=False):
-    """generate RIFormer blocks for a stage."""
+    """Generate RIFormer blocks for a stage."""
     blocks = []
     for block_idx in range(layers[index]):
-        block_dpr = drop_path_rate * (block_idx + sum(layers[:index])) / (
-            sum(layers) - 1)
+        block_dpr = drop_path_rate * (block_idx +
+                                      sum(layers[:index])) / (sum(layers) - 1)
         blocks.append(
             RIFormerBlock(
                 dim,
@@ -282,39 +280,36 @@ class RIFormer(BaseBackbone):
         layer_scale_init_value = arch['layer_scale_init_value'] \
             if 'layer_scale_init_value' in arch else 1e-5
 
-        self.patch_embed = PatchEmbed(
-            patch_size=in_patch_size,
-            stride=in_stride,
-            padding=in_pad,
-            in_chans=in_channels,
-            embed_dim=embed_dims[0])
+        self.patch_embed = PatchEmbed(patch_size=in_patch_size,
+                                      stride=in_stride,
+                                      padding=in_pad,
+                                      in_chans=in_channels,
+                                      embed_dim=embed_dims[0])
 
         # set the main block in network
         network = []
         for i in range(len(layers)):
-            stage = basic_blocks(
-                embed_dims[i],
-                i,
-                layers,
-                mlp_ratio=mlp_ratios[i],
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                drop_rate=drop_rate,
-                drop_path_rate=drop_path_rate,
-                layer_scale_init_value=layer_scale_init_value,
-                deploy=deploy)
+            stage = basic_blocks(embed_dims[i],
+                                 i,
+                                 layers,
+                                 mlp_ratio=mlp_ratios[i],
+                                 norm_cfg=norm_cfg,
+                                 act_cfg=act_cfg,
+                                 drop_rate=drop_rate,
+                                 drop_path_rate=drop_path_rate,
+                                 layer_scale_init_value=layer_scale_init_value,
+                                 deploy=deploy)
             network.append(stage)
             if i >= len(layers) - 1:
                 break
             if embed_dims[i] != embed_dims[i + 1]:
                 # downsampling between two stages
                 network.append(
-                    PatchEmbed(
-                        patch_size=down_patch_size,
-                        stride=down_stride,
-                        padding=down_pad,
-                        in_chans=embed_dims[i],
-                        embed_dim=embed_dims[i + 1]))
+                    PatchEmbed(patch_size=down_patch_size,
+                               stride=down_stride,
+                               padding=down_pad,
+                               in_chans=embed_dims[i],
+                               embed_dim=embed_dims[i + 1]))
 
         self.network = nn.ModuleList(network)
 

@@ -28,7 +28,6 @@ class VisionTransformerClsHead(ClsHead):
         init_cfg (dict): The extra initialization configs. Defaults to
             ``dict(type='Constant', layer='Linear', val=0)``.
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
@@ -36,8 +35,8 @@ class VisionTransformerClsHead(ClsHead):
                  act_cfg: dict = dict(type='Tanh'),
                  init_cfg: dict = dict(type='Constant', layer='Linear', val=0),
                  **kwargs):
-        super(VisionTransformerClsHead, self).__init__(
-            init_cfg=init_cfg, **kwargs)
+        super(VisionTransformerClsHead, self).__init__(init_cfg=init_cfg,
+                                                       **kwargs)
         self.in_channels = in_channels
         self.num_classes = num_classes
         self.hidden_dim = hidden_dim
@@ -67,9 +66,9 @@ class VisionTransformerClsHead(ClsHead):
         # Modified from ClassyVision
         if hasattr(self.layers, 'pre_logits'):
             # Lecun norm
-            trunc_normal_(
-                self.layers.pre_logits.weight,
-                std=math.sqrt(1 / self.layers.pre_logits.in_features))
+            trunc_normal_(self.layers.pre_logits.weight,
+                          std=math.sqrt(1 /
+                                        self.layers.pre_logits.in_features))
             nn.init.zeros_(self.layers.pre_logits.bias)
 
     def pre_logits(self, feats: Tuple[List[torch.Tensor]]) -> torch.Tensor:

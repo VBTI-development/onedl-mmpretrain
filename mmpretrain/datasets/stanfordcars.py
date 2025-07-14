@@ -99,12 +99,11 @@ class StanfordCars(BaseDataset):
                     f'The dataset is incorrectly organized, please \
                     refer to {doc_url} and reorganize your folders.')
 
-        super(StanfordCars, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(StanfordCars, self).__init__(ann_file=ann_file,
+                                           data_root=data_root,
+                                           data_prefix=data_prefix,
+                                           test_mode=test_mode,
+                                           **kwargs)
 
     def load_data_list(self):
         data = mat4py.loadmat(self.ann_file)['annotations']

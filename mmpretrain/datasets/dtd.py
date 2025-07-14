@@ -71,12 +71,11 @@ class DTD(BaseDataset):
         self.backend = get_file_backend(data_root, enable_singleton=True)
         ann_file = self.backend.join_path('imdb', 'imdb.mat')
 
-        super(DTD, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(DTD, self).__init__(ann_file=ann_file,
+                                  data_root=data_root,
+                                  data_prefix=data_prefix,
+                                  test_mode=test_mode,
+                                  **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

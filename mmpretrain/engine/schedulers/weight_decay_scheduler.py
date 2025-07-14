@@ -8,7 +8,6 @@ from mmpretrain.registry import PARAM_SCHEDULERS
 
 class WeightDecaySchedulerMixin:
     """A mixin class for learning rate schedulers."""
-
     def __init__(self, optimizer, *args, **kwargs):
         super().__init__(optimizer, 'weight_decay', *args, **kwargs)
 
@@ -22,10 +21,8 @@ class CosineAnnealingWeightDecay(WeightDecaySchedulerMixin,
     If the weight decay was set to be 0 initially, the weight decay value will
     be 0 constantly during the training.
     """
-
     def _get_value(self) -> list:
         """Compute value using chainable form of the scheduler."""
-
         def _get_eta_min(base_value):
             if self.eta_min_ratio is None:
                 return self.eta_min

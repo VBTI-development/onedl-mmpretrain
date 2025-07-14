@@ -88,12 +88,11 @@ class SUN397(BaseDataset):
         data_prefix = 'SUN397'
         test_mode = split == 'test'
 
-        super(SUN397, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            test_mode=test_mode,
-            data_prefix=data_prefix,
-            **kwargs)
+        super(SUN397, self).__init__(ann_file=ann_file,
+                                     data_root=data_root,
+                                     test_mode=test_mode,
+                                     data_prefix=data_prefix,
+                                     **kwargs)
 
     def load_data_list(self):
         pairs = list_from_file(self.ann_file)

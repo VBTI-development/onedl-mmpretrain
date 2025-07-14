@@ -107,7 +107,6 @@ class PositionalEncodingFourier(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  hidden_dim: int = 32,
                  dim: int = 768,
@@ -115,13 +114,12 @@ class PositionalEncodingFourier(BaseModule):
                  init_cfg=None):
         super(PositionalEncodingFourier, self).__init__(init_cfg=init_cfg)
 
-        self.token_projection = ConvModule(
-            in_channels=hidden_dim * 2,
-            out_channels=dim,
-            kernel_size=1,
-            conv_cfg=None,
-            norm_cfg=None,
-            act_cfg=None)
+        self.token_projection = ConvModule(in_channels=hidden_dim * 2,
+                                           out_channels=dim,
+                                           kernel_size=1,
+                                           conv_cfg=None,
+                                           norm_cfg=None,
+                                           act_cfg=None)
         self.scale = 2 * math.pi
         self.temperature = temperature
         self.hidden_dim = hidden_dim
@@ -130,8 +128,9 @@ class PositionalEncodingFourier(BaseModule):
 
     def forward(self, B: int, H: int, W: int):
         device = self.token_projection.conv.weight.device
-        y_embed = torch.arange(
-            1, H + 1, device=device).unsqueeze(1).repeat(1, 1, W).float()
+        y_embed = torch.arange(1, H + 1,
+                               device=device).unsqueeze(1).repeat(1, 1,
+                                                                  W).float()
         x_embed = torch.arange(1, W + 1, device=device).repeat(1, H, 1).float()
         y_embed = y_embed / (y_embed[:, -1:, :] + self.eps) * self.scale
         x_embed = x_embed / (x_embed[:, :, -1:] + self.eps) * self.scale
@@ -171,7 +170,6 @@ class ConvPatchEmbed(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  img_size: Union[int, tuple] = 224,
                  patch_size: int = 16,
@@ -201,8 +199,8 @@ class ConvPatchEmbed(BaseModule):
             layer.append(
                 conv(in_channels=in_channels, out_channels=embed_dims // 8))
             layer.append(
-                conv(
-                    in_channels=embed_dims // 8, out_channels=embed_dims // 4))
+                conv(in_channels=embed_dims // 8,
+                     out_channels=embed_dims // 4))
         elif patch_size == 8:
             layer.append(
                 conv(in_channels=in_channels, out_channels=embed_dims // 4))
@@ -253,7 +251,6 @@ class ClassAttentionBlock(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  dim: int,
                  num_heads: int,
@@ -342,7 +339,6 @@ class LPI(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_features: int,
                  out_features: Optional[int] = None,
@@ -355,25 +351,23 @@ class LPI(BaseModule):
         out_features = out_features or in_features
         padding = kernel_size // 2
 
-        self.conv1 = ConvModule(
-            in_channels=in_features,
-            out_channels=in_features,
-            kernel_size=kernel_size,
-            padding=padding,
-            groups=in_features,
-            bias=True,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg,
-            order=('conv', 'act', 'norm'))
+        self.conv1 = ConvModule(in_channels=in_features,
+                                out_channels=in_features,
+                                kernel_size=kernel_size,
+                                padding=padding,
+                                groups=in_features,
+                                bias=True,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg,
+                                order=('conv', 'act', 'norm'))
 
-        self.conv2 = ConvModule(
-            in_channels=in_features,
-            out_channels=out_features,
-            kernel_size=kernel_size,
-            padding=padding,
-            groups=out_features,
-            norm_cfg=None,
-            act_cfg=None)
+        self.conv2 = ConvModule(in_channels=in_features,
+                                out_channels=out_features,
+                                kernel_size=kernel_size,
+                                padding=padding,
+                                groups=out_features,
+                                norm_cfg=None,
+                                act_cfg=None)
 
     def forward(self, x: torch.Tensor, H: int, W: int) -> torch.Tensor:
         B, N, C = x.shape
@@ -406,7 +400,6 @@ class XCA(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  dim: int,
                  num_heads: int = 8,
@@ -467,7 +460,6 @@ class XCABlock(BaseModule):
             Defaults to ``dict(type='GELU')``.
         init_cfg (dict | list[dict], optional): Initialization config dict.
     """
-
     def __init__(self,
                  dim: int,
                  num_heads: int,
@@ -569,7 +561,6 @@ class XCiT(BaseBackbone):
             Defaults to ``dict(type='GELU')``.
         init_cfg (dict | list[dict], optional): Initialization config dict.
     """
-
     def __init__(self,
                  img_size: Union[int, tuple] = 224,
                  patch_size: int = 16,

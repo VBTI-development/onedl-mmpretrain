@@ -15,18 +15,16 @@ def test_swav():
         'std': (58.395, 57.12, 57.375),
         'to_rgb': True
     }
-    backbone = dict(
-        type='ResNet',
-        depth=18,
-        norm_cfg=dict(type='BN'),
-        zero_init_residual=True)
-    neck = dict(
-        type='SwAVNeck',
-        in_channels=512,
-        hid_channels=2,
-        out_channels=2,
-        norm_cfg=dict(type='BN1d'),
-        with_avg_pool=True)
+    backbone = dict(type='ResNet',
+                    depth=18,
+                    norm_cfg=dict(type='BN'),
+                    zero_init_residual=True)
+    neck = dict(type='SwAVNeck',
+                in_channels=512,
+                hid_channels=2,
+                out_channels=2,
+                norm_cfg=dict(type='BN1d'),
+                with_avg_pool=True)
     head = dict(
         type='SwAVHead',
         loss=dict(
@@ -36,11 +34,10 @@ def test_swav():
             temperature=0.1,
             num_crops=[2, 6]))
 
-    alg = SwAV(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = SwAV(backbone=backbone,
+               neck=neck,
+               head=head,
+               data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs': [

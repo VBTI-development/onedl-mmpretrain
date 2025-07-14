@@ -19,22 +19,18 @@ def parse_args():
         type=Path,
         help='The path of the checkpoint or model config to draw.')
     parser.add_argument('--depth', type=int, help='The max depth to draw.')
-    parser.add_argument(
-        '--full-name',
-        action='store_true',
-        help='Whether to print the full name of the key.')
-    parser.add_argument(
-        '--shape',
-        action='store_true',
-        help='Whether to print the shape of the parameter.')
-    parser.add_argument(
-        '--state-key',
-        type=str,
-        help='The key of the state dict in the checkpoint.')
-    parser.add_argument(
-        '--number',
-        action='store_true',
-        help='Mark all parameters and their index number.')
+    parser.add_argument('--full-name',
+                        action='store_true',
+                        help='Whether to print the full name of the key.')
+    parser.add_argument('--shape',
+                        action='store_true',
+                        help='Whether to print the shape of the parameter.')
+    parser.add_argument('--state-key',
+                        type=str,
+                        help='The key of the state dict in the checkpoint.')
+    parser.add_argument('--number',
+                        action='store_true',
+                        help='Mark all parameters and their index number.')
     parser.add_argument(
         '--node',
         type=str,
@@ -61,7 +57,6 @@ def ckpt_to_state_dict(checkpoint, key=None):
 
 
 class StateDictTree:
-
     def __init__(self, key='', value=None):
         self.children = {}
         self.key: str = key
@@ -135,13 +130,12 @@ class StateDictTree:
 
         for i, child in enumerate(self.children.values()):
             level_lead = '├─' if i < len(self.children) - 1 else '└─'
-            yield from child.iter_tree(
-                lead=f'{lead}{level_lead} ',
-                prefix=prefix,
-                max_depth=max_depth,
-                full_name=full_name,
-                with_shape=with_shape,
-                with_value=with_value)
+            yield from child.iter_tree(lead=f'{lead}{level_lead} ',
+                                       prefix=prefix,
+                                       max_depth=max_depth,
+                                       full_name=full_name,
+                                       with_shape=with_shape,
+                                       with_value=with_value)
 
 
 def main():

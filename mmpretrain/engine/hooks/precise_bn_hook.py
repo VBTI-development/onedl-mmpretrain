@@ -95,8 +95,8 @@ def update_bn_stats(
     if len(bn_layers) == 0:
         print_log('No BN found in model', logger=logger, level=logging.WARNING)
         return
-    print_log(
-        f'{len(bn_layers)} BN found, run {num_iter} iters...', logger=logger)
+    print_log(f'{len(bn_layers)} BN found, run {num_iter} iters...',
+              logger=logger)
 
     # Finds all the other norm layers with training=True.
     other_norm_layers = [
@@ -104,10 +104,9 @@ def update_bn_stats(
         if m.training and isinstance(m, (_InstanceNorm, GroupNorm))
     ]
     if len(other_norm_layers) > 0:
-        print_log(
-            'IN/GN stats will not be updated in PreciseHook.',
-            logger=logger,
-            level=logging.INFO)
+        print_log('IN/GN stats will not be updated in PreciseHook.',
+                  logger=logger,
+                  level=logging.INFO)
 
     # Initialize BN stats storage for computing
     # mean(mean(batch)) and mean(var(batch))
@@ -169,7 +168,6 @@ class PreciseBNHook(Hook):
          train loop is `IterBasedTrainLoop` or `by_epoch=False`, its unit is
          'iter'. Defaults to 1.
     """
-
     def __init__(self, num_samples: int = 8192, interval: int = 1) -> None:
         assert interval > 0 and num_samples > 0, "'interval' and " \
             "'num_samples' must be bigger than 0."
@@ -178,15 +176,13 @@ class PreciseBNHook(Hook):
         self.num_samples = num_samples
 
     def _perform_precise_bn(self, runner: Runner) -> None:
-        """perform precise bn."""
-        print_log(
-            f'Running Precise BN for {self.num_samples} samples...',
-            logger=runner.logger)
-        update_bn_stats(
-            runner.model,
-            runner.train_loop.dataloader,
-            self.num_samples,
-            logger=runner.logger)
+        """Perform precise bn."""
+        print_log(f'Running Precise BN for {self.num_samples} samples...',
+                  logger=runner.logger)
+        update_bn_stats(runner.model,
+                        runner.train_loop.dataloader,
+                        self.num_samples,
+                        logger=runner.logger)
         print_log('Finish Precise BN, BN stats updated.', logger=runner.logger)
 
     def after_train_epoch(self, runner: Runner) -> None:

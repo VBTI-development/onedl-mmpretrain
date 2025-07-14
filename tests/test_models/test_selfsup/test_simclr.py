@@ -16,10 +16,9 @@ neck = dict(
     num_layers=2,
     with_avg_pool=True,
     norm_cfg=dict(type='BN1d'))
-head = dict(
-    type='ContrastiveHead',
-    loss=dict(type='CrossEntropyLoss'),
-    temperature=0.1)
+head = dict(type='ContrastiveHead',
+            loss=dict(type='CrossEntropyLoss'),
+            temperature=0.1)
 
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
@@ -30,11 +29,10 @@ def test_simclr():
         'to_rgb': True,
     }
 
-    alg = SimCLR(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = SimCLR(backbone=backbone,
+                 neck=neck,
+                 head=head,
+                 data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs':

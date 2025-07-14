@@ -45,7 +45,6 @@ class SwinBlock(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -88,7 +87,6 @@ class SwinBlock(BaseModule):
         self.ffn = FFN(**_ffn_cfgs)
 
     def forward(self, x, hw_shape):
-
         def _inner_forward(x):
             identity = x
             x = self.norm1(x)
@@ -135,7 +133,6 @@ class SwinBlockSequence(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  depth,
@@ -237,7 +234,7 @@ class SwinTransformer(BaseBackbone):
         use_abs_pos_embed (bool): If True, add absolute position embedding to
             the patch embedding. Defaults to False.
         interpolate_mode (str): Select the interpolate mode for absolute
-            position embeding vector resize. Defaults to "bicubic".
+            position embedding vector resize. Defaults to "bicubic".
         with_cp (bool): Use checkpoint or not. Using checkpoint will save some
             memory while slowing down the training speed. Defaults to False.
         frozen_stages (int): Stages to be frozen (stop grad and set eval mode).
@@ -371,8 +368,8 @@ class SwinTransformer(BaseBackbone):
 
         self.stages = ModuleList()
         embed_dims = [self.embed_dims]
-        for i, (depth,
-                num_heads) in enumerate(zip(self.depths, self.num_heads)):
+        for i, (depth, num_heads) in enumerate(zip(self.depths,
+                                                   self.num_heads)):
             if isinstance(stage_cfgs, Sequence):
                 stage_cfg = stage_cfgs[i]
             else:
@@ -431,8 +428,9 @@ class SwinTransformer(BaseBackbone):
 
         outs = []
         for i, stage in enumerate(self.stages):
-            x, hw_shape = stage(
-                x, hw_shape, do_downsample=self.out_after_downsample)
+            x, hw_shape = stage(x,
+                                hw_shape,
+                                do_downsample=self.out_after_downsample)
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
                 out = norm_layer(x)
@@ -447,7 +445,7 @@ class SwinTransformer(BaseBackbone):
 
     def _load_from_state_dict(self, state_dict, prefix, local_metadata, *args,
                               **kwargs):
-        """load checkpoints."""
+        """Load checkpoints."""
         # Names of some parameters in has been changed.
         version = local_metadata.get('version', None)
         if (version is None

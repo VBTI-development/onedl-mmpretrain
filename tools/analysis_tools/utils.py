@@ -187,7 +187,6 @@ class FormatStrFormatter(Formatter):
     Args:
         fmt (str): Format string.
     """
-
     def __init__(self, fmt: str) -> None:
         self.fmt = fmt
 
@@ -243,8 +242,8 @@ class ShapeBias:
             df2.loc[df2.object_response == df2.correct_shape]) / len(df)
         fraction_correct_texture = len(
             df2.loc[df2.object_response == df2.correct_texture]) / len(df)
-        shape_bias = fraction_correct_shape / (
-            fraction_correct_shape + fraction_correct_texture)
+        shape_bias = fraction_correct_shape / (fraction_correct_shape +
+                                               fraction_correct_texture)
 
         result_dict = {
             'fraction-correct-shape': fraction_correct_shape,

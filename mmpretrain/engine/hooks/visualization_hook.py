@@ -32,7 +32,6 @@ class VisualizationHook(Hook):
         **kwargs: other keyword arguments of
             :meth:`mmpretrain.visualization.UniversalVisualizer.visualize_cls`.
     """
-
     def __init__(self,
                  enable=False,
                  interval: int = 5000,

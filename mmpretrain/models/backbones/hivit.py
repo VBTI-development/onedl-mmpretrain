@@ -21,7 +21,6 @@ class Mlp(nn.Module):
         act_layer: MLP activation layer.
         drop (float): MLP dropout rate.
     """
-
     def __init__(self,
                  in_features,
                  hidden_features=None,
@@ -60,7 +59,6 @@ class Attention(nn.Module):
         rpe (bool): If True, add relative position embedding to
             the patch embedding.
     """
-
     def __init__(self,
                  input_size,
                  dim,
@@ -156,7 +154,6 @@ class BlockWithRPE(nn.Module):
         norm_cfg (dict): Config dict for normalization layer.
             Defaults to ``dict(type='LN')``.
     """
-
     def __init__(self,
                  input_size,
                  dim,
@@ -194,18 +191,18 @@ class BlockWithRPE(nn.Module):
             drop_path) if drop_path > 0. else nn.Identity()
         self.norm2 = build_norm_layer(norm_cfg, dim)
         mlp_hidden_dim = int(dim * mlp_ratio)
-        self.mlp = Mlp(
-            in_features=dim,
-            hidden_features=mlp_hidden_dim,
-            act_layer=act_layer,
-            drop=drop)
+        self.mlp = Mlp(in_features=dim,
+                       hidden_features=mlp_hidden_dim,
+                       act_layer=act_layer,
+                       drop=drop)
 
         if layer_scale_init_value > 0:
             self.gamma_1 = nn.Parameter(
                 layer_scale_init_value * torch.ones(
                     (dim)), requires_grad=True) if with_attn else None
-            self.gamma_2 = nn.Parameter(
-                layer_scale_init_value * torch.ones((dim)), requires_grad=True)
+            self.gamma_2 = nn.Parameter(layer_scale_init_value * torch.ones(
+                (dim)),
+                                        requires_grad=True)
         else:
             self.gamma_1, self.gamma_2 = None, None
 
@@ -238,7 +235,6 @@ class PatchEmbed(nn.Module):
         kernel_size (int): Kernel size.
         pad_size (int): Pad size.
     """
-
     def __init__(self,
                  img_size=224,
                  patch_size=16,
@@ -267,12 +263,11 @@ class PatchEmbed(nn.Module):
         conv_size = [size // inner_patches for size in patch_size]
         kernel_size = kernel_size or conv_size
         pad_size = pad_size or 0
-        self.proj = nn.Conv2d(
-            in_chans,
-            embed_dim,
-            kernel_size=kernel_size,
-            stride=conv_size,
-            padding=pad_size)
+        self.proj = nn.Conv2d(in_chans,
+                              embed_dim,
+                              kernel_size=kernel_size,
+                              stride=conv_size,
+                              padding=pad_size)
         if norm_cfg is not None:
             self.norm = build_norm_layer(norm_cfg, embed_dim)
         else:
@@ -303,7 +298,6 @@ class PatchMerge(nn.Module):
         dim (int): Number of input channels.
         norm_cfg (dict): Config dict for normalization layer.
     """
-
     def __init__(self, dim, norm_cfg):
         super().__init__()
         self.norm = build_norm_layer(norm_cfg, dim * 4)

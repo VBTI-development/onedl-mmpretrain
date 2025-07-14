@@ -25,10 +25,9 @@ def test_se():
 
     with pytest.raises(AssertionError):
         # act_cfg must be two dict tuple
-        SELayer(
-            16,
-            act_cfg=(dict(type='ReLU'), dict(type='Sigmoid'),
-                     dict(type='ReLU')))
+        SELayer(16,
+                act_cfg=(dict(type='ReLU'), dict(type='Sigmoid'),
+                         dict(type='ReLU')))
 
     # Test SELayer forward, channels=64
     input = torch.randn((4, 64, 112, 112))
@@ -85,10 +84,9 @@ def test_se():
 
     # Test SELayer with HSigmoid activate layer
     input = torch.randn((4, 128, 56, 56))
-    se = SELayer(
-        128,
-        squeeze_channels=25,
-        act_cfg=(dict(type='ReLU'), dict(type='HSigmoid')))
+    se = SELayer(128,
+                 squeeze_channels=25,
+                 act_cfg=(dict(type='ReLU'), dict(type='HSigmoid')))
     output = se(input)
     assert se.conv1.out_channels == 25
     assert se.conv2.in_channels == 25

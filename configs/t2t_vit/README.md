@@ -54,7 +54,7 @@ python tools/train.py configs/t2t_vit/t2t-vit-t-14_8xb64_in1k.py
 Test:
 
 ```shell
-python tools/test.py configs/t2t_vit/t2t-vit-t-14_8xb64_in1k.py https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.pth
+python tools/test.py configs/t2t_vit/t2t-vit-t-14_8xb64_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,9 +65,9 @@ python tools/test.py configs/t2t_vit/t2t-vit-t-14_8xb64_in1k.py https://download
 
 | Model                     |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                |                                          Download                                          |
 | :------------------------ | :----------: | :--------: | :-------: | :-------: | :-------: | :----------------------------------: | :----------------------------------------------------------------------------------------: |
-| `t2t-vit-t-14_8xb64_in1k` | From scratch |   21.47    |   4.34    |   81.83   |   95.84   | [config](t2t-vit-t-14_8xb64_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.json) |
-| `t2t-vit-t-19_8xb64_in1k` | From scratch |   39.08    |   7.80    |   82.63   |   96.18   | [config](t2t-vit-t-19_8xb64_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-19_8xb64_in1k_20211214-7f5e3aaf.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-19_8xb64_in1k_20211214-7f5e3aaf.json) |
-| `t2t-vit-t-24_8xb64_in1k` | From scratch |   64.00    |   12.69   |   82.71   |   96.09   | [config](t2t-vit-t-24_8xb64_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-24_8xb64_in1k_20211214-b2a68ae3.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-24_8xb64_in1k_20211214-b2a68ae3.json) |
+| `t2t-vit-t-14_8xb64_in1k` | From scratch |   21.47    |   4.34    |   81.83   |   95.84   | [config](t2t-vit-t-14_8xb64_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-14_8xb64_in1k_20211220-f7378dd5.json) |
+| `t2t-vit-t-19_8xb64_in1k` | From scratch |   39.08    |   7.80    |   82.63   |   96.18   | [config](t2t-vit-t-19_8xb64_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-19_8xb64_in1k_20211214-7f5e3aaf.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-19_8xb64_in1k_20211214-7f5e3aaf.json) |
+| `t2t-vit-t-24_8xb64_in1k` | From scratch |   64.00    |   12.69   |   82.71   |   96.09   | [config](t2t-vit-t-24_8xb64_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-24_8xb64_in1k_20211214-b2a68ae3.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-24_8xb64_in1k_20211214-b2a68ae3.json) |
 
 ## Citation
 

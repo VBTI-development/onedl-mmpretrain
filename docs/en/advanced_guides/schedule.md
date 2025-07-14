@@ -1,6 +1,6 @@
 # Customize Training Schedule
 
-In our codebase, [default training schedules](https://github.com/open-mmlab/mmpretrain/blob/main/configs/_base_/schedules) have been provided for common datasets such as CIFAR, ImageNet, etc. If we attempt to experiment on these datasets for higher accuracy or on different new methods and datasets, we might possibly need to modify the strategies.
+In our codebase, [default training schedules](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/configs/_base_/schedules) have been provided for common datasets such as CIFAR, ImageNet, etc. If we attempt to experiment on these datasets for higher accuracy or on different new methods and datasets, we might possibly need to modify the strategies.
 
 In this tutorial, we will introduce how to modify configs to construct optimizers, use parameter-wise finely configuration, gradient clipping, gradient accumulation as well as customize learning rate and momentum schedules. Furthermore, introduce a template to customize self-implemented optimizationmethods for the project.
 
@@ -150,7 +150,7 @@ optim_wrapper = dict(
 
 ## Customize parameter schedules
 
-In training, the optimzation parameters such as learing rate, momentum, are usually not fixed but changing through iterations or epochs. PyTorch supports several learning rate schedulers, which are not sufficient for complex strategies. In MMPretrain, we provide `param_scheduler` for better controls of different parameter schedules.
+In training, the optimization parameters such as learing rate, momentum, are usually not fixed but changing through iterations or epochs. PyTorch supports several learning rate schedulers, which are not sufficient for complex strategies. In MMPretrain, we provide `param_scheduler` for better controls of different parameter schedules.
 
 ### Customize learning rate schedules
 

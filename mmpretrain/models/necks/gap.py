@@ -17,7 +17,6 @@ class GlobalAveragePooling(nn.Module):
         dim (int): Dimensions of each sample channel, can be one of {1, 2, 3}.
             Default: 2
     """
-
     def __init__(self, dim=2):
         super(GlobalAveragePooling, self).__init__()
         assert dim in [1, 2, 3], 'GlobalAveragePooling dim only support ' \

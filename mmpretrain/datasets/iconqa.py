@@ -21,7 +21,6 @@ class IconQA(BaseDataset):
             eg. ``iconqa/val/choose_text/``.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self, data_root: str, data_prefix: str, **kwarg):
         super().__init__(
             data_root=data_root,

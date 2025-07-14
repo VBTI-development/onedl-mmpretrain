@@ -21,22 +21,20 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=16,
     num_workers=2,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/cifar100',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/cifar100',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
 
 val_dataloader = dict(
     batch_size=16,
     num_workers=2,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/cifar100/',
-        split='test',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/cifar100/',
+                 split='test',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 val_evaluator = dict(type='Accuracy', topk=(1, ))

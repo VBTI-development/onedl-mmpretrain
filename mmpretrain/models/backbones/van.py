@@ -30,7 +30,6 @@ class MixFFN(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self,
                  embed_dims,
                  feedforward_channels,
@@ -43,23 +42,20 @@ class MixFFN(BaseModule):
         self.feedforward_channels = feedforward_channels
         self.act_cfg = act_cfg
 
-        self.fc1 = Conv2d(
-            in_channels=embed_dims,
-            out_channels=feedforward_channels,
-            kernel_size=1)
-        self.dwconv = Conv2d(
-            in_channels=feedforward_channels,
-            out_channels=feedforward_channels,
-            kernel_size=3,
-            stride=1,
-            padding=1,
-            bias=True,
-            groups=feedforward_channels)
+        self.fc1 = Conv2d(in_channels=embed_dims,
+                          out_channels=feedforward_channels,
+                          kernel_size=1)
+        self.dwconv = Conv2d(in_channels=feedforward_channels,
+                             out_channels=feedforward_channels,
+                             kernel_size=3,
+                             stride=1,
+                             padding=1,
+                             bias=True,
+                             groups=feedforward_channels)
         self.act = build_activation_layer(act_cfg)
-        self.fc2 = Conv2d(
-            in_channels=feedforward_channels,
-            out_channels=embed_dims,
-            kernel_size=1)
+        self.fc2 = Conv2d(in_channels=feedforward_channels,
+                          out_channels=embed_dims,
+                          kernel_size=1)
         self.drop = nn.Dropout(ffn_drop)
 
     def forward(self, x):
@@ -89,30 +85,28 @@ class LKA(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self, embed_dims, init_cfg=None):
         super(LKA, self).__init__(init_cfg=init_cfg)
 
         # a spatial local convolution (depth-wise convolution)
-        self.DW_conv = Conv2d(
-            in_channels=embed_dims,
-            out_channels=embed_dims,
-            kernel_size=5,
-            padding=2,
-            groups=embed_dims)
+        self.DW_conv = Conv2d(in_channels=embed_dims,
+                              out_channels=embed_dims,
+                              kernel_size=5,
+                              padding=2,
+                              groups=embed_dims)
 
         # a spatial long-range convolution (depth-wise dilation convolution)
-        self.DW_D_conv = Conv2d(
-            in_channels=embed_dims,
-            out_channels=embed_dims,
-            kernel_size=7,
-            stride=1,
-            padding=9,
-            groups=embed_dims,
-            dilation=3)
+        self.DW_D_conv = Conv2d(in_channels=embed_dims,
+                                out_channels=embed_dims,
+                                kernel_size=7,
+                                stride=1,
+                                padding=9,
+                                groups=embed_dims,
+                                dilation=3)
 
-        self.conv1 = Conv2d(
-            in_channels=embed_dims, out_channels=embed_dims, kernel_size=1)
+        self.conv1 = Conv2d(in_channels=embed_dims,
+                            out_channels=embed_dims,
+                            kernel_size=1)
 
     def forward(self, x):
         u = x.clone()
@@ -133,24 +127,25 @@ class SpatialAttention(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self, embed_dims, act_cfg=dict(type='GELU'), init_cfg=None):
         super(SpatialAttention, self).__init__(init_cfg=init_cfg)
 
-        self.proj_1 = Conv2d(
-            in_channels=embed_dims, out_channels=embed_dims, kernel_size=1)
+        self.proj_1 = Conv2d(in_channels=embed_dims,
+                             out_channels=embed_dims,
+                             kernel_size=1)
         self.activation = build_activation_layer(act_cfg)
         self.spatial_gating_unit = LKA(embed_dims)
-        self.proj_2 = Conv2d(
-            in_channels=embed_dims, out_channels=embed_dims, kernel_size=1)
+        self.proj_2 = Conv2d(in_channels=embed_dims,
+                             out_channels=embed_dims,
+                             kernel_size=1)
 
     def forward(self, x):
-        shorcut = x.clone()
+        shortcut = x.clone()
         x = self.proj_1(x)
         x = self.activation(x)
         x = self.spatial_gating_unit(x)
         x = self.proj_2(x)
-        x = x + shorcut
+        x = x + shortcut
         return x
 
 
@@ -170,7 +165,6 @@ class VANBlock(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     def __init__(self,
                  embed_dims,
                  ffn_ratio=4.,
@@ -190,11 +184,10 @@ class VANBlock(BaseModule):
 
         self.norm2 = build_norm_layer(norm_cfg, embed_dims)[1]
         mlp_hidden_dim = int(embed_dims * ffn_ratio)
-        self.mlp = MixFFN(
-            embed_dims=embed_dims,
-            feedforward_channels=mlp_hidden_dim,
-            act_cfg=act_cfg,
-            ffn_drop=drop_rate)
+        self.mlp = MixFFN(embed_dims=embed_dims,
+                          feedforward_channels=mlp_hidden_dim,
+                          act_cfg=act_cfg,
+                          ffn_drop=drop_rate)
         self.layer_scale_1 = nn.Parameter(
             layer_scale_init_value * torch.ones((embed_dims)),
             requires_grad=True) if layer_scale_init_value > 0 else None
@@ -227,7 +220,6 @@ class VANPatchEmbed(PatchEmbed):
         1. Use BN.
         2. Do not use 'flatten' and 'transpose'.
     """
-
     def __init__(self, *args, norm_cfg=dict(type='BN'), **kwargs):
         super(VANPatchEmbed, self).__init__(*args, norm_cfg=norm_cfg, **kwargs)
 
@@ -372,12 +364,11 @@ class VAN(BaseBackbone):
                 norm_cfg=dict(type='BN'))
 
             blocks = ModuleList([
-                VANBlock(
-                    embed_dims=self.embed_dims[i],
-                    ffn_ratio=self.ffn_ratios[i],
-                    drop_rate=drop_rate,
-                    drop_path_rate=dpr[cur_block_idx + j],
-                    **block_cfgs) for j in range(depth)
+                VANBlock(embed_dims=self.embed_dims[i],
+                         ffn_ratio=self.ffn_ratios[i],
+                         drop_rate=drop_rate,
+                         drop_path_rate=dpr[cur_block_idx + j],
+                         **block_cfgs) for j in range(depth)
             ])
             cur_block_idx += depth
             norm = build_norm_layer(norm_cfg, self.embed_dims[i])[1]

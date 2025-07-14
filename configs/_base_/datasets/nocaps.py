@@ -9,11 +9,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(384, 384),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(384, 384),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 

@@ -8,16 +8,17 @@ _base_ = [
 # dataset settings
 train_dataloader = dict(batch_size=128)
 
-model = dict(
-    backbone=dict(
-        frozen_stages=4,
-        norm_eval=True,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
+model = dict(backbone=dict(
+    frozen_stages=4,
+    norm_eval=True,
+    init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
 
 # optimizer
-optim_wrapper = dict(
-    type='OptimWrapper',
-    optimizer=dict(type='SGD', lr=0.4, momentum=0.9, weight_decay=0.))
+optim_wrapper = dict(type='OptimWrapper',
+                     optimizer=dict(type='SGD',
+                                    lr=0.4,
+                                    momentum=0.9,
+                                    weight_decay=0.))
 
 # learning rate scheduler
 param_scheduler = [

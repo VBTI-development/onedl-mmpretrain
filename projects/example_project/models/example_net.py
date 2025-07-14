@@ -9,7 +9,6 @@ class ExampleNet(ResNet):
 
     Implement the backbone network just like a normal pytorch network.
     """
-
     def __init__(self, **kwargs) -> None:
         print('#############################\n'
               '#     Hello MMPretrain!     #\n'

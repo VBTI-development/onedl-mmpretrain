@@ -22,7 +22,6 @@ class CosineSimilarityLoss(BaseModule):
         scale_factor (float): The scale factor of cosine similarity.
             Default: 1.0.
     """
-
     def __init__(self,
                  shift_factor: float = 0.0,
                  scale_factor: float = 1.0) -> None:

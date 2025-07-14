@@ -295,7 +295,7 @@ class ReportVQA(BaseMetric):
         self.file_path = file_path
 
     def process(self, data_batch, data_samples) -> None:
-        """transfer tensors in predictions to CPU."""
+        """Transfer tensors in predictions to CPU."""
         for sample in data_samples:
             question_id = sample['question_id']
             pred_answer = sample['pred_answer']

@@ -84,7 +84,7 @@ Place the ImageNet dataset to the `data/imagenet/` directory, or prepare dataset
 Download Checkpoint:
 
 ```shell
-wget https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth
+wget https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth
 ```
 
 Test use unfused model:
@@ -127,7 +127,7 @@ For example:
 
 ```shell
 # download the weight
-wget https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth
+wget https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth
 
 # reparameterize unfused weight to fused weight
 python tools/model_converters/reparameterize_model.py configs/riformer/riformer-s12_8xb128_in1k.py riformer-s12_32xb128_in1k_20230406-6741ce71.pth riformer-s12_deploy.pth
@@ -156,16 +156,16 @@ python tools/test.py configs/riformer/deploy/riformer-s12-deploy_8xb128_in1k.py 
 
 |         Model         | resolution | Params(M) | Flops(G) | Top-1 (%) | Top-5 (%) |                    Config                     |                                         Download                                          |
 | :-------------------: | :--------: | :-------: | :------: | :-------: | :-------: | :-------------------------------------------: | :---------------------------------------------------------------------------------------: |
-|   riformer-s12_in1k   |  224x224   |   11.92   |   1.82   |   76.90   |   93.06   |    [config](./riformer-s12_8xb128_in1k.py)    | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth) |
-|   riformer-s24_in1k   |  224x224   |   21.39   |   3.41   |   80.28   |   94.80   |    [config](./riformer-s24_8xb128_in1k.py)    | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s24_32xb128_in1k_20230406-fdab072a.pth) |
-|   riformer-s36_in1k   |  224x224   |   30.86   |   5.00   |   81.29   |   95.41   |    [config](./riformer-s36_8xb128_in1k.py)    | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s36_32xb128_in1k_20230406-fdfcd3b0.pth) |
-|   riformer-m36_in1k   |  224x224   |   56.17   |   8.80   |   82.57   |   95.99   |    [config](./riformer-m36_8xb128_in1k.py)    | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-m36_32xb128_in1k_20230406-2fcb9d9b.pth) |
-|   riformer-m48_in1k   |  224x224   |   73.47   |  11.59   |   82.75   |   96.11   |    [config](./riformer-m48_8xb64_in1k.py)     | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-m48_32xb128_in1k_20230406-2b9d1abf.pth) |
-| riformer-s12_384_in1k |  384x384   |   11.92   |   5.36   |   78.29   |   93.93   | [config](./riformer-s12_8xb128_in1k-384px.py) | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s12_32xb128_in1k-384px_20230406-145eda4c.pth) |
-| riformer-s24_384_in1k |  384x384   |   21.39   |  10.03   |   81.36   |   95.40   | [config](./riformer-s24_8xb128_in1k-384px.py) | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s24_32xb128_in1k-384px_20230406-bafae7ab.pth) |
-| riformer-s36_384_in1k |  384x384   |   30.86   |  14.70   |   82.22   |   95.95   | [config](./riformer-s36_8xb64_in1k-384px.py)  | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-s36_32xb128_in1k-384px_20230406-017ed3c4.pth) |
-| riformer-m36_384_in1k |  384x384   |   56.17   |  25.87   |   83.39   |   96.40   | [config](./riformer-m36_8xb64_in1k-384px.py)  | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-m36_32xb128_in1k-384px_20230406-66a6f764.pth) |
-| riformer-m48_384_in1k |  384x384   |   73.47   |  34.06   |   83.70   |   96.60   | [config](./riformer-m48_8xb64_in1k-384px.py)  | [model](https://download.openmmlab.com/mmclassification/v1/riformer/riformer-m48_32xb128_in1k-384px_20230406-2e874826.pth) |
+|   riformer-s12_in1k   |  224x224   |   11.92   |   1.82   |   76.90   |   93.06   |    [config](./riformer-s12_8xb128_in1k.py)    | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s12_32xb128_in1k_20230406-6741ce71.pth) |
+|   riformer-s24_in1k   |  224x224   |   21.39   |   3.41   |   80.28   |   94.80   |    [config](./riformer-s24_8xb128_in1k.py)    | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s24_32xb128_in1k_20230406-fdab072a.pth) |
+|   riformer-s36_in1k   |  224x224   |   30.86   |   5.00   |   81.29   |   95.41   |    [config](./riformer-s36_8xb128_in1k.py)    | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s36_32xb128_in1k_20230406-fdfcd3b0.pth) |
+|   riformer-m36_in1k   |  224x224   |   56.17   |   8.80   |   82.57   |   95.99   |    [config](./riformer-m36_8xb128_in1k.py)    | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-m36_32xb128_in1k_20230406-2fcb9d9b.pth) |
+|   riformer-m48_in1k   |  224x224   |   73.47   |  11.59   |   82.75   |   96.11   |    [config](./riformer-m48_8xb64_in1k.py)     | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-m48_32xb128_in1k_20230406-2b9d1abf.pth) |
+| riformer-s12_384_in1k |  384x384   |   11.92   |   5.36   |   78.29   |   93.93   | [config](./riformer-s12_8xb128_in1k-384px.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s12_32xb128_in1k-384px_20230406-145eda4c.pth) |
+| riformer-s24_384_in1k |  384x384   |   21.39   |  10.03   |   81.36   |   95.40   | [config](./riformer-s24_8xb128_in1k-384px.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s24_32xb128_in1k-384px_20230406-bafae7ab.pth) |
+| riformer-s36_384_in1k |  384x384   |   30.86   |  14.70   |   82.22   |   95.95   | [config](./riformer-s36_8xb64_in1k-384px.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-s36_32xb128_in1k-384px_20230406-017ed3c4.pth) |
+| riformer-m36_384_in1k |  384x384   |   56.17   |  25.87   |   83.39   |   96.40   | [config](./riformer-m36_8xb64_in1k-384px.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-m36_32xb128_in1k-384px_20230406-66a6f764.pth) |
+| riformer-m48_384_in1k |  384x384   |   73.47   |  34.06   |   83.70   |   96.60   | [config](./riformer-m48_8xb64_in1k-384px.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/riformer/riformer-m48_32xb128_in1k-384px_20230406-2e874826.pth) |
 
 The config files of these models are only for inference.
 

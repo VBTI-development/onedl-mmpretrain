@@ -72,7 +72,7 @@ Here are some examples of `target-layers` in ResNet-50, which can be any module 
    python tools/visualization/vis_cam.py \
        demo/bird.JPEG \
        configs/resnet/resnet50_8xb32_in1k.py \
-       https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth \
        --method GradCAM
        # GradCAM++, XGradCAM, EigenCAM, EigenGradCAM, LayerCAM
    ```
@@ -86,7 +86,7 @@ Here are some examples of `target-layers` in ResNet-50, which can be any module 
    ```shell
    python tools/visualization/vis_cam.py \
        demo/cat-dog.png configs/resnet/resnet50_8xb32_in1k.py \
-       https://download.openmmlab.com/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_batch256_imagenet_20200708-cfb998bf.pth \
        --target-layers 'backbone.layer4.2' \
        --method GradCAM \
        --target-category 238
@@ -104,7 +104,7 @@ Here are some examples of `target-layers` in ResNet-50, which can be any module 
    python tools/visualization/vis_cam.py \
        demo/dog.jpg  \
        configs/mobilenet_v3/mobilenet-v3-large_8xb128_in1k.py \
-       https://download.openmmlab.com/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_large-3ea3c186.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_large-3ea3c186.pth \
        --target-layers 'backbone.layer16' \
        --method LayerCAM \
        --eigen-smooth --aug-smooth
@@ -133,7 +133,7 @@ To exclude these extra tokens, we need know the number of extra tokens. Almost a
    python tools/visualization/vis_cam.py \
        demo/bird.JPEG  \
        configs/swin_transformer/swin-tiny_16xb64_in1k.py \
-       https://download.openmmlab.com/mmclassification/v0/swin-transformer/swin_tiny_224_b16x64_300e_imagenet_20210616_090925-66df6be6.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/swin-transformer/swin_tiny_224_b16x64_300e_imagenet_20210616_090925-66df6be6.pth \
        --vit-like
    ```
 
@@ -143,7 +143,7 @@ To exclude these extra tokens, we need know the number of extra tokens. Almost a
    python tools/visualization/vis_cam.py \
        demo/bird.JPEG  \
        configs/vision_transformer/vit-base-p16_64xb64_in1k-384px.py \
-       https://download.openmmlab.com/mmclassification/v0/vit/finetune/vit-base-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-98e8652b.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/finetune/vit-base-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-98e8652b.pth \
        --vit-like \
        --target-layers 'backbone.layers.11.ln1'
    ```
@@ -154,7 +154,7 @@ To exclude these extra tokens, we need know the number of extra tokens. Almost a
    python tools/visualization/vis_cam.py \
        demo/bird.JPEG  \
        configs/t2t_vit/t2t-vit-t-14_8xb64_in1k.py \
-       https://download.openmmlab.com/mmclassification/v0/t2t-vit/t2t-vit-t-14_3rdparty_8xb64_in1k_20210928-b7c09b62.pth \
+       https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/t2t-vit/t2t-vit-t-14_3rdparty_8xb64_in1k_20210928-b7c09b62.pth \
        --vit-like \
        --target-layers 'backbone.encoder.12.ln1'
    ```

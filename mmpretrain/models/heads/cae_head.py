@@ -20,7 +20,6 @@ class CAEHead(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  loss: dict,
                  init_cfg: Optional[Union[dict, List[dict]]] = None) -> None:

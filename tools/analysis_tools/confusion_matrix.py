@@ -16,27 +16,25 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description='Eval a checkpoint and draw the confusion matrix.')
     parser.add_argument('config', help='test config file path')
-    parser.add_argument(
-        'ckpt_or_result',
-        type=str,
-        help='The checkpoint file (.pth) or '
-        'dumpped predictions pickle file (.pkl).')
+    parser.add_argument('ckpt_or_result',
+                        type=str,
+                        help='The checkpoint file (.pth) or '
+                        'dumpped predictions pickle file (.pkl).')
     parser.add_argument('--out', help='the file to save the confusion matrix.')
     parser.add_argument(
         '--show',
         action='store_true',
         help='whether to display the metric result by matplotlib if supports.')
-    parser.add_argument(
-        '--show-path', type=str, help='Path to save the visualization image.')
-    parser.add_argument(
-        '--include-values',
-        action='store_true',
-        help='To draw the values in the figure.')
-    parser.add_argument(
-        '--cmap',
-        type=str,
-        default='viridis',
-        help='The color map to use. Defaults to "viridis".')
+    parser.add_argument('--show-path',
+                        type=str,
+                        help='Path to save the visualization image.')
+    parser.add_argument('--include-values',
+                        action='store_true',
+                        help='To draw the values in the figure.')
+    parser.add_argument('--cmap',
+                        type=str,
+                        default='viridis',
+                        help='The color map to use. Defaults to "viridis".')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
@@ -93,12 +91,11 @@ def main():
         mmengine.dump(cm, args.out)
 
     if args.show or args.show_path is not None:
-        fig = ConfusionMatrix.plot(
-            cm,
-            show=args.show,
-            classes=classes,
-            include_values=args.include_values,
-            cmap=args.cmap)
+        fig = ConfusionMatrix.plot(cm,
+                                   show=args.show,
+                                   classes=classes,
+                                   include_values=args.include_values,
+                                   cmap=args.cmap)
         if args.show_path is not None:
             fig.savefig(args.show_path)
             print(f'The confusion matrix is saved at {args.show_path}.')

@@ -7,7 +7,6 @@ from mmpretrain.models.utils import LayerScale
 
 
 class TestLayerScale(TestCase):
-
     def test_init(self):
         with self.assertRaisesRegex(AssertionError, "'data_format' could"):
             cfg = dict(

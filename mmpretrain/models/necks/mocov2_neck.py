@@ -21,7 +21,6 @@ class MoCoV2Neck(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels: int,
                  hid_channels: int,
@@ -32,9 +31,9 @@ class MoCoV2Neck(BaseModule):
         self.with_avg_pool = with_avg_pool
         if with_avg_pool:
             self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.mlp = nn.Sequential(
-            nn.Linear(in_channels, hid_channels), nn.ReLU(inplace=True),
-            nn.Linear(hid_channels, out_channels))
+        self.mlp = nn.Sequential(nn.Linear(in_channels, hid_channels),
+                                 nn.ReLU(inplace=True),
+                                 nn.Linear(hid_channels, out_channels))
 
     def forward(self, x: Tuple[torch.Tensor]) -> Tuple[torch.Tensor]:
         """Forward function.

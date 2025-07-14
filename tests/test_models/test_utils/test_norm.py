@@ -8,7 +8,6 @@ from mmpretrain.models.utils import GRN, LayerNorm2d
 
 
 class TestGRN(TestCase):
-
     def test_init(self):
         module = GRN(in_channels=32, eps=1e-3)
         self.assertEqual(module.in_channels, 32)
@@ -35,7 +34,6 @@ class TestGRN(TestCase):
 
 
 class TestLayerNorm2d(TestCase):
-
     def test_init(self):
         module = LayerNorm2d(num_channels=32, eps=1e-3)
         self.assertEqual(module.num_channels, 32)

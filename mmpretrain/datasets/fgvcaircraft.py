@@ -66,12 +66,11 @@ class FGVCAircraft(BaseDataset):
         data_prefix = self.backend.join_path('data', 'images')
         test_mode = split == 'test'
 
-        super(FGVCAircraft, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            test_mode=test_mode,
-            data_prefix=data_prefix,
-            **kwargs)
+        super(FGVCAircraft, self).__init__(ann_file=ann_file,
+                                           data_root=data_root,
+                                           test_mode=test_mode,
+                                           data_prefix=data_prefix,
+                                           **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

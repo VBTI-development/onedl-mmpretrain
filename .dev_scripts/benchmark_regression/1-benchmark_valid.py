@@ -47,22 +47,21 @@ def parse_args():
     parser.add_argument('--img', default='demo/demo.JPEG', help='Image file')
     parser.add_argument('--models', nargs='+', help='models name to inference')
     parser.add_argument('--show', action='store_true', help='show results')
-    parser.add_argument(
-        '--wait-time',
-        type=float,
-        default=1,
-        help='the interval of show (s), 0 is block')
+    parser.add_argument('--wait-time',
+                        type=float,
+                        default=1,
+                        help='the interval of show (s), 0 is block')
     parser.add_argument(
         '--inference-time',
         action='store_true',
         help='Test inference time by run 10 times for each model.')
-    parser.add_argument(
-        '--batch-size',
-        type=int,
-        default=1,
-        help='The batch size during the inference.')
-    parser.add_argument(
-        '--flops', action='store_true', help='Get Flops and Params of models')
+    parser.add_argument('--batch-size',
+                        type=int,
+                        default=1,
+                        help='The batch size during the inference.')
+    parser.add_argument('--flops',
+                        action='store_true',
+                        help='Get Flops and Params of models')
     parser.add_argument(
         '--flops-str',
         action='store_true',
@@ -232,9 +231,9 @@ def main(args):
         if args.show:
             vis = UniversalVisualizer.get_instance('valid')
             vis.set_image(mmcv.imread(args.img))
-            vis.draw_texts(
-                texts='\n'.join([f'{k}: {v}' for k, v in result.items()]),
-                positions=np.array([(5, 5)]))
+            vis.draw_texts(texts='\n'.join(
+                [f'{k}: {v}' for k, v in result.items()]),
+                           positions=np.array([(5, 5)]))
             vis.show(wait_time=args.wait_time)
 
     tmpdir.cleanup()

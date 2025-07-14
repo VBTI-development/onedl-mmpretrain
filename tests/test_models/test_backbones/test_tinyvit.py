@@ -37,13 +37,12 @@ def test_tinyvit():
     assert feat[3].shape == torch.Size([1, 320])
 
     # Test with custom arch
-    model = TinyViT(
-        arch={
-            'depths': [2, 3, 4, 5],
-            'channels': [64, 128, 256, 448],
-            'num_heads': [4, 4, 4, 4]
-        },
-        out_indices=(0, 1, 2, 3))
+    model = TinyViT(arch={
+        'depths': [2, 3, 4, 5],
+        'channels': [64, 128, 256, 448],
+        'num_heads': [4, 4, 4, 4]
+    },
+                    out_indices=(0, 1, 2, 3))
     model.init_weights()
     model.train()
 
@@ -56,8 +55,9 @@ def test_tinyvit():
     assert feat[3].shape == torch.Size([1, 448])
 
     # Test without gap before final norm
-    model = TinyViT(
-        arch='21m', out_indices=(0, 1, 2, 3), gap_before_final_norm=False)
+    model = TinyViT(arch='21m',
+                    out_indices=(0, 1, 2, 3),
+                    gap_before_final_norm=False)
 
     imgs = torch.randn(1, 3, 224, 224)
     feat = model(imgs)

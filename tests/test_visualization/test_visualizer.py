@@ -12,7 +12,6 @@ from mmpretrain.visualization import UniversalVisualizer
 
 
 class TestUniversalVisualizer(TestCase):
-
     def setUp(self) -> None:
         super().setUp()
         tmpdir = tempfile.TemporaryDirectory()
@@ -34,12 +33,11 @@ class TestUniversalVisualizer(TestCase):
             self.assertEqual(wait_time, 0)
 
         with patch.object(self.vis, 'show', mock_show):
-            self.vis.visualize_cls(
-                image=image,
-                data_sample=data_sample,
-                show=True,
-                name='test_cls',
-                step=1)
+            self.vis.visualize_cls(image=image,
+                                   data_sample=data_sample,
+                                   show=True,
+                                   name='test_cls',
+                                   step=1)
 
         # Test storage backend.
         save_file = osp.join(self.tmpdir.name,
@@ -48,8 +46,9 @@ class TestUniversalVisualizer(TestCase):
 
         # Test out_file
         out_file = osp.join(self.tmpdir.name, 'results.png')
-        self.vis.visualize_cls(
-            image=image, data_sample=data_sample, out_file=out_file)
+        self.vis.visualize_cls(image=image,
+                               data_sample=data_sample,
+                               out_file=out_file)
         self.assertTrue(osp.exists(out_file))
 
         # Test with dataset_meta
@@ -98,37 +97,34 @@ class TestUniversalVisualizer(TestCase):
 
         # Test adaptive font size
         def assert_font_size(target_size):
-
             def draw_texts(text, font_sizes, *_, **__):
                 self.assertEqual(font_sizes, target_size)
 
             return draw_texts
 
         with patch.object(self.vis, 'draw_texts', assert_font_size(7)):
-            self.vis.visualize_cls(
-                np.ones((224, 384, 3), np.uint8), data_sample)
+            self.vis.visualize_cls(np.ones((224, 384, 3), np.uint8),
+                                   data_sample)
 
         with patch.object(self.vis, 'draw_texts', assert_font_size(2)):
-            self.vis.visualize_cls(
-                np.ones((10, 384, 3), np.uint8), data_sample)
+            self.vis.visualize_cls(np.ones((10, 384, 3), np.uint8),
+                                   data_sample)
 
         with patch.object(self.vis, 'draw_texts', assert_font_size(21)):
-            self.vis.visualize_cls(
-                np.ones((1000, 1000, 3), np.uint8), data_sample)
+            self.vis.visualize_cls(np.ones((1000, 1000, 3), np.uint8),
+                                   data_sample)
 
         # Test rescale image
         with patch.object(self.vis, 'draw_texts', assert_font_size(14)):
-            self.vis.visualize_cls(
-                np.ones((224, 384, 3), np.uint8),
-                data_sample,
-                rescale_factor=2.)
+            self.vis.visualize_cls(np.ones((224, 384, 3), np.uint8),
+                                   data_sample,
+                                   rescale_factor=2.)
 
     def test_visualize_image_retrieval(self):
         image = np.ones((10, 10, 3), np.uint8)
         data_sample = DataSample().set_pred_score([0.1, 0.8, 0.1])
 
         class ToyPrototype:
-
             def get_data_info(self, idx):
                 img_path = osp.join(osp.dirname(__file__), '../data/color.jpg')
                 return {'img_path': img_path, 'sample_idx': idx}
@@ -143,13 +139,12 @@ class TestUniversalVisualizer(TestCase):
             self.assertEqual(wait_time, 0)
 
         with patch.object(self.vis, 'show', mock_show):
-            self.vis.visualize_image_retrieval(
-                image,
-                data_sample,
-                prototype_dataset,
-                show=True,
-                name='test_retrieval',
-                step=1)
+            self.vis.visualize_image_retrieval(image,
+                                               data_sample,
+                                               prototype_dataset,
+                                               show=True,
+                                               name='test_retrieval',
+                                               step=1)
 
         # Test storage backend.
         save_file = osp.join(self.tmpdir.name,
@@ -183,8 +178,11 @@ class TestUniversalVisualizer(TestCase):
             self.assertEqual(wait_time, 0)
 
         with patch.object(self.vis, 'show', mock_show):
-            self.vis.visualize_masked_image(
-                image, data_sample, show=True, name='test_mask', step=1)
+            self.vis.visualize_masked_image(image,
+                                            data_sample,
+                                            show=True,
+                                            name='test_mask',
+                                            step=1)
 
         # Test storage backend.
         save_file = osp.join(self.tmpdir.name,

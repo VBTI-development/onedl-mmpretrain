@@ -12,31 +12,27 @@ data_preprocessor = dict(
 # dataset settings
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(224, 224),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(224, 224),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
-    dict(
-        type='CleanCaption',
-        keys='chat_content',
-        remove_chars='',
-        lowercase=False),
-    dict(
-        type='PackInputs',
-        algorithm_keys=['chat_content', 'lang'],
-        meta_keys=['image_id']),
+    dict(type='CleanCaption',
+         keys='chat_content',
+         remove_chars='',
+         lowercase=False),
+    dict(type='PackInputs',
+         algorithm_keys=['chat_content', 'lang'],
+         meta_keys=['image_id']),
 ]
 
 train_dataloader = dict(
     batch_size=2,
     num_workers=4,
-    dataset=dict(
-        type='MiniGPT4Dataset',
-        data_root='YOUR_DATA_DIRECTORY',
-        ann_file='YOUR_DATA_FILE',
-        pipeline=train_pipeline),
+    dataset=dict(type='MiniGPT4Dataset',
+                 data_root='YOUR_DATA_DIRECTORY',
+                 ann_file='YOUR_DATA_FILE',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
     collate_fn=dict(type='default_collate'),
     drop_last=False,
@@ -44,11 +40,10 @@ train_dataloader = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(224, 224),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(224, 224),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 
@@ -57,13 +52,12 @@ test_evaluator = dict(
     ann_file='data/coco/annotations/coco_karpathy_val_gt.json',
 )
 
-test_dataloader = dict(
-    batch_size=1,
-    dataset=dict(
-        type='COCOCaption',
-        data_root='data/coco',
-        ann_file='annotations/coco_karpathy_val.json',
-        pipeline=test_pipeline))
+test_dataloader = dict(batch_size=1,
+                       dataset=dict(
+                           type='COCOCaption',
+                           data_root='data/coco',
+                           ann_file='annotations/coco_karpathy_val.json',
+                           pipeline=test_pipeline))
 
 # model settings
 model = dict(
@@ -87,7 +81,7 @@ model = dict(
         use_shared_rel_pos_bias=False,
         out_type='raw',
         pretrained=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/minigpt4/minigpt-4_eva-g-p14_20230615-e908c021.pth'  # noqa
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/minigpt4/minigpt-4_eva-g-p14_20230615-e908c021.pth'  # noqa
     ),
     q_former_model=dict(
         type='Qformer',
@@ -97,16 +91,14 @@ model = dict(
         cross_attention_freq=2,
         num_query_token=32,
         pretrained=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/minigpt4/minigpt-4_qformer_20230615-1dfa889c.pth'  # noqa
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/minigpt4/minigpt-4_qformer_20230615-1dfa889c.pth'  # noqa
     ),
-    lang_encoder=dict(
-        type='AutoModelForCausalLM',
-        name_or_path='baichuan-inc/baichuan-7B',
-        trust_remote_code=True),
-    tokenizer=dict(
-        type='AutoTokenizer',
-        name_or_path='baichuan-inc/baichuan-7B',
-        trust_remote_code=True),
+    lang_encoder=dict(type='AutoModelForCausalLM',
+                      name_or_path='baichuan-inc/baichuan-7B',
+                      trust_remote_code=True),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='baichuan-inc/baichuan-7B',
+                   trust_remote_code=True),
     task='caption',
     prompt_template=dict([('en', '###Ask: {} ###Answer: '),
                           ('zh', '###问：{} ###答：')]),
@@ -155,9 +147,8 @@ strategy = dict(
 )
 
 # schedule settings
-optim_wrapper = dict(
-    type='DeepSpeedOptimWrapper',
-    optimizer=dict(type='AdamW', lr=1e-3, weight_decay=0.05))
+optim_wrapper = dict(type='DeepSpeedOptimWrapper',
+                     optimizer=dict(type='AdamW', lr=1e-3, weight_decay=0.05))
 
 param_scheduler = [
     dict(
@@ -180,11 +171,10 @@ test_cfg = dict()
 
 runner_type = 'FlexibleRunner'
 
-default_hooks = dict(
-    checkpoint=dict(
-        type='CheckpointHook',
-        interval=1,
-        by_epoch=True,
-        save_last=True,
-        max_keep_ckpts=1,
-    ))
+default_hooks = dict(checkpoint=dict(
+    type='CheckpointHook',
+    interval=1,
+    by_epoch=True,
+    save_last=True,
+    max_keep_ckpts=1,
+))

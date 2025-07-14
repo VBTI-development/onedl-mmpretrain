@@ -17,7 +17,6 @@ class SeqGenerationHead(BaseModule):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(
         self,
         decoder: dict,
@@ -151,8 +150,8 @@ class SeqGenerationHead(BaseModule):
 
         # TODO: In old version of transformers
         # Additional repeat interleave of hidden states should be add here.
-        image_atts = torch.ones(
-            encoder_hidden_states.size()[:-1], dtype=torch.long).to(device)
+        image_atts = torch.ones(encoder_hidden_states.size()[:-1],
+                                dtype=torch.long).to(device)
 
         model_kwargs = {
             'encoder_hidden_states': encoder_hidden_states,
@@ -162,17 +161,16 @@ class SeqGenerationHead(BaseModule):
 
         if use_nucleus_sampling:
             # nucleus sampling
-            outputs = self.decoder.generate(
-                input_ids=input_ids,
-                max_length=max_length,
-                min_length=min_length,
-                do_sample=True,
-                top_p=top_p,
-                num_return_sequences=1,
-                eos_token_id=sep_token_id,
-                pad_token_id=pad_token_id,
-                repetition_penalty=1.1,
-                **model_kwargs)
+            outputs = self.decoder.generate(input_ids=input_ids,
+                                            max_length=max_length,
+                                            min_length=min_length,
+                                            do_sample=True,
+                                            top_p=top_p,
+                                            num_return_sequences=1,
+                                            eos_token_id=sep_token_id,
+                                            pad_token_id=pad_token_id,
+                                            repetition_penalty=1.1,
+                                            **model_kwargs)
         else:
             # beam search
             outputs = self.decoder.generate(

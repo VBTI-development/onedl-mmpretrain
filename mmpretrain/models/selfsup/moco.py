@@ -42,7 +42,6 @@ class MoCo(BaseSelfSupervisor):
         init_cfg (Union[List[dict], dict], optional): Config dict for weight
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  backbone: dict,
                  neck: dict,
@@ -53,13 +52,12 @@ class MoCo(BaseSelfSupervisor):
                  pretrained: Optional[str] = None,
                  data_preprocessor: Optional[dict] = None,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            pretrained=pretrained,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         pretrained=pretrained,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
         # create momentum model
         self.encoder_k = ExponentialMovingAverage(

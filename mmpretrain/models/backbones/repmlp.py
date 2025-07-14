@@ -13,7 +13,7 @@ from mmpretrain.registry import MODELS
 
 
 def fuse_bn(conv_or_fc, bn):
-    """fuse conv and bn."""
+    """Fuse conv and bn."""
     std = (bn.running_var + bn.eps).sqrt()
     tmp_weight = bn.weight / std
     tmp_weight = tmp_weight.reshape(-1, 1, 1, 1)
@@ -60,7 +60,6 @@ class PatchEmbed(_PatchEmbed):
         init_cfg (`mmcv.ConfigDict`, optional): The Config for initialization.
             Default: None.
     """
-
     def __init__(self, *args, **kwargs):
         super(PatchEmbed, self).__init__(*args, **kwargs)
         self.relu = nn.ReLU()
@@ -96,14 +95,13 @@ class GlobalPerceptron(SELayer):
         ratio (int): Squeeze ratio in GlobalPerceptron, the intermediate
             channel will be ``make_divisible(channels // ratio, divisor)``.
     """
-
     def __init__(self, input_channels: int, ratio: int, **kwargs) -> None:
-        super(GlobalPerceptron, self).__init__(
-            channels=input_channels,
-            ratio=ratio,
-            return_weight=True,
-            act_cfg=(dict(type='ReLU'), dict(type='Sigmoid')),
-            **kwargs)
+        super(GlobalPerceptron,
+              self).__init__(channels=input_channels,
+                             ratio=ratio,
+                             return_weight=True,
+                             act_cfg=(dict(type='ReLU'), dict(type='Sigmoid')),
+                             **kwargs)
 
 
 class RepMLPBlock(BaseModule):
@@ -129,7 +127,6 @@ class RepMLPBlock(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Default: None
     """
-
     def __init__(self,
                  channels,
                  path_h,
@@ -153,19 +150,18 @@ class RepMLPBlock(BaseModule):
         self.conv_cfg = conv_cfg
         self.norm_cfg = norm_cfg
 
-        self.gp = GlobalPerceptron(
-            input_channels=channels, ratio=globalperceptron_ratio)
+        self.gp = GlobalPerceptron(input_channels=channels,
+                                   ratio=globalperceptron_ratio)
 
         # using a conv layer to implement a fc layer
-        self.fc3 = build_conv_layer(
-            conv_cfg,
-            in_channels=self._path_vec_channles,
-            out_channels=self._path_vec_channles,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            bias=deploy,
-            groups=num_sharesets)
+        self.fc3 = build_conv_layer(conv_cfg,
+                                    in_channels=self._path_vec_channles,
+                                    out_channels=self._path_vec_channles,
+                                    kernel_size=1,
+                                    stride=1,
+                                    padding=0,
+                                    bias=deploy,
+                                    groups=num_sharesets)
         if deploy:
             self.fc3_bn = nn.Identity()
         else:
@@ -175,15 +171,15 @@ class RepMLPBlock(BaseModule):
         self.reparam_conv_kernels = reparam_conv_kernels
         if not deploy and reparam_conv_kernels is not None:
             for k in reparam_conv_kernels:
-                conv_branch = ConvModule(
-                    in_channels=num_sharesets,
-                    out_channels=num_sharesets,
-                    kernel_size=k,
-                    stride=1,
-                    padding=k // 2,
-                    norm_cfg=dict(type='BN', requires_grad=True),
-                    groups=num_sharesets,
-                    act_cfg=None)
+                conv_branch = ConvModule(in_channels=num_sharesets,
+                                         out_channels=num_sharesets,
+                                         kernel_size=k,
+                                         stride=1,
+                                         padding=k // 2,
+                                         norm_cfg=dict(type='BN',
+                                                       requires_grad=True),
+                                         groups=num_sharesets,
+                                         act_cfg=None)
                 self.__setattr__('repconv{}'.format(k), conv_branch)
 
     def partition(self, x, h_parts, w_parts):
@@ -194,7 +190,7 @@ class RepMLPBlock(BaseModule):
         return x
 
     def partition_affine(self, x, h_parts, w_parts):
-        """perform Partition Perceptron."""
+        """Perform Partition Perceptron."""
         fc_inputs = x.reshape(-1, self._path_vec_channles, 1, 1)
         out = self.fc3(fc_inputs)
         out = out.reshape(-1, self.num_sharesets, self.path_h, self.path_w)
@@ -236,7 +232,7 @@ class RepMLPBlock(BaseModule):
         return out
 
     def get_equivalent_fc3(self):
-        """get the equivalent fc3 weight and bias."""
+        """Get the equivalent fc3 weight and bias."""
         fc_weight, fc_bias = fuse_bn(self.fc3, self.fc3_bn)
         if self.reparam_conv_kernels is not None:
             largest_k = max(self.reparam_conv_kernels)
@@ -259,7 +255,7 @@ class RepMLPBlock(BaseModule):
         return final_fc3_weight, final_fc3_bias
 
     def local_inject(self):
-        """inject the Local Perceptron into Partition Perceptron."""
+        """Inject the Local Perceptron into Partition Perceptron."""
         self.deploy = True
         #  Locality Injection
         fc3_weight, fc3_bias = self.get_equivalent_fc3()
@@ -269,30 +265,29 @@ class RepMLPBlock(BaseModule):
                 self.__delattr__('repconv{}'.format(k))
         self.__delattr__('fc3')
         self.__delattr__('fc3_bn')
-        self.fc3 = build_conv_layer(
-            self.conv_cfg,
-            self._path_vec_channles,
-            self._path_vec_channles,
-            1,
-            1,
-            0,
-            bias=True,
-            groups=self.num_sharesets)
+        self.fc3 = build_conv_layer(self.conv_cfg,
+                                    self._path_vec_channles,
+                                    self._path_vec_channles,
+                                    1,
+                                    1,
+                                    0,
+                                    bias=True,
+                                    groups=self.num_sharesets)
         self.fc3_bn = nn.Identity()
         self.fc3.weight.data = fc3_weight
         self.fc3.bias.data = fc3_bias
 
     def _convert_conv_to_fc(self, conv_kernel, conv_bias):
-        """convert conv_k1 to fc, which is still a conv_k2, and the k2 > k1."""
+        """Convert conv_k1 to fc, which is still a conv_k2, and the k2 > k1."""
         in_channels = torch.eye(self.path_h * self.path_w).repeat(
             1, self.num_sharesets).reshape(self.path_h * self.path_w,
                                            self.num_sharesets, self.path_h,
                                            self.path_w).to(conv_kernel.device)
-        fc_k = F.conv2d(
-            in_channels,
-            conv_kernel,
-            padding=(conv_kernel.size(2) // 2, conv_kernel.size(3) // 2),
-            groups=self.num_sharesets)
+        fc_k = F.conv2d(in_channels,
+                        conv_kernel,
+                        padding=(conv_kernel.size(2) // 2,
+                                 conv_kernel.size(3) // 2),
+                        groups=self.num_sharesets)
         fc_k = fc_k.reshape(self.path_w * self.path_w, self.num_sharesets *
                             self.path_h * self.path_w).t()
         fc_bias = conv_bias.repeat_interleave(self.path_h * self.path_w)
@@ -324,7 +319,6 @@ class RepMLPNetUnit(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Default: None
     """
-
     def __init__(self,
                  channels,
                  path_h,
@@ -359,7 +353,6 @@ class RepMLPNetUnit(BaseModule):
 
 class ConvFFN(nn.Module):
     """ConvFFN implemented by using point-wise convs."""
-
     def __init__(self,
                  in_channels,
                  hidden_channels=None,
@@ -369,22 +362,20 @@ class ConvFFN(nn.Module):
         super().__init__()
         out_features = out_channels or in_channels
         hidden_features = hidden_channels or in_channels
-        self.ffn_fc1 = ConvModule(
-            in_channels=in_channels,
-            out_channels=hidden_features,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            norm_cfg=norm_cfg,
-            act_cfg=None)
-        self.ffn_fc2 = ConvModule(
-            in_channels=hidden_features,
-            out_channels=out_features,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            norm_cfg=norm_cfg,
-            act_cfg=None)
+        self.ffn_fc1 = ConvModule(in_channels=in_channels,
+                                  out_channels=hidden_features,
+                                  kernel_size=1,
+                                  stride=1,
+                                  padding=0,
+                                  norm_cfg=norm_cfg,
+                                  act_cfg=None)
+        self.ffn_fc2 = ConvModule(in_channels=hidden_features,
+                                  out_channels=out_features,
+                                  kernel_size=1,
+                                  stride=1,
+                                  padding=0,
+                                  norm_cfg=norm_cfg,
+                                  act_cfg=None)
         self.act = build_activation_layer(act_cfg)
 
     def forward(self, x):
@@ -486,15 +477,14 @@ class RepMLPNet(BaseModule):
         self.depths = self.arch_settings['depths']
         self.sharesets_nums = self.arch_settings['sharesets_nums']
 
-        _patch_cfg = dict(
-            in_channels=in_channels,
-            input_size=self.img_size,
-            embed_dims=self.channels[0],
-            conv_type='Conv2d',
-            kernel_size=self.patch_size,
-            stride=self.patch_size,
-            norm_cfg=self.norm_cfg,
-            bias=False)
+        _patch_cfg = dict(in_channels=in_channels,
+                          input_size=self.img_size,
+                          embed_dims=self.channels[0],
+                          conv_type='Conv2d',
+                          kernel_size=self.patch_size,
+                          stride=self.patch_size,
+                          norm_cfg=self.norm_cfg,
+                          bias=False)
         _patch_cfg.update(patch_cfg)
         self.patch_embed = PatchEmbed(**_patch_cfg)
         self.patch_resolution = self.patch_embed.init_out_size
@@ -510,16 +500,15 @@ class RepMLPNet(BaseModule):
         self.downsample_layers = ModuleList()
         for stage_idx in range(self.num_stage):
             # make stage layers
-            _stage_cfg = dict(
-                channels=self.channels[stage_idx],
-                path_h=self.patch_hs[stage_idx],
-                path_w=self.patch_ws[stage_idx],
-                reparam_conv_kernels=reparam_conv_kernels,
-                globalperceptron_ratio=globalperceptron_ratio,
-                norm_cfg=self.norm_cfg,
-                ffn_expand=4,
-                num_sharesets=self.sharesets_nums[stage_idx],
-                deploy=deploy)
+            _stage_cfg = dict(channels=self.channels[stage_idx],
+                              path_h=self.patch_hs[stage_idx],
+                              path_w=self.patch_ws[stage_idx],
+                              reparam_conv_kernels=reparam_conv_kernels,
+                              globalperceptron_ratio=globalperceptron_ratio,
+                              norm_cfg=self.norm_cfg,
+                              ffn_expand=4,
+                              num_sharesets=self.sharesets_nums[stage_idx],
+                              deploy=deploy)
             stage_blocks = [
                 RepMLPNetUnit(**_stage_cfg)
                 for _ in range(self.depths[stage_idx])
@@ -529,15 +518,14 @@ class RepMLPNet(BaseModule):
             # make downsample layers
             if stage_idx < self.num_stage - 1:
                 self.downsample_layers.append(
-                    ConvModule(
-                        in_channels=self.channels[stage_idx],
-                        out_channels=self.channels[stage_idx + 1],
-                        kernel_size=2,
-                        stride=2,
-                        padding=0,
-                        conv_cfg=self.conv_cfg,
-                        norm_cfg=self.norm_cfg,
-                        inplace=True))
+                    ConvModule(in_channels=self.channels[stage_idx],
+                               out_channels=self.channels[stage_idx + 1],
+                               kernel_size=2,
+                               stride=2,
+                               padding=0,
+                               conv_cfg=self.conv_cfg,
+                               norm_cfg=self.norm_cfg,
+                               inplace=True))
 
         self.out_indice = out_indices
 

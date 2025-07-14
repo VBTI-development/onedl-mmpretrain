@@ -4,12 +4,11 @@ _base_ = ['./edgenext-base_8xb256_in1k.py']
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=269,
-        edge='short',
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='ResizeEdge',
+         scale=269,
+         edge='short',
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='CenterCrop', crop_size=256),
     dict(type='PackInputs')
 ]

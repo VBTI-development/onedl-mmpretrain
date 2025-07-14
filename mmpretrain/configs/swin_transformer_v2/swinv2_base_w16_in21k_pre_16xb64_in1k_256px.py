@@ -13,10 +13,9 @@ with read_base():
 
 # model settings
 model.update(
-    backbone=dict(
-        img_size=256,
-        window_size=[16, 16, 16, 8],
-        pretrained_window_sizes=[12, 12, 12, 6]),
+    backbone=dict(img_size=256,
+                  window_size=[16, 16, 16, 8],
+                  pretrained_window_sizes=[12, 12, 12, 6]),
     init_cfg=[
         dict(type=TruncNormalInit, layer='Linear', std=0.02, bias=0.),
         dict(type=ConstantInit, layer='LayerNorm', val=1., bias=0.)

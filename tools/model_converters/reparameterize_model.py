@@ -44,8 +44,9 @@ def main():
         exit()
     save_path.parent.mkdir(parents=True, exist_ok=True)
 
-    model = init_model(
-        args.config_path, checkpoint=args.checkpoint_path, device='cpu')
+    model = init_model(args.config_path,
+                       checkpoint=args.checkpoint_path,
+                       device='cpu')
     assert isinstance(model, ImageClassifier), \
         '`model` must be a `mmpretrain.classifiers.ImageClassifier` instance.'
 

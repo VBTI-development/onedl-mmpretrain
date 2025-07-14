@@ -19,7 +19,6 @@ class RetrievalValLoop(ValLoop):
         fp16 (bool): Whether to enable fp16 valing. Defaults to
             False.
     """
-
     def run(self) -> dict:
         """Launch val."""
         self.runner.call_hook('before_val')
@@ -31,8 +30,9 @@ class RetrievalValLoop(ValLoop):
 
         for idx, data_batch in enumerate(self.dataloader):
             with torch.no_grad():
-                self.runner.call_hook(
-                    'before_val_iter', batch_idx=idx, data_batch=data_batch)
+                self.runner.call_hook('before_val_iter',
+                                      batch_idx=idx,
+                                      data_batch=data_batch)
                 # predictions should be sequence of BaseDataElement
                 with autocast(enabled=self.fp16):
                     if is_model_wrapper(self.runner.model):
@@ -42,15 +42,14 @@ class RetrievalValLoop(ValLoop):
 
                     # get features for retrieval instead of data samples
                     data_batch = data_preprocessor(data_batch, False)
-                    feats = self.runner.model._run_forward(
-                        data_batch, mode='tensor')
+                    feats = self.runner.model._run_forward(data_batch,
+                                                           mode='tensor')
                     feats_local.append(feats)
                     data_samples_local.extend(data_batch['data_samples'])
-                self.runner.call_hook(
-                    'after_val_iter',
-                    batch_idx=idx,
-                    data_batch=data_batch,
-                    outputs=feats)
+                self.runner.call_hook('after_val_iter',
+                                      batch_idx=idx,
+                                      data_batch=data_batch,
+                                      outputs=feats)
 
         # concatenate different features
         feats_local = {
@@ -100,7 +99,6 @@ class RetrievalTestLoop(TestLoop):
         fp16 (bool): Whether to enable fp16 testing. Defaults to
             False.
     """
-
     def run(self) -> dict:
         """Launch test."""
         self.runner.call_hook('before_test')
@@ -112,8 +110,9 @@ class RetrievalTestLoop(TestLoop):
 
         for idx, data_batch in enumerate(self.dataloader):
             with torch.no_grad():
-                self.runner.call_hook(
-                    'before_test_iter', batch_idx=idx, data_batch=data_batch)
+                self.runner.call_hook('before_test_iter',
+                                      batch_idx=idx,
+                                      data_batch=data_batch)
                 # predictions should be sequence of BaseDataElement
                 with autocast(enabled=self.fp16):
                     if is_model_wrapper(self.runner.model):
@@ -122,15 +121,14 @@ class RetrievalTestLoop(TestLoop):
                         data_preprocessor = self.runner.model.data_preprocessor
                     # get features for retrieval instead of data samples
                     data_batch = data_preprocessor(data_batch, False)
-                    feats = self.runner.model._run_forward(
-                        data_batch, mode='tensor')
+                    feats = self.runner.model._run_forward(data_batch,
+                                                           mode='tensor')
                     feats_local.append(feats)
                     data_samples_local.extend(data_batch['data_samples'])
-                self.runner.call_hook(
-                    'after_test_iter',
-                    batch_idx=idx,
-                    data_batch=data_batch,
-                    outputs=feats)
+                self.runner.call_hook('after_test_iter',
+                                      batch_idx=idx,
+                                      data_batch=data_batch,
+                                      outputs=feats)
 
         # concatenate different features
         feats_local = {

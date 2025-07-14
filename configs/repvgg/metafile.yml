@@ -26,7 +26,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 72.37
         Top 5 Accuracy: 90.56
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-A0_8xb32_in1k_20221213-60ae8e23.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-A0_8xb32_in1k_20221213-60ae8e23.pth
   - Name: repvgg-A1_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-A1_8xb32_in1k.py
@@ -39,7 +39,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 74.23
         Top 5 Accuracy: 91.80
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-A1_8xb32_in1k_20221213-f81bf3df.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-A1_8xb32_in1k_20221213-f81bf3df.pth
   - Name: repvgg-A2_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-A2_8xb32_in1k.py
@@ -52,7 +52,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 76.49
         Top 5 Accuracy: 93.09
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-A2_8xb32_in1k_20221213-a8767caf.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-A2_8xb32_in1k_20221213-a8767caf.pth
   - Name: repvgg-B0_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B0_8xb32_in1k.py
@@ -65,7 +65,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 75.27
         Top 5 Accuracy: 92.21
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B0_8xb32_in1k_20221213-5091ecc7.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B0_8xb32_in1k_20221213-5091ecc7.pth
   - Name: repvgg-B1_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B1_8xb32_in1k.py
@@ -78,7 +78,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 78.19
         Top 5 Accuracy: 94.04
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B1_8xb32_in1k_20221213-d17c45e7.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B1_8xb32_in1k_20221213-d17c45e7.pth
   - Name: repvgg-B1g2_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B1g2_8xb32_in1k.py
@@ -91,7 +91,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 77.87
         Top 5 Accuracy: 93.99
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B1g2_8xb32_in1k_20221213-ae6428fd.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B1g2_8xb32_in1k_20221213-ae6428fd.pth
   - Name: repvgg-B1g4_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B1g4_8xb32_in1k.py
@@ -104,7 +104,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 77.81
         Top 5 Accuracy: 93.77
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B1g4_8xb32_in1k_20221213-a7a4aaea.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B1g4_8xb32_in1k_20221213-a7a4aaea.pth
   - Name: repvgg-B2_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B2_8xb32_in1k.py
@@ -117,7 +117,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 78.58
         Top 5 Accuracy: 94.23
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B2_8xb32_in1k_20221213-d8b420ef.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B2_8xb32_in1k_20221213-d8b420ef.pth
   - Name: repvgg-B2g4_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B2g4_8xb32_in1k.py
@@ -130,7 +130,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 79.44
         Top 5 Accuracy: 94.72
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B2g4_8xb32_in1k_20221213-0c1990eb.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B2g4_8xb32_in1k_20221213-0c1990eb.pth
   - Name: repvgg-B3_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B3_8xb32_in1k.py
@@ -143,7 +143,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 80.58
         Top 5 Accuracy: 95.33
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B3_8xb32_in1k_20221213-927a329a.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B3_8xb32_in1k_20221213-927a329a.pth
   - Name: repvgg-B3g4_8xb32_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-B3g4_8xb32_in1k.py
@@ -156,7 +156,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 80.26
         Top 5 Accuracy: 95.15
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-B3g4_8xb32_in1k_20221213-e01cb280.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-B3g4_8xb32_in1k_20221213-e01cb280.pth
   - Name: repvgg-D2se_3rdparty_in1k
     In Collection: RepVGG
     Config: configs/repvgg/repvgg-D2se_8xb32_in1k.py
@@ -169,7 +169,7 @@ Models:
       Metrics:
         Top 1 Accuracy: 81.81
         Top 5 Accuracy: 95.94
-    Weights: https://download.openmmlab.com/mmclassification/v0/repvgg/repvgg-D2se_3rdparty_4xb64-autoaug-lbs-mixup-coslr-200e_in1k_20210909-cf3139b7.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/repvgg/repvgg-D2se_3rdparty_4xb64-autoaug-lbs-mixup-coslr-200e_in1k_20210909-cf3139b7.pth
     Converted From:
       Weights: https://drive.google.com/drive/folders/1Avome4KvNp0Lqh2QwhXO6L5URQjzCjUq
       Code: https://github.com/DingXiaoH/RepVGG/blob/9f272318abfc47a2b702cd0e916fca8d25d683e7/repvgg.py#L250

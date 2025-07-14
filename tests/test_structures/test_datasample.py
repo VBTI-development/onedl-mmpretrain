@@ -8,7 +8,6 @@ from mmpretrain.structures import DataSample, MultiTaskDataSample
 
 
 class TestDataSample(TestCase):
-
     def _test_set_label(self, key):
         data_sample = DataSample()
         method = getattr(data_sample, 'set_' + key)
@@ -92,7 +91,6 @@ class TestDataSample(TestCase):
 
 
 class TestMultiTaskDataSample(TestCase):
-
     def test_multi_task_data_sample(self):
         gt_label = {'task0': {'task00': 1, 'task01': 1}, 'task1': 1}
         data_sample = MultiTaskDataSample()

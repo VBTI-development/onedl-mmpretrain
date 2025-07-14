@@ -11,13 +11,12 @@ model = dict(
         norm_cfg=dict(type='SyncBN', requires_grad=True),
         drop_path_rate=0.05,
     ),
-    head=dict(
-        loss=dict(
-            type='LabelSmoothLoss',
-            label_smooth_val=0.1,
-            mode='original',
-            use_sigmoid=True,
-        )),
+    head=dict(loss=dict(
+        type='LabelSmoothLoss',
+        label_smooth_val=0.1,
+        mode='original',
+        use_sigmoid=True,
+    )),
     train_cfg=dict(augments=[
         dict(type='Mixup', alpha=0.2),
         dict(type='CutMix', alpha=1.0)
@@ -44,13 +43,12 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=595,
-        eta_min=1.0e-6,
-        by_epoch=True,
-        begin=5,
-        end=600)
+    dict(type='CosineAnnealingLR',
+         T_max=595,
+         eta_min=1.0e-6,
+         by_epoch=True,
+         begin=5,
+         end=600)
 ]
 
 train_cfg = dict(by_epoch=True, max_epochs=600)

@@ -42,15 +42,14 @@ class VQAGenerationHead(BaseModule):
     Now using `nn.CrossEntropyLoss`, without label_smoothing, in order to
     maintain compatibility with torch < 1.10.0
     """
-
     def __init__(
         self,
         decoder: dict,
         inference_method: str = 'generate',
         num_beams: int = 3,
         num_ans_candidates: int = 128,
-        loss: Union[dict, nn.Module] = nn.CrossEntropyLoss(
-            reduction='none', ignore_index=-100),
+        loss: Union[dict, nn.Module] = nn.CrossEntropyLoss(reduction='none',
+                                                           ignore_index=-100),
         init_cfg: Optional[dict] = None,
         answer_list_path: Optional[str] = None,
     ) -> None:
@@ -159,11 +158,10 @@ class VQAGenerationHead(BaseModule):
         # topk_probs: top-k probability
         # topk_ids: [num_question, k]
         answer_first_token = answer_ids[:, 1]
-        prob_first_token = F.softmax(
-            logits, dim=1).index_select(
-                dim=1, index=answer_first_token)
-        topk_probs, topk_ids = prob_first_token.topk(
-            self.num_ans_candidates, dim=1)
+        prob_first_token = F.softmax(logits, dim=1).index_select(
+            dim=1, index=answer_first_token)
+        topk_probs, topk_ids = prob_first_token.topk(self.num_ans_candidates,
+                                                     dim=1)
 
         # answer input: [num_question*k, answer_len]
         input_ids = []
@@ -216,8 +214,8 @@ class VQAGenerationHead(BaseModule):
         """Predict answers in a generation manner."""
         device = feats['multimodal_embeds'].device
         question_states = feats['multimodal_embeds']
-        question_atts = torch.ones(
-            question_states.size()[:-1], dtype=torch.long).to(device)
+        question_atts = torch.ones(question_states.size()[:-1],
+                                   dtype=torch.long).to(device)
         model_kwargs = {
             'encoder_hidden_states': question_states,
             'encoder_attention_mask': question_atts
@@ -227,14 +225,13 @@ class VQAGenerationHead(BaseModule):
                              fill_value=feats['bos_token_id'],
                              device=device)
 
-        outputs = self.decoder.generate(
-            input_ids=bos_ids,
-            max_length=10,
-            min_length=1,
-            num_beams=self.num_beams,
-            eos_token_id=feats['sep_token_id'],
-            pad_token_id=feats['pad_token_id'],
-            **model_kwargs)
+        outputs = self.decoder.generate(input_ids=bos_ids,
+                                        max_length=10,
+                                        min_length=1,
+                                        num_beams=self.num_beams,
+                                        eos_token_id=feats['sep_token_id'],
+                                        pad_token_id=feats['pad_token_id'],
+                                        **model_kwargs)
 
         return outputs
 

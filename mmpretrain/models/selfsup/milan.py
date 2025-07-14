@@ -21,7 +21,6 @@ class CLIPGenerator(nn.Module):
     Args:
         tokenizer_path (str): The path of the checkpoint of CLIP.
     """
-
     def __init__(self, tokenizer_path: str) -> None:
         super().__init__()
         self.tokenizer_path = tokenizer_path
@@ -52,13 +51,13 @@ class CLIPGenerator(nn.Module):
 class MILANViT(MAEViT):
     """Vision Transformer for MILAN pre-training.
 
-    Implementation of the encoder for `MILAN: Masked Image Pretraining on
-    Language Assisted Representation <https://arxiv.org/abs/2208.06049>`_.
+    Implementation of the encoder for
+    `MILAN: Masked Image Pretraining on Language Assisted Representation`
+    `<https://arxiv.org/abs/2208.06049>`_.
 
     This module inherits from MAEViT and only overrides the forward function
     and replace random masking with attention masking.
     """
-
     def attention_masking(
         self, x: torch.Tensor, mask_ratio: float, importance: torch.Tensor
     ) -> Tuple[torch.Tensor, torch.Tensor, torch.Tensor, torch.Tensor]:
@@ -95,8 +94,9 @@ class MILANViT(MAEViT):
         # keep the first subset
         ids_keep = ids_shuffle[:, :len_keep]
         ids_dump = ids_shuffle[:, len_keep:]
-        x_masked = torch.gather(
-            x, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
+        x_masked = torch.gather(x,
+                                dim=1,
+                                index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
 
         # generate the binary mask: 0 is keep, 1 is remove
         mask = torch.ones([N, L], device=x.device)
@@ -171,9 +171,9 @@ class MILAN(BaseSelfSupervisor):
     """MILAN.
 
     Implementation of `MILAN: Masked Image Pretraining on Language Assisted
-    Representation <https://arxiv.org/abs/2208.06049>`_.
+    Representation`     `
+    <https://arxiv.org/abs/2208.06049>`_.
     """
-
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, importance=None)
 

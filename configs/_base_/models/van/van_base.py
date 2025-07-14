@@ -8,6 +8,7 @@ model = dict(
         num_classes=1000,
         in_channels=512,
         init_cfg=None,  # suppress the default init_cfg of LinearClsHead.
-        loss=dict(
-            type='LabelSmoothLoss', label_smooth_val=0.1, mode='original'),
+        loss=dict(type='LabelSmoothLoss',
+                  label_smooth_val=0.1,
+                  mode='original'),
         cal_acc=False))

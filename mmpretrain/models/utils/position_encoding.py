@@ -30,17 +30,15 @@ class ConditionalPositionEncoding(BaseModule):
        embed_dims (int): The feature dimension. Default: 768.
        stride (int): Stride of conv layer. Default: 1.
     """
-
     def __init__(self, in_channels, embed_dims=768, stride=1, init_cfg=None):
         super(ConditionalPositionEncoding, self).__init__(init_cfg=init_cfg)
-        self.proj = nn.Conv2d(
-            in_channels,
-            embed_dims,
-            kernel_size=3,
-            stride=stride,
-            padding=1,
-            bias=True,
-            groups=embed_dims)
+        self.proj = nn.Conv2d(in_channels,
+                              embed_dims,
+                              kernel_size=3,
+                              stride=stride,
+                              padding=1,
+                              bias=True,
+                              groups=embed_dims)
         self.stride = stride
 
     def forward(self, x, hw_shape):
@@ -73,7 +71,6 @@ class PositionEncodingFourier(BaseModule):
         init_cfg (dict): The config dict for initializing the module.
             Default: None.
     """
-
     def __init__(self,
                  in_channels=32,
                  embed_dims=768,
@@ -190,7 +187,6 @@ class RotaryEmbeddingFast(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  patch_resolution,
@@ -207,8 +203,8 @@ class RotaryEmbeddingFast(BaseModule):
         self.register_buffer('freqs_sin', freqs_sin)
 
     def compute_position_embedding(self):
-        frequency = self.theta**(
-            torch.arange(0, self.half_dim, 2).float() / self.half_dim)
+        frequency = self.theta**(torch.arange(0, self.half_dim, 2).float() /
+                                 self.half_dim)
         frequency = 1. / frequency
 
         h, w = self.patch_resolution

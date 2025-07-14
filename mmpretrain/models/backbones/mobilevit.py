@@ -49,7 +49,6 @@ class MobileVitBlock(nn.Module):
         transformer_norm_cfg (dict, optional): Config dict for normalization
             layer in transformer. Defaults to dict(type='LN').
     """
-
     def __init__(
             self,
             in_channels: int,
@@ -72,60 +71,56 @@ class MobileVitBlock(nn.Module):
         super(MobileVitBlock, self).__init__()
 
         self.local_rep = nn.Sequential(
-            ConvModule(
-                in_channels=in_channels,
-                out_channels=in_channels,
-                kernel_size=conv_ksize,
-                padding=int((conv_ksize - 1) / 2),
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg),
-            ConvModule(
-                in_channels=in_channels,
-                out_channels=transformer_dim,
-                kernel_size=1,
-                bias=False,
-                conv_cfg=conv_cfg,
-                norm_cfg=None,
-                act_cfg=None),
+            ConvModule(in_channels=in_channels,
+                       out_channels=in_channels,
+                       kernel_size=conv_ksize,
+                       padding=int((conv_ksize - 1) / 2),
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg),
+            ConvModule(in_channels=in_channels,
+                       out_channels=transformer_dim,
+                       kernel_size=1,
+                       bias=False,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=None,
+                       act_cfg=None),
         )
 
         global_rep = [
-            TransformerEncoderLayer(
-                embed_dims=transformer_dim,
-                num_heads=num_heads,
-                feedforward_channels=ffn_dim,
-                drop_rate=drop_rate,
-                attn_drop_rate=attn_drop_rate,
-                drop_path_rate=drop_path_rate,
-                qkv_bias=True,
-                act_cfg=dict(type='Swish'),
-                norm_cfg=transformer_norm_cfg)
+            TransformerEncoderLayer(embed_dims=transformer_dim,
+                                    num_heads=num_heads,
+                                    feedforward_channels=ffn_dim,
+                                    drop_rate=drop_rate,
+                                    attn_drop_rate=attn_drop_rate,
+                                    drop_path_rate=drop_path_rate,
+                                    qkv_bias=True,
+                                    act_cfg=dict(type='Swish'),
+                                    norm_cfg=transformer_norm_cfg)
             for _ in range(num_transformer_blocks)
         ]
         global_rep.append(
             build_norm_layer(transformer_norm_cfg, transformer_dim)[1])
         self.global_rep = nn.Sequential(*global_rep)
 
-        self.conv_proj = ConvModule(
-            in_channels=transformer_dim,
-            out_channels=out_channels,
-            kernel_size=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv_proj = ConvModule(in_channels=transformer_dim,
+                                    out_channels=out_channels,
+                                    kernel_size=1,
+                                    conv_cfg=conv_cfg,
+                                    norm_cfg=norm_cfg,
+                                    act_cfg=act_cfg)
 
         if no_fusion:
             self.conv_fusion = None
         else:
-            self.conv_fusion = ConvModule(
-                in_channels=in_channels + out_channels,
-                out_channels=out_channels,
-                kernel_size=conv_ksize,
-                padding=int((conv_ksize - 1) / 2),
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg)
+            self.conv_fusion = ConvModule(in_channels=in_channels +
+                                          out_channels,
+                                          out_channels=out_channels,
+                                          kernel_size=conv_ksize,
+                                          padding=int((conv_ksize - 1) / 2),
+                                          conv_cfg=conv_cfg,
+                                          norm_cfg=norm_cfg,
+                                          act_cfg=act_cfg)
 
         self.patch_size = (patch_size, patch_size)
         self.patch_area = self.patch_size[0] * self.patch_size[1]
@@ -146,8 +141,10 @@ class MobileVitBlock(nn.Module):
         interpolate = False
         if new_h != H or new_w != W:
             # Note: Padding can be done, but then it needs to be handled in attention function. # noqa
-            x = F.interpolate(
-                x, size=(new_h, new_w), mode='bilinear', align_corners=False)
+            x = F.interpolate(x,
+                              size=(new_h, new_w),
+                              mode='bilinear',
+                              align_corners=False)
             interpolate = True
 
         # [B, C, H, W] --> [B * C * n_h, n_w, p_h, p_w]
@@ -170,8 +167,10 @@ class MobileVitBlock(nn.Module):
         x = x.transpose(1, 2).reshape(B, C, num_patch_h * patch_h,
                                       num_patch_w * patch_w)
         if interpolate:
-            x = F.interpolate(
-                x, size=(H, W), mode='bilinear', align_corners=False)
+            x = F.interpolate(x,
+                              size=(H, W),
+                              mode='bilinear',
+                              align_corners=False)
 
         x = self.conv_proj(x)
         if self.conv_fusion is not None:
@@ -264,10 +263,9 @@ class MobileViT(BaseBackbone):
                  act_cfg=dict(type='Swish'),
                  init_cfg=[
                      dict(type='Kaiming', layer=['Conv2d']),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ]):
         super(MobileViT, self).__init__(init_cfg)
         if isinstance(arch, str):
@@ -303,15 +301,14 @@ class MobileViT(BaseBackbone):
             'mobilevit': self.make_mobilevit_layer,
         }
 
-        self.stem = ConvModule(
-            in_channels=in_channels,
-            out_channels=stem_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.stem = ConvModule(in_channels=in_channels,
+                               out_channels=stem_channels,
+                               kernel_size=3,
+                               stride=2,
+                               padding=1,
+                               conv_cfg=conv_cfg,
+                               norm_cfg=norm_cfg,
+                               act_cfg=act_cfg)
 
         in_channels = stem_channels
         layers = []
@@ -323,14 +320,14 @@ class MobileViT(BaseBackbone):
             in_channels = out_channels
         self.layers = nn.Sequential(*layers)
 
-        self.conv_1x1_exp = ConvModule(
-            in_channels=in_channels,
-            out_channels=last_exp_factor * in_channels,
-            kernel_size=1,
-            stride=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv_1x1_exp = ConvModule(in_channels=in_channels,
+                                       out_channels=last_exp_factor *
+                                       in_channels,
+                                       kernel_size=1,
+                                       stride=1,
+                                       conv_cfg=conv_cfg,
+                                       norm_cfg=norm_cfg,
+                                       act_cfg=act_cfg)
 
     @staticmethod
     def make_mobilevit_layer(in_channels,

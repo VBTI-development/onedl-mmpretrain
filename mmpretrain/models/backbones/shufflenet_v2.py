@@ -31,7 +31,6 @@ class InvertedResidual(BaseModule):
     Returns:
         Tensor: The output tensor.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -59,59 +58,53 @@ class InvertedResidual(BaseModule):
 
         if self.stride > 1:
             self.branch1 = nn.Sequential(
-                ConvModule(
-                    in_channels,
-                    in_channels,
-                    kernel_size=3,
-                    stride=self.stride,
-                    padding=1,
-                    groups=in_channels,
-                    conv_cfg=conv_cfg,
-                    norm_cfg=norm_cfg,
-                    act_cfg=None),
-                ConvModule(
-                    in_channels,
-                    branch_features,
-                    kernel_size=1,
-                    stride=1,
-                    padding=0,
-                    conv_cfg=conv_cfg,
-                    norm_cfg=norm_cfg,
-                    act_cfg=act_cfg),
+                ConvModule(in_channels,
+                           in_channels,
+                           kernel_size=3,
+                           stride=self.stride,
+                           padding=1,
+                           groups=in_channels,
+                           conv_cfg=conv_cfg,
+                           norm_cfg=norm_cfg,
+                           act_cfg=None),
+                ConvModule(in_channels,
+                           branch_features,
+                           kernel_size=1,
+                           stride=1,
+                           padding=0,
+                           conv_cfg=conv_cfg,
+                           norm_cfg=norm_cfg,
+                           act_cfg=act_cfg),
             )
 
         self.branch2 = nn.Sequential(
-            ConvModule(
-                in_channels if (self.stride > 1) else branch_features,
-                branch_features,
-                kernel_size=1,
-                stride=1,
-                padding=0,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg),
-            ConvModule(
-                branch_features,
-                branch_features,
-                kernel_size=3,
-                stride=self.stride,
-                padding=1,
-                groups=branch_features,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=None),
-            ConvModule(
-                branch_features,
-                branch_features,
-                kernel_size=1,
-                stride=1,
-                padding=0,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg))
+            ConvModule(in_channels if (self.stride > 1) else branch_features,
+                       branch_features,
+                       kernel_size=1,
+                       stride=1,
+                       padding=0,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg),
+            ConvModule(branch_features,
+                       branch_features,
+                       kernel_size=3,
+                       stride=self.stride,
+                       padding=1,
+                       groups=branch_features,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=None),
+            ConvModule(branch_features,
+                       branch_features,
+                       kernel_size=1,
+                       stride=1,
+                       padding=0,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg))
 
     def forward(self, x):
-
         def _inner_forward(x):
             if self.stride > 1:
                 out = torch.cat((self.branch1(x), self.branch2(x)), dim=1)
@@ -161,7 +154,6 @@ class ShuffleNetV2(BaseBackbone):
         with_cp (bool): Use checkpoint or not. Using checkpoint will save some
             memory while slowing down the training speed. Default: False.
     """
-
     def __init__(self,
                  widen_factor=1.0,
                  out_indices=(3, ),
@@ -203,15 +195,14 @@ class ShuffleNetV2(BaseBackbone):
                              f'But received {widen_factor}')
 
         self.in_channels = 24
-        self.conv1 = ConvModule(
-            in_channels=3,
-            out_channels=self.in_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv1 = ConvModule(in_channels=3,
+                                out_channels=self.in_channels,
+                                kernel_size=3,
+                                stride=2,
+                                padding=1,
+                                conv_cfg=conv_cfg,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
 
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
@@ -222,13 +213,12 @@ class ShuffleNetV2(BaseBackbone):
 
         output_channels = channels[-1]
         self.layers.append(
-            ConvModule(
-                in_channels=self.in_channels,
-                out_channels=output_channels,
-                kernel_size=1,
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg))
+            ConvModule(in_channels=self.in_channels,
+                       out_channels=output_channels,
+                       kernel_size=1,
+                       conv_cfg=conv_cfg,
+                       norm_cfg=norm_cfg,
+                       act_cfg=act_cfg))
 
     def _make_layer(self, out_channels, num_blocks):
         """Stack blocks to make a layer.
@@ -241,14 +231,13 @@ class ShuffleNetV2(BaseBackbone):
         for i in range(num_blocks):
             stride = 2 if i == 0 else 1
             layers.append(
-                InvertedResidual(
-                    in_channels=self.in_channels,
-                    out_channels=out_channels,
-                    stride=stride,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    with_cp=self.with_cp))
+                InvertedResidual(in_channels=self.in_channels,
+                                 out_channels=out_channels,
+                                 stride=stride,
+                                 conv_cfg=self.conv_cfg,
+                                 norm_cfg=self.norm_cfg,
+                                 act_cfg=self.act_cfg,
+                                 with_cp=self.with_cp))
             self.in_channels = out_channels
 
         return nn.Sequential(*layers)

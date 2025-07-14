@@ -84,8 +84,8 @@ class VOC(MultiLabelDataset):
                  data_root: str,
                  split: str = 'trainval',
                  image_set_path: str = '',
-                 data_prefix: Union[str, dict] = dict(
-                     img_path='JPEGImages', ann_path='Annotations'),
+                 data_prefix: Union[str, dict] = dict(img_path='JPEGImages',
+                                                      ann_path='Annotations'),
                  test_mode: bool = False,
                  metainfo: Optional[dict] = None,
                  **kwargs):
@@ -99,8 +99,8 @@ class VOC(MultiLabelDataset):
             self.split = split
 
             if not data_prefix:
-                data_prefix = dict(
-                    img_path='JPEGImages', ann_path='Annotations')
+                data_prefix = dict(img_path='JPEGImages',
+                                   ann_path='Annotations')
             if not image_set_path:
                 image_set_path = self.backend.join_path(
                     'ImageSets', 'Main', f'{split}.txt')
@@ -125,13 +125,12 @@ class VOC(MultiLabelDataset):
         self.data_root = data_root
         self.image_set_path = self.backend.join_path(data_root, image_set_path)
 
-        super().__init__(
-            ann_file='',
-            metainfo=metainfo,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super().__init__(ann_file='',
+                         metainfo=metainfo,
+                         data_root=data_root,
+                         data_prefix=data_prefix,
+                         test_mode=test_mode,
+                         **kwargs)
 
     @property
     def ann_prefix(self):
@@ -175,10 +174,9 @@ class VOC(MultiLabelDataset):
             if self.ann_prefix is not None:
                 labels, labels_difficult = self._get_labels_from_xml(img_id)
 
-            info = dict(
-                img_path=img_path,
-                gt_label=labels,
-                gt_label_difficult=labels_difficult)
+            info = dict(img_path=img_path,
+                        gt_label=labels,
+                        gt_label_difficult=labels_difficult)
             data_list.append(info)
 
         return data_list

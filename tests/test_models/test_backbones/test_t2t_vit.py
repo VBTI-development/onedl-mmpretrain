@@ -13,18 +13,16 @@ from .utils import timm_resize_pos_embed
 
 
 class TestT2TViT(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            img_size=224,
-            in_channels=3,
-            embed_dims=384,
-            t2t_cfg=dict(
-                token_dims=64,
-                use_performer=False,
-            ),
-            num_layers=14,
-            drop_path_rate=0.1)
+        self.cfg = dict(img_size=224,
+                        in_channels=3,
+                        embed_dims=384,
+                        t2t_cfg=dict(
+                            token_dims=64,
+                            use_performer=False,
+                        ),
+                        num_layers=14,
+                        drop_path_rate=0.1)
 
     def test_structure(self):
         # The performer hasn't been implemented

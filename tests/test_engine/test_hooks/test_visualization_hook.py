@@ -14,7 +14,6 @@ from mmpretrain.visualization import UniversalVisualizer
 
 
 class TestVisualizationHook(TestCase):
-
     def setUp(self) -> None:
         UniversalVisualizer.get_instance('visualizer')
 
@@ -42,12 +41,11 @@ class TestVisualizationHook(TestCase):
         hook: VisualizationHook = HOOKS.build(cfg)
         with patch.object(hook._visualizer, 'visualize_cls') as mock:
             hook._draw_samples(0, self.data_batch, self.outputs, step=0)
-            mock.assert_called_once_with(
-                image=ANY,
-                data_sample=self.outputs[0],
-                step=0,
-                show=True,
-                name='color.jpg')
+            mock.assert_called_once_with(image=ANY,
+                                         data_sample=self.outputs[0],
+                                         step=0,
+                                         show=True,
+                                         name='color.jpg')
 
         # test samples without path
         cfg = dict(type='VisualizationHook', enable=True)
@@ -55,26 +53,27 @@ class TestVisualizationHook(TestCase):
         with patch.object(hook._visualizer, 'visualize_cls') as mock:
             outputs = [DataSample()] * 10
             hook._draw_samples(0, self.data_batch, outputs, step=0)
-            mock.assert_called_once_with(
-                image=ANY,
-                data_sample=outputs[0],
-                step=0,
-                show=False,
-                name='0')
+            mock.assert_called_once_with(image=ANY,
+                                         data_sample=outputs[0],
+                                         step=0,
+                                         show=False,
+                                         name='0')
 
         # test out_dir
-        cfg = dict(
-            type='VisualizationHook', enable=True, out_dir=self.tmpdir.name)
+        cfg = dict(type='VisualizationHook',
+                   enable=True,
+                   out_dir=self.tmpdir.name)
         hook: VisualizationHook = HOOKS.build(cfg)
         with patch.object(hook._visualizer, 'visualize_cls') as mock:
             hook._draw_samples(0, self.data_batch, self.outputs, step=0)
-            mock.assert_called_once_with(
-                image=ANY,
-                data_sample=self.outputs[0],
-                step=0,
-                show=False,
-                name='color.jpg',
-                out_file=osp.join(self.tmpdir.name, 'color.jpg_0.png'))
+            mock.assert_called_once_with(image=ANY,
+                                         data_sample=self.outputs[0],
+                                         step=0,
+                                         show=False,
+                                         name='color.jpg',
+                                         out_file=osp.join(
+                                             self.tmpdir.name,
+                                             'color.jpg_0.png'))
 
         # test sample idx
         cfg = dict(type='VisualizationHook', enable=True, interval=4)

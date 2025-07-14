@@ -25,10 +25,11 @@ def check_norm_state(modules, train_state):
 
 
 class TestSwinTransformerV2(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            arch='b', img_size=256, patch_size=4, drop_path_rate=0.1)
+        self.cfg = dict(arch='b',
+                        img_size=256,
+                        patch_size=4,
+                        drop_path_rate=0.1)
 
     def test_arch(self):
         # Test invalid default arch
@@ -69,11 +70,10 @@ class TestSwinTransformerV2(TestCase):
         cfg = deepcopy(self.cfg)
         cfg['use_abs_pos_embed'] = True
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = SwinTransformerV2(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()
@@ -106,8 +106,9 @@ class TestSwinTransformerV2(TestCase):
         cfg['use_abs_pos_embed'] = True
         model = SwinTransformerV2(**cfg)
         load_checkpoint(model, checkpoint, strict=False)
-        resized_pos_embed = timm_resize_pos_embed(
-            pretrain_pos_embed, model.absolute_pos_embed, num_tokens=0)
+        resized_pos_embed = timm_resize_pos_embed(pretrain_pos_embed,
+                                                  model.absolute_pos_embed,
+                                                  num_tokens=0)
         self.assertTrue(
             torch.allclose(model.absolute_pos_embed, resized_pos_embed))
 

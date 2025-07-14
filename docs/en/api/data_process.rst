@@ -11,7 +11,7 @@ images data / the paths of images.The data process includes data transforms,
 data preprocessors and batch augmentations.
 
 - :mod:`Data Transforms <mmpretrain.datasets.transforms>`: Transforms includes loading, preprocessing, formatting and etc.
-- :mod:`Data Preprocessors <mmpretrain.models.utils.data_preprocessor>`: Processes includes collate, normalization, stacking, channel fliping and etc.
+- :mod:`Data Preprocessors <mmpretrain.models.utils.data_preprocessor>`: Processes includes collate, normalization, stacking, channel flipping and etc.
 
   - :mod:`Batch Augmentations <mmpretrain.models.utils.batch_augments>`: Batch augmentation involves multiple samples, such as Mixup and CutMix.
 

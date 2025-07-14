@@ -8,7 +8,6 @@ from mmpretrain.registry import HOOKS
 @HOOKS.register_module()
 class ClassNumCheckHook(Hook):
     """Class Number Check HOOK."""
-
     def _check_head(self, runner, dataset):
         """Check whether the `num_classes` in head matches the length of
         `CLASSES` in `dataset`.

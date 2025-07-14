@@ -114,8 +114,8 @@ All these logs and checkpoints will be saved under the folder `work_dirs`in the 
 
 ## Fine-tuning with bag of tricks
 
-- [MAE](https://github.com/open-mmlab/mmpretrain/tree/main/configs/mae) |  [Config](https://github.com/Ezra-Yu/ACCV_workshop/tree/master/configs/vit)
-- [Swinv2](https://github.com/open-mmlab/mmpretrain/tree/main/configs/swin_transformer_v2) | [Config](https://github.com/Ezra-Yu/ACCV_workshop/tree/master/configs/swin)
+- [MAE](https://github.com/VBTI-development/onedl-mmpretrain/tree/main/configs/mae) |  [Config](https://github.com/Ezra-Yu/ACCV_workshop/tree/master/configs/vit)
+- [Swinv2](https://github.com/VBTI-development/onedl-mmpretrain/tree/main/configs/swin_transformer_v2) | [Config](https://github.com/Ezra-Yu/ACCV_workshop/tree/master/configs/swin)
 - [ArcFace](https://arxiv.org/abs/1801.07698)   |   [Code](https://github.com/Ezra-Yu/ACCV_workshop/blob/master/src/models/arcface_head.py)
 - [SubCenterArcFaceWithAdvMargin](https://paperswithcode.com/paper/sub-center-arcface-boosting-face-recognition)   |   [Code](https://github.com/Ezra-Yu/ACCV_workshop/blob/master/src/models/arcface_head.py)
 - [Post-LT-adjusment](https://paperswithcode.com/paper/long-tail-learning-via-logit-adjustment)   |   [Code](https://github.com/Ezra-Yu/ACCV_workshop/blob/master/src/models/linear_head_lt.py)

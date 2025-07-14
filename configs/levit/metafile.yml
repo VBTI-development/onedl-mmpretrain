@@ -26,7 +26,7 @@ Models:
           Top 1 Accuracy: 76.51
           Top 5 Accuracy: 92.90
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/levit/levit-128s_3rdparty_in1k_20230117-e9fbd209.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/levit/levit-128s_3rdparty_in1k_20230117-e9fbd209.pth
     Config: configs/levit/levit-128s_8xb256_in1k.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/LeViT/LeViT-128S-96703c44.pth
@@ -43,7 +43,7 @@ Models:
           Top 1 Accuracy: 78.58
           Top 5 Accuracy: 93.95
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/levit/levit-128_3rdparty_in1k_20230117-3be02a02.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/levit/levit-128_3rdparty_in1k_20230117-3be02a02.pth
     Config: configs/levit/levit-128_8xb256_in1k.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/LeViT/LeViT-128-b88c2750.pth
@@ -60,7 +60,7 @@ Models:
           Top 1 Accuracy: 79.86
           Top 5 Accuracy: 94.75
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/levit/levit-192_3rdparty_in1k_20230117-8217a0f9.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/levit/levit-192_3rdparty_in1k_20230117-8217a0f9.pth
     Config: configs/levit/levit-192_8xb256_in1k.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/LeViT/LeViT-192-92712e41.pth
@@ -77,7 +77,7 @@ Models:
           Top 1 Accuracy: 81.59
           Top 5 Accuracy: 95.46
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/levit/levit-256_3rdparty_in1k_20230117-5ae2ce7d.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/levit/levit-256_3rdparty_in1k_20230117-5ae2ce7d.pth
     Config: configs/levit/levit-256_8xb256_in1k.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/LeViT/LeViT-256-13b5763e.pth
@@ -94,7 +94,7 @@ Models:
           Top 1 Accuracy: 82.59
           Top 5 Accuracy: 95.95
         Task: Image Classification
-    Weights: https://download.openmmlab.com/mmclassification/v0/levit/levit-384_3rdparty_in1k_20230117-f3539cce.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/levit/levit-384_3rdparty_in1k_20230117-f3539cce.pth
     Config: configs/levit/levit-384_8xb256_in1k.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/LeViT/LeViT-384-9bdaf2e2.pth

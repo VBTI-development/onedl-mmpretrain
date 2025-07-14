@@ -9,7 +9,6 @@ try:
     @MODELS.register_module()
     class ResLayerExtraNorm(ResLayer):
         """Add extra norm to original ``ResLayer``."""
-
         def __init__(self, *args, **kwargs):
             super(ResLayerExtraNorm, self).__init__(*args, **kwargs)
 

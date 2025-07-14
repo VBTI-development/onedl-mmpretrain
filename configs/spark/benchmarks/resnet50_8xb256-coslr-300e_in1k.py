@@ -18,40 +18,37 @@ bgr_std = data_preprocessor['std'][::-1]
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=224,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=224,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='NumpyToPIL', to_rgb=True),
-    dict(
-        type='torchvision/TrivialAugmentWide',
-        num_magnitude_bins=31,
-        interpolation='bicubic',
-        fill=None),
+    dict(type='torchvision/TrivialAugmentWide',
+         num_magnitude_bins=31,
+         interpolation='bicubic',
+         fill=None),
     dict(type='PILToNumpy', to_bgr=True),
-    dict(
-        type='RandomErasing',
-        erase_prob=0.25,
-        mode='rand',
-        min_area_ratio=0.02,
-        max_area_ratio=1 / 3,
-        fill_color=bgr_mean,
-        fill_std=bgr_std),
+    dict(type='RandomErasing',
+         erase_prob=0.25,
+         mode='rand',
+         min_area_ratio=0.02,
+         max_area_ratio=1 / 3,
+         fill_color=bgr_mean,
+         fill_std=bgr_std),
     dict(type='PackInputs'),
 ]
 train_dataloader = dict(dataset=dict(pipeline=train_pipeline))
 
 # model settings
 model = dict(
-    backbone=dict(
-        norm_cfg=dict(type='SyncBN', requires_grad=True),
-        drop_path_rate=0.05,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')),
-    head=dict(
-        loss=dict(
-            type='LabelSmoothLoss', label_smooth_val=0.1, use_sigmoid=True)),
+    backbone=dict(norm_cfg=dict(type='SyncBN', requires_grad=True),
+                  drop_path_rate=0.05,
+                  init_cfg=dict(type='Pretrained',
+                                checkpoint='',
+                                prefix='backbone.')),
+    head=dict(loss=dict(
+        type='LabelSmoothLoss', label_smooth_val=0.1, use_sigmoid=True)),
     train_cfg=dict(augments=[
         dict(type='Mixup', alpha=0.1),
         dict(type='CutMix', alpha=1.0)
@@ -59,18 +56,16 @@ model = dict(
 
 # schedule settings
 # optimizer
-optim_wrapper = dict(
-    optimizer=dict(
-        type='Lamb',
-        lr=0.016,
-        weight_decay=0.02,
-    ),
-    constructor='LearningRateDecayOptimWrapperConstructor',
-    paramwise_cfg=dict(
-        layer_decay_rate=0.7,
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        flat_decay_mult=0.0))
+optim_wrapper = dict(optimizer=dict(
+    type='Lamb',
+    lr=0.016,
+    weight_decay=0.02,
+),
+                     constructor='LearningRateDecayOptimWrapperConstructor',
+                     paramwise_cfg=dict(layer_decay_rate=0.7,
+                                        norm_decay_mult=0.0,
+                                        bias_decay_mult=0.0,
+                                        flat_decay_mult=0.0))
 
 # learning policy
 param_scheduler = [
@@ -84,13 +79,12 @@ param_scheduler = [
         # update by iter
         convert_to_iter_based=True),
     # main learning rate scheduler
-    dict(
-        type='CosineAnnealingLR',
-        T_max=295,
-        eta_min=1.0e-6,
-        by_epoch=True,
-        begin=5,
-        end=300)
+    dict(type='CosineAnnealingLR',
+         T_max=295,
+         eta_min=1.0e-6,
+         by_epoch=True,
+         begin=5,
+         end=300)
 ]
 train_cfg = dict(by_epoch=True, max_epochs=300)
 val_cfg = dict()

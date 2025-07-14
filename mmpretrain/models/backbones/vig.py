@@ -119,9 +119,9 @@ def xy_dense_knn_matrix(x, y, k=16, relative_pos=None):
         if relative_pos is not None:
             dist += relative_pos
         _, nn_idx = torch.topk(-dist, k=k)
-        center_idx = torch.arange(
-            0, n_points, device=x.device).repeat(batch_size, k,
-                                                 1).transpose(2, 1)
+        center_idx = torch.arange(0, n_points,
+                                  device=x.device).repeat(batch_size, k,
+                                                          1).transpose(2, 1)
     return torch.stack((nn_idx, center_idx), dim=0)
 
 
@@ -130,7 +130,6 @@ class DenseDilated(nn.Module):
 
     edge_index: (2, batch_size, num_points, k)
     """
-
     def __init__(self, k=9, dilation=1, use_stochastic=False, epsilon=0.0):
         super(DenseDilated, self).__init__()
         self.dilation = dilation
@@ -153,7 +152,6 @@ class DenseDilated(nn.Module):
 
 class DenseDilatedKnnGraph(nn.Module):
     """Find the neighbors' indices based on dilated knn."""
-
     def __init__(self, k=9, dilation=1, use_stochastic=False, epsilon=0.0):
         super(DenseDilatedKnnGraph, self).__init__()
         self.dilation = dilation
@@ -179,7 +177,6 @@ class DenseDilatedKnnGraph(nn.Module):
 
 
 class BasicConv(Sequential):
-
     def __init__(self,
                  channels,
                  act_cfg,
@@ -189,12 +186,11 @@ class BasicConv(Sequential):
         m = []
         for i in range(1, len(channels)):
             m.append(
-                nn.Conv2d(
-                    channels[i - 1],
-                    channels[i],
-                    1,
-                    bias=graph_conv_bias,
-                    groups=4))
+                nn.Conv2d(channels[i - 1],
+                          channels[i],
+                          1,
+                          bias=graph_conv_bias,
+                          groups=4))
             if norm_cfg is not None:
                 m.append(build_norm_layer(norm_cfg, channels[-1]))
             if act_cfg is not None:
@@ -206,7 +202,7 @@ class BasicConv(Sequential):
 
 
 def batched_index_select(x, idx):
-    r"""fetches neighbors features from a given neighbor idx
+    r"""Fetches neighbors features from a given neighbor idx.
 
     Args:
         x (Tensor): input feature Tensor
@@ -220,8 +216,8 @@ def batched_index_select(x, idx):
     """
     batch_size, num_dims, num_vertices_reduced = x.shape[:3]
     _, num_vertices, k = idx.shape
-    idx_base = torch.arange(
-        0, batch_size, device=idx.device).view(-1, 1, 1) * num_vertices_reduced
+    idx_base = torch.arange(0, batch_size, device=idx.device).view(
+        -1, 1, 1) * num_vertices_reduced
     idx = idx + idx_base
     idx = idx.contiguous().view(-1)
 
@@ -236,7 +232,6 @@ def batched_index_select(x, idx):
 class MRConv2d(nn.Module):
     """Max-Relative Graph Convolution (Paper: https://arxiv.org/abs/1904.03751)
     for dense data type."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -263,7 +258,6 @@ class MRConv2d(nn.Module):
 class EdgeConv2d(nn.Module):
     """Edge convolution layer (with activation, batch normalization) for dense
     data type."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -280,15 +274,15 @@ class EdgeConv2d(nn.Module):
             x_j = batched_index_select(y, edge_index[0])
         else:
             x_j = batched_index_select(x, edge_index[0])
-        max_value, _ = torch.max(
-            self.nn(torch.cat([x_i, x_j - x_i], dim=1)), -1, keepdim=True)
+        max_value, _ = torch.max(self.nn(torch.cat([x_i, x_j - x_i], dim=1)),
+                                 -1,
+                                 keepdim=True)
         return max_value
 
 
 class GraphSAGE(nn.Module):
     """GraphSAGE Graph Convolution (Paper: https://arxiv.org/abs/1706.02216)
     for dense data type."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -313,7 +307,6 @@ class GraphSAGE(nn.Module):
 class GINConv2d(nn.Module):
     """GIN Graph Convolution (Paper: https://arxiv.org/abs/1810.00826) for
     dense data type."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -337,7 +330,6 @@ class GINConv2d(nn.Module):
 
 class GraphConv2d(nn.Module):
     """Static graph convolution layer."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -368,7 +360,6 @@ class GraphConv2d(nn.Module):
 
 class DyGraphConv2d(GraphConv2d):
     """Dynamic graph convolution layer."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -404,7 +395,6 @@ class DyGraphConv2d(GraphConv2d):
 
 class Grapher(nn.Module):
     """Grapher module with graph convolution and fc layers."""
-
     def __init__(self,
                  in_channels,
                  k=9,
@@ -441,16 +431,14 @@ class Grapher(nn.Module):
         self.relative_pos = None
         if relative_pos:
             relative_pos_tensor = torch.from_numpy(
-                np.float32(
-                    get_2d_relative_pos_embed(in_channels, int(
-                        n**0.5)))).unsqueeze(0).unsqueeze(1)
-            relative_pos_tensor = F.interpolate(
-                relative_pos_tensor,
-                size=(n, n // (r * r)),
-                mode='bicubic',
-                align_corners=False)
-            self.relative_pos = nn.Parameter(
-                -relative_pos_tensor.squeeze(1), requires_grad=False)
+                np.float32(get_2d_relative_pos_embed(in_channels, int(
+                    n**0.5)))).unsqueeze(0).unsqueeze(1)
+            relative_pos_tensor = F.interpolate(relative_pos_tensor,
+                                                size=(n, n // (r * r)),
+                                                mode='bicubic',
+                                                align_corners=False)
+            self.relative_pos = nn.Parameter(-relative_pos_tensor.squeeze(1),
+                                             requires_grad=False)
 
     def _get_relative_pos(self, relative_pos, H, W):
         if relative_pos is None or H * W == self.n:
@@ -458,9 +446,9 @@ class Grapher(nn.Module):
         else:
             N = H * W
             N_reduced = N // (self.r * self.r)
-            return F.interpolate(
-                relative_pos.unsqueeze(0), size=(N, N_reduced),
-                mode='bicubic').squeeze(0)
+            return F.interpolate(relative_pos.unsqueeze(0),
+                                 size=(N, N_reduced),
+                                 mode='bicubic').squeeze(0)
 
     def forward(self, x):
         B, C, H, W = x.shape
@@ -474,9 +462,8 @@ class Grapher(nn.Module):
 
 
 class FFN(nn.Module):
-    """"out_features = out_features or in_features\n
-        hidden_features = hidden_features or in_features"""
-
+    """"out_features = out_features or in_features\n hidden_features =
+    hidden_features or in_features."""
     def __init__(self,
                  in_features,
                  hidden_features=None,
@@ -621,19 +608,18 @@ class Vig(BaseBackbone):
 
         self.blocks = ModuleList([
             Sequential(
-                Grapher(
-                    in_channels=channels,
-                    k=num_knn[i],
-                    dilation=min(i // 4 +
-                                 1, max_dilation) if use_dilation else 1,
-                    graph_conv_type=graph_conv_type,
-                    act_cfg=act_cfg,
-                    norm_cfg=norm_cfg,
-                    graph_conv_bias=graph_conv_bias,
-                    use_stochastic=use_stochastic,
-                    epsilon=epsilon,
-                    drop_path=dpr[i],
-                    relative_pos=relative_pos),
+                Grapher(in_channels=channels,
+                        k=num_knn[i],
+                        dilation=min(i // 4 +
+                                     1, max_dilation) if use_dilation else 1,
+                        graph_conv_type=graph_conv_type,
+                        act_cfg=act_cfg,
+                        norm_cfg=norm_cfg,
+                        graph_conv_bias=graph_conv_bias,
+                        use_stochastic=use_stochastic,
+                        epsilon=epsilon,
+                        drop_path=dpr[i],
+                        relative_pos=relative_pos),
                 FFN(in_features=channels,
                     hidden_features=channels * 4,
                     act_cfg=act_cfg,
@@ -786,32 +772,30 @@ class PyramidVig(BaseBackbone):
             if stage_idx > 0:
                 blocks.append(
                     Sequential(
-                        nn.Conv2d(
-                            self.channels[stage_idx - 1],
-                            mid_channels,
-                            kernel_size=3,
-                            stride=2,
-                            padding=1),
+                        nn.Conv2d(self.channels[stage_idx - 1],
+                                  mid_channels,
+                                  kernel_size=3,
+                                  stride=2,
+                                  padding=1),
                         build_norm_layer(norm_cfg, mid_channels),
                     ))
                 HW = HW // 4
             for _ in range(num_blocks):
                 blocks.append(
                     Sequential(
-                        Grapher(
-                            in_channels=mid_channels,
-                            k=num_knn[block_idx],
-                            dilation=min(block_idx // 4 + 1, max_dilation),
-                            graph_conv_type=graph_conv_type,
-                            act_cfg=act_cfg,
-                            norm_cfg=norm_cfg,
-                            graph_conv_bias=graph_conv_bias,
-                            use_stochastic=use_stochastic,
-                            epsilon=epsilon,
-                            r=reduce_ratio,
-                            n=HW,
-                            drop_path=dpr[block_idx],
-                            relative_pos=True),
+                        Grapher(in_channels=mid_channels,
+                                k=num_knn[block_idx],
+                                dilation=min(block_idx // 4 + 1, max_dilation),
+                                graph_conv_type=graph_conv_type,
+                                act_cfg=act_cfg,
+                                norm_cfg=norm_cfg,
+                                graph_conv_bias=graph_conv_bias,
+                                use_stochastic=use_stochastic,
+                                epsilon=epsilon,
+                                r=reduce_ratio,
+                                n=HW,
+                                drop_path=dpr[block_idx],
+                                relative_pos=True),
                         FFN(in_features=mid_channels,
                             hidden_features=mid_channels * 4,
                             act_cfg=act_cfg,

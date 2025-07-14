@@ -13,12 +13,11 @@ from mmpretrain.structures import DataSample
 from mmpretrain.visualization import UniversalVisualizer
 
 MODEL = 'mobilenet-v3-small-050_3rdparty_in1k'
-WEIGHT = 'https://download.openmmlab.com/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth'  # noqa: E501
+WEIGHT = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth'  # noqa: E501
 CONFIG = ModelHub.get(MODEL).config
 
 
 class TestImageClassificationInferencer(TestCase):
-
     def test_init(self):
         # test input BaseModel
         model = get_model(MODEL)
@@ -73,8 +72,10 @@ class TestImageClassificationInferencer(TestCase):
             self.assertTrue(osp.exists(osp.join(tmpdir, '0.png')))
 
             inferencer.visualizer = MagicMock(wraps=inferencer.visualizer)
-            inferencer(
-                img_path, rescale_factor=2., draw_score=False, show_dir=tmpdir)
+            inferencer(img_path,
+                       rescale_factor=2.,
+                       draw_score=False,
+                       show_dir=tmpdir)
             self.assertTrue(osp.exists(osp.join(tmpdir, 'color.png')))
             inferencer.visualizer.visualize_cls.assert_called_once_with(
                 ANY,
@@ -92,7 +93,6 @@ class TestImageClassificationInferencer(TestCase):
 
 
 class TestInferenceAPIs(TestCase):
-
     def test_inference_model(self):
         # test backward compatibility
         img_path = osp.join(osp.dirname(__file__), '../data/color.jpg')

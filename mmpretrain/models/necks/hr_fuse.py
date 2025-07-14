@@ -20,7 +20,6 @@ class HRFuseScales(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to ``dict(type='Normal', layer='Linear', std=0.01))``.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels=2048,

@@ -72,12 +72,11 @@ class Food101(BaseDataset):
         test_mode = split == 'test'
         data_prefix = 'images'
 
-        super(Food101, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            test_mode=test_mode,
-            data_prefix=data_prefix,
-            **kwargs)
+        super(Food101, self).__init__(ann_file=ann_file,
+                                      data_root=data_root,
+                                      test_mode=test_mode,
+                                      data_prefix=data_prefix,
+                                      **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

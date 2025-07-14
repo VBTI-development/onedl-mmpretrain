@@ -66,11 +66,10 @@ policy_imagenet = [
         dict(type='Invert', prob=0.6)
     ],
     [
-        dict(
-            type='Shear',
-            magnitude=0.3 / 9 * 5,
-            prob=0.6,
-            direction='horizontal'),
+        dict(type='Shear',
+             magnitude=0.3 / 9 * 5,
+             prob=0.6,
+             direction='horizontal'),
         dict(type='Equalize', prob=1.)
     ],
     [

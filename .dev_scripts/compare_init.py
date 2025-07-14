@@ -25,16 +25,14 @@ def parse_args():
         'model_b',
         type=Path,
         help='The path of the second checkpoint or model config.')
-    parser.add_argument(
-        '--show',
-        action='store_true',
-        help='Whether to draw the KDE of variables')
-    parser.add_argument(
-        '-p',
-        default=0.01,
-        type=float,
-        help='The threshold of p-value. '
-        'Higher threshold means more strict test.')
+    parser.add_argument('--show',
+                        action='store_true',
+                        help='Whether to draw the KDE of variables')
+    parser.add_argument('-p',
+                        default=0.01,
+                        type=float,
+                        help='The threshold of p-value. '
+                        'Higher threshold means more strict test.')
     args = parser.parse_args()
     return args
 
@@ -80,7 +78,7 @@ def main():
             raise ValueError(f'The shapes of "{key}" are different. '
                              'Please check models in the same architecture.')
 
-        # Sample at most 30000 items to prevent long-time calcuation.
+        # Sample at most 30000 items to prevent long-time calculation.
         perm_ids = torch.randperm(state_dict_a[key].numel())[:30000]
         value_a = state_dict_a[key].flatten()[perm_ids]
         value_b = state_dict_b[key].flatten()[perm_ids]

@@ -12,8 +12,12 @@ def test_bottleneck():
         BottleneckS(64, 64, radix=2, reduction_factor=4, style='tensorflow')
 
     # Test ResNeSt Bottleneck structure
-    block = BottleneckS(
-        64, 256, radix=2, reduction_factor=4, stride=2, style='pytorch')
+    block = BottleneckS(64,
+                        256,
+                        radix=2,
+                        reduction_factor=4,
+                        stride=2,
+                        style='pytorch')
     assert block.avd_layer.stride == 2
     assert block.conv2.channels == 64
 
@@ -30,8 +34,10 @@ def test_resnest():
         ResNeSt(depth=18)
 
     # Test ResNeSt with radix 2, reduction_factor 4
-    model = ResNeSt(
-        depth=50, radix=2, reduction_factor=4, out_indices=(0, 1, 2, 3))
+    model = ResNeSt(depth=50,
+                    radix=2,
+                    reduction_factor=4,
+                    out_indices=(0, 1, 2, 3))
     model.init_weights()
     model.train()
 

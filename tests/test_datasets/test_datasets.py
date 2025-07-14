@@ -429,10 +429,9 @@ class TestImageNet21k(TestCustomDataset):
                 'dog/b.jpg 1',
             ]))
 
-        cls.DEFAULT_ARGS = dict(
-            data_root=cls.root,
-            classes=['cat', 'dog'],
-            ann_file='meta/train.txt')
+        cls.DEFAULT_ARGS = dict(data_root=cls.root,
+                                classes=['cat', 'dog'],
+                                ann_file='meta/train.txt')
 
     def test_initialize(self):
         super().test_initialize()
@@ -528,23 +527,25 @@ class TestCIFAR10(TestBaseDataset):
         base_folder = osp.join(cls.root, dataset_class.base_folder)
         os.mkdir(base_folder)
 
-        cls.fake_imgs = np.random.randint(
-            0, 255, size=(6, 3 * 32 * 32), dtype=np.uint8)
+        cls.fake_imgs = np.random.randint(0,
+                                          255,
+                                          size=(6, 3 * 32 * 32),
+                                          dtype=np.uint8)
         cls.fake_labels = np.random.randint(0, 10, size=(6, ))
         cls.fake_classes = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
 
-        batch1 = dict(
-            data=cls.fake_imgs[:2], labels=cls.fake_labels[:2].tolist())
+        batch1 = dict(data=cls.fake_imgs[:2],
+                      labels=cls.fake_labels[:2].tolist())
         with open(osp.join(base_folder, 'data_batch_1'), 'wb') as f:
             f.write(pickle.dumps(batch1))
 
-        batch2 = dict(
-            data=cls.fake_imgs[2:4], labels=cls.fake_labels[2:4].tolist())
+        batch2 = dict(data=cls.fake_imgs[2:4],
+                      labels=cls.fake_labels[2:4].tolist())
         with open(osp.join(base_folder, 'data_batch_2'), 'wb') as f:
             f.write(pickle.dumps(batch2))
 
-        test_batch = dict(
-            data=cls.fake_imgs[4:], fine_labels=cls.fake_labels[4:].tolist())
+        test_batch = dict(data=cls.fake_imgs[4:],
+                          fine_labels=cls.fake_labels[4:].tolist())
         with open(osp.join(base_folder, 'test_batch'), 'wb') as f:
             f.write(pickle.dumps(test_batch))
 
@@ -661,11 +662,10 @@ class TestCIFAR10(TestBaseDataset):
             dataset.test_list = [['invalid_batch', None]]
             with self.assertRaisesRegex(AssertionError, 'Download failed'):
                 dataset.full_init()
-            mock.assert_called_once_with(
-                dataset.url,
-                dataset.data_prefix['root'],
-                filename=dataset.filename,
-                md5=dataset.tgz_md5)
+            mock.assert_called_once_with(dataset.url,
+                                         dataset.data_prefix['root'],
+                                         filename=dataset.filename,
+                                         md5=dataset.tgz_md5)
 
         with self.assertRaisesRegex(RuntimeError, '`download=True`'):
             cfg = {
@@ -1025,16 +1025,14 @@ class TestMNIST(TestBaseDataset):
             with self.assertRaisesRegex(AssertionError, 'Download failed'):
                 dataset.full_init()
             calls = [
-                call(
-                    osp.join(dataset.url_prefix, dataset.train_list[0][0]),
-                    download_root=dataset.data_prefix['root'],
-                    filename=dataset.train_list[0][0],
-                    md5=None),
-                call(
-                    osp.join(dataset.url_prefix, dataset.test_list[0][0]),
-                    download_root=dataset.data_prefix['root'],
-                    filename=dataset.test_list[0][0],
-                    md5=None)
+                call(osp.join(dataset.url_prefix, dataset.train_list[0][0]),
+                     download_root=dataset.data_prefix['root'],
+                     filename=dataset.train_list[0][0],
+                     md5=None),
+                call(osp.join(dataset.url_prefix, dataset.test_list[0][0]),
+                     download_root=dataset.data_prefix['root'],
+                     filename=dataset.test_list[0][0],
+                     md5=None)
             ]
             mock.assert_has_calls(calls)
 
@@ -1090,8 +1088,9 @@ class TestCUB(TestBaseDataset):
         cls.image_class_labels_file = 'image_class_labels.txt'
         cls.train_test_split_file = 'train_test_split.txt'
 
-        cls.DEFAULT_ARGS = dict(
-            data_root=cls.root, split='train', test_mode=False)
+        cls.DEFAULT_ARGS = dict(data_root=cls.root,
+                                split='train',
+                                test_mode=False)
 
         with open(osp.join(cls.root, cls.ann_file), 'w') as f:
             f.write('\n'.join([
@@ -1188,10 +1187,9 @@ class TestCUB(TestBaseDataset):
 class TestMultiTaskDataset(TestCase):
     DATASET_TYPE = 'MultiTaskDataset'
 
-    DEFAULT_ARGS = dict(
-        data_root=ASSETS_ROOT,
-        ann_file=osp.join(ASSETS_ROOT, 'multi-task.json'),
-        pipeline=[])
+    DEFAULT_ARGS = dict(data_root=ASSETS_ROOT,
+                        ann_file=osp.join(ASSETS_ROOT, 'multi-task.json'),
+                        pipeline=[])
 
     def test_metainfo(self):
         dataset_class = DATASETS.get(self.DATASET_TYPE)

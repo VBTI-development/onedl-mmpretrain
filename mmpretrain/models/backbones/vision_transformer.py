@@ -39,7 +39,6 @@ class TransformerEncoderLayer(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -72,14 +71,14 @@ class TransformerEncoderLayer(BaseModule):
         self.ln2 = build_norm_layer(norm_cfg, self.embed_dims)
 
         if ffn_type == 'origin':
-            self.ffn = FFN(
-                embed_dims=embed_dims,
-                feedforward_channels=feedforward_channels,
-                num_fcs=num_fcs,
-                ffn_drop=drop_rate,
-                dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-                act_cfg=act_cfg,
-                layer_scale_init_value=layer_scale_init_value)
+            self.ffn = FFN(embed_dims=embed_dims,
+                           feedforward_channels=feedforward_channels,
+                           num_fcs=num_fcs,
+                           ffn_drop=drop_rate,
+                           dropout_layer=dict(type='DropPath',
+                                              drop_prob=drop_path_rate),
+                           act_cfg=act_cfg,
+                           layer_scale_init_value=layer_scale_init_value)
         elif ffn_type == 'swiglu_fused':
             self.ffn = SwiGLUFFNFused(
                 embed_dims=embed_dims,
@@ -161,10 +160,11 @@ class VisionTransformer(BaseBackbone):
         frozen_stages (int): Stages to be frozen (stop grad and set eval mode).
             -1 means not freezing any parameters. Defaults to -1.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
+            embedding vector resize. Defaults to "bicubic".
         layer_scale_init_value (float or torch.Tensor): Init value of layer
             scale. Defaults to 0.
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
@@ -343,16 +343,15 @@ class VisionTransformer(BaseBackbone):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(
-                embed_dims=self.embed_dims,
-                num_heads=self.arch_settings['num_heads'],
-                feedforward_channels=self.
-                arch_settings['feedforward_channels'],
-                layer_scale_init_value=layer_scale_init_value,
-                drop_rate=drop_rate,
-                drop_path_rate=dpr[i],
-                qkv_bias=qkv_bias,
-                norm_cfg=norm_cfg)
+            _layer_cfg = dict(embed_dims=self.embed_dims,
+                              num_heads=self.arch_settings['num_heads'],
+                              feedforward_channels=self.
+                              arch_settings['feedforward_channels'],
+                              layer_scale_init_value=layer_scale_init_value,
+                              drop_rate=drop_rate,
+                              drop_path_rate=dpr[i],
+                              qkv_bias=qkv_bias,
+                              norm_cfg=norm_cfg)
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(TransformerEncoderLayer(**_layer_cfg))
 
@@ -465,12 +464,11 @@ class VisionTransformer(BaseBackbone):
             cls_token = self.cls_token.expand(B, -1, -1)
             x = torch.cat((cls_token, x), dim=1)
 
-        x = x + resize_pos_embed(
-            self.pos_embed,
-            self.patch_resolution,
-            patch_resolution,
-            mode=self.interpolate_mode,
-            num_extra_tokens=self.num_extra_tokens)
+        x = x + resize_pos_embed(self.pos_embed,
+                                 self.patch_resolution,
+                                 patch_resolution,
+                                 mode=self.interpolate_mode,
+                                 num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         x = self.pre_norm(x)

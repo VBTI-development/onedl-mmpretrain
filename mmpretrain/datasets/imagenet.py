@@ -119,12 +119,11 @@ class ImageNet(CustomDataset):
                 if fileio.exists(_ann_path):
                     ann_file = fileio.join_path('meta', f'{split}.txt')
 
-        super().__init__(
-            data_root=data_root,
-            data_prefix=data_prefix,
-            ann_file=ann_file,
-            metainfo=metainfo,
-            **kwargs)
+        super().__init__(data_root=data_root,
+                         data_prefix=data_prefix,
+                         ann_file=ann_file,
+                         metainfo=metainfo,
+                         **kwargs)
 
     def extra_repr(self) -> List[str]:
         """The extra repr information of the dataset."""
@@ -221,12 +220,11 @@ class ImageNet21k(CustomDataset):
                 'accelerate the initialization.')
 
         kwargs = {'extensions': self.IMG_EXTENSIONS, **kwargs}
-        super().__init__(
-            data_root=data_root,
-            data_prefix=data_prefix,
-            ann_file=ann_file,
-            metainfo=metainfo,
-            **kwargs)
+        super().__init__(data_root=data_root,
+                         data_prefix=data_prefix,
+                         ann_file=ann_file,
+                         metainfo=metainfo,
+                         **kwargs)
 
         if self.CLASSES is None:
             logger.warning(

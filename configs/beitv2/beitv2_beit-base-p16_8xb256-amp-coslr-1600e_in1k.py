@@ -4,46 +4,47 @@ _base_ = [
 ]
 
 # model settings
-vqkd_encoder = dict(
-    arch='base',
-    img_size=224,
-    patch_size=16,
-    in_channels=3,
-    out_indices=-1,
-    drop_rate=0.,
-    drop_path_rate=0.,
-    norm_cfg=dict(type='LN', eps=1e-6),
-    final_norm=True,
-    out_type='featmap',
-    with_cls_token=True,
-    frozen_stages=-1,
-    use_abs_pos_emb=True,
-    use_rel_pos_bias=False,
-    use_shared_rel_pos_bias=False,
-    layer_scale_init_value=0.,
-    interpolate_mode='bicubic',
-    patch_cfg=dict(),
-    layer_cfgs=dict(),
-    init_cfg=None)
+vqkd_encoder = dict(arch='base',
+                    img_size=224,
+                    patch_size=16,
+                    in_channels=3,
+                    out_indices=-1,
+                    drop_rate=0.,
+                    drop_path_rate=0.,
+                    norm_cfg=dict(type='LN', eps=1e-6),
+                    final_norm=True,
+                    out_type='featmap',
+                    with_cls_token=True,
+                    frozen_stages=-1,
+                    use_abs_pos_emb=True,
+                    use_rel_pos_bias=False,
+                    use_shared_rel_pos_bias=False,
+                    layer_scale_init_value=0.,
+                    interpolate_mode='bicubic',
+                    patch_cfg=dict(),
+                    layer_cfgs=dict(),
+                    init_cfg=None)
 
 layer_scale_init_value = 0.1
 drop_path_rate = 0.1  # 0. for 300 epochs and 0.1 for 1600 epochs.
 model = dict(
     type='BEiT',
-    backbone=dict(
-        type='BEiTPretrainViT',
-        arch='base',
-        patch_size=16,
-        out_indices=[-4, -1],
-        drop_path_rate=drop_path_rate,
-        final_norm=False,
-        out_type='raw',
-        layer_scale_init_value=layer_scale_init_value,
-        init_cfg=[
-            dict(type='TruncNormal', std=0.02, layer='Linear'),
-            dict(type='TruncNormal', std=0.02, layer='Conv2d'),
-            dict(type='Constant', layer='LayerNorm', val=1.0, bias=0.0)
-        ]),
+    backbone=dict(type='BEiTPretrainViT',
+                  arch='base',
+                  patch_size=16,
+                  out_indices=[-4, -1],
+                  drop_path_rate=drop_path_rate,
+                  final_norm=False,
+                  out_type='raw',
+                  layer_scale_init_value=layer_scale_init_value,
+                  init_cfg=[
+                      dict(type='TruncNormal', std=0.02, layer='Linear'),
+                      dict(type='TruncNormal', std=0.02, layer='Conv2d'),
+                      dict(type='Constant',
+                           layer='LayerNorm',
+                           val=1.0,
+                           bias=0.0)
+                  ]),
     neck=dict(
         type='BEiTV2Neck',
         num_layers=2,
@@ -52,18 +53,17 @@ model = dict(
         drop_path_rate=drop_path_rate,
         layer_scale_init_value=layer_scale_init_value,
     ),
-    head=dict(
-        type='BEiTV2Head',
-        embed_dims=768,
-        num_embed=8192,
-        loss=dict(type='CrossEntropyLoss')),
+    head=dict(type='BEiTV2Head',
+              embed_dims=768,
+              num_embed=8192,
+              loss=dict(type='CrossEntropyLoss')),
     target_generator=dict(
         type='VQKD',
         encoder_config=vqkd_encoder,
         init_cfg=dict(
             type='Pretrained',
             checkpoint=  # noqa
-            'https://download.openmmlab.com/mmselfsup/1.x/target_generator_ckpt/vqkd_encoder.pth'  # noqa
+            'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/target_generator_ckpt/vqkd_encoder.pth'  # noqa
         )))
 
 # optimizer wrapper
@@ -71,8 +71,10 @@ optim_wrapper = dict(
     type='AmpOptimWrapper',
     loss_scale='dynamic',
     # betas: (0.9, 0.98) for 300 epochs and (0.9, 0.999) for 1600 epochs.
-    optimizer=dict(
-        type='AdamW', lr=1.5e-3, betas=(0.9, 0.999), weight_decay=0.05),
+    optimizer=dict(type='AdamW',
+                   lr=1.5e-3,
+                   betas=(0.9, 0.999),
+                   weight_decay=0.05),
     clip_grad=dict(max_norm=3.0),
     paramwise_cfg=dict(
         custom_keys={
@@ -88,20 +90,18 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        eta_min=1e-5,
-        by_epoch=True,
-        begin=10,
-        end=1600,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         eta_min=1e-5,
+         by_epoch=True,
+         begin=10,
+         end=1600,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

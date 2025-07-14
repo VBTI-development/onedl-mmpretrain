@@ -5,15 +5,16 @@ _base_ = [
     '../../_base_/default_runtime.py',
 ]
 
-model = dict(
-    backbone=dict(
-        frozen_stages=4,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
+model = dict(backbone=dict(
+    frozen_stages=4,
+    init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
 
 # optimizer
-optim_wrapper = dict(
-    type='OptimWrapper',
-    optimizer=dict(type='SGD', lr=30., momentum=0.9, weight_decay=0.))
+optim_wrapper = dict(type='OptimWrapper',
+                     optimizer=dict(type='SGD',
+                                    lr=30.,
+                                    momentum=0.9,
+                                    weight_decay=0.))
 
 # runtime settings
 default_hooks = dict(

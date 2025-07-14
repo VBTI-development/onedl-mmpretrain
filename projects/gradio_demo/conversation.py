@@ -61,7 +61,6 @@ ZH_CONV_VISION = Conversation(
 
 
 class Chat:
-
     def __init__(self, inferencer, device, is_half=False):
         self.device = device
         self.inferencer = inferencer
@@ -84,9 +83,10 @@ class Chat:
         prompt = conv.get_prompt()
         prompt_segs = prompt.split('<ImageHere>')
         seg_tokens = [
-            self.model.llama_tokenizer(
-                seg, return_tensors='pt',
-                add_special_tokens=(i == 0)).to(self.device).input_ids
+            self.model.llama_tokenizer(seg,
+                                       return_tensors='pt',
+                                       add_special_tokens=(i == 0)).to(
+                                           self.device).input_ids
             for i, seg in enumerate(prompt_segs)
         ]
         seg_embs = [

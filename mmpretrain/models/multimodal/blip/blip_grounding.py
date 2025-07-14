@@ -37,7 +37,6 @@ class BlipGrounding(BaseModel):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  tokenizer: Optional[dict] = None,
                  visual_encoder: Optional[dict] = None,
@@ -52,8 +51,9 @@ class BlipGrounding(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super(BlipGrounding, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BlipGrounding,
+              self).__init__(init_cfg=init_cfg,
+                             data_preprocessor=data_preprocessor)
 
         self.tokenizer = TOKENIZER.build(tokenizer)
         self.prompt = 'localize instance: '
@@ -115,7 +115,7 @@ class BlipGrounding(BaseModel):
         images: torch.Tensor,
         data_samples=None,
     ) -> Union[torch.Tensor, Tuple[torch.Tensor]]:
-        """generate train_loss from the input tensor and data_samples.
+        """Generate train_loss from the input tensor and data_samples.
 
         Args:
             inputs (Tensor): A batch of inputs. The shape of it should be
@@ -129,8 +129,8 @@ class BlipGrounding(BaseModel):
 
         # extract image feature
         image_embeds = self.extract_feat(images)
-        image_atts = image_embeds.new_ones(
-            image_embeds.size()[:-1], dtype=torch.long)
+        image_atts = image_embeds.new_ones(image_embeds.size()[:-1],
+                                           dtype=torch.long)
 
         raw_text = []
         box_targets = []
@@ -156,11 +156,10 @@ class BlipGrounding(BaseModel):
             return_tensors='pt',
         ).to(image_embeds.device)
 
-        text_embeds = self.text_encoder(
-            text.input_ids,
-            attention_mask=text.attention_mask,
-            mode='text',
-            return_dict=True)  # bz, seq_len, hid
+        text_embeds = self.text_encoder(text.input_ids,
+                                        attention_mask=text.attention_mask,
+                                        mode='text',
+                                        return_dict=True)  # bz, seq_len, hid
 
         # multimodal fusion
         multimodal_embeds = self.multimodal_encoder(
@@ -187,8 +186,8 @@ class BlipGrounding(BaseModel):
 
         # extract image feature
         image_embeds = self.extract_feat(images)
-        image_atts = image_embeds.new_ones(
-            image_embeds.size()[:-1], dtype=torch.long)
+        image_atts = image_embeds.new_ones(image_embeds.size()[:-1],
+                                           dtype=torch.long)
 
         raw_text = []
         for ds in data_samples:
@@ -202,11 +201,10 @@ class BlipGrounding(BaseModel):
             return_tensors='pt',
         ).to(image_embeds.device)
 
-        text_embeds = self.text_encoder(
-            text.input_ids,
-            attention_mask=text.attention_mask,
-            mode='text',
-            return_dict=True)  # bz, seq_len, hid
+        text_embeds = self.text_encoder(text.input_ids,
+                                        attention_mask=text.attention_mask,
+                                        mode='text',
+                                        return_dict=True)  # bz, seq_len, hid
 
         # multimodal fusion
         multimodal_embeds = self.multimodal_encoder(

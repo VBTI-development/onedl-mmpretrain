@@ -49,7 +49,6 @@ class CosineEMA(ExponentialMovingAverage):
             both the parameters and the buffers of the model. Defaults to
             False.
     """
-
     def __init__(self,
                  model: nn.Module,
                  momentum: float = 0.004,
@@ -57,12 +56,11 @@ class CosineEMA(ExponentialMovingAverage):
                  interval: int = 1,
                  device: Optional[torch.device] = None,
                  update_buffers: bool = False) -> None:
-        super().__init__(
-            model=model,
-            momentum=momentum,
-            interval=interval,
-            device=device,
-            update_buffers=update_buffers)
+        super().__init__(model=model,
+                         momentum=momentum,
+                         interval=interval,
+                         device=device,
+                         update_buffers=update_buffers)
         self.end_momentum = end_momentum
 
     def avg_func(self, averaged_param: torch.Tensor,

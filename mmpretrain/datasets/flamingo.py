@@ -30,7 +30,6 @@ class FlamingoFewShotMixin:
         final_prompt_temp (str): Final query prompt template. Defaults to ''.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  num_shots: int = 0,
                  num_support_examples: int = 2048,
@@ -46,10 +45,10 @@ class FlamingoFewShotMixin:
         super().__init__(**kwarg)
 
     def get_subset_idx(self, total_num):
-        random_idx = np.random.choice(
-            total_num,
-            self.num_support_examples + self.num_query_examples,
-            replace=False)
+        random_idx = np.random.choice(total_num,
+                                      self.num_support_examples +
+                                      self.num_query_examples,
+                                      replace=False)
 
         support_idx = random_idx[:self.num_support_examples]
         query_idx = random_idx[self.num_support_examples:]
@@ -85,7 +84,6 @@ class FlamingoEvalCOCOVQA(FlamingoFewShotMixin, COCOVQA):
             final evaluation. Defaults to 5000.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root: str,
                  question_file: str,
@@ -94,14 +92,13 @@ class FlamingoEvalCOCOVQA(FlamingoFewShotMixin, COCOVQA):
                  num_support_examples: int = 2048,
                  num_query_examples: int = 5000,
                  **kwarg):
-        super().__init__(
-            data_root=data_root,
-            question_file=question_file,
-            ann_file=ann_file,
-            num_shots=num_shots,
-            num_support_examples=num_support_examples,
-            num_query_examples=num_query_examples,
-            **kwarg)
+        super().__init__(data_root=data_root,
+                         question_file=question_file,
+                         ann_file=ann_file,
+                         num_shots=num_shots,
+                         num_support_examples=num_support_examples,
+                         num_query_examples=num_query_examples,
+                         **kwarg)
 
     def parse_basic_anno(self, ann: dict) -> dict:
         """Parse basic annotation for support and query set.
@@ -211,7 +208,6 @@ class FlamingoEvalCOCOCaption(FlamingoFewShotMixin, BaseDataset):
             final evaluation. Defaults to 5000.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root: str,
                  ann_file: str,
@@ -219,13 +215,12 @@ class FlamingoEvalCOCOCaption(FlamingoFewShotMixin, BaseDataset):
                  num_support_examples: int = 2048,
                  num_query_examples: int = 5000,
                  **kwarg):
-        super().__init__(
-            data_root=data_root,
-            ann_file=ann_file,
-            num_shots=num_shots,
-            num_support_examples=num_support_examples,
-            num_query_examples=num_query_examples,
-            **kwarg)
+        super().__init__(data_root=data_root,
+                         ann_file=ann_file,
+                         num_shots=num_shots,
+                         num_support_examples=num_support_examples,
+                         num_query_examples=num_query_examples,
+                         **kwarg)
 
     def parse_basic_anno(self, ann: dict, coco: COCO) -> dict:
         """Parse basic annotation for support and query set.

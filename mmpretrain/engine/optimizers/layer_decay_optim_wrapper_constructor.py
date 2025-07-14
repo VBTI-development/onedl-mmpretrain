@@ -59,7 +59,6 @@ class LearningRateDecayOptimWrapperConstructor(DefaultOptimWrapperConstructor):
                     '.pos_embed': dict(decay_mult=0.0)
                 }))
     """
-
     def add_params(self,
                    params: List[dict],
                    module: nn.Module,

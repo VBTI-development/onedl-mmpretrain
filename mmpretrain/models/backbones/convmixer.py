@@ -12,7 +12,6 @@ from .base_backbone import BaseBackbone
 
 
 class Residual(nn.Module):
-
     def __init__(self, fn):
         super().__init__()
         self.fn = fn
@@ -121,11 +120,10 @@ class ConvMixer(BaseBackbone):
 
         # Set stem layers
         self.stem = nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                self.embed_dims,
-                kernel_size=self.patch_size,
-                stride=self.patch_size), self.act,
+            nn.Conv2d(in_channels,
+                      self.embed_dims,
+                      kernel_size=self.patch_size,
+                      stride=self.patch_size), self.act,
             build_norm_layer(norm_cfg, self.embed_dims)[1])
 
         # Set conv2d according to torch version
@@ -138,12 +136,11 @@ class ConvMixer(BaseBackbone):
             nn.Sequential(
                 Residual(
                     nn.Sequential(
-                        convfunc(
-                            self.embed_dims,
-                            self.embed_dims,
-                            self.kernel_size,
-                            groups=self.embed_dims,
-                            padding='same'), self.act,
+                        convfunc(self.embed_dims,
+                                 self.embed_dims,
+                                 self.kernel_size,
+                                 groups=self.embed_dims,
+                                 padding='same'), self.act,
                         build_norm_layer(norm_cfg, self.embed_dims)[1])),
                 nn.Conv2d(self.embed_dims, self.embed_dims, kernel_size=1),
                 self.act,

@@ -15,13 +15,11 @@ from .ofa_modules import OFAEncoderDecoder
 
 
 class TreeNode():
-
     def __init__(self):
         self.child = defaultdict(TreeNode)
 
 
 class Trie:
-
     def __init__(self, eos):
         self.root = TreeNode()
         self.eos = eos
@@ -130,8 +128,8 @@ class OFA(BaseModel):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super().__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super().__init__(init_cfg=init_cfg,
+                         data_preprocessor=data_preprocessor)
 
         if isinstance(tokenizer, dict):
             self.tokenizer = TOKENIZER.build(tokenizer)
@@ -267,8 +265,9 @@ class OFA(BaseModel):
                 assert 'question' in sample
                 prompt = ' ' + sample.get('question')
                 prompts.append(prompt)
-            prompts = self.tokenizer(
-                prompts, return_tensors='pt', padding=True)
+            prompts = self.tokenizer(prompts,
+                                     return_tensors='pt',
+                                     padding=True)
             return prompts.input_ids.to(device)
         elif self.task == 'refcoco':
             prompt_template = self.prompt or \
@@ -278,8 +277,9 @@ class OFA(BaseModel):
                 assert 'text' in sample
                 prompt = prompt_template.format(sample.get('text'))
                 prompts.append(prompt)
-            prompts = self.tokenizer(
-                prompts, return_tensors='pt', padding=True)
+            prompts = self.tokenizer(prompts,
+                                     return_tensors='pt',
+                                     padding=True)
             return prompts.input_ids.to(device)
 
     def post_process(self, outputs, data_samples):

@@ -50,9 +50,8 @@ optim_wrapper = dict(optimizer=dict(lr=0.8, nesterov=True))
 # EMAHook(priority of 'NORMAL') So set the priority of PreciseBNHook to
 # 'ABOVENORMAL' here.
 custom_hooks = [
-    dict(
-        type='PreciseBNHook',
-        num_samples=8192,
-        interval=1,
-        priority='ABOVE_NORMAL')
+    dict(type='PreciseBNHook',
+         num_samples=8192,
+         interval=1,
+         priority='ABOVE_NORMAL')
 ]

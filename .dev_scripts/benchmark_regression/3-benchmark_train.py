@@ -29,7 +29,6 @@ CYCLE_LEVELS = ['month', 'quarter', 'half-year', 'no-training']
 
 
 class RangeAction(argparse.Action):
-
     def __call__(self, _, namespace, values: str, __):
         matches = re.match(r'([><=]*)([-\w]+)', values)
         if matches is None:
@@ -53,26 +52,25 @@ class RangeAction(argparse.Action):
 def parse_args():
     parser = argparse.ArgumentParser(
         description='Train models (in bench_train.yml) and compare accuracy.')
-    parser.add_argument(
-        '--local',
-        action='store_true',
-        help='run at local instead of cluster.')
-    parser.add_argument(
-        '--models', nargs='+', type=str, help='Specify model names to run.')
-    parser.add_argument(
-        '--run', action='store_true', help='run script directly')
-    parser.add_argument(
-        '--summary',
-        action='store_true',
-        help='Summarize benchmark train results.')
-    parser.add_argument(
-        '--save',
-        action='store_true',
-        help='Save the summary and archive log files.')
-    parser.add_argument(
-        '--non-distributed',
-        action='store_true',
-        help='Use non-distributed environment (for debug).')
+    parser.add_argument('--local',
+                        action='store_true',
+                        help='run at local instead of cluster.')
+    parser.add_argument('--models',
+                        nargs='+',
+                        type=str,
+                        help='Specify model names to run.')
+    parser.add_argument('--run',
+                        action='store_true',
+                        help='run script directly')
+    parser.add_argument('--summary',
+                        action='store_true',
+                        help='Summarize benchmark train results.')
+    parser.add_argument('--save',
+                        action='store_true',
+                        help='Save the summary and archive log files.')
+    parser.add_argument('--non-distributed',
+                        action='store_true',
+                        help='Use non-distributed environment (for debug).')
     parser.add_argument(
         '--range',
         type=str,
@@ -81,32 +79,28 @@ def parse_args():
         metavar='{month,quarter,half-year,no-training}',
         help='The training benchmark range, "no-training" means all models '
         "including those we haven't trained.")
-    parser.add_argument(
-        '--work-dir',
-        default='work_dirs/benchmark_train',
-        help='the dir to save train log')
+    parser.add_argument('--work-dir',
+                        default='work_dirs/benchmark_train',
+                        help='the dir to save train log')
     parser.add_argument('--port', type=int, default=29666, help='dist port')
-    parser.add_argument(
-        '--partition',
-        type=str,
-        default='mm_model',
-        help='(for slurm) Cluster partition to use.')
-    parser.add_argument(
-        '--job-name',
-        type=str,
-        default='cls-train-benchmark',
-        help='(for slurm) Slurm job name prefix')
+    parser.add_argument('--partition',
+                        type=str,
+                        default='mm_model',
+                        help='(for slurm) Cluster partition to use.')
+    parser.add_argument('--job-name',
+                        type=str,
+                        default='cls-train-benchmark',
+                        help='(for slurm) Slurm job name prefix')
     parser.add_argument(
         '--quotatype',
         default=None,
         choices=['reserved', 'auto', 'spot'],
         help='(for slurm) Quota type, only available for phoenix-slurm>=0.2')
-    parser.add_argument(
-        '--cfg-options',
-        nargs='+',
-        type=str,
-        default=[],
-        help='Config options for all config files.')
+    parser.add_argument('--cfg-options',
+                        nargs='+',
+                        type=str,
+                        default=[],
+                        help='Config options for all config files.')
 
     args = parser.parse_args()
     return args
@@ -217,17 +211,15 @@ def train(models, args):
     preview.add_column(str(script_path))
     preview.add_column('Shell command preview')
     preview.add_row(
-        Syntax.from_path(
-            script_path,
-            background_color='default',
-            line_numbers=True,
-            word_wrap=True),
-        Syntax(
-            command_str,
-            'bash',
-            background_color='default',
-            line_numbers=True,
-            word_wrap=True))
+        Syntax.from_path(script_path,
+                         background_color='default',
+                         line_numbers=True,
+                         word_wrap=True),
+        Syntax(command_str,
+               'bash',
+               background_color='default',
+               line_numbers=True,
+               word_wrap=True))
     console.print(preview)
 
     if args.run:
@@ -375,17 +367,16 @@ def summary(models, args):
                     f'{model_name}: No metric "{key_res}"'
                 expect_result = float(expect_metrics[key_yml])
                 last = float(val_logs[-1][key_res])
-                best_log, best_epoch = sorted(
-                    zip(val_logs, range(len(val_logs))),
-                    key=lambda x: x[0][key_res])[-1]
+                best_log, best_epoch = sorted(zip(val_logs,
+                                                  range(len(val_logs))),
+                                              key=lambda x: x[0][key_res])[-1]
                 best = float(best_log[key_res])
 
-                summary[key_yml] = dict(
-                    expect=expect_result,
-                    last=last,
-                    last_epoch=len(val_logs),
-                    best=best,
-                    best_epoch=best_epoch + 1)
+                summary[key_yml] = dict(expect=expect_result,
+                                        last=last,
+                                        last_epoch=len(val_logs),
+                                        best=best,
+                                        best_epoch=best_epoch + 1)
         summary_data[model_name].update(summary)
 
     show_summary(summary_data)

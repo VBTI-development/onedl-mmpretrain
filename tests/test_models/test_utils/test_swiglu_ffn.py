@@ -8,7 +8,6 @@ from mmpretrain.models.utils import LayerScale, SwiGLUFFN, SwiGLUFFNFused
 
 
 class TestSwiGLUFFN(TestCase):
-
     def test_init(self):
         swiglu = SwiGLUFFN(embed_dims=4)
         assert swiglu.w12.weight.shape == torch.ones((8, 4)).shape
@@ -31,7 +30,6 @@ class TestSwiGLUFFN(TestCase):
 
 
 class TestSwiGLUFFNFused(TestCase):
-
     def test_init(self):
         swiglu = SwiGLUFFNFused(embed_dims=4)
         assert swiglu.w12.weight.shape == torch.ones((16, 4)).shape

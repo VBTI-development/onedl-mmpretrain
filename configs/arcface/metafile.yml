@@ -24,5 +24,5 @@ Models:
           Recall@1: 90.18
           mAP@10: 69.30
         Task: Image Retrieval
-    Weights: https://download.openmmlab.com/mmclassification/v0/arcface/resnet50-arcface_inshop_20230202-b766fe7f.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/arcface/resnet50-arcface_inshop_20230202-b766fe7f.pth
     Config: configs/arcface/resnet50-arcface_8xb32_inshop.py

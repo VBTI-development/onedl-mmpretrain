@@ -38,7 +38,6 @@ class EdgeResidual(BaseModule):
             memory while slowing down the training speed. Defaults to False.
         init_cfg (dict | list[dict], optional): Initialization config dict.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -59,37 +58,34 @@ class EdgeResidual(BaseModule):
         self.drop_path = DropPath(
             drop_path_rate) if drop_path_rate > 0 else nn.Identity()
         self.with_se = se_cfg is not None
-        self.with_residual = (
-            stride == 1 and in_channels == out_channels and with_residual)
+        self.with_residual = (stride == 1 and in_channels == out_channels
+                              and with_residual)
 
         if self.with_se:
             assert isinstance(se_cfg, dict)
 
-        self.conv1 = ConvModule(
-            in_channels=in_channels,
-            out_channels=mid_channels,
-            kernel_size=kernel_size,
-            stride=stride,
-            padding=kernel_size // 2,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv1 = ConvModule(in_channels=in_channels,
+                                out_channels=mid_channels,
+                                kernel_size=kernel_size,
+                                stride=stride,
+                                padding=kernel_size // 2,
+                                conv_cfg=conv_cfg,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
 
         if self.with_se:
             self.se = SELayer(**se_cfg)
 
-        self.conv2 = ConvModule(
-            in_channels=mid_channels,
-            out_channels=out_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            conv_cfg=None,
-            norm_cfg=norm_cfg,
-            act_cfg=None)
+        self.conv2 = ConvModule(in_channels=mid_channels,
+                                out_channels=out_channels,
+                                kernel_size=1,
+                                stride=1,
+                                padding=0,
+                                conv_cfg=None,
+                                norm_cfg=norm_cfg,
+                                act_cfg=None)
 
     def forward(self, x):
-
         def _inner_forward(x):
             out = x
             out = self.conv1(out)
@@ -264,10 +260,9 @@ class EfficientNet(BaseBackbone):
                  with_cp=False,
                  init_cfg=[
                      dict(type='Kaiming', layer='Conv2d'),
-                     dict(
-                         type='Constant',
-                         layer=['_BatchNorm', 'GroupNorm'],
-                         val=1)
+                     dict(type='Constant',
+                          layer=['_BatchNorm', 'GroupNorm'],
+                          val=1)
                  ]):
         super(EfficientNet, self).__init__(init_cfg)
         assert arch in self.arch_settings, \
@@ -304,26 +299,24 @@ class EfficientNet(BaseBackbone):
         self.out_channels = block_cfg_last[1]
         self.layers = nn.ModuleList()
         self.layers.append(
-            ConvModule(
-                in_channels=3,
-                out_channels=self.in_channels,
-                kernel_size=block_cfg_0[0],
-                stride=block_cfg_0[3],
-                padding=block_cfg_0[0] // 2,
-                conv_cfg=self.conv_cfg,
-                norm_cfg=self.norm_cfg,
-                act_cfg=self.act_cfg))
+            ConvModule(in_channels=3,
+                       out_channels=self.in_channels,
+                       kernel_size=block_cfg_0[0],
+                       stride=block_cfg_0[3],
+                       padding=block_cfg_0[0] // 2,
+                       conv_cfg=self.conv_cfg,
+                       norm_cfg=self.norm_cfg,
+                       act_cfg=self.act_cfg))
         self.make_layer()
         self.layers.append(
-            ConvModule(
-                in_channels=self.in_channels,
-                out_channels=self.out_channels,
-                kernel_size=block_cfg_last[0],
-                stride=block_cfg_last[3],
-                padding=block_cfg_last[0] // 2,
-                conv_cfg=self.conv_cfg,
-                norm_cfg=self.norm_cfg,
-                act_cfg=self.act_cfg))
+            ConvModule(in_channels=self.in_channels,
+                       out_channels=self.out_channels,
+                       kernel_size=block_cfg_last[0],
+                       stride=block_cfg_last[3],
+                       padding=block_cfg_last[0] // 2,
+                       conv_cfg=self.conv_cfg,
+                       norm_cfg=self.norm_cfg,
+                       act_cfg=self.act_cfg))
 
     def make_layer(self):
         # Without the first and the final conv block.
@@ -347,11 +340,10 @@ class EfficientNet(BaseBackbone):
                 if se_ratio <= 0:
                     se_cfg = None
                 else:
-                    se_cfg = dict(
-                        channels=mid_channels,
-                        ratio=expand_ratio * se_ratio,
-                        divisor=1,
-                        act_cfg=(self.act_cfg, dict(type='Sigmoid')))
+                    se_cfg = dict(channels=mid_channels,
+                                  ratio=expand_ratio * se_ratio,
+                                  divisor=1,
+                                  act_cfg=(self.act_cfg, dict(type='Sigmoid')))
                 if block_type == 1:  # edge tpu
                     if i > 0 and expand_ratio == 3:
                         with_residual = False
@@ -360,27 +352,26 @@ class EfficientNet(BaseBackbone):
                         with_residual = True
                     mid_channels = int(self.in_channels * expand_ratio)
                     if se_cfg is not None:
-                        se_cfg = dict(
-                            channels=mid_channels,
-                            ratio=se_ratio * expand_ratio,
-                            divisor=1,
-                            act_cfg=(self.act_cfg, dict(type='Sigmoid')))
+                        se_cfg = dict(channels=mid_channels,
+                                      ratio=se_ratio * expand_ratio,
+                                      divisor=1,
+                                      act_cfg=(self.act_cfg,
+                                               dict(type='Sigmoid')))
                     block = partial(EdgeResidual, with_residual=with_residual)
                 else:
                     block = InvertedResidual
                 layer.append(
-                    block(
-                        in_channels=self.in_channels,
-                        out_channels=out_channels,
-                        mid_channels=mid_channels,
-                        kernel_size=kernel_size,
-                        stride=stride,
-                        se_cfg=se_cfg,
-                        conv_cfg=self.conv_cfg,
-                        norm_cfg=self.norm_cfg,
-                        act_cfg=self.act_cfg,
-                        drop_path_rate=dpr[block_idx],
-                        with_cp=self.with_cp))
+                    block(in_channels=self.in_channels,
+                          out_channels=out_channels,
+                          mid_channels=mid_channels,
+                          kernel_size=kernel_size,
+                          stride=stride,
+                          se_cfg=se_cfg,
+                          conv_cfg=self.conv_cfg,
+                          norm_cfg=self.norm_cfg,
+                          act_cfg=self.act_cfg,
+                          drop_path_rate=dpr[block_idx],
+                          with_cp=self.with_cp))
                 self.in_channels = out_channels
                 block_idx += 1
             self.layers.append(Sequential(*layer))

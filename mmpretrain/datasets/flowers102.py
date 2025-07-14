@@ -61,12 +61,11 @@ class Flowers102(BaseDataset):
         self.train_test_split_file = self.backend.join_path(
             data_root, train_test_split_file)
 
-        super(Flowers102, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(Flowers102, self).__init__(ann_file=ann_file,
+                                         data_root=data_root,
+                                         data_prefix=data_prefix,
+                                         test_mode=test_mode,
+                                         **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

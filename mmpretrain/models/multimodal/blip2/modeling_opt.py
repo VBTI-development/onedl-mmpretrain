@@ -84,14 +84,12 @@ def _expand_mask(mask: torch.Tensor,
 
     inverted_mask = 1.0 - expanded_mask
 
-    return inverted_mask.masked_fill(
-        inverted_mask.to(torch.bool),
-        torch.finfo(dtype).min)
+    return inverted_mask.masked_fill(inverted_mask.to(torch.bool),
+                                     torch.finfo(dtype).min)
 
 
 class OPTLearnedPositionalEmbedding(nn.Embedding):
     """This module learns positional embeddings up to a fixed maximum size."""
-
     def __init__(self, num_embeddings: int, embedding_dim: int):
         # OPT is set up so that if padding_idx is specified then offset the embedding ids by 2
         # and adjust num_embeddings appropriately. Other models don't have this hack
@@ -117,7 +115,6 @@ class OPTLearnedPositionalEmbedding(nn.Embedding):
 
 class OPTAttention(nn.Module):
     """Multi-headed attention from 'Attention Is All You Need' paper."""
-
     def __init__(
         self,
         embed_dim: int,
@@ -228,8 +225,10 @@ class OPTAttention(nn.Module):
 
         # upcast to fp32 if the weights are in fp16. Please see https://github.com/huggingface/transformers/pull/17437
         if attn_weights.dtype == torch.float16:
-            attn_weights = nn.functional.softmax(
-                attn_weights, dim=-1, dtype=torch.float32).to(torch.float16)
+            attn_weights = nn.functional.softmax(attn_weights,
+                                                 dim=-1,
+                                                 dtype=torch.float32).to(
+                                                     torch.float16)
         else:
             attn_weights = nn.functional.softmax(attn_weights, dim=-1)
 
@@ -256,8 +255,9 @@ class OPTAttention(nn.Module):
         else:
             attn_weights_reshaped = None
 
-        attn_probs = nn.functional.dropout(
-            attn_weights, p=self.dropout, training=self.training)
+        attn_probs = nn.functional.dropout(attn_weights,
+                                           p=self.dropout,
+                                           training=self.training)
 
         attn_output = torch.bmm(attn_probs, value_states)
 
@@ -281,7 +281,6 @@ class OPTAttention(nn.Module):
 
 
 class OPTDecoderLayer(nn.Module):
-
     def __init__(self, config: OPTConfig):
         super().__init__()
         self.embed_dim = config.hidden_size
@@ -340,8 +339,9 @@ class OPTDecoderLayer(nn.Module):
             layer_head_mask=layer_head_mask,
             output_attentions=output_attentions,
         )
-        hidden_states = nn.functional.dropout(
-            hidden_states, p=self.dropout, training=self.training)
+        hidden_states = nn.functional.dropout(hidden_states,
+                                              p=self.dropout,
+                                              training=self.training)
         hidden_states = residual + hidden_states
 
         # 350m applies layer norm AFTER attention
@@ -361,8 +361,9 @@ class OPTDecoderLayer(nn.Module):
         hidden_states = self.activation_fn(hidden_states)
 
         hidden_states = self.fc2(hidden_states)
-        hidden_states = nn.functional.dropout(
-            hidden_states, p=self.dropout, training=self.training)
+        hidden_states = nn.functional.dropout(hidden_states,
+                                              p=self.dropout,
+                                              training=self.training)
 
         hidden_states = (residual + hidden_states).view(hidden_states_shape)
 
@@ -495,7 +496,6 @@ class OPTDecoder(OPTPreTrainedModel):
     Args:
         config: OPTConfig
     """
-
     def __init__(self, config: OPTConfig):
         super().__init__(config)
         self.dropout = config.dropout
@@ -511,14 +511,16 @@ class OPTDecoder(OPTPreTrainedModel):
             config.max_position_embeddings, config.hidden_size)
 
         if config.word_embed_proj_dim != config.hidden_size:
-            self.project_out = nn.Linear(
-                config.hidden_size, config.word_embed_proj_dim, bias=False)
+            self.project_out = nn.Linear(config.hidden_size,
+                                         config.word_embed_proj_dim,
+                                         bias=False)
         else:
             self.project_out = None
 
         if config.word_embed_proj_dim != config.hidden_size:
-            self.project_in = nn.Linear(
-                config.word_embed_proj_dim, config.hidden_size, bias=False)
+            self.project_in = nn.Linear(config.word_embed_proj_dim,
+                                        config.hidden_size,
+                                        bias=False)
         else:
             self.project_in = None
 
@@ -558,12 +560,14 @@ class OPTDecoder(OPTPreTrainedModel):
 
         if attention_mask is not None:
             # [bsz, seq_len] -> [bsz, 1, tgt_seq_len, src_seq_len]
-            expanded_attn_mask = _expand_mask(
-                attention_mask, inputs_embeds.dtype,
-                tgt_len=input_shape[-1]).to(inputs_embeds.device)
-            combined_attention_mask = (
-                expanded_attn_mask if combined_attention_mask is None else
-                expanded_attn_mask + combined_attention_mask)
+            expanded_attn_mask = _expand_mask(attention_mask,
+                                              inputs_embeds.dtype,
+                                              tgt_len=input_shape[-1]).to(
+                                                  inputs_embeds.device)
+            combined_attention_mask = (expanded_attn_mask
+                                       if combined_attention_mask is None else
+                                       expanded_attn_mask +
+                                       combined_attention_mask)
 
         return combined_attention_mask
 
@@ -627,17 +631,15 @@ class OPTDecoder(OPTPreTrainedModel):
             return_dict (`bool`, *optional*):
                 Whether or not to return a [`~utils.ModelOutput`] instead of a plain tuple.
         """
-        output_attentions = (
-            output_attentions if output_attentions is not None else
-            self.config.output_attentions)
-        output_hidden_states = (
-            output_hidden_states if output_hidden_states is not None else
-            self.config.output_hidden_states)
+        output_attentions = (output_attentions if output_attentions is not None
+                             else self.config.output_attentions)
+        output_hidden_states = (output_hidden_states
+                                if output_hidden_states is not None else
+                                self.config.output_hidden_states)
         use_cache = use_cache if use_cache is not None else self.config.use_cache
 
-        return_dict = (
-            return_dict
-            if return_dict is not None else self.config.use_return_dict)
+        return_dict = (return_dict if return_dict is not None else
+                       self.config.use_return_dict)
 
         # retrieve input_ids and inputs_embeds
         if input_ids is not None and inputs_embeds is not None:
@@ -671,10 +673,9 @@ class OPTDecoder(OPTPreTrainedModel):
 
         # embed positions
         if attention_mask is None:
-            attention_mask = torch.ones(
-                inputs_embeds.shape[:2],
-                dtype=torch.bool,
-                device=inputs_embeds.device)
+            attention_mask = torch.ones(inputs_embeds.shape[:2],
+                                        dtype=torch.bool,
+                                        device=inputs_embeds.device)
         pos_embeds = self.embed_positions(attention_mask,
                                           past_key_values_length)
 
@@ -714,8 +715,8 @@ class OPTDecoder(OPTPreTrainedModel):
             if self.training and (dropout_probability < self.layerdrop):
                 continue
 
-            past_key_value = (
-                past_key_values[idx] if past_key_values is not None else None)
+            past_key_value = (past_key_values[idx]
+                              if past_key_values is not None else None)
 
             if self.gradient_checkpointing and self.training:
 
@@ -726,7 +727,6 @@ class OPTDecoder(OPTPreTrainedModel):
                     use_cache = False
 
                 def create_custom_forward(module):
-
                     def custom_forward(*inputs):
                         # None for past_key_value
                         return module(*inputs, output_attentions, None)
@@ -790,7 +790,6 @@ class OPTDecoder(OPTPreTrainedModel):
     OPT_START_DOCSTRING,
 )
 class OPTModel(OPTPreTrainedModel):
-
     def __init__(self, config: OPTConfig):
         super().__init__(config)
         self.decoder = OPTDecoder(config)
@@ -828,16 +827,14 @@ class OPTModel(OPTPreTrainedModel):
         return_dict: Optional[bool] = None,
     ) -> Union[Tuple, BaseModelOutputWithPast]:
 
-        output_attentions = (
-            output_attentions if output_attentions is not None else
-            self.config.output_attentions)
-        output_hidden_states = (
-            output_hidden_states if output_hidden_states is not None else
-            self.config.output_hidden_states)
+        output_attentions = (output_attentions if output_attentions is not None
+                             else self.config.output_attentions)
+        output_hidden_states = (output_hidden_states
+                                if output_hidden_states is not None else
+                                self.config.output_hidden_states)
         use_cache = use_cache if use_cache is not None else self.config.use_cache
-        return_dict = (
-            return_dict
-            if return_dict is not None else self.config.use_return_dict)
+        return_dict = (return_dict if return_dict is not None else
+                       self.config.use_return_dict)
 
         # decoder outputs consists of (dec_features, past_key_value, dec_hidden, dec_attn)
         decoder_outputs = self.decoder(
@@ -873,8 +870,9 @@ class OPTForCausalLM(OPTPreTrainedModel):
         self.model = OPTModel(config)
 
         # the lm_head weight is automatically tied to the embed tokens weight
-        self.lm_head = nn.Linear(
-            config.word_embed_proj_dim, config.vocab_size, bias=False)
+        self.lm_head = nn.Linear(config.word_embed_proj_dim,
+                                 config.vocab_size,
+                                 bias=False)
 
         # Initialize weights and apply final processing
         self.post_init()
@@ -897,8 +895,8 @@ class OPTForCausalLM(OPTPreTrainedModel):
     def get_decoder(self):
         return self.model.decoder
 
-    @replace_return_docstrings(
-        output_type=CausalLMOutputWithPast, config_class=_CONFIG_FOR_DOC)
+    @replace_return_docstrings(output_type=CausalLMOutputWithPast,
+                               config_class=_CONFIG_FOR_DOC)
     def forward(
         self,
         input_ids: torch.LongTensor = None,
@@ -988,15 +986,13 @@ class OPTForCausalLM(OPTPreTrainedModel):
         "Hey, are you consciours? Can you talk to me?\nI'm not consciours, but I can talk to you."
         ```"""
 
-        output_attentions = (
-            output_attentions if output_attentions is not None else
-            self.config.output_attentions)
-        output_hidden_states = (
-            output_hidden_states if output_hidden_states is not None else
-            self.config.output_hidden_states)
-        return_dict = (
-            return_dict
-            if return_dict is not None else self.config.use_return_dict)
+        output_attentions = (output_attentions if output_attentions is not None
+                             else self.config.output_attentions)
+        output_hidden_states = (output_hidden_states
+                                if output_hidden_states is not None else
+                                self.config.output_hidden_states)
+        return_dict = (return_dict if return_dict is not None else
+                       self.config.use_return_dict)
 
         # decoder outputs consists of (dec_features, layer_state, dec_hidden, dec_attn)
         outputs = self.model.decoder(
@@ -1023,9 +1019,8 @@ class OPTForCausalLM(OPTPreTrainedModel):
             shift_labels = labels[..., 1:].contiguous()
             # Flatten the tokens
             loss_fct = CrossEntropyLoss(reduction=reduction)
-            loss = loss_fct(
-                shift_logits.view(-1, self.config.vocab_size),
-                shift_labels.view(-1))
+            loss = loss_fct(shift_logits.view(-1, self.config.vocab_size),
+                            shift_labels.view(-1))
             if reduction == 'none':
                 loss = loss.view(shift_logits.size(0), -1).sum(1)
 

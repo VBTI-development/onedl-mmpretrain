@@ -363,7 +363,7 @@ IMAGENET_CATEGORIES = (
     'tiger, Panthera tigris',
     'cheetah, chetah, Acinonyx jubatus',
     'brown bear, bruin, Ursus arctos',
-    'American black bear, black bear, Ursus americanus, Euarctos americanus',  # noqa: E501
+    'American black bear, black bear, Ursus americans, Euarctos americans',  # noqa: E501
     'ice bear, polar bear, Ursus Maritimus, Thalarctos maritimus',
     'sloth bear, Melursus ursinus, Ursus ursinus',
     'mongoose',
@@ -577,7 +577,7 @@ IMAGENET_CATEGORIES = (
     'coil, spiral, volute, whorl, helix',
     'combination lock',
     'computer keyboard, keypad',
-    'confectionery, confectionary, candy store',
+    'confectionery, confectionery, candy store',
     'container ship, containership, container vessel',
     'convertible',
     'corkscrew, bottle screw',

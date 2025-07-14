@@ -55,7 +55,6 @@ class LabelSmoothLoss(nn.Module):
           .. math::
               (1-2\epsilon)\delta_{k, y} + \epsilon
     """
-
     def __init__(self,
                  label_smooth_val,
                  num_classes=None,
@@ -102,12 +101,11 @@ class LabelSmoothLoss(nn.Module):
             self.smooth_label = self.original_smooth_label
             use_sigmoid = False if use_sigmoid is None else use_sigmoid
 
-        self.ce = CrossEntropyLoss(
-            use_sigmoid=use_sigmoid,
-            use_soft=not use_sigmoid,
-            reduction=reduction,
-            class_weight=class_weight,
-            pos_weight=pos_weight)
+        self.ce = CrossEntropyLoss(use_sigmoid=use_sigmoid,
+                                   use_soft=not use_sigmoid,
+                                   reduction=reduction,
+                                   class_weight=class_weight,
+                                   pos_weight=pos_weight)
 
     def generate_one_hot_like_label(self, label):
         """This function takes one-hot or index label vectors and computes one-

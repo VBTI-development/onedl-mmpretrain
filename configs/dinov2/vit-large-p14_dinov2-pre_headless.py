@@ -1,15 +1,14 @@
 # model settings
-model = dict(
-    type='ImageClassifier',
-    backbone=dict(
-        type='VisionTransformer',
-        arch='large',
-        img_size=518,
-        patch_size=14,
-        layer_scale_init_value=1e-5,
-    ),
-    neck=None,
-    head=None)
+model = dict(type='ImageClassifier',
+             backbone=dict(
+                 type='VisionTransformer',
+                 arch='large',
+                 img_size=518,
+                 patch_size=14,
+                 layer_scale_init_value=1e-5,
+             ),
+             neck=None,
+             head=None)
 
 data_preprocessor = dict(
     # RGB format normalization parameters

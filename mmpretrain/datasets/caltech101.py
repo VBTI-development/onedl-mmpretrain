@@ -41,7 +41,7 @@ class Caltech101(BaseDataset):
     Please note that since there is no official splitting for training and
     test set, you can use the train.txt and text.txt provided by us or
     create your own annotation files. Here is the download
-    `link <https://download.openmmlab.com/mmpretrain/datasets/caltech_meta.zip>`_
+    `link <https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/datasets/caltech_meta.zip>`_
     for the annotations.
 
     Args:
@@ -84,12 +84,11 @@ class Caltech101(BaseDataset):
         data_prefix = '101_ObjectCategories'
         test_mode = split == 'test'
 
-        super(Caltech101, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(Caltech101, self).__init__(ann_file=ann_file,
+                                         data_root=data_root,
+                                         data_prefix=data_prefix,
+                                         test_mode=test_mode,
+                                         **kwargs)
 
     def load_data_list(self):
         """Load images and ground truth labels."""

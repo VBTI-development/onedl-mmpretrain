@@ -358,7 +358,7 @@ model = dict(
 
 Changes in **`data`**:
 
-- The original `data` field is splited to `train_dataloader`, `val_dataloader` and
+- The original `data` field is split to `train_dataloader`, `val_dataloader` and
   `test_dataloader`. This allows us to configure them in fine-grained. For example,
   you can specify different sampler and batch size during training and test.
 - The `samples_per_gpu` is renamed to `batch_size`.
@@ -465,7 +465,7 @@ train_pipeline = [
 
 Changes in **`evaluation`**:
 
-- The **`evaluation`** field is splited to `val_evaluator` and `test_evaluator`. And it won't supports `interval` and `save_best` arguments.
+- The **`evaluation`** field is split to `val_evaluator` and `test_evaluator`. And it won't supports `interval` and `save_best` arguments.
   The `interval` is moved to `train_cfg.val_interval`, see [the schedule settings](./user_guides/config.md#schedule-settings) and the `save_best`
   is moved to `default_hooks.checkpoint.save_best`, see [the runtime settings](./user_guides/config.md#runtime-settings).
 - The 'accuracy' metric is renamed to [`Accuracy`](mmpretrain.evaluation.Accuracy).
@@ -643,7 +643,7 @@ This section illustrates the changes of our config files in the `_base_` folder,
 
 In **MMSelfSup 0.x**, we use key `data` to summarize all information, such as `samples_per_gpu`, `train`, `val`, etc.
 
-In **MMPretrain 1.x**, we separate `train_dataloader`, `val_dataloader` to summarize information correspodingly and the key `data` has been **removed**.
+In **MMPretrain 1.x**, we separate `train_dataloader`, `val_dataloader` to summarize information correspondingly and the key `data` has been **removed**.
 
 <table class="docutils">
 <tr>
@@ -759,7 +759,7 @@ The table below records the general modification of the folders and files.
 | MMSelfSup 0.x            | MMPretrain 1.x      | Remark                                                                                                                                                        |
 | ------------------------ | ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | apis                     | apis                | The high level APIs are updated.                                                                                                                              |
-| core                     | engine              | The `core` folder has been renamed to `engine`, which includes `hooks`, `opimizers`. ([API link](mmpretrain.engine))                                          |
+| core                     | engine              | The `core` folder has been renamed to `engine`, which includes `hooks`, `optimizers`. ([API link](mmpretrain.engine))                                         |
 | datasets                 | datasets            | The datasets is implemented according to different datasets, such as ImageNet, Places205. ([API link](mmpretrain.datasets))                                   |
 | datasets/data_sources    | /                   | The `data_sources` has been **removed** and the directory of `datasets` now is consistent with other OpenMMLab projects.                                      |
 | datasets/pipelines       | datasets/transforms | The `pipelines` folder has been renamed to `transforms`. ([API link](mmpretrain.datasets.transforms))                                                         |

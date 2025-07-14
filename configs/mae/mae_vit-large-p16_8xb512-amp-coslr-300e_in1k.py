@@ -5,44 +5,39 @@ _base_ = [
 ]
 
 # model settings
-model = dict(
-    backbone=dict(type='MAEViT', arch='l'),
-    neck=dict(type='MAEPretrainDecoder', embed_dim=1024))
+model = dict(backbone=dict(type='MAEViT', arch='l'),
+             neck=dict(type='MAEPretrainDecoder', embed_dim=1024))
 
 # optimizer wrapper
-optim_wrapper = dict(
-    type='AmpOptimWrapper',
-    loss_scale='dynamic',
-    optimizer=dict(
-        type='AdamW',
-        lr=1.5e-4 * 4096 / 256,
-        betas=(0.9, 0.95),
-        weight_decay=0.05),
-    paramwise_cfg=dict(
-        custom_keys={
-            'ln': dict(decay_mult=0.0),
-            'bias': dict(decay_mult=0.0),
-            'pos_embed': dict(decay_mult=0.),
-            'mask_token': dict(decay_mult=0.),
-            'cls_token': dict(decay_mult=0.)
-        }))
+optim_wrapper = dict(type='AmpOptimWrapper',
+                     loss_scale='dynamic',
+                     optimizer=dict(type='AdamW',
+                                    lr=1.5e-4 * 4096 / 256,
+                                    betas=(0.9, 0.95),
+                                    weight_decay=0.05),
+                     paramwise_cfg=dict(
+                         custom_keys={
+                             'ln': dict(decay_mult=0.0),
+                             'bias': dict(decay_mult=0.0),
+                             'pos_embed': dict(decay_mult=0.),
+                             'mask_token': dict(decay_mult=0.),
+                             'cls_token': dict(decay_mult=0.)
+                         }))
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=0.0001,
-        by_epoch=True,
-        begin=0,
-        end=40,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=260,
-        by_epoch=True,
-        begin=40,
-        end=300,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=0.0001,
+         by_epoch=True,
+         begin=0,
+         end=40,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=260,
+         by_epoch=True,
+         begin=40,
+         end=300,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings

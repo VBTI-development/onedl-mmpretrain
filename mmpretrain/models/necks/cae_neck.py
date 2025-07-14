@@ -43,7 +43,6 @@ class CAETransformerRegressorLayer(BaseModule):
         norm_cfg (dict): Config dict for normalization layer.
             Defaults to ``dict(type='LN')``.
     """
-
     def __init__(
         self,
         embed_dims: int,
@@ -62,44 +61,45 @@ class CAETransformerRegressorLayer(BaseModule):
         super().__init__()
 
         # NOTE: cross attention
-        _, self.norm1_q_cross = build_norm_layer(
-            norm_cfg, embed_dims, postfix=2)
-        _, self.norm1_k_cross = build_norm_layer(
-            norm_cfg, embed_dims, postfix=2)
-        _, self.norm1_v_cross = build_norm_layer(
-            norm_cfg, embed_dims, postfix=2)
+        _, self.norm1_q_cross = build_norm_layer(norm_cfg,
+                                                 embed_dims,
+                                                 postfix=2)
+        _, self.norm1_k_cross = build_norm_layer(norm_cfg,
+                                                 embed_dims,
+                                                 postfix=2)
+        _, self.norm1_v_cross = build_norm_layer(norm_cfg,
+                                                 embed_dims,
+                                                 postfix=2)
         _, self.norm2_cross = build_norm_layer(norm_cfg, embed_dims, postfix=2)
-        self.cross_attn = CrossMultiheadAttention(
-            embed_dims,
-            num_heads=num_heads,
-            qkv_bias=qkv_bias,
-            qk_scale=qk_scale,
-            attn_drop=attn_drop_rate,
-            proj_drop=drop_rate)
+        self.cross_attn = CrossMultiheadAttention(embed_dims,
+                                                  num_heads=num_heads,
+                                                  qkv_bias=qkv_bias,
+                                                  qk_scale=qk_scale,
+                                                  attn_drop=attn_drop_rate,
+                                                  proj_drop=drop_rate)
 
-        self.ffn = FFN(
-            embed_dims=embed_dims,
-            feedforward_channels=feedforward_channels,
-            num_fcs=num_fcs,
-            ffn_drop=drop_rate,
-            dropout_layer=None,
-            act_cfg=act_cfg,
-            add_identity=False)
+        self.ffn = FFN(embed_dims=embed_dims,
+                       feedforward_channels=feedforward_channels,
+                       num_fcs=num_fcs,
+                       ffn_drop=drop_rate,
+                       dropout_layer=None,
+                       act_cfg=act_cfg,
+                       add_identity=False)
 
         self.drop_path = DropPath(drop_prob=drop_path_rate)
 
         if layer_scale_init_value > 0:
-            self.gamma_1_cross = nn.Parameter(
-                layer_scale_init_value * torch.ones((embed_dims)),
-                requires_grad=True)
-            self.gamma_2_cross = nn.Parameter(
-                layer_scale_init_value * torch.ones((embed_dims)),
-                requires_grad=True)
+            self.gamma_1_cross = nn.Parameter(layer_scale_init_value *
+                                              torch.ones((embed_dims)),
+                                              requires_grad=True)
+            self.gamma_2_cross = nn.Parameter(layer_scale_init_value *
+                                              torch.ones((embed_dims)),
+                                              requires_grad=True)
         else:
-            self.gamma_1_cross = nn.Parameter(
-                torch.ones((embed_dims)), requires_grad=False)
-            self.gamma_2_cross = nn.Parameter(
-                torch.ones((embed_dims)), requires_grad=False)
+            self.gamma_1_cross = nn.Parameter(torch.ones((embed_dims)),
+                                              requires_grad=False)
+            self.gamma_2_cross = nn.Parameter(torch.ones((embed_dims)),
+                                              requires_grad=False)
 
     def forward(self, x_q: torch.Tensor, x_kv: torch.Tensor,
                 pos_q: torch.Tensor, pos_k: torch.Tensor) -> torch.Tensor:
@@ -146,7 +146,6 @@ class CAENeck(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  num_classes: int = 8192,
                  embed_dims: int = 768,
@@ -207,10 +206,12 @@ class CAENeck(BaseModule):
                 norm_cfg=norm_cfg) for i in range(decoder_depth)
         ])
 
-        _, self.norm_regressor = build_norm_layer(
-            norm_cfg, embed_dims, postfix=2)
-        _, self.norm_decoder = build_norm_layer(
-            norm_cfg, embed_dims, postfix=2)
+        _, self.norm_regressor = build_norm_layer(norm_cfg,
+                                                  embed_dims,
+                                                  postfix=2)
+        _, self.norm_decoder = build_norm_layer(norm_cfg,
+                                                embed_dims,
+                                                postfix=2)
 
         self.head = nn.Linear(
             embed_dims, num_classes) if num_classes > 0 else nn.Identity()

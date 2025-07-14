@@ -8,28 +8,24 @@ data_preprocessor = dict(
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomApply',
-        transforms=[
-            dict(
-                type='ColorJitter',
-                brightness=0.4,
-                contrast=0.4,
-                saturation=0.4,
-                hue=0.1,
-                backend='cv2')
-        ],
-        prob=0.5),
-    dict(
-        type='mmdet.RandomCrop',
-        crop_type='relative_range',
-        crop_size=(0.8, 0.8),
-        allow_negative_crop=False),
-    dict(
-        type='RandomChoiceResize',
-        scales=[(384, 384), (360, 360), (344, 344), (312, 312), (300, 300),
-                (286, 286), (270, 270)],
-        keep_ratio=False),
+    dict(type='RandomApply',
+         transforms=[
+             dict(type='ColorJitter',
+                  brightness=0.4,
+                  contrast=0.4,
+                  saturation=0.4,
+                  hue=0.1,
+                  backend='cv2')
+         ],
+         prob=0.5),
+    dict(type='mmdet.RandomCrop',
+         crop_type='relative_range',
+         crop_size=(0.8, 0.8),
+         allow_negative_crop=False),
+    dict(type='RandomChoiceResize',
+         scales=[(384, 384), (360, 360), (344, 344), (312, 312), (300, 300),
+                 (286, 286), (270, 270)],
+         keep_ratio=False),
     dict(
         type='RandomTranslatePad',
         size=384,
@@ -45,11 +41,10 @@ train_pipeline = [
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(384, 384),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(384, 384),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='CleanCaption', keys='text'),
     dict(
         type='PackInputs',
@@ -61,14 +56,13 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=16,
     num_workers=8,
-    dataset=dict(
-        type='RefCOCO',
-        data_root='data/coco',
-        data_prefix='train2014',
-        ann_file='refcoco/instances.json',
-        split_file='refcoco/refs(unc).p',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type='RefCOCO',
+                 data_root='data/coco',
+                 data_prefix='train2014',
+                 ann_file='refcoco/instances.json',
+                 split_file='refcoco/refs(unc).p',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
     drop_last=True,
 )
@@ -76,14 +70,13 @@ train_dataloader = dict(
 val_dataloader = dict(
     batch_size=16,
     num_workers=8,
-    dataset=dict(
-        type='RefCOCO',
-        data_root='data/coco',
-        data_prefix='train2014',
-        ann_file='refcoco/instances.json',
-        split_file='refcoco/refs(unc).p',
-        split='val',
-        pipeline=test_pipeline),
+    dataset=dict(type='RefCOCO',
+                 data_root='data/coco',
+                 data_prefix='train2014',
+                 ann_file='refcoco/instances.json',
+                 split_file='refcoco/refs(unc).p',
+                 split='val',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 

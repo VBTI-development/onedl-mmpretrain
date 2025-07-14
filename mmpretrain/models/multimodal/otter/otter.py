@@ -61,8 +61,8 @@ class Otter(Flamingo):
             data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
             data_preprocessor = MODELS.build(data_preprocessor)
 
-        super(Flamingo, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(Flamingo, self).__init__(init_cfg=init_cfg,
+                                       data_preprocessor=data_preprocessor)
 
         if task not in self.support_tasks:
             raise ValueError(f'Unsupported task {task}, please select '
@@ -127,8 +127,8 @@ class Otter(Flamingo):
         Returns:
             List[DataSample]: Return list of data samples.
         """
-        outputs = self.tokenizer.batch_decode(
-            outputs, skip_special_tokens=True)
+        outputs = self.tokenizer.batch_decode(outputs,
+                                              skip_special_tokens=True)
 
         if data_samples is None:
             data_samples = [DataSample() for _ in range(len(outputs))]

@@ -37,7 +37,6 @@ class DaViTWindowMSA(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  window_size,
@@ -112,16 +111,14 @@ class ConvPosEnc(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self, embed_dims, kernel_size=3, init_cfg=None):
         super(ConvPosEnc, self).__init__(init_cfg)
-        self.proj = Conv2d(
-            embed_dims,
-            embed_dims,
-            kernel_size,
-            stride=1,
-            padding=kernel_size // 2,
-            groups=embed_dims)
+        self.proj = Conv2d(embed_dims,
+                           embed_dims,
+                           kernel_size,
+                           stride=1,
+                           padding=kernel_size // 2,
+                           groups=embed_dims)
 
     def forward(self, x, size: Tuple[int, int]):
         B, N, C = x.shape
@@ -158,7 +155,6 @@ class DaViTDownSample(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -180,26 +176,24 @@ class DaViTDownSample(BaseModule):
         dilation = to_2tuple(dilation)
 
         if isinstance(padding, str):
-            self.adaptive_padding = AdaptivePadding(
-                kernel_size=kernel_size,
-                stride=stride,
-                dilation=dilation,
-                padding=padding)
+            self.adaptive_padding = AdaptivePadding(kernel_size=kernel_size,
+                                                    stride=stride,
+                                                    dilation=dilation,
+                                                    padding=padding)
             # disable the padding of conv
             padding = 0
         else:
             self.adaptive_padding = None
         padding = to_2tuple(padding)
 
-        self.projection = build_conv_layer(
-            dict(type=conv_type),
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size,
-            stride=stride,
-            padding=padding,
-            dilation=dilation,
-            bias=bias)
+        self.projection = build_conv_layer(dict(type=conv_type),
+                                           in_channels=in_channels,
+                                           out_channels=out_channels,
+                                           kernel_size=kernel_size,
+                                           stride=stride,
+                                           padding=padding,
+                                           dilation=dilation,
+                                           bias=bias)
 
         if norm_cfg is not None:
             self.norm = build_norm_layer(norm_cfg, in_channels)[1]
@@ -232,7 +226,6 @@ class ChannelAttention(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self, embed_dims, num_heads=8, qkv_bias=False, init_cfg=None):
         super().__init__(init_cfg)
         self.embed_dims = embed_dims
@@ -280,7 +273,6 @@ class ChannelBlock(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -296,8 +288,9 @@ class ChannelBlock(BaseModule):
 
         self.cpe1 = ConvPosEnc(embed_dims=embed_dims, kernel_size=3)
         self.norm1 = build_norm_layer(norm_cfg, embed_dims)[1]
-        self.attn = ChannelAttention(
-            embed_dims, num_heads=num_heads, qkv_bias=qkv_bias)
+        self.attn = ChannelAttention(embed_dims,
+                                     num_heads=num_heads,
+                                     qkv_bias=qkv_bias)
         self.cpe2 = ConvPosEnc(embed_dims=embed_dims, kernel_size=3)
 
         _ffn_cfgs = {
@@ -313,7 +306,6 @@ class ChannelBlock(BaseModule):
         self.ffn = FFN(**_ffn_cfgs)
 
     def forward(self, x, hw_shape):
-
         def _inner_forward(x):
             x = self.cpe1(x, hw_shape)
             identity = x
@@ -363,7 +355,6 @@ class SpatialBlock(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -410,7 +401,6 @@ class SpatialBlock(BaseModule):
         self.ffn = FFN(**_ffn_cfgs)
 
     def forward(self, x, hw_shape):
-
         def _inner_forward(x):
             x = self.cpe1(x, hw_shape)
             identity = x
@@ -460,7 +450,6 @@ class DaViTBlock(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -476,27 +465,25 @@ class DaViTBlock(BaseModule):
                  init_cfg=None):
 
         super(DaViTBlock, self).__init__(init_cfg)
-        self.spatial_block = SpatialBlock(
-            embed_dims,
-            num_heads,
-            window_size=window_size,
-            ffn_ratio=ffn_ratio,
-            qkv_bias=qkv_bias,
-            drop_path=drop_path,
-            pad_small_map=pad_small_map,
-            attn_cfgs=attn_cfgs,
-            ffn_cfgs=ffn_cfgs,
-            norm_cfg=norm_cfg,
-            with_cp=with_cp)
-        self.channel_block = ChannelBlock(
-            embed_dims,
-            num_heads,
-            ffn_ratio=ffn_ratio,
-            qkv_bias=qkv_bias,
-            drop_path=drop_path,
-            ffn_cfgs=ffn_cfgs,
-            norm_cfg=norm_cfg,
-            with_cp=False)
+        self.spatial_block = SpatialBlock(embed_dims,
+                                          num_heads,
+                                          window_size=window_size,
+                                          ffn_ratio=ffn_ratio,
+                                          qkv_bias=qkv_bias,
+                                          drop_path=drop_path,
+                                          pad_small_map=pad_small_map,
+                                          attn_cfgs=attn_cfgs,
+                                          ffn_cfgs=ffn_cfgs,
+                                          norm_cfg=norm_cfg,
+                                          with_cp=with_cp)
+        self.channel_block = ChannelBlock(embed_dims,
+                                          num_heads,
+                                          ffn_ratio=ffn_ratio,
+                                          qkv_bias=qkv_bias,
+                                          drop_path=drop_path,
+                                          ffn_cfgs=ffn_cfgs,
+                                          norm_cfg=norm_cfg,
+                                          with_cp=False)
 
     def forward(self, x, hw_shape):
         x = self.spatial_block(x, hw_shape)
@@ -534,7 +521,6 @@ class DaViTBlockSequence(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  depth,
@@ -750,8 +736,8 @@ class DaViT(BaseBackbone):
 
         self.stages = ModuleList()
         embed_dims = [self.embed_dims]
-        for i, (depth,
-                num_heads) in enumerate(zip(self.depths, self.num_heads)):
+        for i, (depth, num_heads) in enumerate(zip(self.depths,
+                                                   self.num_heads)):
             if isinstance(stage_cfgs, Sequence):
                 stage_cfg = stage_cfgs[i]
             else:
@@ -819,8 +805,9 @@ class DaViT(BaseBackbone):
 
         outs = []
         for i, stage in enumerate(self.stages):
-            x, hw_shape = stage(
-                x, hw_shape, do_downsample=self.out_after_downsample)
+            x, hw_shape = stage(x,
+                                hw_shape,
+                                do_downsample=self.out_after_downsample)
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
                 out = norm_layer(x)

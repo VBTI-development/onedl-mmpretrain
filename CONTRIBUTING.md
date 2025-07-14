@@ -44,7 +44,7 @@ We use the following tools for linting and formatting:
 - [mdformat](https://github.com/executablebooks/mdformat): Mdformat is an opinionated Markdown formatter that can be used to enforce a consistent style in Markdown files.
 - [docformatter](https://github.com/myint/docformatter): A formatter to format docstring.
 
-Style configurations of yapf and isort can be found in [setup.cfg](https://github.com/open-mmlab/mmpretrain/blob/main/setup.cfg).
+Style configurations of yapf and isort can be found in [setup.cfg](https://github.com/VBTI-development/onedl-mmpretrainl-mmpretrain/blob/main/setup.cfg).
 
 ### C++ and CUDA
 
@@ -53,8 +53,8 @@ We follow the [Google C++ Style Guide](https://google.github.io/styleguide/cppgu
 ## Pre-commit Hook
 
 We use [pre-commit hook](https://pre-commit.com/) that checks and formats for `flake8`, `yapf`, `isort`, `trailing whitespaces`, `markdown files`,
-fixes `end-of-files`, `double-quoted-strings`, `python-encoding-pragma`, `mixed-line-ending`, sorts `requirments.txt` automatically on every commit.
-The config for a pre-commit hook is stored in [.pre-commit-config](https://github.com/open-mmlab/mmpretrain/blob/main/.pre-commit-config.yaml).
+fixes `end-of-files`, `double-quoted-strings`, `python-encoding-pragma`, `mixed-line-ending`, sorts `requirements.txt` automatically on every commit.
+The config for a pre-commit hook is stored in [.pre-commit-config](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/.pre-commit-config.yaml).
 
 After you clone the repository, you will need to install initialize pre-commit hook.
 

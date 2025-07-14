@@ -22,8 +22,10 @@ def test_resnet_cifar():
 
     # test the feature map size when depth is 50
     # and deep_stem=True, avg_down=True
-    model = Res2Net(
-        depth=50, out_indices=(0, 1, 2, 3), deep_stem=True, avg_down=True)
+    model = Res2Net(depth=50,
+                    out_indices=(0, 1, 2, 3),
+                    deep_stem=True,
+                    avg_down=True)
     model.init_weights()
     model.train()
 
@@ -39,8 +41,10 @@ def test_resnet_cifar():
 
     # test the feature map size when depth is 101
     # and deep_stem=False, avg_down=False
-    model = Res2Net(
-        depth=101, out_indices=(0, 1, 2, 3), deep_stem=False, avg_down=False)
+    model = Res2Net(depth=101,
+                    out_indices=(0, 1, 2, 3),
+                    deep_stem=False,
+                    avg_down=False)
     model.init_weights()
     model.train()
 

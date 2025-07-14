@@ -35,7 +35,7 @@ Models:
         Metrics:
           Top 1 Accuracy: 84.01
           Top 5 Accuracy: 97.08
-    Weights: https://download.openmmlab.com/mmclassification/v0/vit/finetune/vit-base-p32_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-9cea8599.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/finetune/vit-base-p32_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-9cea8599.pth
     Config: configs/vision_transformer/vit-base-p32_64xb64_in1k-384px.py
     Converted From:
       Weights: https://console.cloud.google.com/storage/browser/_details/vit_models/augreg/B_32-i21k-300ep-lr_0.001-aug_light1-wd_0.1-do_0.0-sd_0.0--imagenet2012-steps_20k-lr_0.01-res_384.npz
@@ -53,7 +53,7 @@ Models:
         Metrics:
           Top 1 Accuracy: 82.37
           Top 5 Accuracy: 96.15
-    Weights: https://download.openmmlab.com/mmclassification/v0/vit/vit-base-p16_pt-32xb128-mae_in1k_20220623-4c544545.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/vit-base-p16_pt-32xb128-mae_in1k_20220623-4c544545.pth
     Config: configs/vision_transformer/vit-base-p16_32xb128-mae_in1k.py
   - Name: vit-base-p16_in21k-pre_3rdparty_in1k-384px
     Metadata:
@@ -69,7 +69,7 @@ Models:
         Metrics:
           Top 1 Accuracy: 85.43
           Top 5 Accuracy: 97.77
-    Weights: https://download.openmmlab.com/mmclassification/v0/vit/finetune/vit-base-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-98e8652b.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/finetune/vit-base-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-98e8652b.pth
     Config: configs/vision_transformer/vit-base-p16_64xb64_in1k-384px.py
     Converted From:
       Weights: https://console.cloud.google.com/storage/browser/_details/vit_models/augreg/B_16-i21k-300ep-lr_0.001-aug_medium1-wd_0.1-do_0.0-sd_0.0--imagenet2012-steps_20k-lr_0.03-res_384.npz
@@ -88,7 +88,7 @@ Models:
         Metrics:
           Top 1 Accuracy: 85.63
           Top 5 Accuracy: 97.63
-    Weights: https://download.openmmlab.com/mmclassification/v0/vit/finetune/vit-large-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-b20ba619.pth
+    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vit/finetune/vit-large-p16_in21k-pre-3rdparty_ft-64xb64_in1k-384_20210928-b20ba619.pth
     Config: configs/vision_transformer/vit-large-p16_64xb64_in1k-384px.py
     Converted From:
       Weights: https://console.cloud.google.com/storage/browser/_details/vit_models/augreg/L_16-i21k-300ep-lr_0.001-aug_strong1-wd_0.1-do_0.0-sd_0.0--imagenet2012-steps_20k-lr_0.01-res_384.npz

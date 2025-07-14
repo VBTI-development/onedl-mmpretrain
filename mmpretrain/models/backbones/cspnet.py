@@ -41,7 +41,6 @@ class DarknetBottleneck(BaseModule):
         act_cfg (dict): Config dict for activation layer.
             Defaults to ``dict(type='Swish')``.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -56,22 +55,20 @@ class DarknetBottleneck(BaseModule):
         super().__init__(init_cfg)
         hidden_channels = int(out_channels / expansion)
         conv = DepthwiseSeparableConvModule if use_depthwise else ConvModule
-        self.conv1 = ConvModule(
-            in_channels,
-            hidden_channels,
-            1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
-        self.conv2 = conv(
-            hidden_channels,
-            out_channels,
-            3,
-            stride=1,
-            padding=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv1 = ConvModule(in_channels,
+                                hidden_channels,
+                                1,
+                                conv_cfg=conv_cfg,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
+        self.conv2 = conv(hidden_channels,
+                          out_channels,
+                          3,
+                          stride=1,
+                          padding=1,
+                          conv_cfg=conv_cfg,
+                          norm_cfg=norm_cfg,
+                          act_cfg=act_cfg)
         self.add_identity = \
             add_identity and in_channels == out_channels
 
@@ -134,7 +131,6 @@ class CSPStage(BaseModule):
         act_cfg (dict): Config dict for activation layer.
             Default: dict(type='LeakyReLU', inplace=True)
     """
-
     def __init__(self,
                  block_fn,
                  in_channels,
@@ -181,30 +177,27 @@ class CSPStage(BaseModule):
         block_channels = exp_channels // 2
         blocks = []
         for i in range(num_blocks):
-            block_cfg = dict(
-                in_channels=block_channels,
-                out_channels=block_channels,
-                expansion=bottle_ratio,
-                drop_path_rate=block_dpr[i],
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                **block_args)
+            block_cfg = dict(in_channels=block_channels,
+                             out_channels=block_channels,
+                             expansion=bottle_ratio,
+                             drop_path_rate=block_dpr[i],
+                             conv_cfg=conv_cfg,
+                             norm_cfg=norm_cfg,
+                             act_cfg=act_cfg,
+                             **block_args)
             blocks.append(block_fn(**block_cfg))
         self.blocks = Sequential(*blocks)
-        self.atfer_blocks_conv = ConvModule(
-            block_channels,
-            block_channels,
-            1,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.atfer_blocks_conv = ConvModule(block_channels,
+                                            block_channels,
+                                            1,
+                                            norm_cfg=norm_cfg,
+                                            act_cfg=act_cfg)
 
-        self.final_conv = ConvModule(
-            2 * block_channels,
-            out_channels,
-            1,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.final_conv = ConvModule(2 * block_channels,
+                                     out_channels,
+                                     1,
+                                     norm_cfg=norm_cfg,
+                                     act_cfg=act_cfg)
 
     def forward(self, x):
         x = self.downsample_conv(x)
@@ -298,7 +291,6 @@ class CSPNet(BaseModule):
         (1, 64, 111, 111)
         (1, 128, 56, 56)
     """
-
     def __init__(self,
                  arch,
                  stem_fn,
@@ -332,13 +324,12 @@ class CSPNet(BaseModule):
 
         for i in range(self.num_stages):
             stage_cfg = {k: v[i] for k, v in self.arch.items()}
-            csp_stage = CSPStage(
-                **stage_cfg,
-                block_dpr=dpr[i].tolist(),
-                conv_cfg=conv_cfg,
-                norm_cfg=norm_cfg,
-                act_cfg=act_cfg,
-                init_cfg=init_cfg)
+            csp_stage = CSPStage(**stage_cfg,
+                                 block_dpr=dpr[i].tolist(),
+                                 conv_cfg=conv_cfg,
+                                 norm_cfg=norm_cfg,
+                                 act_cfg=act_cfg,
+                                 init_cfg=init_cfg)
             stages.append(csp_stage)
         self.stages = Sequential(*stages)
 
@@ -465,40 +456,37 @@ class CSPDarkNet(CSPNet):
                  norm_cfg=dict(type='BN', eps=1e-5),
                  act_cfg=dict(type='LeakyReLU', inplace=True),
                  norm_eval=False,
-                 init_cfg=dict(
-                     type='Kaiming',
-                     layer='Conv2d',
-                     a=math.sqrt(5),
-                     distribution='uniform',
-                     mode='fan_in',
-                     nonlinearity='leaky_relu')):
+                 init_cfg=dict(type='Kaiming',
+                               layer='Conv2d',
+                               a=math.sqrt(5),
+                               distribution='uniform',
+                               mode='fan_in',
+                               nonlinearity='leaky_relu')):
 
         assert depth in self.arch_settings, 'depth must be one of ' \
             f'{list(self.arch_settings.keys())}, but get {depth}.'
 
-        super().__init__(
-            arch=self.arch_settings[depth],
-            stem_fn=self._make_stem_layer,
-            in_channels=in_channels,
-            out_indices=out_indices,
-            frozen_stages=frozen_stages,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg,
-            norm_eval=norm_eval,
-            init_cfg=init_cfg)
+        super().__init__(arch=self.arch_settings[depth],
+                         stem_fn=self._make_stem_layer,
+                         in_channels=in_channels,
+                         out_indices=out_indices,
+                         frozen_stages=frozen_stages,
+                         conv_cfg=conv_cfg,
+                         norm_cfg=norm_cfg,
+                         act_cfg=act_cfg,
+                         norm_eval=norm_eval,
+                         init_cfg=init_cfg)
 
     def _make_stem_layer(self, in_channels):
-        """using a stride=1 conv as the stem in CSPDarknet."""
+        """Using a stride=1 conv as the stem in CSPDarknet."""
         # `stem_channels` equals to the `in_channels` in the first stage.
         stem_channels = self.arch['in_channels'][0]
-        stem = ConvModule(
-            in_channels=in_channels,
-            out_channels=stem_channels,
-            kernel_size=3,
-            padding=1,
-            norm_cfg=self.norm_cfg,
-            act_cfg=self.act_cfg)
+        stem = ConvModule(in_channels=in_channels,
+                          out_channels=stem_channels,
+                          kernel_size=3,
+                          padding=1,
+                          norm_cfg=self.norm_cfg,
+                          act_cfg=self.act_cfg)
         return stem
 
 
@@ -539,15 +527,14 @@ class CSPResNet(CSPNet):
     """
     arch_settings = {
         50:
-        dict(
-            block_fn=ResNetBottleneck,
-            in_channels=(64, 128, 256, 512),
-            out_channels=(128, 256, 512, 1024),
-            num_blocks=(3, 3, 5, 2),
-            expand_ratio=4,
-            bottle_ratio=2,
-            has_downsampler=(False, True, True, True),
-            down_growth=False),
+        dict(block_fn=ResNetBottleneck,
+             in_channels=(64, 128, 256, 512),
+             out_channels=(128, 256, 512, 1024),
+             num_blocks=(3, 3, 5, 2),
+             expand_ratio=4,
+             bottle_ratio=2,
+             has_downsampler=(False, True, True, True),
+             down_growth=False),
     }
 
     def __init__(self,
@@ -565,61 +552,56 @@ class CSPResNet(CSPNet):
             f'{list(self.arch_settings.keys())}, but get {depth}.'
         self.deep_stem = deep_stem
 
-        super().__init__(
-            arch=self.arch_settings[depth],
-            stem_fn=self._make_stem_layer,
-            in_channels=in_channels,
-            out_indices=out_indices,
-            frozen_stages=frozen_stages,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg,
-            norm_eval=norm_eval,
-            init_cfg=init_cfg)
+        super().__init__(arch=self.arch_settings[depth],
+                         stem_fn=self._make_stem_layer,
+                         in_channels=in_channels,
+                         out_indices=out_indices,
+                         frozen_stages=frozen_stages,
+                         conv_cfg=conv_cfg,
+                         norm_cfg=norm_cfg,
+                         act_cfg=act_cfg,
+                         norm_eval=norm_eval,
+                         init_cfg=init_cfg)
 
     def _make_stem_layer(self, in_channels):
         # `stem_channels` equals to the `in_channels` in the first stage.
         stem_channels = self.arch['in_channels'][0]
         if self.deep_stem:
             stem = nn.Sequential(
-                ConvModule(
-                    in_channels,
-                    stem_channels // 2,
-                    kernel_size=3,
-                    stride=2,
-                    padding=1,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg),
-                ConvModule(
-                    stem_channels // 2,
-                    stem_channels // 2,
-                    kernel_size=3,
-                    stride=1,
-                    padding=1,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg),
-                ConvModule(
-                    stem_channels // 2,
-                    stem_channels,
-                    kernel_size=3,
-                    stride=1,
-                    padding=1,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg))
+                ConvModule(in_channels,
+                           stem_channels // 2,
+                           kernel_size=3,
+                           stride=2,
+                           padding=1,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=self.act_cfg),
+                ConvModule(stem_channels // 2,
+                           stem_channels // 2,
+                           kernel_size=3,
+                           stride=1,
+                           padding=1,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=self.act_cfg),
+                ConvModule(stem_channels // 2,
+                           stem_channels,
+                           kernel_size=3,
+                           stride=1,
+                           padding=1,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=self.act_cfg))
         else:
             stem = nn.Sequential(
-                ConvModule(
-                    in_channels,
-                    stem_channels,
-                    kernel_size=7,
-                    stride=2,
-                    padding=3,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg),
+                ConvModule(in_channels,
+                           stem_channels,
+                           kernel_size=7,
+                           stride=2,
+                           padding=3,
+                           conv_cfg=self.conv_cfg,
+                           norm_cfg=self.norm_cfg,
+                           act_cfg=self.act_cfg),
                 nn.MaxPool2d(kernel_size=3, stride=2, padding=1))
         return stem
 

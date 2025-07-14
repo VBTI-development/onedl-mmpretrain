@@ -111,8 +111,8 @@ class MNIST(BaseDataset):
 
         # load data from SN3 files
         imgs = read_image_file(join_path(root, rm_suffix(file_list[0][0])))
-        gt_labels = read_label_file(
-            join_path(root, rm_suffix(file_list[1][0])))
+        gt_labels = read_label_file(join_path(root,
+                                              rm_suffix(file_list[1][0])))
 
         data_infos = []
         for img, gt_label in zip(imgs, gt_labels):
@@ -139,8 +139,10 @@ class MNIST(BaseDataset):
 
         for filename, md5 in (self.train_list + self.test_list):
             url = urljoin(self.url_prefix, filename)
-            download_and_extract_archive(
-                url, download_root=root, filename=filename, md5=md5)
+            download_and_extract_archive(url,
+                                         download_root=root,
+                                         filename=filename,
+                                         md5=md5)
 
     def extra_repr(self) -> List[str]:
         """The extra repr information of the dataset."""

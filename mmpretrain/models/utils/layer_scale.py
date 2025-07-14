@@ -18,7 +18,6 @@ class LayerScale(nn.Module):
              or 'channels_first', representing (B, C, H, W) and
              (B, N, C) format data respectively. Defaults to 'channels_last'.
     """
-
     def __init__(self,
                  dim: int,
                  layer_scale_init_value: Union[float, torch.Tensor] = 1e-5,

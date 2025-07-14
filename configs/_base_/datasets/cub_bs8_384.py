@@ -27,22 +27,20 @@ test_pipeline = [
 train_dataloader = dict(
     batch_size=8,
     num_workers=2,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/CUB_200_2011',
-        split='train',
-        pipeline=train_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/CUB_200_2011',
+                 split='train',
+                 pipeline=train_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=True),
 )
 
 val_dataloader = dict(
     batch_size=8,
     num_workers=2,
-    dataset=dict(
-        type=dataset_type,
-        data_root='data/CUB_200_2011',
-        split='test',
-        pipeline=test_pipeline),
+    dataset=dict(type=dataset_type,
+                 data_root='data/CUB_200_2011',
+                 split='test',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 val_evaluator = dict(type='Accuracy', topk=(1, ))

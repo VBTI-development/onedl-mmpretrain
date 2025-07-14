@@ -11,23 +11,21 @@ model = dict(backbone=dict(pre_norm=True))
 # data settings
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='RandomResizedCrop',
-        scale=448,
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='RandomResizedCrop',
+         scale=448,
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='PackInputs'),
 ]
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='ResizeEdge',
-        scale=448,
-        edge='short',
-        backend='pillow',
-        interpolation='bicubic'),
+    dict(type='ResizeEdge',
+         scale=448,
+         edge='short',
+         backend='pillow',
+         interpolation='bicubic'),
     dict(type='CenterCrop', crop_size=448),
     dict(type='PackInputs'),
 ]

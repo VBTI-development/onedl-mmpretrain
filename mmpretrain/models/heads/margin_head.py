@@ -30,7 +30,6 @@ class NormProduct(nn.Linear):
         weight_norm (bool):Whether to normalize the weight.
             Defaults to ``True``.
     """
-
     def __init__(self,
                  in_features: int,
                  out_features: int,
@@ -145,7 +144,6 @@ class ArcFaceClsHead(ClsHead):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
@@ -183,8 +181,9 @@ class ArcFaceClsHead(ClsHead):
         assert len(margins) == num_classes, \
             'The length of margins must be equal with num_classes.'
 
-        self.register_buffer(
-            'margins', torch.tensor(margins).float(), persistent=False)
+        self.register_buffer('margins',
+                             torch.tensor(margins).float(),
+                             persistent=False)
         # To make `phi` monotonic decreasing, refers to
         # https://github.com/deepinsight/insightface/issues/108
         sinm_m = torch.sin(math.pi - self.margins) * self.margins
@@ -193,7 +192,7 @@ class ArcFaceClsHead(ClsHead):
         self.register_buffer('threshold', threshold, persistent=False)
 
     def set_margins(self, margins: Union[Sequence[float], float]) -> None:
-        """set margins of arcface head.
+        """Set margins of arcface head.
 
         Args:
             margins (Union[Sequence[float], float]): The marigins.
@@ -204,8 +203,9 @@ class ArcFaceClsHead(ClsHead):
             list(margins), float) and (len(margins) == self.num_classes), (
                 f'margins must be Sequence[Union(float, int)], get {margins}')
 
-        self.margins = torch.tensor(
-            margins, device=self.margins.device, dtype=torch.float32)
+        self.margins = torch.tensor(margins,
+                                    device=self.margins.device,
+                                    dtype=torch.float32)
         self.sinm_m = torch.sin(self.margins) * self.margins
         self.threshold = -torch.cos(self.margins)
 
@@ -221,7 +221,7 @@ class ArcFaceClsHead(ClsHead):
         return feats[-1]
 
     def _get_logit_with_margin(self, pre_logits, target):
-        """add arc margin to the cosine in target index.
+        """Add arc margin to the cosine in target index.
 
         The target must be in index format.
         """
@@ -293,8 +293,10 @@ class ArcFaceClsHead(ClsHead):
 
         # compute loss
         losses = dict()
-        loss = self.loss_module(
-            cls_score, target, avg_factor=cls_score.size(0), **kwargs)
+        loss = self.loss_module(cls_score,
+                                target,
+                                avg_factor=cls_score.size(0),
+                                **kwargs)
         losses['loss'] = loss
 
         return losses

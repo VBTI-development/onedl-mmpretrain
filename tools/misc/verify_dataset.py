@@ -28,8 +28,10 @@ def parse_args():
         type=str,
         choices=['train', 'test', 'val'],
         help='phase of dataset to visualize, accept "train" "test" and "val".')
-    parser.add_argument(
-        '--num-process', type=int, default=1, help='number of process to use')
+    parser.add_argument('--num-process',
+                        type=int,
+                        default=1,
+                        help='number of process to use')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
@@ -47,8 +49,7 @@ def parse_args():
 
 
 class DatasetValidator():
-    """the dataset tool class to check if all file are broken."""
-
+    """The dataset tool class to check if all file are broken."""
     def __init__(self, dataset_cfg, log_file_path):
         super(DatasetValidator, self).__init__()
         # keep only LoadImageFromFile pipeline
@@ -82,7 +83,7 @@ class DatasetValidator():
 
 
 def print_info(log_file_path):
-    """print some information and do extra action."""
+    """Print some information and do extra action."""
     print()
     with open(log_file_path, 'r') as f:
         content = f.read().strip()
@@ -124,17 +125,16 @@ def main():
     validator = DatasetValidator(dataset_cfg, output_path)
 
     if args.num_process > 1:
-        # The default chunksize calcuation method of Pool.map
+        # The default chunksize calculation method of Pool.map
         chunksize, extra = divmod(len(validator), args.num_process * 8)
         if extra:
             chunksize += 1
 
-        track_parallel_progress(
-            validator.valid_idx,
-            list(range(len(validator))),
-            args.num_process,
-            chunksize=chunksize,
-            keep_order=False)
+        track_parallel_progress(validator.valid_idx,
+                                list(range(len(validator))),
+                                args.num_process,
+                                chunksize=chunksize,
+                                keep_order=False)
     else:
         track_progress(validator.valid_idx, list(range(len(validator))))
 

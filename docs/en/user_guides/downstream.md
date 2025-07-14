@@ -36,7 +36,7 @@ Example:
 ```shell
 bash ./tools/benchmarks/mmdetection/mim_dist_train_c4.sh \
   configs/byol/benchmarks/mask-rcnn_r50-c4_ms-1x_coco.py \
-  https://download.openmmlab.com/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 8
+  https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 8
 ```
 
 ### Test
@@ -62,7 +62,7 @@ Example:
 ```shell
 bash ./tools/benchmarks/mmdetection/mim_dist_test.sh \
 configs/byol/benchmarks/mask-rcnn_r50_fpn_ms-1x_coco.py \
-https://download.openmmlab.com/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 8
+https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 8
 ```
 
 ## Segmentation
@@ -99,7 +99,7 @@ Example:
 ```shell
 bash ./tools/benchmarks/mmsegmentation/mim_dist_train.sh \
 configs/benchmarks/mmsegmentation/voc12aug/fcn_r50-d8_4xb4-20k_voc12aug-512x512.py \
-https://download.openmmlab.com/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 4
+https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 4
 ```
 
 ### Test
@@ -124,5 +124,5 @@ Example:
 
 ```shell
 bash ./tools/benchmarks/mmsegmentation/mim_dist_test.sh  fcn_r50-d8_4xb4-20k_voc12aug-512x512.py \
-https://download.openmmlab.com/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 4
+https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth 4
 ```

@@ -96,7 +96,6 @@ class VisualGroundingInferencer(BaseInferencer):
         return test_pipeline
 
     def preprocess(self, inputs: List[dict], batch_size: int = 1):
-
         def load_image(input_: dict):
             img = imread(input_['img'])
             if img is None:
@@ -141,16 +140,15 @@ class VisualGroundingInferencer(BaseInferencer):
             else:
                 out_file = None
 
-            self.visualizer.visualize_visual_grounding(
-                image,
-                data_sample,
-                resize=resize,
-                show=show,
-                wait_time=wait_time,
-                line_width=line_width,
-                bbox_color=bbox_color,
-                name=name,
-                out_file=out_file)
+            self.visualizer.visualize_visual_grounding(image,
+                                                       data_sample,
+                                                       resize=resize,
+                                                       show=show,
+                                                       wait_time=wait_time,
+                                                       line_width=line_width,
+                                                       bbox_color=bbox_color,
+                                                       name=name,
+                                                       out_file=out_file)
             visualization.append(self.visualizer.get_image())
         if show:
             self.visualizer.close()

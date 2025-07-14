@@ -7,30 +7,27 @@ optim_wrapper = dict(
         weight_decay=0.05,
         eps=1e-8,
         betas=(0.9, 0.999)),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.cls_token': dict(decay_mult=0.0),
-        }),
+    paramwise_cfg=dict(norm_decay_mult=0.0,
+                       bias_decay_mult=0.0,
+                       custom_keys={
+                           '.cls_token': dict(decay_mult=0.0),
+                       }),
 )
 
 # learning policy
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-3,
-        by_epoch=True,
-        begin=0,
-        end=5,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=295,
-        eta_min=1e-5,
-        by_epoch=True,
-        begin=5,
-        end=300)
+    dict(type='LinearLR',
+         start_factor=1e-3,
+         by_epoch=True,
+         begin=0,
+         end=5,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=295,
+         eta_min=1e-5,
+         by_epoch=True,
+         begin=5,
+         end=300)
 ]
 
 # train, val, test setting

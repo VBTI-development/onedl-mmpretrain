@@ -16,7 +16,6 @@ def is_pow2n(x):
 
 class ConvBlock2x(BaseModule):
     """The definition of convolution block."""
-
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -48,7 +47,6 @@ class ConvBlock2x(BaseModule):
 
 class DecoderConvModule(BaseModule):
     """The convolution module of decoder with upsampling."""
-
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -70,22 +68,20 @@ class DecoderConvModule(BaseModule):
                f'{scale_factor}.'
 
         padding = (kernel_size - scale_factor) // 2
-        self.upsample = nn.ConvTranspose2d(
-            in_channels,
-            in_channels,
-            kernel_size=kernel_size,
-            stride=scale_factor,
-            padding=padding,
-            bias=True)
+        self.upsample = nn.ConvTranspose2d(in_channels,
+                                           in_channels,
+                                           kernel_size=kernel_size,
+                                           stride=scale_factor,
+                                           padding=padding,
+                                           bias=True)
 
         conv_blocks_list = [
-            ConvBlock2x(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                mid_channels=mid_channels,
-                norm_cfg=norm_cfg,
-                last_act=last_act,
-                act_cfg=act_cfg) for _ in range(num_conv_blocks)
+            ConvBlock2x(in_channels=in_channels,
+                        out_channels=out_channels,
+                        mid_channels=mid_channels,
+                        norm_cfg=norm_cfg,
+                        last_act=last_act,
+                        act_cfg=act_cfg) for _ in range(num_conv_blocks)
         ]
         self.conv_blocks = nn.Sequential(*conv_blocks_list)
 
@@ -116,7 +112,6 @@ class SparKLightDecoder(BaseModule):
             `DecoderConvModule`. Defaults to False.
         init_cfg (dict or list[dict], optional): Initialization config dict.
     """
-
     def __init__(
         self,
         feature_dim: int,
@@ -131,10 +126,9 @@ class SparKLightDecoder(BaseModule):
         init_cfg: Optional[dict] = [
             dict(type='Kaiming', layer=['Conv2d', 'ConvTranspose2d']),
             dict(type='TruncNormal', std=0.02, layer=['Linear']),
-            dict(
-                type='Constant',
-                val=1,
-                layer=['_BatchNorm', 'LayerNorm', 'SyncBatchNorm'])
+            dict(type='Constant',
+                 val=1,
+                 layer=['_BatchNorm', 'LayerNorm', 'SyncBatchNorm'])
         ],
     ):
         super().__init__(init_cfg=init_cfg)
@@ -157,8 +151,11 @@ class SparKLightDecoder(BaseModule):
                 last_act=last_act)
             for (c_in, c_out) in zip(channels[:-1], channels[1:])
         ])
-        self.proj = nn.Conv2d(
-            channels[-1], 3, kernel_size=1, stride=1, bias=True)
+        self.proj = nn.Conv2d(channels[-1],
+                              3,
+                              kernel_size=1,
+                              stride=1,
+                              bias=True)
 
     def forward(self, to_dec):
         x = 0

@@ -26,20 +26,17 @@ def check_norm_state(modules, train_state):
 
 
 class TestMLPMixer(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            arch='b',
-            img_size=224,
-            patch_size=16,
-            drop_rate=0.1,
-            init_cfg=[
-                dict(
-                    type='Kaiming',
-                    layer='Conv2d',
-                    mode='fan_in',
-                    nonlinearity='linear')
-            ])
+        self.cfg = dict(arch='b',
+                        img_size=224,
+                        patch_size=16,
+                        drop_rate=0.1,
+                        init_cfg=[
+                            dict(type='Kaiming',
+                                 layer='Conv2d',
+                                 mode='fan_in',
+                                 nonlinearity='linear')
+                        ])
 
     def test_arch(self):
         # Test invalid default arch
@@ -77,11 +74,10 @@ class TestMLPMixer(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = MlpMixer(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()

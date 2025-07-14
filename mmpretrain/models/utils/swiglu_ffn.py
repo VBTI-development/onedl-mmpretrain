@@ -13,7 +13,8 @@ from .norm import build_norm_layer
 class SwiGLUFFN(nn.Module):
     """SwiGLU FFN layer.
 
-    Modified from https://github.com/facebookresearch/dinov2/blob/main/dinov2/layers/swiglu_ffn.py
+    Modified from
+    https://github.com/facebookresearch/dinov2/blob/main/dinov2/layers/swiglu_ffn.py
     """  # noqa
 
     def __init__(
@@ -75,7 +76,8 @@ class SwiGLUFFN(nn.Module):
 class SwiGLUFFNFused(SwiGLUFFN):
     """SwiGLU FFN layer with fusing.
 
-    Modified from https://github.com/facebookresearch/dinov2/blob/main/dinov2/layers/swiglu_ffn.py
+    Modified from
+    https://github.com/facebookresearch/dinov2/blob/main/dinov2/layers/swiglu_ffn.py
     """  # noqa
 
     def __init__(

@@ -8,9 +8,8 @@ Describe the image in detail. ASSISTANT:'''
 # model settings
 model = dict(
     type='Llava',
-    tokenizer=dict(
-        type='AutoTokenizer',
-        name_or_path='liuhaotian/LLaVA-Lightning-7B-delta-v1-1'),
+    tokenizer=dict(type='AutoTokenizer',
+                   name_or_path='liuhaotian/LLaVA-Lightning-7B-delta-v1-1'),
     vision_encoder=dict(
         type='VisionTransformer',
         arch='l',
@@ -22,7 +21,8 @@ model = dict(
         final_norm=False,
         out_type='raw',
         pretrained=(
-            'https://download.openmmlab.com/mmclassification/v0/clip/'
+            'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/'
+            'mmclassification/v0/clip/'
             'vit-large-p14_clip-openai-pre_3rdparty_20230517-95e2af0b.pth'),
     ),
     mm_hidden_size=1024,
@@ -48,11 +48,10 @@ data_preprocessor = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(
-        type='Resize',
-        scale=(image_size, image_size),
-        interpolation='bicubic',
-        backend='pillow'),
+    dict(type='Resize',
+         scale=(image_size, image_size),
+         interpolation='bicubic',
+         backend='pillow'),
     dict(type='PackInputs', meta_keys=['image_id']),
 ]
 

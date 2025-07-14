@@ -43,14 +43,15 @@ def test_mae():
         mlp_ratio=4.,
     )
     loss = dict(type='PixelReconstructionLoss', criterion='L2')
-    head = dict(
-        type='MAEPretrainHead', norm_pix=False, patch_size=16, loss=loss)
+    head = dict(type='MAEPretrainHead',
+                norm_pix=False,
+                patch_size=16,
+                loss=loss)
 
-    alg = MAE(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        data_preprocessor=data_preprocessor)
+    alg = MAE(backbone=backbone,
+              neck=neck,
+              head=head,
+              data_preprocessor=data_preprocessor)
 
     fake_data = {
         'inputs': torch.randn((2, 3, 224, 224)),

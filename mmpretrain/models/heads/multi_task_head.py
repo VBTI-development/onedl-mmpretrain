@@ -10,7 +10,6 @@ from mmpretrain.structures import MultiTaskDataSample
 
 
 def loss_convertor(loss_func, task_name):
-
     def wrapped(inputs, data_samples, **kwargs):
         mask = torch.empty(len(data_samples), dtype=torch.bool)
         task_data_samples = []
@@ -55,7 +54,6 @@ class MultiTaskHead(BaseModule):
         init_cfg (dict, optional): The extra initialization settings.
             Defaults to None.
     """
-
     def __init__(self, task_heads, init_cfg=None, **kwargs):
         super(MultiTaskHead, self).__init__(init_cfg=init_cfg)
 
@@ -140,10 +138,9 @@ class MultiTaskHead(BaseModule):
 
         for task_name, task_samples in predictions_dict.items():
             for data_sample, task_sample in zip(data_samples, task_samples):
-                task_sample.set_field(
-                    task_name in data_sample.tasks,
-                    'eval_mask',
-                    field_type='metainfo')
+                task_sample.set_field(task_name in data_sample.tasks,
+                                      'eval_mask',
+                                      field_type='metainfo')
 
                 if task_name in data_sample.tasks:
                     data_sample.get(task_name).update(task_sample)

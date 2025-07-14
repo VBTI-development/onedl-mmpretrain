@@ -69,7 +69,7 @@ python tools/train.py configs/mobileone/mobileone-s0_8xb32_in1k.py
 Test:
 
 ```shell
-python tools/test.py configs/mobileone/mobileone-s0_8xb32_in1k.py https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.pth
+python tools/test.py configs/mobileone/mobileone-s0_8xb32_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.pth
 ```
 
 <!-- [TABS-END] -->
@@ -80,11 +80,11 @@ python tools/test.py configs/mobileone/mobileone-s0_8xb32_in1k.py https://downlo
 
 | Model                     |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                |                                          Download                                          |
 | :------------------------ | :----------: | :--------: | :-------: | :-------: | :-------: | :----------------------------------: | :----------------------------------------------------------------------------------------: |
-| `mobileone-s0_8xb32_in1k` | From scratch |    2.08    |   0.27    |   71.34   |   89.87   | [config](mobileone-s0_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.json) |
-| `mobileone-s1_8xb32_in1k` | From scratch |    4.76    |   0.82    |   75.72   |   92.54   | [config](mobileone-s1_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s1_8xb32_in1k_20221110-ceeef467.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s1_8xb32_in1k_20221110-ceeef467.json) |
-| `mobileone-s2_8xb32_in1k` | From scratch |    7.81    |   1.30    |   77.37   |   93.34   | [config](mobileone-s2_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s2_8xb32_in1k_20221110-9c7ecb97.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s2_8xb32_in1k_20221110-9c7ecb97.json) |
-| `mobileone-s3_8xb32_in1k` | From scratch |   10.08    |   1.89    |   78.06   |   93.83   | [config](mobileone-s3_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s3_8xb32_in1k_20221110-c95eb3bf.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s3_8xb32_in1k_20221110-c95eb3bf.json) |
-| `mobileone-s4_8xb32_in1k` | From scratch |   14.84    |   2.98    |   79.69   |   94.46   | [config](mobileone-s4_8xb32_in1k.py) | [model](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s4_8xb32_in1k_20221110-28d888cb.pth) \| [log](https://download.openmmlab.com/mmclassification/v0/mobileone/mobileone-s4_8xb32_in1k_20221110-28d888cb.json) |
+| `mobileone-s0_8xb32_in1k` | From scratch |    2.08    |   0.27    |   71.34   |   89.87   | [config](mobileone-s0_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s0_8xb32_in1k_20221110-0bc94952.json) |
+| `mobileone-s1_8xb32_in1k` | From scratch |    4.76    |   0.82    |   75.72   |   92.54   | [config](mobileone-s1_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s1_8xb32_in1k_20221110-ceeef467.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s1_8xb32_in1k_20221110-ceeef467.json) |
+| `mobileone-s2_8xb32_in1k` | From scratch |    7.81    |   1.30    |   77.37   |   93.34   | [config](mobileone-s2_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s2_8xb32_in1k_20221110-9c7ecb97.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s2_8xb32_in1k_20221110-9c7ecb97.json) |
+| `mobileone-s3_8xb32_in1k` | From scratch |   10.08    |   1.89    |   78.06   |   93.83   | [config](mobileone-s3_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s3_8xb32_in1k_20221110-c95eb3bf.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s3_8xb32_in1k_20221110-c95eb3bf.json) |
+| `mobileone-s4_8xb32_in1k` | From scratch |   14.84    |   2.98    |   79.69   |   94.46   | [config](mobileone-s4_8xb32_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s4_8xb32_in1k_20221110-28d888cb.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobileone/mobileone-s4_8xb32_in1k_20221110-28d888cb.json) |
 
 ## Citation
 

@@ -62,8 +62,10 @@ class BEiTV2Neck(BaseModule):
         layer_scale_init_value: float = 0.1,
         use_rel_pos_bias: bool = False,
         norm_cfg: dict = dict(type='LN', eps=1e-6),
-        init_cfg: Optional[Union[dict, List[dict]]] = dict(
-            type='TruncNormal', layer='Linear', std=0.02, bias=0)
+        init_cfg: Optional[Union[dict, List[dict]]] = dict(type='TruncNormal',
+                                                           layer='Linear',
+                                                           std=0.02,
+                                                           bias=0)
     ) -> None:
         super().__init__(init_cfg=init_cfg)
 
@@ -90,17 +92,16 @@ class BEiTV2Neck(BaseModule):
 
         self.patch_aggregation = nn.ModuleList()
         for i in range(early_layers, early_layers + num_layers):
-            _layer_cfg = dict(
-                embed_dims=self.arch_settings['embed_dims'],
-                num_heads=self.arch_settings['num_heads'],
-                feedforward_channels=self.
-                arch_settings['feedforward_channels'],
-                drop_rate=drop_rate,
-                drop_path_rate=dpr[i],
-                norm_cfg=norm_cfg,
-                layer_scale_init_value=layer_scale_init_value,
-                window_size=None,
-                use_rel_pos_bias=use_rel_pos_bias)
+            _layer_cfg = dict(embed_dims=self.arch_settings['embed_dims'],
+                              num_heads=self.arch_settings['num_heads'],
+                              feedforward_channels=self.
+                              arch_settings['feedforward_channels'],
+                              drop_rate=drop_rate,
+                              drop_path_rate=dpr[i],
+                              norm_cfg=norm_cfg,
+                              layer_scale_init_value=layer_scale_init_value,
+                              window_size=None,
+                              use_rel_pos_bias=use_rel_pos_bias)
             self.patch_aggregation.append(
                 BEiTTransformerEncoderLayer(**_layer_cfg))
 
@@ -112,7 +113,6 @@ class BEiTV2Neck(BaseModule):
 
     def rescale_patch_aggregation_init_weight(self):
         """Rescale the initialized weights."""
-
         def rescale(param, layer_id):
             param.div_(math.sqrt(2.0 * layer_id))
 

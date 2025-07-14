@@ -12,16 +12,14 @@ from mmengine.optim import MultiStepLR
 
 # model settings
 model.merge(
-    dict(
-        head=dict(
-            _delete_=True,
-            type=StackedLinearClsHead,
-            num_classes=10,
-            in_channels=576,
-            mid_channels=[1280],
-            act_cfg=dict(type=Hardswish),
-            loss=dict(type=CrossEntropyLoss, loss_weight=1.0),
-            topk=(1, 5))))
+    dict(head=dict(_delete_=True,
+                   type=StackedLinearClsHead,
+                   num_classes=10,
+                   in_channels=576,
+                   mid_channels=[1280],
+                   act_cfg=dict(type=Hardswish),
+                   loss=dict(type=CrossEntropyLoss, loss_weight=1.0),
+                   topk=(1, 5))))
 # schedule settings
 param_scheduler.merge(
     dict(

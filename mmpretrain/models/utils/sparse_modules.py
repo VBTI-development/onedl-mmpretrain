@@ -31,8 +31,8 @@ class SparseHelper:
         x = super(type(self), self).forward(x)
 
         # (b, c, h, w) *= (b, 1, h, w), mask the output of conv
-        x *= SparseHelper._get_active_map_or_index(
-            H=x.shape[2], returning_active_map=True)
+        x *= SparseHelper._get_active_map_or_index(H=x.shape[2],
+                                                   returning_active_map=True)
         return x
 
     @staticmethod
@@ -100,7 +100,6 @@ class SparseSyncBatchNorm2d(nn.SyncBatchNorm):
 @MODELS.register_module('SparseLN2d')
 class SparseLayerNorm2D(nn.LayerNorm):
     """Implementation of sparse LayerNorm on channels for 2d images."""
-
     def forward(self,
                 x: torch.Tensor,
                 data_format='channel_first') -> torch.Tensor:

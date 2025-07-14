@@ -86,16 +86,14 @@ def parse_args():
         help='If not None, used for naming the `{model_name}.mar`'
         'file that will be created under `output_folder`.'
         'If None, `{Path(checkpoint_file).stem}` will be used.')
-    parser.add_argument(
-        '--model-version',
-        type=str,
-        default='1.0',
-        help='Number used for versioning.')
-    parser.add_argument(
-        '-f',
-        '--force',
-        action='store_true',
-        help='overwrite the existing `{model_name}.mar`')
+    parser.add_argument('--model-version',
+                        type=str,
+                        default='1.0',
+                        help='Number used for versioning.')
+    parser.add_argument('-f',
+                        '--force',
+                        action='store_true',
+                        help='overwrite the existing `{model_name}.mar`')
     args = parser.parse_args()
 
     return args

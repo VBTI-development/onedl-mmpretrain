@@ -12,7 +12,6 @@ from .cls_head import ClsHead
 
 class LinearBlock(BaseModule):
     """Linear block for StackedLinearClsHead."""
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -62,7 +61,6 @@ class StackedLinearClsHead(ClsHead):
         act_cfg (dict, optional): Config dict of activation function after each
             hidden layer, except the last layer. Defaults to use "ReLU".
     """
-
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
@@ -95,21 +93,19 @@ class StackedLinearClsHead(ClsHead):
         in_channels = self.in_channels
         for hidden_channels in self.mid_channels:
             self.layers.append(
-                LinearBlock(
-                    in_channels,
-                    hidden_channels,
-                    dropout_rate=self.dropout_rate,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg))
+                LinearBlock(in_channels,
+                            hidden_channels,
+                            dropout_rate=self.dropout_rate,
+                            norm_cfg=self.norm_cfg,
+                            act_cfg=self.act_cfg))
             in_channels = hidden_channels
 
         self.layers.append(
-            LinearBlock(
-                self.mid_channels[-1],
-                self.num_classes,
-                dropout_rate=0.,
-                norm_cfg=None,
-                act_cfg=None))
+            LinearBlock(self.mid_channels[-1],
+                        self.num_classes,
+                        dropout_rate=0.,
+                        norm_cfg=None,
+                        act_cfg=None))
 
     def pre_logits(self, feats: Tuple[torch.Tensor]) -> torch.Tensor:
         """The process before the final classification head.

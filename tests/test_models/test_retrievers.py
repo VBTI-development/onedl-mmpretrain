@@ -17,14 +17,13 @@ from mmpretrain.structures import DataSample
 
 
 class ExampleDataset(Dataset):
-
     def __init__(self):
         self.metainfo = None
         self.pipe = PackInputs()
 
     def __getitem__(self, idx):
-        results = dict(
-            img=np.random.random((64, 64, 3)), meta=dict(sampleidx=idx))
+        results = dict(img=np.random.random((64, 64, 3)),
+                       meta=dict(sampleidx=idx))
 
         return self.pipe(results)
 
@@ -39,11 +38,10 @@ class TestImageToImageRetriever(TestCase):
             dict(type='ResNet', depth=18, out_indices=(3, )),
             dict(type='GlobalAveragePooling'),
         ],
-        head=dict(
-            type='LinearClsHead',
-            num_classes=10,
-            in_channels=512,
-            loss=dict(type='CrossEntropyLoss')),
+        head=dict(type='LinearClsHead',
+                  num_classes=10,
+                  in_channels=512,
+                  loss=dict(type='CrossEntropyLoss')),
         prototype=torch.rand((10, 512)),
     )
 
@@ -72,16 +70,14 @@ class TestImageToImageRetriever(TestCase):
         self.assertEqual(type(model.prototype), DataLoader)
 
         # test prototype is dataloader
-        loader_cfg = dict(
-            batch_size=16,
-            num_workers=2,
-            dataset=dict(
-                type='CIFAR100',
-                data_prefix='data/cifar100',
-                test_mode=False,
-                pipeline=[]),
-            sampler=dict(type='DefaultSampler', shuffle=True),
-            persistent_workers=True)
+        loader_cfg = dict(batch_size=16,
+                          num_workers=2,
+                          dataset=dict(type='CIFAR100',
+                                       data_prefix='data/cifar100',
+                                       test_mode=False,
+                                       pipeline=[]),
+                          sampler=dict(type='DefaultSampler', shuffle=True),
+                          persistent_workers=True)
         cfg = {**self.DEFAULT_ARGS, 'prototype': loader_cfg}
         model = MODELS.build(cfg)
         self.assertEqual(type(model.prototype), dict)

@@ -8,8 +8,7 @@ _base_ = [
 
 model = dict(
     type='ImageClassifier',
-    backbone=dict(
-        img_size=384,
-        window_size=[24, 24, 24, 12],
-        pretrained_window_sizes=[12, 12, 12, 6]),
+    backbone=dict(img_size=384,
+                  window_size=[24, 24, 24, 12],
+                  pretrained_window_sizes=[12, 12, 12, 6]),
 )

@@ -68,8 +68,11 @@ def test_mobilenetv2_invertedresidual():
     assert x_out.shape == torch.Size((1, 24, 56, 56))
 
     # Test InvertedResidual with act_cfg=dict(type='ReLU')
-    block = InvertedResidual(
-        16, 24, stride=1, expand_ratio=6, act_cfg=dict(type='ReLU'))
+    block = InvertedResidual(16,
+                             24,
+                             stride=1,
+                             expand_ratio=6,
+                             act_cfg=dict(type='ReLU'))
     x = torch.randn(1, 16, 56, 56)
     x_out = block(x)
     assert x_out.shape == torch.Size((1, 24, 56, 56))
@@ -169,8 +172,9 @@ def test_mobilenetv2_backbone():
     assert feat[0].shape == torch.Size((1, 1280, 7, 7))
 
     # Test MobileNetV2 forward with dict(type='ReLU')
-    model = MobileNetV2(
-        widen_factor=1.0, act_cfg=dict(type='ReLU'), out_indices=range(0, 7))
+    model = MobileNetV2(widen_factor=1.0,
+                        act_cfg=dict(type='ReLU'),
+                        out_indices=range(0, 7))
     model.init_weights()
     model.train()
 
@@ -205,10 +209,11 @@ def test_mobilenetv2_backbone():
     assert feat[6].shape == torch.Size((1, 320, 7, 7))
 
     # Test MobileNetV2 with GroupNorm forward
-    model = MobileNetV2(
-        widen_factor=1.0,
-        norm_cfg=dict(type='GN', num_groups=2, requires_grad=True),
-        out_indices=range(0, 7))
+    model = MobileNetV2(widen_factor=1.0,
+                        norm_cfg=dict(type='GN',
+                                      num_groups=2,
+                                      requires_grad=True),
+                        out_indices=range(0, 7))
     for m in model.modules():
         if is_norm(m):
             assert isinstance(m, GroupNorm)
@@ -239,8 +244,9 @@ def test_mobilenetv2_backbone():
     assert feat[2].shape == torch.Size((1, 96, 14, 14))
 
     # Test MobileNetV2 with checkpoint forward
-    model = MobileNetV2(
-        widen_factor=1.0, with_cp=True, out_indices=range(0, 7))
+    model = MobileNetV2(widen_factor=1.0,
+                        with_cp=True,
+                        out_indices=range(0, 7))
     for m in model.modules():
         if is_block(m):
             assert m.with_cp

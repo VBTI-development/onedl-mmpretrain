@@ -23,7 +23,6 @@ class PatchSplit(nn.Module):
         norm_cfg (dict): Config dict for normalization layer.
                 Defaults to ``dict(type='LN')``.
     """
-
     def __init__(self, dim, fpn_dim, norm_cfg):
         super().__init__()
         _, self.norm = build_norm_layer(norm_cfg, dim)
@@ -69,7 +68,6 @@ class iTPNPretrainDecoder(BaseModule):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
-
     def __init__(self,
                  num_patches: int = 196,
                  patch_size: int = 16,
@@ -134,22 +132,22 @@ class iTPNPretrainDecoder(BaseModule):
                 ))
 
         if reconstruction_type == 'pixel':
-            self.mask_token = nn.Parameter(
-                torch.zeros(1, 1, decoder_embed_dim))
+            self.mask_token = nn.Parameter(torch.zeros(1, 1,
+                                                       decoder_embed_dim))
 
             # create new position embedding, different from that in encoder
             # and is not learnable
-            self.decoder_pos_embed = nn.Parameter(
-                torch.zeros(1, self.num_patches, decoder_embed_dim),
-                requires_grad=False)
+            self.decoder_pos_embed = nn.Parameter(torch.zeros(
+                1, self.num_patches, decoder_embed_dim),
+                                                  requires_grad=False)
 
             self.decoder_blocks = nn.ModuleList([
-                TransformerEncoderLayer(
-                    decoder_embed_dim,
-                    decoder_num_heads,
-                    int(mlp_ratio * decoder_embed_dim),
-                    qkv_bias=True,
-                    norm_cfg=norm_cfg) for _ in range(decoder_depth)
+                TransformerEncoderLayer(decoder_embed_dim,
+                                        decoder_num_heads,
+                                        int(mlp_ratio * decoder_embed_dim),
+                                        qkv_bias=True,
+                                        norm_cfg=norm_cfg)
+                for _ in range(decoder_depth)
             ])
 
             self.decoder_norm_name, decoder_norm = build_norm_layer(
@@ -159,8 +157,9 @@ class iTPNPretrainDecoder(BaseModule):
             # Used to map features to pixels
             if predict_feature_dim is None:
                 predict_feature_dim = patch_size**2 * in_chans
-            self.decoder_pred = nn.Linear(
-                decoder_embed_dim, predict_feature_dim, bias=True)
+            self.decoder_pred = nn.Linear(decoder_embed_dim,
+                                          predict_feature_dim,
+                                          bias=True)
         else:
             _, norm = build_norm_layer(norm_cfg, embed_dim)
             self.add_module('norm', norm)
@@ -186,18 +185,17 @@ class iTPNPretrainDecoder(BaseModule):
                 self.align_dim_16tofpn = None
             self.fpn_modules = nn.ModuleList()
             self.fpn_modules.append(
-                BlockWithRPE(
-                    Hp,
-                    fpn_dim,
-                    0,
-                    mlp_ratio,
-                    qkv_bias,
-                    qk_scale,
-                    drop=drop_rate,
-                    attn_drop=attn_drop_rate,
-                    drop_path=0.,
-                    rpe=rpe,
-                    norm_cfg=norm_cfg))
+                BlockWithRPE(Hp,
+                             fpn_dim,
+                             0,
+                             mlp_ratio,
+                             qkv_bias,
+                             qk_scale,
+                             drop=drop_rate,
+                             attn_drop=attn_drop_rate,
+                             drop_path=0.,
+                             rpe=rpe,
+                             norm_cfg=norm_cfg))
             self.fpn_modules.append(
                 BlockWithRPE(
                     Hp,
@@ -213,8 +211,9 @@ class iTPNPretrainDecoder(BaseModule):
                     norm_cfg=norm_cfg,
                 ))
 
-            self.align_dim_16to8 = nn.Linear(
-                mlvl_dims['8'], fpn_dim, bias=False)
+            self.align_dim_16to8 = nn.Linear(mlvl_dims['8'],
+                                             fpn_dim,
+                                             bias=False)
             self.split_16to8 = PatchSplit(mlvl_dims['16'], fpn_dim, norm_cfg)
             self.block_16to8 = nn.Sequential(*[
                 BlockWithRPE(
@@ -233,8 +232,9 @@ class iTPNPretrainDecoder(BaseModule):
             ])
 
         if num_outs > 2:
-            self.align_dim_8to4 = nn.Linear(
-                mlvl_dims['4'], fpn_dim, bias=False)
+            self.align_dim_8to4 = nn.Linear(mlvl_dims['4'],
+                                            fpn_dim,
+                                            bias=False)
             self.split_8to4 = PatchSplit(fpn_dim, fpn_dim, norm_cfg)
             self.block_8to4 = nn.Sequential(*[
                 BlockWithRPE(
@@ -252,18 +252,17 @@ class iTPNPretrainDecoder(BaseModule):
                 ) for _ in range(fpn_depth)
             ])
             self.fpn_modules.append(
-                BlockWithRPE(
-                    Hp,
-                    fpn_dim,
-                    0,
-                    mlp_ratio,
-                    qkv_bias,
-                    qk_scale,
-                    drop=drop_rate,
-                    attn_drop=attn_drop_rate,
-                    drop_path=0.,
-                    rpe=rpe,
-                    norm_cfg=norm_cfg))
+                BlockWithRPE(Hp,
+                             fpn_dim,
+                             0,
+                             mlp_ratio,
+                             qkv_bias,
+                             qk_scale,
+                             drop=drop_rate,
+                             attn_drop=attn_drop_rate,
+                             drop_path=0.,
+                             rpe=rpe,
+                             norm_cfg=norm_cfg))
 
     def init_weights(self) -> None:
         """Initialize position embedding and mask token of MAE decoder."""
@@ -282,7 +281,6 @@ class iTPNPretrainDecoder(BaseModule):
 
     def rescale_init_weight(self) -> None:
         """Rescale the initialized weights."""
-
         def rescale(param, layer_id):
             param.div_(math.sqrt(2.0 * layer_id))
 
@@ -357,10 +355,10 @@ class iTPNPretrainDecoder(BaseModule):
                 mask_tokens = self.mask_token.repeat(
                     x.shape[0], ids_restore.shape[1] + 1 - x.shape[1], 1)
                 x = torch.cat([x, mask_tokens], dim=1)
-                x = torch.gather(
-                    x,
-                    dim=1,
-                    index=ids_restore.unsqueeze(-1).repeat(1, 1, x.shape[2]))
+                x = torch.gather(x,
+                                 dim=1,
+                                 index=ids_restore.unsqueeze(-1).repeat(
+                                     1, 1, x.shape[2]))
                 feats.append(x)
             x = feats.pop(0)
             # add pos embed

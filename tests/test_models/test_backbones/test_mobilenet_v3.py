@@ -97,9 +97,10 @@ def test_mobilenetv3_backbone():
     assert feat[12].shape == torch.Size([1, 576, 7, 7])
 
     # Test MobileNetV3 forward with small arch and GroupNorm
-    model = MobileNetV3(
-        out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
-        norm_cfg=dict(type='GN', num_groups=2, requires_grad=True))
+    model = MobileNetV3(out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12),
+                        norm_cfg=dict(type='GN',
+                                      num_groups=2,
+                                      requires_grad=True))
     for m in model.modules():
         if is_norm(m):
             assert isinstance(m, GroupNorm)
@@ -124,9 +125,9 @@ def test_mobilenetv3_backbone():
     assert feat[12].shape == torch.Size([1, 576, 7, 7])
 
     # Test MobileNetV3 forward with large arch
-    model = MobileNetV3(
-        arch='large',
-        out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16))
+    model = MobileNetV3(arch='large',
+                        out_indices=(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12,
+                                     13, 14, 15, 16))
     model.init_weights()
     model.train()
 

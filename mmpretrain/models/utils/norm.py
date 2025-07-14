@@ -18,7 +18,6 @@ class GRN(nn.Module):
         eps (float): a value added to the denominator for numerical stability.
             Defaults to 1e-6.
     """
-
     def __init__(self, in_channels, eps=1e-6):
         super().__init__()
         self.in_channels = in_channels
@@ -60,7 +59,6 @@ class LayerNorm2d(nn.LayerNorm):
             this module has learnable per-element affine parameters initialized
             to ones (for weights) and zeros (for biases). Defaults to True.
     """
-
     def __init__(self, num_channels: int, **kwargs) -> None:
         super().__init__(num_channels, **kwargs)
         self.num_channels = self.normalized_shape[0]

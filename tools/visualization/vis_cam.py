@@ -1,8 +1,8 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import argparse
 import copy
+import importlib.metadata
 import math
-import pkg_resources
 from functools import partial
 from pathlib import Path
 
@@ -52,16 +52,14 @@ def parse_args():
         'specify the norm layer in the last block. Backbones '
         'implemented by users are recommended to manually specify'
         ' target layers in commmad statement.')
-    parser.add_argument(
-        '--preview-model',
-        default=False,
-        action='store_true',
-        help='To preview all the model layers')
-    parser.add_argument(
-        '--method',
-        default='GradCAM',
-        help='Type of method to use, supports '
-        f'{", ".join(list(METHOD_MAP.keys()))}.')
+    parser.add_argument('--preview-model',
+                        default=False,
+                        action='store_true',
+                        help='To preview all the model layers')
+    parser.add_argument('--method',
+                        default='GradCAM',
+                        help='Type of method to use, supports '
+                        f'{", ".join(list(METHOD_MAP.keys()))}.')
     parser.add_argument(
         '--target-category',
         default=[],
@@ -73,7 +71,7 @@ def parse_args():
         '--eigen-smooth',
         default=False,
         action='store_true',
-        help='Reduce noise by taking the first principle componenet of '
+        help='Reduce noise by taking the first principle component of '
         '``cam_weights*activations``')
     parser.add_argument(
         '--aug-smooth',
@@ -85,10 +83,9 @@ def parse_args():
         type=Path,
         help='The path to save visualize cam image, default not to save.')
     parser.add_argument('--device', default='cpu', help='Device to use cpu')
-    parser.add_argument(
-        '--vit-like',
-        action='store_true',
-        help='Whether the network is a ViT-like network.')
+    parser.add_argument('--vit-like',
+                        action='store_true',
+                        help='Whether the network is a ViT-like network.')
     parser.add_argument(
         '--num-extra-tokens',
         type=int,
@@ -150,7 +147,9 @@ def init_cam(method, model, target_layers, use_cuda, reshape_transform):
     mmpretrain, here we modify the ActivationsAndGradients object."""
     GradCAM_Class = METHOD_MAP[method.lower()]
     cam = GradCAM_Class(
-        model=model, target_layers=target_layers, use_cuda=use_cuda)
+        model=model,
+        target_layers=target_layers,
+    )
     # Release the original hooks in ActivationsAndGradients to use
     # ActivationsAndGradients.
     cam.activations_and_grads.release()
@@ -161,7 +160,7 @@ def init_cam(method, model, target_layers, use_cuda, reshape_transform):
 
 
 def get_layer(layer_str, model):
-    """get model layer from given str."""
+    """Get model layer from given str."""
     for name, layer in model.named_modules():
         if name == layer_str:
             return layer
@@ -171,11 +170,12 @@ def get_layer(layer_str, model):
 
 
 def show_cam_grad(grayscale_cam, src_img, title, out_path=None):
-    """fuse src_img and grayscale_cam and show or save."""
+    """Fuse src_img and grayscale_cam and show or save."""
     grayscale_cam = grayscale_cam[0, :]
     src_img = np.float32(src_img) / 255
-    visualization_img = show_cam_on_image(
-        src_img, grayscale_cam, use_rgb=False)
+    visualization_img = show_cam_on_image(src_img,
+                                          grayscale_cam,
+                                          use_rgb=False)
 
     if out_path:
         mmcv.imwrite(visualization_img, str(out_path))
@@ -184,7 +184,7 @@ def show_cam_grad(grayscale_cam, src_img, title, out_path=None):
 
 
 def get_default_target_layers(model, args):
-    """get default target layers from given model, here choose nrom type layer
+    """Get default target layers from given model, here choose nrom type layer
     as default target layer."""
     norm_layers = [
         (name, layer)
@@ -228,7 +228,7 @@ def main():
         print('\n Please remove `--preview-model` to get the CAM.')
         return
 
-    # apply transform and perpare data
+    # apply transform and prepare data
     transforms = Compose(
         [TRANSFORMS.build(t) for t in cfg.test_dataloader.dataset.pipeline])
     data = transforms({'img_path': args.img})
@@ -252,7 +252,10 @@ def main():
     # to fix the bug in #654.
     targets = None
     if args.target_category:
-        grad_cam_v = pkg_resources.get_distribution('grad_cam').version
+        try:
+            grad_cam_v = importlib.metadata.version('grad-cam')
+        except importlib.metadata.PackageNotFoundError:
+            grad_cam_v = '0.0.0'
         if digit_version(grad_cam_v) >= digit_version('1.3.7'):
             from pytorch_grad_cam.utils.model_targets import \
                 ClassifierOutputTarget
@@ -261,13 +264,14 @@ def main():
             targets = args.target_category
 
     # calculate cam grads and show|save the visualization image
-    grayscale_cam = cam(
-        data['inputs'],
-        targets,
-        eigen_smooth=args.eigen_smooth,
-        aug_smooth=args.aug_smooth)
-    show_cam_grad(
-        grayscale_cam, src_img, title=args.method, out_path=args.save_path)
+    grayscale_cam = cam(data['inputs'],
+                        targets,
+                        eigen_smooth=args.eigen_smooth,
+                        aug_smooth=args.aug_smooth)
+    show_cam_grad(grayscale_cam,
+                  src_img,
+                  title=args.method,
+                  out_path=args.save_path)
 
 
 if __name__ == '__main__':

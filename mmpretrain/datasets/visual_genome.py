@@ -30,7 +30,6 @@ class VisualGenomeQA(BaseDataset):
             validation. Defaults to ``"question_answers.json"``.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
-
     def __init__(self,
                  data_root: str,
                  data_prefix: str = 'image',

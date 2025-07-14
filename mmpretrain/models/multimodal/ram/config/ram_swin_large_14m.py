@@ -15,10 +15,9 @@ def get_ram_cfg(mode='normal'):
     model_type = 'RAMNormal' if mode == 'normal' else 'RAMOpenset'
     model_cfg = dict(
         type=model_type,
-        tokenizer=dict(
-            type='BertTokenizer',
-            name_or_path='/public/DATA/qbw/ckpt/bert-base-uncased',
-            use_fast=False),
+        tokenizer=dict(type='BertTokenizer',
+                       name_or_path='/public/DATA/qbw/ckpt/bert-base-uncased',
+                       use_fast=False),
         vision_backbone=dict(
             type='SwinTransformer',
             arch='large',

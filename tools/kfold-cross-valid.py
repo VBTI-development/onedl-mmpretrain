@@ -29,11 +29,10 @@ def parse_args():
         formatter_class=argparse.RawDescriptionHelpFormatter,
         description=prog_description)
     parser.add_argument('config', help='train config file path')
-    parser.add_argument(
-        '--num-splits',
-        type=int,
-        help='The number of all folds.',
-        required=True)
+    parser.add_argument('--num-splits',
+                        type=int,
+                        help='The number of all folds.',
+                        required=True)
     parser.add_argument(
         '--fold',
         type=int,
@@ -41,14 +40,12 @@ def parse_args():
         'If specify, only do an experiment of the specified fold.')
     parser.add_argument('--work-dir', help='the dir to save logs and models')
     parser.add_argument('--seed', type=int, default=None, help='random seed')
-    parser.add_argument(
-        '--resume',
-        action='store_true',
-        help='Resume the previous experiment.')
-    parser.add_argument(
-        '--amp',
-        action='store_true',
-        help='enable automatic-mixed-precision training')
+    parser.add_argument('--resume',
+                        action='store_true',
+                        help='Resume the previous experiment.')
+    parser.add_argument('--amp',
+                        action='store_true',
+                        help='enable automatic-mixed-precision training')
     parser.add_argument(
         '--no-validate',
         action='store_true',
@@ -77,11 +74,10 @@ def parse_args():
         'It also allows nested list/tuple values, e.g. key="[(a,b),(c,d)]" '
         'Note that the quotation marks are necessary and that no white space '
         'is allowed.')
-    parser.add_argument(
-        '--launcher',
-        choices=['none', 'pytorch', 'slurm', 'mpi'],
-        default='none',
-        help='job launcher')
+    parser.add_argument('--launcher',
+                        choices=['none', 'pytorch', 'slurm', 'mpi'],
+                        default='none',
+                        help='job launcher')
     parser.add_argument('--local_rank', type=int, default=0)
     args = parser.parse_args()
     if 'LOCAL_RANK' not in os.environ:
@@ -201,7 +197,6 @@ def train_single_fold(cfg, num_splits, fold, resume_ckpt=None):
     runner.logger.info(f'Train dataset: \n{runner.train_dataloader.dataset}')
 
     class SaveInfoHook(Hook):
-
         def after_train_epoch(self, runner):
             last_ckpt = find_latest_checkpoint(cfg.work_dir)
             exp_info = dict(

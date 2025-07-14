@@ -45,7 +45,6 @@ class ConvNeXtBlock(BaseModule):
         As default, we use the second to align with the official repository.
         And it may be slightly faster.
     """
-
     def __init__(self,
                  in_channels,
                  dw_conv_cfg=dict(kernel_size=7, padding=3),
@@ -60,8 +59,10 @@ class ConvNeXtBlock(BaseModule):
         super().__init__()
         self.with_cp = with_cp
 
-        self.depthwise_conv = nn.Conv2d(
-            in_channels, in_channels, groups=in_channels, **dw_conv_cfg)
+        self.depthwise_conv = nn.Conv2d(in_channels,
+                                        in_channels,
+                                        groups=in_channels,
+                                        **dw_conv_cfg)
 
         self.linear_pw_conv = linear_pw_conv
         self.norm = build_norm_layer(norm_cfg, in_channels)
@@ -90,7 +91,6 @@ class ConvNeXtBlock(BaseModule):
             drop_path_rate) if drop_path_rate > 0. else nn.Identity()
 
     def forward(self, x):
-
         def _inner_forward(x):
             shortcut = x
             x = self.depthwise_conv(x)
@@ -234,14 +234,14 @@ class ConvNeXt(BaseBackbone):
                  gap_before_final_norm=True,
                  with_cp=False,
                  init_cfg=[
-                     dict(
-                         type='TruncNormal',
-                         layer=['Conv2d', 'Linear'],
-                         std=.02,
-                         bias=0.),
-                     dict(
-                         type='Constant', layer=['LayerNorm'], val=1.,
-                         bias=0.),
+                     dict(type='TruncNormal',
+                          layer=['Conv2d', 'Linear'],
+                          std=.02,
+                          bias=0.),
+                     dict(type='Constant',
+                          layer=['LayerNorm'],
+                          val=1.,
+                          bias=0.),
                  ]):
         super().__init__(init_cfg=init_cfg)
 
@@ -289,11 +289,10 @@ class ConvNeXt(BaseBackbone):
         # 4 downsample layers between stages, including the stem layer.
         self.downsample_layers = ModuleList()
         stem = nn.Sequential(
-            nn.Conv2d(
-                in_channels,
-                self.channels[0],
-                kernel_size=stem_patch_size,
-                stride=stem_patch_size),
+            nn.Conv2d(in_channels,
+                      self.channels[0],
+                      kernel_size=stem_patch_size,
+                      stride=stem_patch_size),
             build_norm_layer(norm_cfg, self.channels[0]),
         )
         self.downsample_layers.append(stem)
@@ -309,24 +308,22 @@ class ConvNeXt(BaseBackbone):
             if i >= 1:
                 downsample_layer = nn.Sequential(
                     build_norm_layer(norm_cfg, self.channels[i - 1]),
-                    nn.Conv2d(
-                        self.channels[i - 1],
-                        channels,
-                        kernel_size=2,
-                        stride=2),
+                    nn.Conv2d(self.channels[i - 1],
+                              channels,
+                              kernel_size=2,
+                              stride=2),
                 )
                 self.downsample_layers.append(downsample_layer)
 
             stage = Sequential(*[
-                ConvNeXtBlock(
-                    in_channels=channels,
-                    drop_path_rate=dpr[block_idx + j],
-                    norm_cfg=norm_cfg,
-                    act_cfg=act_cfg,
-                    linear_pw_conv=linear_pw_conv,
-                    layer_scale_init_value=layer_scale_init_value,
-                    use_grn=use_grn,
-                    with_cp=with_cp) for j in range(depth)
+                ConvNeXtBlock(in_channels=channels,
+                              drop_path_rate=dpr[block_idx + j],
+                              norm_cfg=norm_cfg,
+                              act_cfg=act_cfg,
+                              linear_pw_conv=linear_pw_conv,
+                              layer_scale_init_value=layer_scale_init_value,
+                              use_grn=use_grn,
+                              with_cp=with_cp) for j in range(depth)
             ])
             block_idx += depth
 

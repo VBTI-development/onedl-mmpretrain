@@ -41,7 +41,6 @@ class ShuffleUnit(BaseModule):
     Returns:
         Tensor: The output tensor.
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -119,7 +118,6 @@ class ShuffleUnit(BaseModule):
         return torch.cat((x, out), 1)
 
     def forward(self, x):
-
         def _inner_forward(x):
             residual = x
 
@@ -173,7 +171,6 @@ class ShuffleNetV1(BaseBackbone):
         with_cp (bool): Use checkpoint or not. Using checkpoint will save some
             memory while slowing down the training speed. Default: False.
     """
-
     def __init__(self,
                  groups=3,
                  widen_factor=1.0,
@@ -224,15 +221,14 @@ class ShuffleNetV1(BaseBackbone):
 
         self.in_channels = int(24 * widen_factor)
 
-        self.conv1 = ConvModule(
-            in_channels=3,
-            out_channels=self.in_channels,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            conv_cfg=conv_cfg,
-            norm_cfg=norm_cfg,
-            act_cfg=act_cfg)
+        self.conv1 = ConvModule(in_channels=3,
+                                out_channels=self.in_channels,
+                                kernel_size=3,
+                                stride=2,
+                                padding=1,
+                                conv_cfg=conv_cfg,
+                                norm_cfg=norm_cfg,
+                                act_cfg=act_cfg)
         self.maxpool = nn.MaxPool2d(kernel_size=3, stride=2, padding=1)
 
         self.layers = nn.ModuleList()
@@ -286,16 +282,15 @@ class ShuffleNetV1(BaseBackbone):
             first_block = first_block if i == 0 else False
             combine_mode = 'concat' if i == 0 else 'add'
             layers.append(
-                ShuffleUnit(
-                    self.in_channels,
-                    out_channels,
-                    groups=self.groups,
-                    first_block=first_block,
-                    combine=combine_mode,
-                    conv_cfg=self.conv_cfg,
-                    norm_cfg=self.norm_cfg,
-                    act_cfg=self.act_cfg,
-                    with_cp=self.with_cp))
+                ShuffleUnit(self.in_channels,
+                            out_channels,
+                            groups=self.groups,
+                            first_block=first_block,
+                            combine=combine_mode,
+                            conv_cfg=self.conv_cfg,
+                            norm_cfg=self.norm_cfg,
+                            act_cfg=self.act_cfg,
+                            with_cp=self.with_cp))
             self.in_channels = out_channels
 
         return nn.Sequential(*layers)

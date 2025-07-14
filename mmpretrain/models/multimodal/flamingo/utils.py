@@ -14,7 +14,6 @@ class ExtendModule:
             base module.
         adapter: (dict): Dict to build the adapter.
     """
-
     def __new__(cls, base: object, adapter: dict):
 
         if isinstance(base, dict):

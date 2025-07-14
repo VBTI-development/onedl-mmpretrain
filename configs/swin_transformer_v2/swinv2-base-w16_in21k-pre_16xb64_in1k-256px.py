@@ -5,9 +5,7 @@ _base_ = [
     '../_base_/default_runtime.py'
 ]
 
-model = dict(
-    type='ImageClassifier',
-    backbone=dict(
-        window_size=[16, 16, 16, 8],
-        drop_path_rate=0.2,
-        pretrained_window_sizes=[12, 12, 12, 6]))
+model = dict(type='ImageClassifier',
+             backbone=dict(window_size=[16, 16, 16, 8],
+                           drop_path_rate=0.2,
+                           pretrained_window_sizes=[12, 12, 12, 6]))

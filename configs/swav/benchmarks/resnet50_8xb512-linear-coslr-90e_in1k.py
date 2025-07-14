@@ -5,10 +5,9 @@ _base_ = [
     '../../_base_/default_runtime.py',
 ]
 
-model = dict(
-    backbone=dict(
-        frozen_stages=4,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
+model = dict(backbone=dict(
+    frozen_stages=4,
+    init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')))
 
 # dataset summary
 train_dataloader = dict(batch_size=512)

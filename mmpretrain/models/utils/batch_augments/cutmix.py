@@ -43,7 +43,6 @@ class CutMix(Mixup):
         .. math::
             \text{ratio} = \sqrt{1-\lambda}
     """
-
     def __init__(self,
                  alpha: float,
                  cutmix_minmax: Optional[List[float]] = None,
@@ -70,14 +69,12 @@ class CutMix(Mixup):
         """
         assert len(self.cutmix_minmax) == 2
         img_h, img_w = img_shape
-        cut_h = np.random.randint(
-            int(img_h * self.cutmix_minmax[0]),
-            int(img_h * self.cutmix_minmax[1]),
-            size=count)
-        cut_w = np.random.randint(
-            int(img_w * self.cutmix_minmax[0]),
-            int(img_w * self.cutmix_minmax[1]),
-            size=count)
+        cut_h = np.random.randint(int(img_h * self.cutmix_minmax[0]),
+                                  int(img_h * self.cutmix_minmax[1]),
+                                  size=count)
+        cut_w = np.random.randint(int(img_w * self.cutmix_minmax[0]),
+                                  int(img_w * self.cutmix_minmax[1]),
+                                  size=count)
         yl = np.random.randint(0, img_h - cut_h, size=count)
         xl = np.random.randint(0, img_w - cut_w, size=count)
         yu = yl + cut_h

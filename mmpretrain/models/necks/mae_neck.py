@@ -44,7 +44,6 @@ class MAEPretrainDecoder(BaseModule):
         >>> print(tuple(level_outputs.shape))
         (1, 196, 768)
     """
-
     def __init__(self,
                  num_patches: int = 196,
                  patch_size: int = 16,
@@ -68,17 +67,17 @@ class MAEPretrainDecoder(BaseModule):
 
         # create new position embedding, different from that in encoder
         # and is not learnable
-        self.decoder_pos_embed = nn.Parameter(
-            torch.zeros(1, self.num_patches + 1, decoder_embed_dim),
-            requires_grad=False)
+        self.decoder_pos_embed = nn.Parameter(torch.zeros(
+            1, self.num_patches + 1, decoder_embed_dim),
+                                              requires_grad=False)
 
         self.decoder_blocks = nn.ModuleList([
-            TransformerEncoderLayer(
-                decoder_embed_dim,
-                decoder_num_heads,
-                int(mlp_ratio * decoder_embed_dim),
-                qkv_bias=True,
-                norm_cfg=norm_cfg) for _ in range(decoder_depth)
+            TransformerEncoderLayer(decoder_embed_dim,
+                                    decoder_num_heads,
+                                    int(mlp_ratio * decoder_embed_dim),
+                                    qkv_bias=True,
+                                    norm_cfg=norm_cfg)
+            for _ in range(decoder_depth)
         ])
 
         self.decoder_norm_name, decoder_norm = build_norm_layer(
@@ -88,8 +87,9 @@ class MAEPretrainDecoder(BaseModule):
         # Used to map features to pixels
         if predict_feature_dim is None:
             predict_feature_dim = patch_size**2 * in_chans
-        self.decoder_pred = nn.Linear(
-            decoder_embed_dim, predict_feature_dim, bias=True)
+        self.decoder_pred = nn.Linear(decoder_embed_dim,
+                                      predict_feature_dim,
+                                      bias=True)
 
     def init_weights(self) -> None:
         """Initialize position embedding and mask token of MAE decoder."""
@@ -132,10 +132,10 @@ class MAEPretrainDecoder(BaseModule):
         mask_tokens = self.mask_token.repeat(
             x.shape[0], ids_restore.shape[1] + 1 - x.shape[1], 1)
         x_ = torch.cat([x[:, 1:, :], mask_tokens], dim=1)
-        x_ = torch.gather(
-            x_,
-            dim=1,
-            index=ids_restore.unsqueeze(-1).repeat(1, 1, x.shape[2]))
+        x_ = torch.gather(x_,
+                          dim=1,
+                          index=ids_restore.unsqueeze(-1).repeat(
+                              1, 1, x.shape[2]))
         x = torch.cat([x[:, :1, :], x_], dim=1)
 
         # add pos embed
@@ -170,7 +170,6 @@ class ClsBatchNormNeck(BaseModule):
         init_cfg (Dict or List[Dict], optional): Config dict for weight
             initialization. Defaults to None.
     """
-
     def __init__(self,
                  input_features: int,
                  affine: bool = False,

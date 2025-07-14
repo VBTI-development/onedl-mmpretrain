@@ -40,7 +40,7 @@ def main():
     args = parse_args()
 
     if args.metric_options is None:
-        raise ValueError('Please speicfy at least one `--metric`. '
+        raise ValueError('Please specify at least one `--metric`. '
                          f'The detailed usage can be found in {HELP_URL}')
 
     test_metrics = []

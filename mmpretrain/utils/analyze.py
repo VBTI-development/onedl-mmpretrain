@@ -3,7 +3,7 @@ import json
 
 
 def load_json_log(json_log):
-    """load and convert json_logs to log_dicts.
+    """Load and convert json_logs to log_dicts.
 
     Args:
         json_log (str): The path of the json log file.

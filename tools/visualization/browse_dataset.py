@@ -48,12 +48,11 @@ def parse_args():
         help='number of images selected to visualize, must bigger than 0. if '
         'the number is bigger than length of dataset, show all the images in '
         'dataset; default "sys.maxsize", show all images in dataset')
-    parser.add_argument(
-        '--show-interval',
-        '-i',
-        type=float,
-        default=2,
-        help='the interval of show (s)')
+    parser.add_argument('--show-interval',
+                        '-i',
+                        type=float,
+                        default=2,
+                        help='the interval of show (s)')
     parser.add_argument(
         '--mode',
         '-m',
@@ -116,17 +115,17 @@ def make_grid(imgs, names):
                 subplot.axis(False)
                 subplot.imshow(img[j])
                 name = '\n'.join(textwrap.wrap(names[i] + str(j), width=20))
-                subplot.set_title(
-                    f'{name}\n{img_shapes[i][j]}',
-                    fontsize=15,
-                    family='monospace')
+                subplot.set_title(f'{name}\n{img_shapes[i][j]}',
+                                  fontsize=15,
+                                  family='monospace')
         else:
             subplot = figure.add_subplot(gs[:, i])
             subplot.axis(False)
             subplot.imshow(img)
             name = '\n'.join(textwrap.wrap(names[i], width=20))
-            subplot.set_title(
-                f'{name}\n{img_shapes[i]}', fontsize=15, family='monospace')
+            subplot.set_title(f'{name}\n{img_shapes[i]}',
+                              fontsize=15,
+                              family='monospace')
 
     # Manage the gap of subplots
     figure.tight_layout()
@@ -144,7 +143,6 @@ class InspectCompose(Compose):
 
     And record "img" field of all results in one list.
     """
-
     def __init__(self, transforms, intermediate_imgs, visualizer):
         super().__init__(transforms=transforms)
         self.intermediate_imgs = intermediate_imgs
@@ -192,8 +190,9 @@ def main():
     # init visualizer
     cfg.visualizer.pop('type')
     fig_cfg = dict(figsize=(16, 10))
-    visualizer = UniversalVisualizer(
-        **cfg.visualizer, fig_show_cfg=fig_cfg, fig_save_cfg=fig_cfg)
+    visualizer = UniversalVisualizer(**cfg.visualizer,
+                                     fig_show_cfg=fig_cfg,
+                                     fig_save_cfg=fig_cfg)
     visualizer.dataset_meta = dataset.metainfo
 
     # init inspection

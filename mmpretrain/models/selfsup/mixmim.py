@@ -58,7 +58,6 @@ class MixMIMPretrainTransformer(MixMIMTransformer):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  arch: Union[str, dict] = 'base',
                  mlp_ratio: float = 4,
@@ -77,21 +76,20 @@ class MixMIMPretrainTransformer(MixMIMTransformer):
                  range_mask_ratio: float = 0.0,
                  init_cfg: Optional[dict] = None) -> None:
 
-        super().__init__(
-            arch=arch,
-            mlp_ratio=mlp_ratio,
-            img_size=img_size,
-            patch_size=patch_size,
-            in_channels=in_channels,
-            window_size=window_size,
-            qkv_bias=qkv_bias,
-            patch_cfg=patch_cfg,
-            norm_cfg=norm_cfg,
-            drop_rate=drop_rate,
-            drop_path_rate=drop_path_rate,
-            attn_drop_rate=attn_drop_rate,
-            use_checkpoint=use_checkpoint,
-            init_cfg=init_cfg)
+        super().__init__(arch=arch,
+                         mlp_ratio=mlp_ratio,
+                         img_size=img_size,
+                         patch_size=patch_size,
+                         in_channels=in_channels,
+                         window_size=window_size,
+                         qkv_bias=qkv_bias,
+                         patch_cfg=patch_cfg,
+                         norm_cfg=norm_cfg,
+                         drop_rate=drop_rate,
+                         drop_path_rate=drop_path_rate,
+                         attn_drop_rate=attn_drop_rate,
+                         use_checkpoint=use_checkpoint,
+                         init_cfg=init_cfg)
 
         self.mask_ratio = mask_ratio
         self.range_mask_ratio = range_mask_ratio
@@ -221,9 +219,9 @@ class MixMIM(BaseSelfSupervisor):
     """MixMIM.
 
     Implementation of `MixMIM: Mixed and Masked Image Modeling for Efficient
-    Visual Representation Learning. <https://arxiv.org/abs/2205.13137>`_.
+    Visual Representation Learning.` `
+    <https://arxiv.org/abs/2205.13137>`_.
     """
-
     def __init__(self,
                  backbone: dict,
                  neck: Optional[dict] = None,
@@ -233,13 +231,12 @@ class MixMIM(BaseSelfSupervisor):
                  init_cfg: Optional[dict] = None):
 
         head.update(dict(patch_size=neck['encoder_stride']))
-        super().__init__(
-            backbone=backbone,
-            neck=neck,
-            head=head,
-            pretrained=pretrained,
-            data_preprocessor=data_preprocessor,
-            init_cfg=init_cfg)
+        super().__init__(backbone=backbone,
+                         neck=neck,
+                         head=head,
+                         pretrained=pretrained,
+                         data_preprocessor=data_preprocessor,
+                         init_cfg=init_cfg)
 
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)

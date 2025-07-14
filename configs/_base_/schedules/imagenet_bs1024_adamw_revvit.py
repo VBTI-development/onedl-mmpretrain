@@ -2,19 +2,17 @@
 # lr = 5e-4 * 128 * 8 / 512 = 0.001
 # schedule settings
 optim_wrapper = dict(
-    optimizer=dict(
-        type='AdamW',
-        lr=5e-4 * 2048 / 512,
-        weight_decay=0.05,
-        eps=1e-8,
-        betas=(0.9, 0.999)),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.cls_token': dict(decay_mult=0.0),
-            '.pos_embed': dict(decay_mult=0.0)
-        }),
+    optimizer=dict(type='AdamW',
+                   lr=5e-4 * 2048 / 512,
+                   weight_decay=0.05,
+                   eps=1e-8,
+                   betas=(0.9, 0.999)),
+    paramwise_cfg=dict(norm_decay_mult=0.0,
+                       bias_decay_mult=0.0,
+                       custom_keys={
+                           '.cls_token': dict(decay_mult=0.0),
+                           '.pos_embed': dict(decay_mult=0.0)
+                       }),
     clip_grad=dict(max_norm=1.0),
 )
 # learning policy

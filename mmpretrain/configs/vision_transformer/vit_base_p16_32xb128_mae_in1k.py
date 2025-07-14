@@ -28,20 +28,17 @@ model.update(
 train_dataloader.update(batch_size=128)
 
 # schedule settings
-optim_wrapper.update(
-    optimizer=dict(
-        type=AdamW,
-        lr=1e-4 * 4096 / 256,
-        weight_decay=0.3,
-        eps=1e-8,
-        betas=(0.9, 0.95)),
-    paramwise_cfg=dict(
-        norm_decay_mult=0.0,
-        bias_decay_mult=0.0,
-        custom_keys={
-            '.cls_token': dict(decay_mult=0.0),
-            '.pos_embed': dict(decay_mult=0.0)
-        }))
+optim_wrapper.update(optimizer=dict(type=AdamW,
+                                    lr=1e-4 * 4096 / 256,
+                                    weight_decay=0.3,
+                                    eps=1e-8,
+                                    betas=(0.9, 0.95)),
+                     paramwise_cfg=dict(norm_decay_mult=0.0,
+                                        bias_decay_mult=0.0,
+                                        custom_keys={
+                                            '.cls_token': dict(decay_mult=0.0),
+                                            '.pos_embed': dict(decay_mult=0.0)
+                                        }))
 
 # runtime settings
 custom_hooks = [dict(type=EMAHook, momentum=1e-4)]

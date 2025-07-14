@@ -20,11 +20,10 @@ train_dataloader = None
 test_dataloader = dict(
     batch_size=32,
     num_workers=8,
-    dataset=dict(
-        type='CIFAR100',
-        data_root='data/cifar100',
-        split='test',
-        pipeline=test_pipeline),
+    dataset=dict(type='CIFAR100',
+                 data_root='data/cifar100',
+                 split='test',
+                 pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 test_evaluator = dict(type='Accuracy', topk=(1, ))
@@ -48,27 +47,25 @@ model = dict(
         pre_norm=True,
         out_type='cls_token',
     ),
-    text_backbone=dict(
-        type='BertModelCN',
-        config=dict(
-            vocab_size=21128,
-            pad_token_id=0,
-            add_type_embeddings=True,
-            attention_probs_dropout_prob=0.1,
-            hidden_act='gelu',
-            hidden_dropout_prob=0.1,
-            hidden_size=1024,
-            initializer_range=0.02,
-            intermediate_size=4096,
-            max_position_embeddings=512,
-            num_attention_heads=16,
-            num_hidden_layers=24,
-            type_vocab_size=2,
-            layer_norm_eps=1e-12)),
+    text_backbone=dict(type='BertModelCN',
+                       config=dict(vocab_size=21128,
+                                   pad_token_id=0,
+                                   add_type_embeddings=True,
+                                   attention_probs_dropout_prob=0.1,
+                                   hidden_act='gelu',
+                                   hidden_dropout_prob=0.1,
+                                   hidden_size=1024,
+                                   initializer_range=0.02,
+                                   intermediate_size=4096,
+                                   max_position_embeddings=512,
+                                   num_attention_heads=16,
+                                   num_hidden_layers=24,
+                                   type_vocab_size=2,
+                                   layer_norm_eps=1e-12)),
     tokenizer=dict(
         type='FullTokenizer',
-        vocab_file=  # noqa
-        'https://download.openmmlab.com/mmpretrain/v1.0/chinese_clip/vocab.txt'
+        vocab_file=
+        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/chinese_clip/vocab.txt'  # noqa
     ),
     proj_dim=1024,
     text_prototype='cifar100',

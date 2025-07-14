@@ -40,15 +40,14 @@ def conv_bn(in_channels,
     result = nn.Sequential()
     result.add_module(
         'conv',
-        nn.Conv2d(
-            in_channels=in_channels,
-            out_channels=out_channels,
-            kernel_size=kernel_size,
-            stride=stride,
-            padding=padding,
-            dilation=dilation,
-            groups=groups,
-            bias=False))
+        nn.Conv2d(in_channels=in_channels,
+                  out_channels=out_channels,
+                  kernel_size=kernel_size,
+                  stride=stride,
+                  padding=padding,
+                  dilation=dilation,
+                  groups=groups,
+                  bias=False))
     result.add_module('bn', build_norm_layer(norm_cfg, out_channels)[1])
     return result
 
@@ -77,14 +76,13 @@ def conv_bn_relu(in_channels,
 
     if padding is None:
         padding = kernel_size // 2
-    result = conv_bn(
-        in_channels=in_channels,
-        out_channels=out_channels,
-        kernel_size=kernel_size,
-        stride=stride,
-        padding=padding,
-        groups=groups,
-        dilation=dilation)
+    result = conv_bn(in_channels=in_channels,
+                     out_channels=out_channels,
+                     kernel_size=kernel_size,
+                     stride=stride,
+                     padding=padding,
+                     groups=groups,
+                     dilation=dilation)
     result.add_module('nonlinear', nn.ReLU())
     return result
 
@@ -131,7 +129,6 @@ class ReparamLargeKernelConv(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None
     """
-
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -151,34 +148,31 @@ class ReparamLargeKernelConv(BaseModule):
         # and change the padding of small_conv accordingly.
         padding = kernel_size // 2
         if small_kernel_merged:
-            self.lkb_reparam = nn.Conv2d(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=stride,
-                padding=padding,
-                dilation=1,
-                groups=groups,
-                bias=True)
+            self.lkb_reparam = nn.Conv2d(in_channels=in_channels,
+                                         out_channels=out_channels,
+                                         kernel_size=kernel_size,
+                                         stride=stride,
+                                         padding=padding,
+                                         dilation=1,
+                                         groups=groups,
+                                         bias=True)
         else:
-            self.lkb_origin = conv_bn(
-                in_channels=in_channels,
-                out_channels=out_channels,
-                kernel_size=kernel_size,
-                stride=stride,
-                padding=padding,
-                dilation=1,
-                groups=groups)
+            self.lkb_origin = conv_bn(in_channels=in_channels,
+                                      out_channels=out_channels,
+                                      kernel_size=kernel_size,
+                                      stride=stride,
+                                      padding=padding,
+                                      dilation=1,
+                                      groups=groups)
             if small_kernel is not None:
                 assert small_kernel <= kernel_size
-                self.small_conv = conv_bn(
-                    in_channels=in_channels,
-                    out_channels=out_channels,
-                    kernel_size=small_kernel,
-                    stride=stride,
-                    padding=small_kernel // 2,
-                    groups=groups,
-                    dilation=1)
+                self.small_conv = conv_bn(in_channels=in_channels,
+                                          out_channels=out_channels,
+                                          kernel_size=small_kernel,
+                                          stride=stride,
+                                          padding=small_kernel // 2,
+                                          groups=groups,
+                                          dilation=1)
 
     def forward(self, inputs):
         if hasattr(self, 'lkb_reparam'):
@@ -242,7 +236,6 @@ class ConvFFN(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels,
                  internal_channels,
@@ -255,20 +248,18 @@ class ConvFFN(BaseModule):
         self.drop_path = DropPath(
             drop_prob=drop_path) if drop_path > 0. else nn.Identity()
         self.preffn_bn = build_norm_layer(norm_cfg, in_channels)[1]
-        self.pw1 = conv_bn(
-            in_channels=in_channels,
-            out_channels=internal_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            groups=1)
-        self.pw2 = conv_bn(
-            in_channels=internal_channels,
-            out_channels=out_channels,
-            kernel_size=1,
-            stride=1,
-            padding=0,
-            groups=1)
+        self.pw1 = conv_bn(in_channels=in_channels,
+                           out_channels=internal_channels,
+                           kernel_size=1,
+                           stride=1,
+                           padding=0,
+                           groups=1)
+        self.pw2 = conv_bn(in_channels=internal_channels,
+                           out_channels=out_channels,
+                           kernel_size=1,
+                           stride=1,
+                           padding=0,
+                           groups=1)
         self.nonlinear = build_activation_layer(act_cfg)
 
     def forward(self, x):
@@ -299,7 +290,6 @@ class RepLKBlock(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Default to  None
     """
-
     def __init__(self,
                  in_channels,
                  dw_channels,
@@ -364,7 +354,6 @@ class RepLKNetStage(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Default to  None
     """
-
     def __init__(
             self,
             channels,
@@ -387,18 +376,17 @@ class RepLKNetStage(BaseModule):
                                                          list) else drop_path
             #   Assume all RepLK Blocks within a stage share the same lk_size.
             #   You may tune it on your own model.
-            replk_block = RepLKBlock(
-                in_channels=channels,
-                dw_channels=int(channels * dw_ratio),
-                block_lk_size=stage_lk_size,
-                small_kernel=small_kernel,
-                drop_path=block_drop_path,
-                small_kernel_merged=small_kernel_merged)
-            convffn_block = ConvFFN(
-                in_channels=channels,
-                internal_channels=int(channels * ffn_ratio),
-                out_channels=channels,
-                drop_path=block_drop_path)
+            replk_block = RepLKBlock(in_channels=channels,
+                                     dw_channels=int(channels * dw_ratio),
+                                     block_lk_size=stage_lk_size,
+                                     small_kernel=small_kernel,
+                                     drop_path=block_drop_path,
+                                     small_kernel_merged=small_kernel_merged)
+            convffn_block = ConvFFN(in_channels=channels,
+                                    internal_channels=int(channels *
+                                                          ffn_ratio),
+                                    out_channels=channels,
+                                    drop_path=block_drop_path)
             blks.append(replk_block)
             blks.append(convffn_block)
         self.blocks = nn.ModuleList(blks)
@@ -468,26 +456,23 @@ class RepLKNet(BaseBackbone):
 
     arch_settings = {
         '31B':
-        dict(
-            large_kernel_sizes=[31, 29, 27, 13],
-            layers=[2, 2, 18, 2],
-            channels=[128, 256, 512, 1024],
-            small_kernel=5,
-            dw_ratio=1),
+        dict(large_kernel_sizes=[31, 29, 27, 13],
+             layers=[2, 2, 18, 2],
+             channels=[128, 256, 512, 1024],
+             small_kernel=5,
+             dw_ratio=1),
         '31L':
-        dict(
-            large_kernel_sizes=[31, 29, 27, 13],
-            layers=[2, 2, 18, 2],
-            channels=[192, 384, 768, 1536],
-            small_kernel=5,
-            dw_ratio=1),
+        dict(large_kernel_sizes=[31, 29, 27, 13],
+             layers=[2, 2, 18, 2],
+             channels=[192, 384, 768, 1536],
+             small_kernel=5,
+             dw_ratio=1),
         'XL':
-        dict(
-            large_kernel_sizes=[27, 27, 27, 13],
-            layers=[2, 2, 18, 2],
-            channels=[256, 512, 1024, 2048],
-            small_kernel=None,
-            dw_ratio=1.5),
+        dict(large_kernel_sizes=[27, 27, 27, 13],
+             layers=[2, 2, 18, 2],
+             channels=[256, 512, 1024, 2048],
+             small_kernel=None,
+             dw_ratio=1.5),
     }
 
     def __init__(self,
@@ -508,10 +493,9 @@ class RepLKNet(BaseBackbone):
                  norm_eval=False,
                  init_cfg=[
                      dict(type='Kaiming', layer=['Conv2d']),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ]):
         super(RepLKNet, self).__init__(init_cfg)
 
@@ -548,34 +532,30 @@ class RepLKNet(BaseBackbone):
         self.norm_intermediate_features = norm_intermediate_features
         self.num_stages = len(self.arch['layers'])
         self.stem = nn.ModuleList([
-            conv_bn_relu(
-                in_channels=in_channels,
-                out_channels=base_width,
-                kernel_size=3,
-                stride=2,
-                padding=1,
-                groups=1),
-            conv_bn_relu(
-                in_channels=base_width,
-                out_channels=base_width,
-                kernel_size=3,
-                stride=1,
-                padding=1,
-                groups=base_width),
-            conv_bn_relu(
-                in_channels=base_width,
-                out_channels=base_width,
-                kernel_size=1,
-                stride=1,
-                padding=0,
-                groups=1),
-            conv_bn_relu(
-                in_channels=base_width,
-                out_channels=base_width,
-                kernel_size=3,
-                stride=2,
-                padding=1,
-                groups=base_width)
+            conv_bn_relu(in_channels=in_channels,
+                         out_channels=base_width,
+                         kernel_size=3,
+                         stride=2,
+                         padding=1,
+                         groups=1),
+            conv_bn_relu(in_channels=base_width,
+                         out_channels=base_width,
+                         kernel_size=3,
+                         stride=1,
+                         padding=1,
+                         groups=base_width),
+            conv_bn_relu(in_channels=base_width,
+                         out_channels=base_width,
+                         kernel_size=1,
+                         stride=1,
+                         padding=0,
+                         groups=1),
+            conv_bn_relu(in_channels=base_width,
+                         out_channels=base_width,
+                         kernel_size=3,
+                         stride=2,
+                         padding=1,
+                         groups=base_width)
         ])
         # stochastic depth. We set block-wise drop-path rate.
         # The higher level blocks are more likely to be dropped.
@@ -602,20 +582,18 @@ class RepLKNet(BaseBackbone):
             self.stages.append(layer)
             if stage_idx < len(self.arch['layers']) - 1:
                 transition = nn.Sequential(
-                    conv_bn_relu(
-                        self.arch['channels'][stage_idx],
-                        self.arch['channels'][stage_idx + 1],
-                        1,
-                        1,
-                        0,
-                        groups=1),
-                    conv_bn_relu(
-                        self.arch['channels'][stage_idx + 1],
-                        self.arch['channels'][stage_idx + 1],
-                        3,
-                        stride=2,
-                        padding=1,
-                        groups=self.arch['channels'][stage_idx + 1]))
+                    conv_bn_relu(self.arch['channels'][stage_idx],
+                                 self.arch['channels'][stage_idx + 1],
+                                 1,
+                                 1,
+                                 0,
+                                 groups=1),
+                    conv_bn_relu(self.arch['channels'][stage_idx + 1],
+                                 self.arch['channels'][stage_idx + 1],
+                                 3,
+                                 stride=2,
+                                 padding=1,
+                                 groups=self.arch['channels'][stage_idx + 1]))
                 self.transitions.append(transition)
 
     def forward_features(self, x):

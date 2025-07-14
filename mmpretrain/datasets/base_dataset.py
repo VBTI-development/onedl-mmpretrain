@@ -98,18 +98,17 @@ class BaseDataset(_BaseDataset):
             else:
                 transforms.append(transform)
 
-        super().__init__(
-            ann_file=ann_file,
-            metainfo=metainfo,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            filter_cfg=filter_cfg,
-            indices=indices,
-            serialize_data=serialize_data,
-            pipeline=transforms,
-            test_mode=test_mode,
-            lazy_init=lazy_init,
-            max_refetch=max_refetch)
+        super().__init__(ann_file=ann_file,
+                         metainfo=metainfo,
+                         data_root=data_root,
+                         data_prefix=data_prefix,
+                         filter_cfg=filter_cfg,
+                         indices=indices,
+                         serialize_data=serialize_data,
+                         pipeline=transforms,
+                         test_mode=test_mode,
+                         lazy_init=lazy_init,
+                         max_refetch=max_refetch)
 
     @property
     def img_prefix(self):
@@ -180,8 +179,8 @@ class BaseDataset(_BaseDataset):
         #  To support the standard OpenMMLab 2.0 annotation format. Generate
         #  metainfo in internal format from standard metainfo format.
         if 'categories' in self._metainfo and 'classes' not in self._metainfo:
-            categories = sorted(
-                self._metainfo['categories'], key=lambda x: x['id'])
+            categories = sorted(self._metainfo['categories'],
+                                key=lambda x: x['id'])
             self._metainfo['classes'] = tuple(
                 [cat['category_name'] for cat in categories])
 

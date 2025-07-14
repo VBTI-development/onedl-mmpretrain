@@ -17,119 +17,133 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  build_cpu:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python-version: [3.7]
         include:
-          - torch: 1.8.1
-            torchvision: 0.9.1
+          - python-version: '3.10' # minimum version
+            torch: '2.0.0'
+          - python-version: '3.10'  # maximum version
+            torch: '2.5.1'
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
         with:
           python-version: ${{ matrix.python-version }}
-      - name: Upgrade pip
-        run: pip install pip --upgrade
+          activate-environment: true
       - name: Install PyTorch
-        run: pip install torch==${{matrix.torch}}+cpu torchvision==${{matrix.torchvision}}+cpu -f https://download.pytorch.org/whl/cpu/torch_stable.html
+        run: |
+          uv pip install torch==${{ matrix.torch }} torchvision
       - name: Install mmpretrain dependencies
         run: |
-          pip install git+https://github.com/open-mmlab/mmengine.git@main
-          pip install -U openmim
-          mim install 'mmcv >= 2.0.0rc4'
-          pip install -r requirements.txt
+          uv pip install onedl-mmengine onedl-mmcv
+          uv pip install -r pyproject.toml
       - name: Build and install
-        run: mim install .
+        run: uv pip install .
+      - name: Install test dependencies
+        run: uv pip install -r pyproject.toml --group tests --extra optional
       - name: Run unittests and generate coverage report
         run: |
-          coverage run --branch --source mmpretrain -m pytest tests/
-          coverage xml
-          coverage report -m
-      # Upload coverage report for python3.7 && pytorch1.8.1 cpu
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.14
+          set -e
+          uv run coverage run --branch --source mmpretrain -m pytest tests/
+          uv run coverage xml
+          uv run coverage report -m
+      - name: Code Coverage Summary Report
+        uses: irongut/CodeCoverageSummary@v1.3.0
         with:
-          file: ./coverage.xml
-          flags: unittests
-          env_vars: OS,PYTHON
-          name: codecov-umbrella
-          fail_ci_if_error: false
+          filename: coverage.xml
+          format: markdown
+          output: both
+          hide_branch_rate: false
+      - name: Add Coverage PR Comment
+        uses: marocchino/sticky-pull-request-comment@v2
+        if: github.event_name == 'pull_request'
+        with:
+          recreate: true
+          path: code-coverage-results.md
 
-  build_cu117:
+  build_gpu:
     runs-on: ubuntu-22.04
-    container:
-      image: pytorch/pytorch:2.0.0-cuda11.7-cudnn8-devel
     strategy:
       matrix:
-        python-version: [3.9]
+        include:
+          - python-version: '3.10' # minimum version
+            torch: '2.0.0'
+            container: 'nvidia/cuda:11.1.1-cudnn8-devel-ubuntu20.04'
+          - python-version: '3.10'  # maximum version
+            torch: '2.5.1'
+            container: 'nvidia/cuda:12.8.0-cudnn-devel-ubuntu22.04'
+    container:
+      image: ${{ matrix.container }}
+    env:
+        UV_CACHE_DIR: /__w/_uv_cache # set cache to be on same disk to avoid hardlink copies.
+        DEBIAN_FRONTEND: noninteractive
+        TZ: Etc/UTC
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
         with:
+          activate-environment: true
           python-version: ${{ matrix.python-version }}
-      - name: Upgrade pip
-        run: pip install pip --upgrade
+          cache-local-path: /__w/_uv_cache
       - name: Fetch GPG keys
         run: |
           apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/cuda/repos/ubuntu1804/x86_64/3bf863cc.pub
           apt-key adv --fetch-keys https://developer.download.nvidia.com/compute/machine-learning/repos/ubuntu1804/x86_64/7fa2af80.pub
-      - name: Install Python-dev
-        run: apt-get update && apt-get install -y python${{matrix.python-version}}-dev
-        if: ${{matrix.python-version != 3.9}}
       - name: Install system dependencies
         run: |
           apt-get update
-          apt-get install -y ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
+          apt-get install -y tzdata ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
+          apt-get clean -y
+
+      - name: Install torch
+        run: |
+          uv pip install -v --torch-backend=auto torch==${{ matrix.torch }} torchvision
+          uv cache clean
       - name: Install mmpretrain dependencies
         run: |
-          pip install git+https://github.com/open-mmlab/mmengine.git@main
-          pip install -U openmim
-          mim install 'mmcv >= 2.0.0rc4'
-          pip install -r requirements.txt
+          uv pip install onedl-mmengine
+          uv pip install ninja psutil setuptools
+          uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
+          uv pip install -r pyproject.toml
       - name: Build and install
-        run: pip install -e .
-      - name: Run unittests and generate coverage report
+        run: uv pip install -e .
+      - name: Install test dependencies
+        run: uv pip install -r pyproject.toml --group tests --extra optional
+      - name: Run unit tests with coverage
         run: |
-          coverage run --branch --source mmpretrain -m pytest tests/ --ignore tests/test_tools.py
-          coverage xml
-          coverage report -m
-      - name: Upload coverage to Codecov
-        uses: codecov/codecov-action@v1.0.14
-        with:
-          file: ./coverage.xml
-          flags: unittests
-          env_vars: OS,PYTHON
-          name: codecov-umbrella
-          fail_ci_if_error: false
+          set -e
+          uv run coverage run --branch --source mmengine -m pytest tests/  --ignore tests/test_dist
+          uv run coverage xml
 
   build_windows:
     runs-on: windows-2022
     strategy:
       matrix:
-        python-version: [3.7]
+        python-version: ['3.10']
         platform: [cpu]
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
+      - uses: actions/checkout@v4
+      - name: Install uv and set the python version
+        uses: astral-sh/setup-uv@v6
         with:
+          activate-environment: true
           python-version: ${{ matrix.python-version }}
-      - name: Upgrade pip
-        run: python -m pip install pip --upgrade
-      - name: Install PyTorch
-        run: pip install torch==1.8.2+${{matrix.platform}} torchvision==0.9.2+${{matrix.platform}} -f https://download.pytorch.org/whl/lts/1.8/torch_lts.html
+      - name: Install torch
+        run: uv pip install -v torch==2.3.1 torchvision
       - name: Install mmpretrain dependencies
         run: |
-          pip install -U openmim
-          mim install mmengine
-          mim install 'mmcv >= 2.0.0rc4'
-          pip install -r requirements.txt
+          uv pip install onedl-mmengine
+          uv pip install ninja psutil setuptools
+          uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
+          uv pip install -r pyproject.toml
       - name: Build and install
-        run: mim install .
+        run: uv pip install .
+      - name: Install test dependencies
+        run: uv pip install -r pyproject.toml --group tests --extra optional
       - name: Run unittests
         run: |
-          pytest tests/ --ignore tests/test_models/test_backbones
+          uv run pytest tests/ --ignore tests/test_models/test_backbones --ignore tests/test_tools.py

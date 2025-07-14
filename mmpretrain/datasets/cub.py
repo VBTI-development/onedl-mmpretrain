@@ -86,15 +86,14 @@ class CUB(BaseDataset):
             data_root, image_class_labels_file)
         self.train_test_split_file = self.backend.join_path(
             data_root, train_test_split_file)
-        super(CUB, self).__init__(
-            ann_file=ann_file,
-            data_root=data_root,
-            data_prefix=data_prefix,
-            test_mode=test_mode,
-            **kwargs)
+        super(CUB, self).__init__(ann_file=ann_file,
+                                  data_root=data_root,
+                                  data_prefix=data_prefix,
+                                  test_mode=test_mode,
+                                  **kwargs)
 
     def _load_data_from_txt(self, filepath):
-        """load data from CUB txt file, the every line of the file is idx and a
+        """Load data from CUB txt file, the every line of the file is idx and a
         data item."""
         pairs = list_from_file(filepath)
         data_dict = dict()

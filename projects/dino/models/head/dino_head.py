@@ -20,7 +20,6 @@ class DINOHead(BaseModule):
         student_temp (float): Temperature for student output.
         center_momentum (float): Momentum for center update.
     """
-
     def __init__(self, out_channels: int, num_crops: int, student_temp: float,
                  center_momentum: float) -> None:
         super().__init__()

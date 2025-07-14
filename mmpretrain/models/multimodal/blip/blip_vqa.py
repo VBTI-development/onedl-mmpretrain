@@ -27,7 +27,6 @@ class BlipVQA(BaseModel):
         init_cfg (Optional[dict]): the config to control the initialization.
             Defaults to None.
     """
-
     def __init__(self,
                  tokenizer: dict,
                  vision_backbone: dict,
@@ -41,8 +40,8 @@ class BlipVQA(BaseModel):
         data_preprocessor.setdefault('type', 'MultiModalDataPreprocessor')
         data_preprocessor = MODELS.build(data_preprocessor)
 
-        super(BlipVQA, self).__init__(
-            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
+        super(BlipVQA, self).__init__(init_cfg=init_cfg,
+                                      data_preprocessor=data_preprocessor)
 
         self.tokenizer = TOKENIZER.build(tokenizer)
         self.vision_backbone = MODELS.build(vision_backbone)
@@ -119,7 +118,7 @@ class BlipVQA(BaseModel):
         images: torch.Tensor,
         data_samples: Optional[List[DataSample]] = None,
     ) -> Union[torch.Tensor, Tuple[torch.Tensor]]:
-        """generate train_loss from the input tensor and data_samples.
+        """Generate train_loss from the input tensor and data_samples.
 
         Args:
             images (Tensor): A batch of images. The shape of it should be
@@ -131,14 +130,15 @@ class BlipVQA(BaseModel):
             Dict[torch.Tensor]: The losses features.
         """
         visual_embeds = self.extract_feat(images)
-        image_atts = torch.ones(
-            visual_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts = torch.ones(visual_embeds.size()[:-1],
+                                dtype=torch.long).to(self.device)
 
         questions = []
         for sample in data_samples:
             questions.append(sample.get('question'))
-        questions = self.tokenizer(
-            questions, padding='longest', return_tensors='pt').to(self.device)
+        questions = self.tokenizer(questions,
+                                   padding='longest',
+                                   return_tensors='pt').to(self.device)
 
         questions.input_ids[:, 0] = \
             self.tokenizer.additional_special_tokens_ids[0]
@@ -156,9 +156,9 @@ class BlipVQA(BaseModel):
         answer_raw_text = []
         for sample in data_samples:
             answer_raw_text.extend(sample.gt_answer)
-        answer = self.tokenizer(
-            answer_raw_text, padding='longest',
-            return_tensors='pt').to(self.device)
+        answer = self.tokenizer(answer_raw_text,
+                                padding='longest',
+                                return_tensors='pt').to(self.device)
         answer_targets = answer.input_ids.masked_fill(
             answer.input_ids == self.tokenizer.pad_token_id, -100)
         for sample in data_samples:
@@ -200,7 +200,7 @@ class BlipVQA(BaseModel):
         images: torch.Tensor,
         data_samples: Optional[List[DataSample]] = None,
     ):
-        """update data_samples that contain pred_answer for each question.
+        """Update data_samples that contain pred_answer for each question.
 
         Args:
             images (Tensor): A batch of images. The shape of it should be
@@ -212,14 +212,15 @@ class BlipVQA(BaseModel):
             Dict[torch.Tensor]: The losses features.
         """
         visual_embeds = self.extract_feat(images)
-        image_atts = torch.ones(
-            visual_embeds.size()[:-1], dtype=torch.long).to(self.device)
+        image_atts = torch.ones(visual_embeds.size()[:-1],
+                                dtype=torch.long).to(self.device)
 
         questions = []
         for sample in data_samples:
             questions.append(sample.get('question'))
-        questions = self.tokenizer(
-            questions, padding='longest', return_tensors='pt').to(self.device)
+        questions = self.tokenizer(questions,
+                                   padding='longest',
+                                   return_tensors='pt').to(self.device)
 
         questions.input_ids[:, 0] = \
             self.tokenizer.additional_special_tokens_ids[0]
@@ -234,10 +235,10 @@ class BlipVQA(BaseModel):
         )
 
         if self.vqa_head.inference_method == 'rank':
-            answer_candidates = self.tokenizer(
-                self.vqa_head.answer_list,
-                padding='longest',
-                return_tensors='pt').to(self.device)
+            answer_candidates = self.tokenizer(self.vqa_head.answer_list,
+                                               padding='longest',
+                                               return_tensors='pt').to(
+                                                   self.device)
             answer_candidates.input_ids[:, 0] = self.tokenizer.bos_token_id
         elif self.vqa_head.inference_method == 'generate':
             answer_candidates = None

@@ -23,7 +23,6 @@ class CLIPTransformer(nn.Module):
         heads (int): The number of attention heads.
         attn_mask (torch.Tensor, optional): The attention mask.
     """
-
     def __init__(self,
                  width: int,
                  layers: int,
@@ -37,8 +36,10 @@ class CLIPTransformer(nn.Module):
             self.resblocks.append(
                 ResidualAttentionBlock(width, heads, attn_mask))
         self.resblocks.append(
-            ResidualAttentionBlock(
-                width, heads, attn_mask, return_attention=True))
+            ResidualAttentionBlock(width,
+                                   heads,
+                                   attn_mask,
+                                   return_attention=True))
 
     def forward(
             self, x: torch.Tensor
@@ -65,7 +66,6 @@ class CLIPProjection(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -79,14 +79,14 @@ class CLIPProjection(BaseModule):
                                  torch.randn(in_channels, out_channels))
 
     def forward(self, inputs: Tuple) -> Tuple[torch.Tensor]:
-        """forward function.
+        """Forward function.
 
         Args:
             inputs (Tuple): The features extracted from
                  the backbone. Multiple stage inputs are acceptable but only
                   the last stage will be used.
         Returns:
-            Tuple(torch.Tensor)): A tuple of reducted features.
+            Tuple(torch.Tensor)): A tuple of redacted features.
         """
         if isinstance(inputs, tuple):
             inputs = inputs[-1]

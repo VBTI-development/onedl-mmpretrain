@@ -19,7 +19,6 @@ from mmpretrain.structures import DataSample
 
 
 class ExampleDataset(Dataset):
-
     def __init__(self):
         self.index = 0
         self.metainfo = None
@@ -33,15 +32,13 @@ class ExampleDataset(Dataset):
 
 
 class MockDataPreprocessor(ClsDataPreprocessor):
-    """mock preprocessor that do nothing."""
-
+    """Mock preprocessor that do nothing."""
     def forward(self, data, training=False):
 
         return dict(inputs=data['imgs'], data_samples=DataSample())
 
 
 class ExampleModel(BaseModel):
-
     def __init__(self):
         super(ExampleModel, self).__init__()
         self.data_preprocessor = MockDataPreprocessor()
@@ -59,7 +56,6 @@ class ExampleModel(BaseModel):
 
 
 class SingleBNModel(ExampleModel):
-
     def __init__(self):
         super().__init__()
         self.bn = nn.BatchNorm1d(1)
@@ -70,7 +66,6 @@ class SingleBNModel(ExampleModel):
 
 
 class GNExampleModel(ExampleModel):
-
     def __init__(self):
         super().__init__()
         self.gn = nn.GroupNorm(1, 1)
@@ -78,7 +73,6 @@ class GNExampleModel(ExampleModel):
 
 
 class NoBNExampleModel(ExampleModel):
-
     def __init__(self):
         super().__init__()
         self.conv = nn.Linear(1, 1)
@@ -95,14 +89,17 @@ class TestPreciseBNHookHook(TestCase):
 
     def setUp(self) -> None:
         # optimizer
-        self.optim_wrapper = dict(
-            optimizer=dict(
-                type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001))
+        self.optim_wrapper = dict(optimizer=dict(
+            type='SGD', lr=0.1, momentum=0.9, weight_decay=0.0001))
         # learning policy
-        self.epoch_param_scheduler = dict(
-            type='MultiStepLR', by_epoch=True, milestones=[1, 2], gamma=0.1)
-        self.iter_param_scheduler = dict(
-            type='MultiStepLR', by_epoch=False, milestones=[1, 2], gamma=0.1)
+        self.epoch_param_scheduler = dict(type='MultiStepLR',
+                                          by_epoch=True,
+                                          milestones=[1, 2],
+                                          gamma=0.1)
+        self.iter_param_scheduler = dict(type='MultiStepLR',
+                                         by_epoch=False,
+                                         milestones=[1, 2],
+                                         gamma=0.1)
 
         self.default_hooks = dict(
             timer=dict(type='IterTimerHook'),
@@ -122,18 +119,17 @@ class TestPreciseBNHookHook(TestCase):
         self.model = ExampleModel()
 
     def test_construct(self):
-        self.runner = Runner(
-            model=self.model,
-            work_dir=self.tmpdir.name,
-            train_dataloader=self.loader,
-            train_cfg=self.epoch_train_cfg,
-            log_level='WARNING',
-            optim_wrapper=self.optim_wrapper,
-            param_scheduler=self.epoch_param_scheduler,
-            default_scope='mmpretrain',
-            default_hooks=self.default_hooks,
-            experiment_name='test_construct',
-            custom_hooks=None)
+        self.runner = Runner(model=self.model,
+                             work_dir=self.tmpdir.name,
+                             train_dataloader=self.loader,
+                             train_cfg=self.epoch_train_cfg,
+                             log_level='WARNING',
+                             optim_wrapper=self.optim_wrapper,
+                             param_scheduler=self.epoch_param_scheduler,
+                             default_scope='mmpretrain',
+                             default_hooks=self.default_hooks,
+                             experiment_name='test_construct',
+                             custom_hooks=None)
 
         cfg = copy.deepcopy(self.DEFAULT_ARGS)
         precise_bn = HOOKS.build(cfg)
@@ -173,18 +169,17 @@ class TestPreciseBNHookHook(TestCase):
 
     def test_after_train_epoch(self):
         self.preciseBN_cfg['priority'] = 'ABOVE_NORMAL'
-        self.runner = Runner(
-            model=self.model,
-            work_dir=self.tmpdir.name,
-            train_dataloader=self.loader,
-            train_cfg=self.epoch_train_cfg,
-            log_level='WARNING',
-            optim_wrapper=self.optim_wrapper,
-            param_scheduler=self.epoch_param_scheduler,
-            default_scope='mmpretrain',
-            default_hooks=self.default_hooks,
-            experiment_name='test_after_train_epoch',
-            custom_hooks=[self.preciseBN_cfg])
+        self.runner = Runner(model=self.model,
+                             work_dir=self.tmpdir.name,
+                             train_dataloader=self.loader,
+                             train_cfg=self.epoch_train_cfg,
+                             log_level='WARNING',
+                             optim_wrapper=self.optim_wrapper,
+                             param_scheduler=self.epoch_param_scheduler,
+                             default_scope='mmpretrain',
+                             default_hooks=self.default_hooks,
+                             experiment_name='test_after_train_epoch',
+                             custom_hooks=[self.preciseBN_cfg])
 
         # Test with normal conv model in single machine
         self.runner._train_loop = self.epoch_train_cfg
@@ -210,18 +205,17 @@ class TestPreciseBNHookHook(TestCase):
         self.preciseBN_cfg['priority'] = 'ABOVE_NORMAL'
         test_dataset = ExampleDataset()
         self.loader = DataLoader(test_dataset, batch_size=2)
-        self.runner = Runner(
-            model=self.model,
-            work_dir=self.tmpdir.name,
-            train_dataloader=self.loader,
-            train_cfg=self.iter_train_cfg,
-            log_level='WARNING',
-            optim_wrapper=self.optim_wrapper,
-            param_scheduler=self.iter_param_scheduler,
-            default_scope='mmpretrain',
-            default_hooks=self.default_hooks,
-            experiment_name='test_after_train_iter',
-            custom_hooks=[self.preciseBN_cfg])
+        self.runner = Runner(model=self.model,
+                             work_dir=self.tmpdir.name,
+                             train_dataloader=self.loader,
+                             train_cfg=self.iter_train_cfg,
+                             log_level='WARNING',
+                             optim_wrapper=self.optim_wrapper,
+                             param_scheduler=self.iter_param_scheduler,
+                             default_scope='mmpretrain',
+                             default_hooks=self.default_hooks,
+                             experiment_name='test_after_train_iter',
+                             custom_hooks=[self.preciseBN_cfg])
         self.runner.train()
 
     def tearDown(self) -> None:

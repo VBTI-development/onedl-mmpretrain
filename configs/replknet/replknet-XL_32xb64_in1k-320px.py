@@ -6,7 +6,10 @@ _base_ = [
 ]
 
 # schedule settings
-param_scheduler = dict(
-    type='CosineAnnealingLR', T_max=300, by_epoch=True, begin=0, end=300)
+param_scheduler = dict(type='CosineAnnealingLR',
+                       T_max=300,
+                       by_epoch=True,
+                       begin=0,
+                       end=300)
 
 train_cfg = dict(by_epoch=True, max_epochs=300)

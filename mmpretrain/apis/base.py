@@ -99,20 +99,18 @@ class BaseInferencer:
                 load_checkpoint(model, pretrained, map_location='cpu')
             if device_map is not None:
                 from .utils import dispatch_model
-                model = dispatch_model(
-                    model,
-                    device_map=device_map,
-                    offload_folder=offload_folder)
+                model = dispatch_model(model,
+                                       device_map=device_map,
+                                       offload_folder=offload_folder)
             elif device is not None:
                 model.to(device)
         else:
-            model = get_model(
-                model,
-                pretrained,
-                device=device,
-                device_map=device_map,
-                offload_folder=offload_folder,
-                **kwargs)
+            model = get_model(model,
+                              pretrained,
+                              device=device,
+                              device_map=device_map,
+                              offload_folder=offload_folder,
+                              **kwargs)
 
         model.eval()
 
@@ -152,11 +150,13 @@ class BaseInferencer:
         ) = self._dispatch_kwargs(**kwargs)
 
         ori_inputs = self._inputs_to_list(inputs)
-        inputs = self.preprocess(
-            ori_inputs, batch_size=batch_size, **preprocess_kwargs)
+        inputs = self.preprocess(ori_inputs,
+                                 batch_size=batch_size,
+                                 **preprocess_kwargs)
         preds = []
-        for data in track(
-                inputs, 'Inference', total=ceil(len(ori_inputs) / batch_size)):
+        for data in track(inputs,
+                          'Inference',
+                          total=ceil(len(ori_inputs) / batch_size)):
             preds.extend(self.forward(data, **forward_kwargs))
         visualization = self.visualize(ori_inputs, preds, **visualize_kwargs)
         results = self.postprocess(preds, visualization, return_datasamples,
@@ -222,8 +222,8 @@ class BaseInferencer:
         Yields:
             Any: Data processed by the ``pipeline`` and ``default_collate``.
         """
-        chunked_data = self._get_chunk_data(
-            map(self.pipeline, inputs), batch_size)
+        chunked_data = self._get_chunk_data(map(self.pipeline, inputs),
+                                            batch_size)
         yield from map(default_collate, chunked_data)
 
     @torch.no_grad()

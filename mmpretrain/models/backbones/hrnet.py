@@ -35,7 +35,6 @@ class HRModule(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  num_branches,
                  block,
@@ -116,17 +115,16 @@ class HRModule(BaseModule):
                     # Upsample the feature maps of smaller scales.
                     fuse_layer.append(
                         nn.Sequential(
-                            build_conv_layer(
-                                self.conv_cfg,
-                                in_channels[j],
-                                in_channels[i],
-                                kernel_size=1,
-                                stride=1,
-                                padding=0,
-                                bias=False),
+                            build_conv_layer(self.conv_cfg,
+                                             in_channels[j],
+                                             in_channels[i],
+                                             kernel_size=1,
+                                             stride=1,
+                                             padding=0,
+                                             bias=False),
                             build_norm_layer(self.norm_cfg, in_channels[i])[1],
-                            nn.Upsample(
-                                scale_factor=2**(j - i), mode='nearest')))
+                            nn.Upsample(scale_factor=2**(j - i),
+                                        mode='nearest')))
                 elif j == i:
                     # Keep the feature map with the same scale.
                     fuse_layer.append(None)
@@ -138,27 +136,25 @@ class HRModule(BaseModule):
                         if k == i - j - 1:
                             conv_downsamples.append(
                                 nn.Sequential(
-                                    build_conv_layer(
-                                        self.conv_cfg,
-                                        in_channels[j],
-                                        in_channels[i],
-                                        kernel_size=3,
-                                        stride=2,
-                                        padding=1,
-                                        bias=False),
+                                    build_conv_layer(self.conv_cfg,
+                                                     in_channels[j],
+                                                     in_channels[i],
+                                                     kernel_size=3,
+                                                     stride=2,
+                                                     padding=1,
+                                                     bias=False),
                                     build_norm_layer(self.norm_cfg,
                                                      in_channels[i])[1]))
                         else:
                             conv_downsamples.append(
                                 nn.Sequential(
-                                    build_conv_layer(
-                                        self.conv_cfg,
-                                        in_channels[j],
-                                        in_channels[j],
-                                        kernel_size=3,
-                                        stride=2,
-                                        padding=1,
-                                        bias=False),
+                                    build_conv_layer(self.conv_cfg,
+                                                     in_channels[j],
+                                                     in_channels[j],
+                                                     kernel_size=3,
+                                                     stride=2,
+                                                     padding=1,
+                                                     bias=False),
                                     build_norm_layer(self.norm_cfg,
                                                      in_channels[j])[1],
                                     nn.ReLU(inplace=False)))
@@ -315,10 +311,9 @@ class HRNet(BaseModule):
                  multiscale_output=True,
                  init_cfg=[
                      dict(type='Kaiming', layer='Conv2d'),
-                     dict(
-                         type='Constant',
-                         val=1,
-                         layer=['_BatchNorm', 'GroupNorm'])
+                     dict(type='Constant',
+                          val=1,
+                          layer=['_BatchNorm', 'GroupNorm'])
                  ]):
         super(HRNet, self).__init__(init_cfg)
 
@@ -341,26 +336,24 @@ class HRNet(BaseModule):
         self.zero_init_residual = zero_init_residual
 
         # -------------------- stem net --------------------
-        self.conv1 = build_conv_layer(
-            self.conv_cfg,
-            in_channels,
-            out_channels=64,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            bias=False)
+        self.conv1 = build_conv_layer(self.conv_cfg,
+                                      in_channels,
+                                      out_channels=64,
+                                      kernel_size=3,
+                                      stride=2,
+                                      padding=1,
+                                      bias=False)
 
         self.norm1_name, norm1 = build_norm_layer(self.norm_cfg, 64, postfix=1)
         self.add_module(self.norm1_name, norm1)
 
-        self.conv2 = build_conv_layer(
-            self.conv_cfg,
-            in_channels=64,
-            out_channels=64,
-            kernel_size=3,
-            stride=2,
-            padding=1,
-            bias=False)
+        self.conv2 = build_conv_layer(self.conv_cfg,
+                                      in_channels=64,
+                                      out_channels=64,
+                                      kernel_size=3,
+                                      stride=2,
+                                      padding=1,
+                                      bias=False)
 
         self.norm2_name, norm2 = build_norm_layer(self.norm_cfg, 64, postfix=2)
         self.add_module(self.norm2_name, norm2)
@@ -377,11 +370,10 @@ class HRNet(BaseModule):
             channel * get_expansion(block) for channel in base_channels
         ]
         # To align with the original code, use layer1 instead of stage1 here.
-        self.layer1 = ResLayer(
-            block,
-            in_channels=64,
-            out_channels=num_channels[0],
-            num_blocks=num_blocks[0])
+        self.layer1 = ResLayer(block,
+                               in_channels=64,
+                               out_channels=num_channels[0],
+                               num_blocks=num_blocks[0])
         pre_num_channels = num_channels
 
         # -------------------- stage 2~4 --------------------
@@ -398,20 +390,21 @@ class HRNet(BaseModule):
             transition = self._make_transition_layer(pre_num_channels,
                                                      num_channels)
             self.add_module(f'transition{i-1}', transition)
-            stage = self._make_stage(
-                stage_cfg, num_channels, multiscale_output=multiscale_output_)
+            stage = self._make_stage(stage_cfg,
+                                     num_channels,
+                                     multiscale_output=multiscale_output_)
             self.add_module(f'stage{i}', stage)
 
             pre_num_channels = num_channels
 
     @property
     def norm1(self):
-        """nn.Module: the normalization layer named "norm1" """
+        """nn.Module: the normalization layer named "norm1"."""
         return getattr(self, self.norm1_name)
 
     @property
     def norm2(self):
-        """nn.Module: the normalization layer named "norm2" """
+        """nn.Module: the normalization layer named "norm2"."""
         return getattr(self, self.norm2_name)
 
     def _make_transition_layer(self, num_channels_pre_layer,
@@ -427,14 +420,13 @@ class HRNet(BaseModule):
                 if num_channels_cur_layer[i] != num_channels_pre_layer[i]:
                     transition_layers.append(
                         nn.Sequential(
-                            build_conv_layer(
-                                self.conv_cfg,
-                                num_channels_pre_layer[i],
-                                num_channels_cur_layer[i],
-                                kernel_size=3,
-                                stride=1,
-                                padding=1,
-                                bias=False),
+                            build_conv_layer(self.conv_cfg,
+                                             num_channels_pre_layer[i],
+                                             num_channels_cur_layer[i],
+                                             kernel_size=3,
+                                             stride=1,
+                                             padding=1,
+                                             bias=False),
                             build_norm_layer(self.norm_cfg,
                                              num_channels_cur_layer[i])[1],
                             nn.ReLU(inplace=True)))
@@ -451,14 +443,13 @@ class HRNet(BaseModule):
                         if j == i - num_branches_pre else in_channels
                     conv_downsamples.append(
                         nn.Sequential(
-                            build_conv_layer(
-                                self.conv_cfg,
-                                in_channels,
-                                out_channels,
-                                kernel_size=3,
-                                stride=2,
-                                padding=1,
-                                bias=False),
+                            build_conv_layer(self.conv_cfg,
+                                             in_channels,
+                                             out_channels,
+                                             kernel_size=3,
+                                             stride=2,
+                                             padding=1,
+                                             bias=False),
                             build_norm_layer(self.norm_cfg, out_channels)[1],
                             nn.ReLU(inplace=True)))
                 transition_layers.append(nn.Sequential(*conv_downsamples))
@@ -476,11 +467,13 @@ class HRNet(BaseModule):
         block_init_cfg = None
         if self.zero_init_residual:
             if block is BasicBlock:
-                block_init_cfg = dict(
-                    type='Constant', val=0, override=dict(name='norm2'))
+                block_init_cfg = dict(type='Constant',
+                                      val=0,
+                                      override=dict(name='norm2'))
             elif block is Bottleneck:
-                block_init_cfg = dict(
-                    type='Constant', val=0, override=dict(name='norm3'))
+                block_init_cfg = dict(type='Constant',
+                                      val=0,
+                                      override=dict(name='norm3'))
 
         for i in range(num_modules):
             # multi_scale_output is only used for the last module
@@ -490,17 +483,16 @@ class HRNet(BaseModule):
                 reset_multiscale_output = True
 
             hr_modules.append(
-                HRModule(
-                    num_branches,
-                    block,
-                    num_blocks,
-                    in_channels,
-                    num_channels,
-                    reset_multiscale_output,
-                    with_cp=self.with_cp,
-                    norm_cfg=self.norm_cfg,
-                    conv_cfg=self.conv_cfg,
-                    block_init_cfg=block_init_cfg))
+                HRModule(num_branches,
+                         block,
+                         num_blocks,
+                         in_channels,
+                         num_channels,
+                         reset_multiscale_output,
+                         with_cp=self.with_cp,
+                         norm_cfg=self.norm_cfg,
+                         conv_cfg=self.conv_cfg,
+                         block_init_cfg=block_init_cfg))
 
         return Sequential(*hr_modules)
 

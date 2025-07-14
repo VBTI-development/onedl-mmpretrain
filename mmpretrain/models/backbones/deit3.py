@@ -42,7 +42,6 @@ class DeiT3FFN(BaseModule):
         init_cfg (obj:`mmcv.ConfigDict`): The Config for initialization.
             Default: None.
     """
-
     @deprecated_api_warning(
         {
             'dropout': 'ffn_drop',
@@ -73,9 +72,8 @@ class DeiT3FFN(BaseModule):
         in_channels = embed_dims
         for _ in range(num_fcs - 1):
             layers.append(
-                Sequential(
-                    Linear(in_channels, feedforward_channels), self.activate,
-                    nn.Dropout(ffn_drop)))
+                Sequential(Linear(in_channels, feedforward_channels),
+                           self.activate, nn.Dropout(ffn_drop)))
             in_channels = feedforward_channels
         layers.append(Linear(feedforward_channels, embed_dims))
         layers.append(nn.Dropout(ffn_drop))
@@ -132,7 +130,6 @@ class DeiT3TransformerEncoderLayer(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -152,25 +149,26 @@ class DeiT3TransformerEncoderLayer(BaseModule):
 
         self.ln1 = build_norm_layer(norm_cfg, self.embed_dims)
 
-        self.attn = MultiheadAttention(
-            embed_dims=embed_dims,
-            num_heads=num_heads,
-            attn_drop=attn_drop_rate,
-            proj_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            qkv_bias=qkv_bias,
-            use_layer_scale=use_layer_scale)
+        self.attn = MultiheadAttention(embed_dims=embed_dims,
+                                       num_heads=num_heads,
+                                       attn_drop=attn_drop_rate,
+                                       proj_drop=drop_rate,
+                                       dropout_layer=dict(
+                                           type='DropPath',
+                                           drop_prob=drop_path_rate),
+                                       qkv_bias=qkv_bias,
+                                       use_layer_scale=use_layer_scale)
 
         self.ln2 = build_norm_layer(norm_cfg, self.embed_dims)
 
-        self.ffn = DeiT3FFN(
-            embed_dims=embed_dims,
-            feedforward_channels=feedforward_channels,
-            num_fcs=num_fcs,
-            ffn_drop=drop_rate,
-            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
-            act_cfg=act_cfg,
-            use_layer_scale=use_layer_scale)
+        self.ffn = DeiT3FFN(embed_dims=embed_dims,
+                            feedforward_channels=feedforward_channels,
+                            num_fcs=num_fcs,
+                            ffn_drop=drop_rate,
+                            dropout_layer=dict(type='DropPath',
+                                               drop_prob=drop_path_rate),
+                            act_cfg=act_cfg,
+                            use_layer_scale=use_layer_scale)
 
     def init_weights(self):
         super(DeiT3TransformerEncoderLayer, self).init_weights()
@@ -242,8 +240,9 @@ class DeiT3(VisionTransformer):
         use_layer_scale (bool): Whether to use layer_scale in  DeiT3.
             Defaults to True.
         interpolate_mode (str): Select the interpolate mode for position
-            embeding vector resize. Defaults to "bicubic".
-        patch_cfg (dict): Configs of patch embeding. Defaults to an empty dict.
+            embedding vector resize. Defaults to "bicubic".
+        patch_cfg (dict): Configs of patch embedding.
+            Defaults to an empty dict.
         layer_cfgs (Sequence | dict): Configs of each transformer layer in
             encoder. Defaults to an empty dict.
         init_cfg (dict, optional): Initialization config dict.
@@ -382,16 +381,15 @@ class DeiT3(VisionTransformer):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(
-                embed_dims=self.embed_dims,
-                num_heads=self.arch_settings['num_heads'],
-                feedforward_channels=self.
-                arch_settings['feedforward_channels'],
-                drop_rate=drop_rate,
-                drop_path_rate=dpr[i],
-                qkv_bias=qkv_bias,
-                norm_cfg=norm_cfg,
-                use_layer_scale=use_layer_scale)
+            _layer_cfg = dict(embed_dims=self.embed_dims,
+                              num_heads=self.arch_settings['num_heads'],
+                              feedforward_channels=self.
+                              arch_settings['feedforward_channels'],
+                              drop_rate=drop_rate,
+                              drop_path_rate=dpr[i],
+                              qkv_bias=qkv_bias,
+                              norm_cfg=norm_cfg,
+                              use_layer_scale=use_layer_scale)
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(DeiT3TransformerEncoderLayer(**_layer_cfg))
 
@@ -403,12 +401,11 @@ class DeiT3(VisionTransformer):
         B = x.shape[0]
         x, patch_resolution = self.patch_embed(x)
 
-        x = x + resize_pos_embed(
-            self.pos_embed,
-            self.patch_resolution,
-            patch_resolution,
-            mode=self.interpolate_mode,
-            num_extra_tokens=0)
+        x = x + resize_pos_embed(self.pos_embed,
+                                 self.patch_resolution,
+                                 patch_resolution,
+                                 mode=self.interpolate_mode,
+                                 num_extra_tokens=0)
         x = self.drop_after_pos(x)
 
         if self.cls_token is not None:

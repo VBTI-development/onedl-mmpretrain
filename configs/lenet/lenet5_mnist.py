@@ -1,12 +1,11 @@
 # model settings
-model = dict(
-    type='ImageClassifier',
-    backbone=dict(type='LeNet5', num_classes=10),
-    neck=None,
-    head=dict(
-        type='ClsHead',
-        loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
-    ))
+model = dict(type='ImageClassifier',
+             backbone=dict(type='LeNet5', num_classes=10),
+             neck=None,
+             head=dict(
+                 type='ClsHead',
+                 loss=dict(type='CrossEntropyLoss', loss_weight=1.0),
+             ))
 
 # dataset settings
 dataset_type = 'MNIST'
@@ -14,8 +13,9 @@ data_preprocessor = dict(mean=[33.46], std=[78.87], num_classes=10)
 
 pipeline = [dict(type='Resize', scale=32), dict(type='PackInputs')]
 
-common_data_cfg = dict(
-    type=dataset_type, data_prefix='data/mnist', pipeline=pipeline)
+common_data_cfg = dict(type=dataset_type,
+                       data_prefix='data/mnist',
+                       pipeline=pipeline)
 
 train_dataloader = dict(
     batch_size=128,

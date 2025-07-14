@@ -18,7 +18,6 @@ class DenseCLHook(Hook):
         start_iters (int): The number of warmup iterations to set
             ``loss_lambda=0``. Defaults to 1000.
     """
-
     def __init__(self, start_iters: int = 1000) -> None:
         self.start_iters = start_iters
 

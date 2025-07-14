@@ -31,7 +31,7 @@ def format_label(value: LABEL_TYPE) -> torch.Tensor:
         value (torch.Tensor | numpy.ndarray | Sequence | int): Label value.
 
     Returns:
-        :obj:`torch.Tensor`: The foramtted label tensor.
+        :obj:`torch.Tensor`: The formatted label tensor.
     """
 
     # Handle single number
@@ -62,7 +62,7 @@ def format_score(value: SCORE_TYPE) -> torch.Tensor:
         value (torch.Tensor | numpy.ndarray | Sequence): Score values.
 
     Returns:
-        :obj:`torch.Tensor`: The foramtted score tensor.
+        :obj:`torch.Tensor`: The formatted score tensor.
     """
 
     if isinstance(value, np.ndarray):

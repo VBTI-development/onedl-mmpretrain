@@ -8,10 +8,11 @@ from mmpretrain.models.backbones import BEiTViT
 
 
 class TestBEiT(TestCase):
-
     def setUp(self):
-        self.cfg = dict(
-            arch='b', img_size=224, patch_size=16, drop_path_rate=0.1)
+        self.cfg = dict(arch='b',
+                        img_size=224,
+                        patch_size=16,
+                        drop_path_rate=0.1)
 
     def test_structure(self):
         # Test invalid default arch

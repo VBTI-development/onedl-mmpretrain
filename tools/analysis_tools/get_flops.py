@@ -9,12 +9,11 @@ from mmpretrain import get_model
 def parse_args():
     parser = argparse.ArgumentParser(description='Get model flops and params')
     parser.add_argument('config', help='config file path')
-    parser.add_argument(
-        '--shape',
-        type=int,
-        nargs='+',
-        default=[224, 224],
-        help='input image size')
+    parser.add_argument('--shape',
+                        type=int,
+                        nargs='+',
+                        default=[224, 224],
+                        help='input image size')
     args = parser.parse_args()
     return args
 

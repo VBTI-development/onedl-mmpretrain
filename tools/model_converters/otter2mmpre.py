@@ -14,8 +14,9 @@ Convert Official Otter HF models to MMPreTrain format.
 
 def parse_args():
     parser = argparse.ArgumentParser(description=prog_description)
-    parser.add_argument(
-        'name_or_dir', type=str, help='The Otter HF model name or directory.')
+    parser.add_argument('name_or_dir',
+                        type=str,
+                        help='The Otter HF model name or directory.')
     args = parser.parse_args()
     return args
 

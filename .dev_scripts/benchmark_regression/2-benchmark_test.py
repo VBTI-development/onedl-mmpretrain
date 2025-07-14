@@ -26,49 +26,50 @@ def parse_args():
     parser = argparse.ArgumentParser(
         description="Test all models' accuracy in model-index.yml")
     parser.add_argument('checkpoint_root', help='Checkpoint file root path.')
-    parser.add_argument(
-        '--local', action='store_true', help='run at local instead of slurm.')
-    parser.add_argument(
-        '--models', nargs='+', type=str, help='Specify model names to run.')
-    parser.add_argument(
-        '--run', action='store_true', help='run script directly')
-    parser.add_argument(
-        '--summary',
-        action='store_true',
-        help='Summarize benchmark test results.')
+    parser.add_argument('--local',
+                        action='store_true',
+                        help='run at local instead of slurm.')
+    parser.add_argument('--models',
+                        nargs='+',
+                        type=str,
+                        help='Specify model names to run.')
+    parser.add_argument('--run',
+                        action='store_true',
+                        help='run script directly')
+    parser.add_argument('--summary',
+                        action='store_true',
+                        help='Summarize benchmark test results.')
     parser.add_argument('--save', action='store_true', help='Save the summary')
-    parser.add_argument(
-        '--gpus', type=int, default=1, help='How many GPUS to use.')
+    parser.add_argument('--gpus',
+                        type=int,
+                        default=1,
+                        help='How many GPUS to use.')
     parser.add_argument(
         '--no-skip',
         action='store_true',
         help='Whether to skip models without results record in the metafile.')
-    parser.add_argument(
-        '--work-dir',
-        default='work_dirs/benchmark_test',
-        help='the dir to save metric')
+    parser.add_argument('--work-dir',
+                        default='work_dirs/benchmark_test',
+                        help='the dir to save metric')
     parser.add_argument('--port', type=int, default=29666, help='dist port')
-    parser.add_argument(
-        '--partition',
-        type=str,
-        default='mm_model',
-        help='(for slurm) Cluster partition to use.')
-    parser.add_argument(
-        '--job-name',
-        type=str,
-        default='cls-test-benchmark',
-        help='(for slurm) Slurm job name prefix')
+    parser.add_argument('--partition',
+                        type=str,
+                        default='mm_model',
+                        help='(for slurm) Cluster partition to use.')
+    parser.add_argument('--job-name',
+                        type=str,
+                        default='cls-test-benchmark',
+                        help='(for slurm) Slurm job name prefix')
     parser.add_argument(
         '--quotatype',
         default=None,
         choices=['reserved', 'auto', 'spot'],
         help='(for slurm) Quota type, only available for phoenix-slurm>=0.2')
-    parser.add_argument(
-        '--cfg-options',
-        nargs='+',
-        type=str,
-        default=[],
-        help='Config options for all config files.')
+    parser.add_argument('--cfg-options',
+                        nargs='+',
+                        type=str,
+                        default=[],
+                        help='Config options for all config files.')
 
     args = parser.parse_args()
     return args
@@ -160,17 +161,15 @@ def test(models, args):
     preview.add_column(str(preview_script))
     preview.add_column('Shell command preview')
     preview.add_row(
-        Syntax.from_path(
-            preview_script,
-            background_color='default',
-            line_numbers=True,
-            word_wrap=True),
-        Syntax(
-            command_str,
-            'bash',
-            background_color='default',
-            line_numbers=True,
-            word_wrap=True))
+        Syntax.from_path(preview_script,
+                         background_color='default',
+                         line_numbers=True,
+                         word_wrap=True),
+        Syntax(command_str,
+               'bash',
+               background_color='default',
+               line_numbers=True,
+               word_wrap=True))
     console.print(preview)
 
     if args.run:

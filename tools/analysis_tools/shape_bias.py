@@ -16,13 +16,14 @@ from utils import FormatStrFormatter, ShapeBias
 # between two partially overlapping datapoints of the same color:
 PLOTTING_EDGE_COLOR = (0.3, 0.3, 0.3, 0.3)
 PLOTTING_EDGE_WIDTH = 0.02
-ICONS_DIR = osp.join(
-    osp.dirname(__file__), '..', '..', 'resources', 'shape_bias_icons')
+ICONS_DIR = osp.join(osp.dirname(__file__), '..', '..', 'resources',
+                     'shape_bias_icons')
 
 parser = argparse.ArgumentParser()
 parser.add_argument('--csv-dir', type=str, help='directory of csv files')
-parser.add_argument(
-    '--result-dir', type=str, help='directory to save plotting results')
+parser.add_argument('--result-dir',
+                    type=str,
+                    help='directory to save plotting results')
 parser.add_argument('--model-names', nargs='+', default=[], help='model name')
 parser.add_argument(
     '--colors',
@@ -47,10 +48,9 @@ parser.add_argument(
     help=  # noqa
     'the plotting names for the plots of each model, and they should be in the same order as model_names'  # noqa: E501
 )
-parser.add_argument(
-    '--delete-icons',
-    action='store_true',
-    help='whether to delete the icons after plotting')
+parser.add_argument('--delete-icons',
+                    action='store_true',
+                    help='whether to delete the icons after plotting')
 
 humans = [
     'subject-01', 'subject-02', 'subject-03', 'subject-04', 'subject-05',
@@ -114,49 +114,56 @@ def plot_shape_bias_matrixplot(args, analysis=ShapeBias()) -> None:
     ax.set_ylim([-.5, num_classes - 0.5])
 
     # secondary reversed x axis
-    ax_top = ax.secondary_xaxis(
-        'top', functions=(lambda x: 1 - x, lambda x: 1 - x))
+    ax_top = ax.secondary_xaxis('top',
+                                functions=(lambda x: 1 - x, lambda x: 1 - x))
 
     # labels, ticks
-    plt.tick_params(
-        axis='y', which='both', left=False, right=False, labelleft=False)
+    plt.tick_params(axis='y',
+                    which='both',
+                    left=False,
+                    right=False,
+                    labelleft=False)
     ax.set_ylabel('Shape categories', labelpad=60, fontsize=label_size)
-    ax.set_xlabel(
-        "Fraction of 'texture' decisions", fontsize=label_size, labelpad=25)
-    ax_top.set_xlabel(
-        "Fraction of 'shape' decisions", fontsize=label_size, labelpad=25)
+    ax.set_xlabel("Fraction of 'texture' decisions",
+                  fontsize=label_size,
+                  labelpad=25)
+    ax_top.set_xlabel("Fraction of 'shape' decisions",
+                      fontsize=label_size,
+                      labelpad=25)
     ax.xaxis.set_major_formatter(FormatStrFormatter('%g'))
     ax_top.xaxis.set_major_formatter(FormatStrFormatter('%g'))
     ax.get_xaxis().set_ticks(np.arange(0, 1.1, 0.1))
     ax_top.set_ticks(np.arange(0, 1.1, 0.1))
-    ax.tick_params(
-        axis='both', which='major', labelsize=fontsize, length=ticklength)
-    ax_top.tick_params(
-        axis='both', which='major', labelsize=fontsize, length=ticklength)
+    ax.tick_params(axis='both',
+                   which='major',
+                   labelsize=fontsize,
+                   length=ticklength)
+    ax_top.tick_params(axis='both',
+                       which='major',
+                       labelsize=fontsize,
+                       length=ticklength)
 
     # arrows on x axes
-    plt.arrow(
-        x=0,
-        y=-1.75,
-        dx=1,
-        dy=0,
-        fc='black',
-        head_width=0.4,
-        head_length=0.03,
-        clip_on=False,
-        length_includes_head=True,
-        overhang=0.5)
-    plt.arrow(
-        x=1,
-        y=num_classes + 0.75,
-        dx=-1,
-        dy=0,
-        fc='black',
-        head_width=0.4,
-        head_length=0.03,
-        clip_on=False,
-        length_includes_head=True,
-        overhang=0.5)
+    plt.arrow(x=0,
+              y=-1.75,
+              dx=1,
+              dy=0,
+              fc='black',
+              head_width=0.4,
+              head_length=0.03,
+              clip_on=False,
+              length_includes_head=True,
+              overhang=0.5)
+    plt.arrow(x=1,
+              y=num_classes + 0.75,
+              dx=-1,
+              dy=0,
+              fc='black',
+              head_width=0.4,
+              head_length=0.03,
+              clip_on=False,
+              length_includes_head=True,
+              overhang=0.5)
 
     # icons besides y axis
     # determine order of icons
@@ -185,11 +192,10 @@ def plot_shape_bias_matrixplot(args, analysis=ShapeBias()) -> None:
         bottom = i + MARGINY + YPOS
         top = (i + 1) - MARGINY + YPOS
         iconpath = osp.join(ICONS_DIR, '{}.png'.format(classes[i]))
-        plt.imshow(
-            plt.imread(iconpath),
-            extent=[left, right, bottom, top],
-            aspect='auto',
-            clip_on=False)
+        plt.imshow(plt.imread(iconpath),
+                   extent=[left, right, bottom, top],
+                   aspect='auto',
+                   clip_on=False)
 
     # plot horizontal intersection lines
     for i in range(num_classes - 1):
@@ -211,17 +217,16 @@ def plot_shape_bias_matrixplot(args, analysis=ShapeBias()) -> None:
             class_avgs.append(1 - analysis.analysis(
                 df=df_class_selection)['shape-bias'])
 
-        ax.scatter(
-            class_avgs,
-            classes,
-            color=args.colors[i],
-            marker=args.markers[i],
-            label=args.plotting_names[i],
-            s=markersize,
-            clip_on=False,
-            edgecolors=PLOTTING_EDGE_COLOR,
-            linewidths=PLOTTING_EDGE_WIDTH,
-            zorder=3)
+        ax.scatter(class_avgs,
+                   classes,
+                   color=args.colors[i],
+                   marker=args.markers[i],
+                   label=args.plotting_names[i],
+                   s=markersize,
+                   clip_on=False,
+                   edgecolors=PLOTTING_EDGE_COLOR,
+                   linewidths=PLOTTING_EDGE_WIDTH,
+                   zorder=3)
     plt.legend(frameon=True, labelspacing=1, loc=9)
 
     figure_path = osp.join(args.result_dir,
@@ -249,8 +254,8 @@ if __name__ == '__main__':
             f'Downloading icons to {ICONS_DIR}')
         for icon_name in icon_names:
             url = osp.join(root_url, icon_name)
-            os.system('wget -O {} {}'.format(
-                osp.join(ICONS_DIR, icon_name), url))
+            os.system('wget -O {} {}'.format(osp.join(ICONS_DIR, icon_name),
+                                             url))
 
     args = parser.parse_args()
     assert len(args.model_names) * 3 == len(args.colors), 'Number of colors \

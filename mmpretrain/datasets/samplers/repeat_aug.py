@@ -28,7 +28,6 @@ class RepeatAugSampler(Sampler):
             :attr:`shuffle=True`. This number should be identical across all
             processes in the distributed group. Defaults to None.
     """
-
     def __init__(self,
                  dataset: Sized,
                  shuffle: bool = True,

@@ -11,22 +11,22 @@ test_dataloader = dict(drop_last=False)
 # model settings
 model = dict(
     type='ImageClassifier',
-    backbone=dict(
-        type='VisionTransformer',
-        arch='base',
-        img_size=224,
-        patch_size=16,
-        frozen_stages=12,
-        out_type='cls_token',
-        final_norm=True,
-        init_cfg=dict(type='Pretrained', checkpoint='', prefix='backbone.')),
+    backbone=dict(type='VisionTransformer',
+                  arch='base',
+                  img_size=224,
+                  patch_size=16,
+                  frozen_stages=12,
+                  out_type='cls_token',
+                  final_norm=True,
+                  init_cfg=dict(type='Pretrained',
+                                checkpoint='',
+                                prefix='backbone.')),
     neck=dict(type='ClsBatchNormNeck', input_features=768),
-    head=dict(
-        type='VisionTransformerClsHead',
-        num_classes=1000,
-        in_channels=768,
-        loss=dict(type='CrossEntropyLoss'),
-        init_cfg=[dict(type='TruncNormal', layer='Linear', std=0.01)]),
+    head=dict(type='VisionTransformerClsHead',
+              num_classes=1000,
+              in_channels=768,
+              loss=dict(type='CrossEntropyLoss'),
+              init_cfg=[dict(type='TruncNormal', layer='Linear', std=0.01)]),
     data_preprocessor=dict(
         num_classes=1000,
         mean=[123.675, 116.28, 103.53],
@@ -43,28 +43,27 @@ optim_wrapper = dict(
 
 # learning rate scheduler
 param_scheduler = [
-    dict(
-        type='LinearLR',
-        start_factor=1e-4,
-        by_epoch=True,
-        begin=0,
-        end=10,
-        convert_to_iter_based=True),
-    dict(
-        type='CosineAnnealingLR',
-        T_max=90,
-        by_epoch=True,
-        begin=10,
-        end=100,
-        eta_min=0.0,
-        convert_to_iter_based=True)
+    dict(type='LinearLR',
+         start_factor=1e-4,
+         by_epoch=True,
+         begin=0,
+         end=10,
+         convert_to_iter_based=True),
+    dict(type='CosineAnnealingLR',
+         T_max=90,
+         by_epoch=True,
+         begin=10,
+         end=100,
+         eta_min=0.0,
+         convert_to_iter_based=True)
 ]
 
 # runtime settings
 train_cfg = dict(by_epoch=True, max_epochs=100)
 
-default_hooks = dict(
-    checkpoint=dict(type='CheckpointHook', interval=1, max_keep_ckpts=3),
-    logger=dict(type='LoggerHook', interval=10))
+default_hooks = dict(checkpoint=dict(type='CheckpointHook',
+                                     interval=1,
+                                     max_keep_ckpts=3),
+                     logger=dict(type='LoggerHook', interval=10))
 
 randomness = dict(seed=0, diff_rank_seed=True)

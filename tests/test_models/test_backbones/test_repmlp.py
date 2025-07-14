@@ -11,15 +11,13 @@ from mmpretrain.models.backbones import RepMLPNet
 
 
 class TestRepMLP(TestCase):
-
     def setUp(self):
         # default model setting
-        self.cfg = dict(
-            arch='b',
-            img_size=224,
-            out_indices=(3, ),
-            reparam_conv_kernels=(1, 3),
-            final_norm=True)
+        self.cfg = dict(arch='b',
+                        img_size=224,
+                        out_indices=(3, ),
+                        reparam_conv_kernels=(1, 3),
+                        final_norm=True)
 
         # default model setting and output stage channels
         self.model_forward_settings = [
@@ -85,11 +83,10 @@ class TestRepMLP(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(
-                type='Kaiming',
-                layer='Conv2d',
-                mode='fan_in',
-                nonlinearity='linear')
+            dict(type='Kaiming',
+                 layer='Conv2d',
+                 mode='fan_in',
+                 nonlinearity='linear')
         ]
         model = RepMLPNet(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()
@@ -114,10 +111,9 @@ class TestRepMLP(TestCase):
 
         # Test RepMLPNet model forward
         for model_test_setting in self.model_forward_settings:
-            model = RepMLPNet(
-                model_test_setting['model_name'],
-                out_indices=(0, 1, 2, 3),
-                final_norm=False)
+            model = RepMLPNet(model_test_setting['model_name'],
+                              out_indices=(0, 1, 2, 3),
+                              final_norm=False)
             model.init_weights()
 
             model.train()
@@ -139,11 +135,12 @@ class TestRepMLP(TestCase):
     def test_deploy_(self):
         # Test output before and load from deploy checkpoint
         imgs = torch.randn((1, 3, 224, 224))
-        cfg = dict(
-            arch='b', out_indices=(
-                1,
-                3,
-            ), reparam_conv_kernels=(1, 3, 5))
+        cfg = dict(arch='b',
+                   out_indices=(
+                       1,
+                       3,
+                   ),
+                   reparam_conv_kernels=(1, 3, 5))
         model = RepMLPNet(**cfg)
 
         model.eval()
@@ -157,8 +154,10 @@ class TestRepMLP(TestCase):
         assert len(feats) == len(feats_)
         for i in range(len(feats)):
             self.assertTrue(
-                torch.allclose(
-                    feats[i].sum(), feats_[i].sum(), rtol=0.1, atol=0.1))
+                torch.allclose(feats[i].sum(),
+                               feats_[i].sum(),
+                               rtol=0.1,
+                               atol=0.1))
 
         cfg['deploy'] = True
         model_deploy = RepMLPNet(**cfg)

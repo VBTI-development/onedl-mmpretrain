@@ -33,15 +33,13 @@ def parse_args():
     parser.add_argument(
         '--test-cfg',
         help='tsne config file path to load config of test dataloader.')
-    parser.add_argument(
-        '--vis-stage',
-        choices=['backbone', 'neck', 'pre_logits'],
-        help='The visualization stage of the model')
-    parser.add_argument(
-        '--class-idx',
-        nargs='+',
-        type=int,
-        help='The categories used to calculate t-SNE.')
+    parser.add_argument('--vis-stage',
+                        choices=['backbone', 'neck', 'pre_logits'],
+                        help='The visualization stage of the model')
+    parser.add_argument('--class-idx',
+                        nargs='+',
+                        type=int,
+                        help='The categories used to calculate t-SNE.')
     parser.add_argument(
         '--max-num-class',
         type=int,
@@ -65,18 +63,18 @@ def parse_args():
         'Note that the quotation marks are necessary and that no white space '
         'is allowed.')
     parser.add_argument('--device', help='Device used for inference')
-    parser.add_argument(
-        '--legend',
-        action='store_true',
-        help='Show the legend of all categories.')
-    parser.add_argument(
-        '--show',
-        action='store_true',
-        help='Display the result in a graphical window.')
+    parser.add_argument('--legend',
+                        action='store_true',
+                        help='Show the legend of all categories.')
+    parser.add_argument('--show',
+                        action='store_true',
+                        help='Display the result in a graphical window.')
 
     # t-SNE settings
-    parser.add_argument(
-        '--n-components', type=int, default=2, help='the dimension of results')
+    parser.add_argument('--n-components',
+                        type=int,
+                        default=2,
+                        help='the dimension of results')
     parser.add_argument(
         '--perplexity',
         type=float,
@@ -110,8 +108,10 @@ def parse_args():
         default=300,
         help='Maximum number of iterations without progress before we abort'
         'the optimization.')
-    parser.add_argument(
-        '--init', type=str, default='random', help='The init method')
+    parser.add_argument('--init',
+                        type=str,
+                        default='random',
+                        help='The init method')
     args = parser.parse_args()
     return args
 
@@ -139,11 +139,10 @@ def main():
 
     # init the logger before other steps
     log_file = osp.join(tsne_work_dir, 'tsne.log')
-    logger = MMLogger.get_instance(
-        'mmpretrain',
-        logger_name='mmpretrain',
-        log_file=log_file,
-        log_level=cfg.log_level)
+    logger = MMLogger.get_instance('mmpretrain',
+                                   logger_name='mmpretrain',
+                                   log_file=log_file,
+                                   log_level=cfg.log_level)
 
     # build the model from a config file and a checkpoint file
     device = args.device or get_device()
@@ -231,14 +230,13 @@ def main():
         np.save(output_file, val)
 
     # build t-SNE model
-    tsne_model = TSNE(
-        n_components=args.n_components,
-        perplexity=args.perplexity,
-        early_exaggeration=args.early_exaggeration,
-        learning_rate=args.learning_rate,
-        n_iter=args.n_iter,
-        n_iter_without_progress=args.n_iter_without_progress,
-        init=args.init)
+    tsne_model = TSNE(n_components=args.n_components,
+                      perplexity=args.perplexity,
+                      early_exaggeration=args.early_exaggeration,
+                      learning_rate=args.learning_rate,
+                      max_iter=args.n_iter,
+                      n_iter_without_progress=args.n_iter_without_progress,
+                      init=args.init)
 
     # run and get results
     logger.info('Running t-SNE.')
@@ -247,13 +245,12 @@ def main():
         res_min, res_max = result.min(0), result.max(0)
         res_norm = (result - res_min) / (res_max - res_min)
         _, ax = plt.subplots(figsize=(10, 10))
-        scatter = ax.scatter(
-            res_norm[:, 0],
-            res_norm[:, 1],
-            alpha=1.0,
-            s=15,
-            c=labels,
-            cmap='tab20')
+        scatter = ax.scatter(res_norm[:, 0],
+                             res_norm[:, 1],
+                             alpha=1.0,
+                             s=15,
+                             c=labels,
+                             cmap='tab20')
         if args.legend:
             legend = ax.legend(scatter.legend_elements()[0], classes)
             ax.add_artist(legend)

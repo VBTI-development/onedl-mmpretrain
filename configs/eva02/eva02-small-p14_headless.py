@@ -1,12 +1,11 @@
 model = dict(
     type='ImageClassifier',
-    backbone=dict(
-        type='ViTEVA02',
-        arch='s',
-        img_size=224,
-        patch_size=14,
-        final_norm=False,
-        out_type='avg_featmap'),
+    backbone=dict(type='ViTEVA02',
+                  arch='s',
+                  img_size=224,
+                  patch_size=14,
+                  final_norm=False,
+                  out_type='avg_featmap'),
     neck=None,
     head=None,
 )

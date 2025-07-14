@@ -11,7 +11,6 @@ from .base import BaseSelfSupervisor
 
 class GatherLayer(torch.autograd.Function):
     """Gather tensors from all process, supporting backward propagation."""
-
     @staticmethod
     def forward(ctx: Any, input: torch.Tensor) -> Tuple[List]:
         ctx.save_for_backward(input)
@@ -31,9 +30,9 @@ class SimCLR(BaseSelfSupervisor):
     """SimCLR.
 
     Implementation of `A Simple Framework for Contrastive Learning of Visual
-    Representations <https://arxiv.org/abs/2002.05709>`_.
+    Representations`     `
+    <https://arxiv.org/abs/2002.05709>`_.
     """
-
     @staticmethod
     def _create_buffer(
         batch_size: int, device: torch.device

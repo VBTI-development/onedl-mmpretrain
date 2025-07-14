@@ -34,8 +34,10 @@ def cross_entropy(pred,
     # apply weights and do the reduction
     if weight is not None:
         weight = weight.float()
-    loss = weight_reduce_loss(
-        loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
+    loss = weight_reduce_loss(loss,
+                              weight=weight,
+                              reduction=reduction,
+                              avg_factor=avg_factor)
 
     return loss
 
@@ -72,8 +74,10 @@ def soft_cross_entropy(pred,
     # apply weights and do the reduction
     if weight is not None:
         weight = weight.float()
-    loss = weight_reduce_loss(
-        loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
+    loss = weight_reduce_loss(loss,
+                              weight=weight,
+                              reduction=reduction,
+                              avg_factor=avg_factor)
 
     return loss
 
@@ -125,8 +129,10 @@ def binary_cross_entropy(pred,
         weight = weight.float()
         if pred.dim() > 1:
             weight = weight.reshape(-1, 1)
-    loss = weight_reduce_loss(
-        loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
+    loss = weight_reduce_loss(loss,
+                              weight=weight,
+                              reduction=reduction,
+                              avg_factor=avg_factor)
     return loss
 
 
@@ -148,7 +154,6 @@ class CrossEntropyLoss(nn.Module):
             class with shape (C), C is the number of classes. Only enabled in
             BCE loss when ``use_sigmoid`` is True. Default None.
     """
-
     def __init__(self,
                  use_sigmoid=False,
                  use_soft=False,
@@ -183,8 +188,8 @@ class CrossEntropyLoss(nn.Module):
                 reduction_override=None,
                 **kwargs):
         assert reduction_override in (None, 'none', 'mean', 'sum')
-        reduction = (
-            reduction_override if reduction_override else self.reduction)
+        reduction = (reduction_override
+                     if reduction_override else self.reduction)
 
         if self.class_weight is not None:
             class_weight = cls_score.new_tensor(self.class_weight)

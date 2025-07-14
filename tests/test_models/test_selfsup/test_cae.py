@@ -10,8 +10,9 @@ from mmpretrain.structures import DataSample
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
 def test_cae_vit():
-    backbone = dict(
-        arch='deit-tiny', patch_size=16, layer_scale_init_value=0.1)
+    backbone = dict(arch='deit-tiny',
+                    patch_size=16,
+                    layer_scale_init_value=0.1)
 
     cae_backbone = CAEPretrainViT(**backbone)
     cae_backbone.init_weights()
@@ -30,37 +31,33 @@ def test_cae_vit():
 
 @pytest.mark.skipif(platform.system() == 'Windows', reason='Windows mem limit')
 def test_cae():
-    data_preprocessor = dict(
-        type='TwoNormDataPreprocessor',
-        mean=[123.675, 116.28, 103.53],
-        std=[58.395, 57.12, 57.375],
-        second_mean=[-31.875, -31.875, -31.875],
-        second_std=[318.75, 318.75, 318.75],
-        to_rgb=True)
+    data_preprocessor = dict(type='TwoNormDataPreprocessor',
+                             mean=[123.675, 116.28, 103.53],
+                             std=[58.395, 57.12, 57.375],
+                             second_mean=[-31.875, -31.875, -31.875],
+                             second_std=[318.75, 318.75, 318.75],
+                             to_rgb=True)
 
     # model settings
-    backbone = dict(
-        type='CAEPretrainViT',
-        arch='deit-tiny',
-        patch_size=16,
-        layer_scale_init_value=0.1)
-    neck = dict(
-        type='CAENeck',
-        embed_dims=192,
-        num_heads=12,
-        regressor_depth=4,
-        decoder_depth=4,
-        mlp_ratio=4,
-        layer_scale_init_value=0.1)
+    backbone = dict(type='CAEPretrainViT',
+                    arch='deit-tiny',
+                    patch_size=16,
+                    layer_scale_init_value=0.1)
+    neck = dict(type='CAENeck',
+                embed_dims=192,
+                num_heads=12,
+                regressor_depth=4,
+                decoder_depth=4,
+                mlp_ratio=4,
+                layer_scale_init_value=0.1)
     head = dict(type='CAEHead', loss=dict(type='CAELoss', lambd=2))
     target_generator = dict(type='DALL-E')
 
-    model = CAE(
-        backbone=backbone,
-        neck=neck,
-        head=head,
-        target_generator=target_generator,
-        data_preprocessor=data_preprocessor)
+    model = CAE(backbone=backbone,
+                neck=neck,
+                head=head,
+                target_generator=target_generator,
+                data_preprocessor=data_preprocessor)
 
     fake_img = torch.rand((1, 3, 224, 224))
     fake_target_img = torch.rand((1, 3, 112, 112))

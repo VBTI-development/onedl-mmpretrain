@@ -23,7 +23,6 @@ class DenseCLNeck(BaseModule):
         init_cfg (dict or list[dict], optional): Initialization config dict.
             Defaults to None.
     """
-
     def __init__(self,
                  in_channels: int,
                  hid_channels: int,
@@ -32,16 +31,16 @@ class DenseCLNeck(BaseModule):
                  init_cfg: Optional[Union[dict, List[dict]]] = None) -> None:
         super().__init__(init_cfg)
         self.avgpool = nn.AdaptiveAvgPool2d((1, 1))
-        self.mlp = nn.Sequential(
-            nn.Linear(in_channels, hid_channels), nn.ReLU(inplace=True),
-            nn.Linear(hid_channels, out_channels))
+        self.mlp = nn.Sequential(nn.Linear(in_channels, hid_channels),
+                                 nn.ReLU(inplace=True),
+                                 nn.Linear(hid_channels, out_channels))
 
         self.with_pool = True if num_grid is not None else False
         if self.with_pool:
             self.pool = nn.AdaptiveAvgPool2d((num_grid, num_grid))
-        self.mlp2 = nn.Sequential(
-            nn.Conv2d(in_channels, hid_channels, 1), nn.ReLU(inplace=True),
-            nn.Conv2d(hid_channels, out_channels, 1))
+        self.mlp2 = nn.Sequential(nn.Conv2d(in_channels, hid_channels, 1),
+                                  nn.ReLU(inplace=True),
+                                  nn.Conv2d(hid_channels, out_channels, 1))
         self.avgpool2 = nn.AdaptiveAvgPool2d((1, 1))
 
     def forward(self, x: Tuple[torch.Tensor]) -> Tuple[torch.Tensor]:
