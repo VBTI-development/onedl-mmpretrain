@@ -1124,6 +1124,8 @@ class Albumentations(BaseTransform):
         keymap (Optional[Dict]): Mapping of mmpretrain to albumentations
             fields, in format {'input key':'albumentation-style key'}.
             Defaults to None.
+        seed (Optional[int]): Random seed passed along to
+            albumentations Compose. Defaults to None.
 
     Example:
         >>> import mmcv
@@ -1156,7 +1158,10 @@ class Albumentations(BaseTransform):
         >>> print(data['img'].shape)
         (375, 500, 3)
     """
-    def __init__(self, transforms: List[Dict], keymap: Optional[Dict] = None):
+    def __init__(self,
+                 transforms: List[Dict],
+                 keymap: Optional[Dict] = None,
+                 seed: Optional[int] = None):
         if albumentations is None:
             raise RuntimeError('albumentations is not installed')
         else:
@@ -1169,7 +1174,7 @@ class Albumentations(BaseTransform):
         self.transforms = transforms
 
         self.aug = albu_Compose(
-            [self.albu_builder(t) for t in self.transforms])
+            [self.albu_builder(t) for t in self.transforms], seed=seed)
 
         if not keymap:
             self.keymap_to_albu = dict(img='image')

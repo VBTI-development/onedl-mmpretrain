@@ -145,4 +145,4 @@ jobs:
         run: uv pip install -r pyproject.toml --group tests --extra optional
       - name: Run unittests
         run: |
-          uv run pytest tests/ --ignore tests/test_models/test_backbones --ignore tests/test_tools
+          uv run pytest tests/ --ignore tests/test_models/test_backbones --ignore tests/test_tools.py

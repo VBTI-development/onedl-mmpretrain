@@ -772,7 +772,8 @@ class TestAlbumentations(TestCase):
             A.RandomCrop(width=256, height=256),
             A.HorizontalFlip(p=0.5),
             A.RandomBrightnessContrast(p=0.2),
-        ])
+        ],
+                                       seed=42)
         transformed_image_3rd = ablu_transform_3rd(
             image=copy.deepcopy(ori_img))['image']
 
@@ -785,6 +786,7 @@ class TestAlbumentations(TestCase):
             dict(type='HorizontalFlip', p=0.5),
             dict(type='RandomBrightnessContrast', p=0.2)
         ]
+        cfg['seed'] = 42
         mmpretrain_module = TRANSFORMS.build(cfg)
         transformed_image_mmpretrain = mmpretrain_module(results)['img']
         assert np.equal(transformed_image_3rd,
