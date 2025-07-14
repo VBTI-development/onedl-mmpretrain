@@ -19,6 +19,8 @@ concurrency:
 jobs:
   build_cpu:
     runs-on: ubuntu-22.04
+    permissions:
+      pull-requests: write
     strategy:
       matrix:
         include:
