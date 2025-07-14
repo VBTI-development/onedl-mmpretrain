@@ -69,7 +69,7 @@ jobs:
         run: |
           uv pip install onedl-mmengine
           uv pip install ninja psutil setuptools
-          uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
+          uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@main --no-build-isolation
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install -e .
