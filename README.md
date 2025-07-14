@@ -19,11 +19,13 @@
   </div>
   <div>&nbsp;</div>
 
-[![PyPI](https://img.shields.io/pypi/v/mmpretrain)](https://pypi.org/project/mmpretrain)
 [![Docs](https://img.shields.io/badge/docs-latest-blue)](https://mmpretrain.readthedocs.io/en/latest/)
-[![Build Status](https://github.com/VBTI-development/onedl-mmpretrain/workflows/build/badge.svg)](https://github.com/VBTI-development/onedl-mmpretrain/actions)
-[![codecov](https://codecov.io/gh/VBTI-development/onedl-mmpretrain/branch/main/graph/badge.svg)](https://codecov.io/gh/VBTI-development/onedl-mmpretrain)
 [![license](https://img.shields.io/github/license/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/LICENSE)
+
+[![PyPI - Python Version](https://img.shields.io/pypi/pyversions/onedl-mmpretrain)](https://pypi.org/project/onedl-mmpretrain/)
+[![PyPI](https://img.shields.io/pypi/v/onedl-mmpretrain)](https://pypi.org/project/onedl-mmpretrain)
+
+[![Build Status](https://github.com/VBTI-development/onedl-mmpretrain/workflows/build/badge.svg)](https://github.com/VBTI-development/onedl-mmpretrain/actions)
 [![open issues](https://isitmaintained.com/badge/open/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 [![issue resolution](https://isitmaintained.com/badge/resolution/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 

@@ -64,8 +64,9 @@ jobs:
           uv pip install -v --torch-backend=auto torch==${{ matrix.torch }} torchvision
           uv cache clean
       - name: Install mmpretrain dependencies
+        # TODO: use prebuilt wheel with gpu
         run: |
-          uv pip install git+https://github.com/VBTI-development/onedl-mmengine.git@main
+          uv pip install onedl-mmengine
           uv pip install ninja psutil
           uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
           uv pip install -r pyproject.toml

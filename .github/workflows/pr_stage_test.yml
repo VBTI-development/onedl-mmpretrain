@@ -38,9 +38,7 @@ jobs:
           uv pip install torch==${{ matrix.torch }} torchvision
       - name: Install mmpretrain dependencies
         run: |
-          uv pip install git+https://github.com/VBTI-development/onedl-mmengine.git@main
-          uv pip install ninja psutil
-          uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
+          uv pip install onedl-mmengine onedl-mmcv
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install .
@@ -104,7 +102,7 @@ jobs:
           uv cache clean
       - name: Install mmpretrain dependencies
         run: |
-          uv pip install git+https://github.com/VBTI-development/onedl-mmengine.git@main
+          uv pip install onedl-mmengine
           uv pip install ninja psutil
           uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
           uv pip install -r pyproject.toml
@@ -137,7 +135,7 @@ jobs:
         run: uv pip install -v torch==2.3.1 torchvision
       - name: Install mmpretrain dependencies
         run: |
-          uv pip install git+https://github.com/VBTI-development/onedl-mmengine.git@main
+          uv pip install onedl-mmengine
           uv pip install ninja psutil
           uv pip install git+https://github.com/VBTI-development/onedl-mmcv.git@chore/rename-to-onedl-cv --no-build-isolation
           uv pip install -r pyproject.toml

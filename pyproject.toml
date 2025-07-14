@@ -62,8 +62,8 @@ multimodal = [
     "transformers>=4.28.0",
 ]
 mminstall = [
-    "mmcv>=2.0.0",
-    "mmengine>=0.8.3,<1.0.0",
+    "onedl-mmcv>=2.0.0",
+    "onedl-mmengine>=0.8.3,<1.0.0",
 ]
 optional = [
     "albumentations>=0.3.2",
