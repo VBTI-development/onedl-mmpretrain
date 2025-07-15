@@ -206,8 +206,8 @@ intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None),
     'numpy': ('https://numpy.org/doc/stable', None),
     'torch': ('https://pytorch.org/docs/stable/', None),
-    'mmcv': ('https://mmcv.readthedocs.io/en/2.x/', None),
-    'mmengine': ('https://mmengine.readthedocs.io/en/latest/', None),
+    'mmcv': ('https://onedl-mmcv.readthedocs.io/en/latest/', None),
+    'mmengine': ('https://onedl-mmengine.readthedocs.io/en/latest/', None),
     'transformers':
     ('https://huggingface.co/docs/transformers/main/en/', None),
 }

@@ -77,7 +77,7 @@ torch.Size([1, 1000])
 
 **Test Command**
 
-Place the ImageNet dataset to the `data/imagenet/` directory, or prepare datasets according to the [docs](https://mmpretrain.readthedocs.io/en/latest/user_guides/dataset_prepare.html#prepare-dataset).
+Place the ImageNet dataset to the `data/imagenet/` directory, or prepare datasets according to the [docs](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/dataset_prepare.html#prepare-dataset).
 
 *224×224*
 
@@ -107,7 +107,7 @@ python tools/test.py configs/riformer/deploy/riformer-s12-deploy_8xb128_in1k.py 
 
 <!-- [TABS-END] -->
 
-For more configurable parameters, please refer to the [API](https://mmpretrain.readthedocs.io/en/latest/api/generated/mmpretrain.models.backbones.RIFormer.html#mmpretrain.models.backbones.RIFormer).
+For more configurable parameters, please refer to the [API](https://onedl-mmpretrain.readthedocs.io/en/latest/api/generated/mmpretrain.models.backbones.RIFormer.html#mmpretrain.models.backbones.RIFormer).
 
 <details>
 

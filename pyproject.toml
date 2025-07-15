@@ -4,7 +4,7 @@ version = "1.3.0-rc.0"
 description = "OpenMMLab Model Pretraining Toolbox and Benchmark"
 readme = "README.md"
 authors = [
-    { name = "VBTI Contributors", email = "dev@vbti.nl" }
+    { name = "VBTI Contributors", email = "oss-team@vbti.nl" }
 ]
 license = "Apache-2.0"
 requires-python = ">=3.10"
@@ -39,7 +39,7 @@ docs = [
     "docutils==0.18.1",
     "modelindex",
     "myst-parser",
-    "pytorch_sphinx_theme @ git+https://github.com/VBTI-development/onedl_sphinx_theme.git@pt",
+    "pytorch_sphinx_theme @ git+https://github.com/VBTI-development/onedl_sphinx_theme.git@master",
     "sphinx==6.1.3",
     "sphinx-copybutton",
     "sphinx-notfound-page",
@@ -75,8 +75,8 @@ torch = [ "torch<2.6", "torchvision" ]
 
 [project.urls]
 Homepage = "https://onedl.ai"
-Repository = "https://github.com/VBTI-development/onedl-mmengine"
-Documentation = "https://mmpretrain.readthedocs.io/en/latest/"
+Repository = "https://github.com/VBTI-development/onedl-mmpretrain"
+Documentation = "https://onedl-mmpretrain.readthedocs.io/en/latest/"
 
 [tool.setuptools.packages.find]
 include = ["mmpretrain", "mmpretrain.*"]

@@ -1,25 +1,23 @@
 <div align="center">
 
-<img src="resources/mmpt-logo.png" width="600"/>
+<!-- <img src="resources/mmpt-logo.png" width="600"/> -->
+
+<div align="center">
+  <img width="600" alt="onedl-mmengine" src="https://raw.githubusercontent.com/VBTI-development/onedl-mmpretrain/main/resources/mmpt-logo.png"/>
   <div>&nbsp;</div>
   <div align="center">
-    <b><font size="5">OpenMMLab website</font></b>
-    <sup>
-      <a href="https://openmmlab.com">
-        <i><font size="4">HOT</font></i>
-      </a>
-    </sup>
+    <a href="https://vbti.ai">
+      <b><font size="5">VBTI Website</font></b>
+    </a>
     &nbsp;&nbsp;&nbsp;&nbsp;
-    <b><font size="5">OpenMMLab platform</font></b>
-    <sup>
-      <a href="https://platform.openmmlab.com">
-        <i><font size="4">TRY IT OUT</font></i>
-      </a>
-    </sup>
+    <a href="https://onedl.ai">
+      <b><font size="5">OneDL platform</font></b>
+    </a>
   </div>
-  <div>&nbsp;</div>
+<div>&nbsp;</div>
+</div>
 
-[![Docs](https://img.shields.io/badge/docs-latest-blue)](https://mmpretrain.readthedocs.io/en/latest/)
+[![Docs](https://img.shields.io/badge/docs-latest-blue)](https://onedl-mmpretrain.readthedocs.io/en/latest/)
 [![license](https://img.shields.io/github/license/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/LICENSE)
 
 [![PyPI - Python Version](https://img.shields.io/pypi/pyversions/onedl-mmpretrain)](https://pypi.org/project/onedl-mmpretrain/)
@@ -29,10 +27,10 @@
 [![open issues](https://isitmaintained.com/badge/open/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 [![issue resolution](https://isitmaintained.com/badge/resolution/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 
-[📘 Documentation](https://mmpretrain.readthedocs.io/en/latest/) |
-[🛠️ Installation](https://mmpretrain.readthedocs.io/en/latest/get_started.html#installation) |
-[👀 Model Zoo](https://mmpretrain.readthedocs.io/en/latest/modelzoo_statistics.html) |
-[🆕 Update News](https://mmpretrain.readthedocs.io/en/latest/notes/changelog.html) |
+[📘 Documentation](https://onedl-mmpretrain.readthedocs.io/en/latest/) |
+[🛠️ Installation](https://onedl-mmpretrain.readthedocs.io/en/latest/get_started.html#installation) |
+[👀 Model Zoo](https://onedl-mmpretrain.readthedocs.io/en/latest/modelzoo_statistics.html) |
+[🆕 Update News](https://onedl-mmpretrain.readthedocs.io/en/latest/notes/changelog.html) |
 [🤔 Reporting Issues](https://github.com/VBTI-development/onedl-mmpretrain/issues/new/choose)
 
 <img src="https://user-images.githubusercontent.com/36138628/230307505-4727ad0a-7d71-4069-939d-b499c7e272b7.png" width="400"/>
@@ -42,8 +40,6 @@
 ## Introduction
 
 MMPreTrain is an open source pre-training toolbox based on PyTorch. It is a part of the [OpenMMLab](https://openmmlab.com/) project.
-
-The `main` branch works with **PyTorch 1.8+**.
 
 ### Major features
 
@@ -64,6 +60,10 @@ https://github.com/open-mmlab/mmpretrain/assets/26739999/e4dcd3a2-f895-4d1b-a351
 
 ## What's new
 
+The VBTI development team is reviving MMLabs code, making it work with
+newer pytorch versions and fixing bugs. We are only a small team, so your help
+is appreciated.
+
 🌟 v1.2.0 was released in 04/01/2023
 
 - Support LLaVA 1.5.
@@ -79,7 +79,7 @@ https://github.com/open-mmlab/mmpretrain/assets/26739999/e4dcd3a2-f895-4d1b-a351
 - Support inference of more **multi-modal** algorithms, such as [**LLaVA**](./configs/llava/), [**MiniGPT-4**](./configs/minigpt4), [**Otter**](./configs/otter/), etc.
 - Support around **10 multi-modal** datasets!
 - Add [**iTPN**](./configs/itpn/), [**SparK**](./configs/spark/) self-supervised learning algorithms.
-- Provide examples of [New Config](./mmpretrain/configs/) and [DeepSpeed/FSDP with FlexibleRunner](./configs/mae/benchmarks/). Here are the documentation links of [New Config](https://mmengine.readthedocs.io/en/latest/advanced_tutorials/config.html#a-pure-python-style-configuration-file-beta) and [DeepSpeed/FSDP with FlexibleRunner](https://mmengine.readthedocs.io/en/latest/api/generated/mmengine.runner.FlexibleRunner.html#mmengine.runner.FlexibleRunner).
+- Provide examples of [New Config](./mmpretrain/configs/) and [DeepSpeed/FSDP with FlexibleRunner](./configs/mae/benchmarks/). Here are the documentation links of [New Config](https://onedl-mmengine.readthedocs.io/en/latest/advanced_tutorials/config.html#a-pure-python-style-configuration-file-beta) and [DeepSpeed/FSDP with FlexibleRunner](https://onedl-mmengine.readthedocs.io/en/latest/api/generated/mmengine.runner.FlexibleRunner.html#mmengine.runner.FlexibleRunner).
 
 🌟 Upgrade from MMClassification to MMPreTrain
 
@@ -89,15 +89,19 @@ https://github.com/open-mmlab/mmpretrain/assets/26739999/e4dcd3a2-f895-4d1b-a351
 - Support **LeViT**, **XCiT**, **ViG**, **ConvNeXt-V2**, **EVA**, **RevViT**, **EfficientnetV2**, **CLIP**, **TinyViT** and **MixMIM** backbones.
 
 This release introduced a brand new and flexible training & test engine, but it's still in progress. Welcome
-to try according to [the documentation](https://mmpretrain.readthedocs.io/en/latest/).
+to try according to [the documentation](https://onedl-mmpretrain.readthedocs.io/en/latest/).
 
-And there are some BC-breaking changes. Please check [the migration tutorial](https://mmpretrain.readthedocs.io/en/latest/migration.html).
+And there are some BC-breaking changes. Please check [the migration tutorial](https://onedl-mmpretrain.readthedocs.io/en/latest/migration.html).
 
-Please refer to [changelog](https://mmpretrain.readthedocs.io/en/latest/notes/changelog.html) for more details and other release history.
+Please refer to [changelog](https://onedl-mmpretrain.readthedocs.io/en/latest/notes/changelog.html) for more details and other release history.
 
 ## Installation
 
 Below are quick steps for installation:
+
+```shell
+uv pip install
+```
 
 ```shell
 conda create -n open-mmlab python=3.8 pytorch==1.10.1 torchvision==0.11.2 cudatoolkit=11.3 -c pytorch -y
@@ -108,7 +112,7 @@ cd mmpretrain
 mim install -e .
 ```
 
-Please refer to [installation documentation](https://mmpretrain.readthedocs.io/en/latest/get_started.html) for more detailed installation and dataset preparation.
+Please refer to [installation documentation](https://onedl-mmpretrain.readthedocs.io/en/latest/get_started.html) for more detailed installation and dataset preparation.
 
 For multi-modality models support, please install the extra dependencies by:
 
@@ -120,18 +124,18 @@ mim install -e ".[multimodal]"
 
 We provided a series of tutorials about the basic usage of MMPreTrain for new users:
 
-- [Learn about Configs](https://mmpretrain.readthedocs.io/en/latest/user_guides/config.html)
-- [Prepare Dataset](https://mmpretrain.readthedocs.io/en/latest/user_guides/dataset_prepare.html)
-- [Inference with existing models](https://mmpretrain.readthedocs.io/en/latest/user_guides/inference.html)
-- [Train](https://mmpretrain.readthedocs.io/en/latest/user_guides/train.html)
-- [Test](https://mmpretrain.readthedocs.io/en/latest/user_guides/test.html)
-- [Downstream tasks](https://mmpretrain.readthedocs.io/en/latest/user_guides/downstream.html)
+- [Learn about Configs](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/config.html)
+- [Prepare Dataset](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/dataset_prepare.html)
+- [Inference with existing models](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/inference.html)
+- [Train](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/train.html)
+- [Test](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/test.html)
+- [Downstream tasks](https://onedl-mmpretrain.readthedocs.io/en/latest/user_guides/downstream.html)
 
-For more information, please refer to [our documentation](https://mmpretrain.readthedocs.io/en/latest/).
+For more information, please refer to [our documentation](https://onedl-mmpretrain.readthedocs.io/en/latest/).
 
 ## Model zoo
 
-Results and models are available in the [model zoo](https://mmpretrain.readthedocs.io/en/latest/modelzoo_statistics.html).
+Results and models are available in the [model zoo](https://onedl-mmpretrain.readthedocs.io/en/latest/modelzoo_statistics.html).
 
 <div align="center">
   <b>Overview</b>
@@ -266,7 +270,7 @@ Results and models are available in the [model zoo](https://mmpretrain.readthedo
 ## Contributing
 
 We appreciate all contributions to improve MMPreTrain.
-Please refer to [CONTRUBUTING](https://mmpretrain.readthedocs.io/en/latest/notes/contribution_guide.html) for the contributing guideline.
+Please refer to [CONTRUBUTING](https://onedl-mmpretrain.readthedocs.io/en/latest/notes/contribution_guide.html) for the contributing guideline.
 
 ## Acknowledgement
 

@@ -2,14 +2,14 @@
 
 ## Detection
 
-For detection tasks, please use MMDetection. First, make sure you have installed [MIM](https://github.com/open-mmlab/mim), which is also a project of OpenMMLab.
+For detection tasks, please use MMDetection. First, make sure you have installed [MIM](https://github.com/vbti-development/mim), which is also a project of OpenMMLab.
 
 ```shell
 pip install openmim
 mim install 'mmdet>=3.0.0rc0'
 ```
 
-Besides, please refer to MMDet for [installation](https://mmdetection.readthedocs.io/en/dev-3.x/get_started.html) and [data preparation](https://mmdetection.readthedocs.io/en/dev-3.x/user_guides/dataset_prepare.html)
+Besides, please refer to MMDet for [installation](https://onedl-mmdetection.readthedocs.io/en/latest/get_started.html) and [data preparation](https://onedl-mmdetection.readthedocs.io/en/latest/user_guides/dataset_prepare.html)
 
 ### Train
 
@@ -74,7 +74,7 @@ pip install openmim
 mim install 'mmsegmentation>=1.0.0rc0'
 ```
 
-Besides, please refer to MMSegmentation for [installation](https://mmsegmentation.readthedocs.io/en/dev-1.x/get_started.html) and [data preparation](https://mmsegmentation.readthedocs.io/en/dev-1.x/user_guides/2_dataset_prepare.html).
+Besides, please refer to MMSegmentation for [installation](https://onedl-mmsegmentation.readthedocs.io/en/latest/get_started.html) and [data preparation](https://onedl-mmsegmentation.readthedocs.io/en/latest/user_guides/2_dataset_prepare.html).
 
 ### Train
 

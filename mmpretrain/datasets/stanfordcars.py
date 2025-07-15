@@ -94,7 +94,7 @@ class StanfordCars(BaseDataset):
 
             if not self.backend.exists(
                     self.backend.join_path(data_root, ann_file)):
-                doc_url = 'https://mmpretrain.readthedocs.io/en/latest/api/datasets.html#stanfordcars'  # noqa: E501
+                doc_url = 'https://onedl-mmpretrain.readthedocs.io/en/latest/api/datasets.html#stanfordcars'  # noqa: E501
                 raise RuntimeError(
                     f'The dataset is incorrectly organized, please \
                     refer to {doc_url} and reorganize your folders.')
