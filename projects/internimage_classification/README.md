@@ -8,7 +8,7 @@ This is the implementation of [InternImage](https://arxiv.org/abs/2211.05778) fo
 
 ### Setup Environment
 
-Please refer to [Get Started](https://mmpretrain.readthedocs.io/en/latest/get_started.html) documentation of MMPretrain to finish installation.
+Please refer to [Get Started](https://onedl-mmpretrain.readthedocs.io/en/latest/get_started.html) documentation of MMPretrain to finish installation.
 
 Please install DCNv3. Run the command below following the [ InternImage official installation instructions](https://github.com/OpenGVLab/InternImage/blob/master/classification/README.md).
 

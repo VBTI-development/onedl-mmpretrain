@@ -454,7 +454,7 @@ if __name__ == '__main__':
                     gr.Markdown(
                         'To inference multi-modal models, please install '
                         'the extra multi-modal dependencies, please refer '
-                        'to https://mmpretrain.readthedocs.io/en/latest/'
+                        'to https://onedl-mmpretrain.readthedocs.io/en/latest/'
                         'get_started.html#installation')
 
     demo.launch()
