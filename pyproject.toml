@@ -83,11 +83,17 @@ include = ["mmpretrain", "mmpretrain.*"]
 exclude = ['configs', 'tools', 'demo', 'tests']
 namespaces = false
 
+[tool.setuptools.package-data]
+"mmpretrain" = [".mim/**/*"]
+
+[tool.setuptools.package-dir]
+"" = "."
+
 [tool.uv]
 # uv-specific configuration can be added here if needed
 
 [build-system]
-requires = ["setuptools"]
+requires = ["setuptools", "wheel", "click"]
 build-backend = "setuptools.build_meta"
 
 [tool.isort]
