@@ -3,6 +3,9 @@ name: test-mim
 on:
   push:
     paths:
+      - '.github/workflows/test_mim.yml'
+      - 'pyproject.toml'
+      - 'setup.py'
       - 'model-index.yml'
       - 'configs/**'
     branches:
@@ -10,6 +13,9 @@ on:
 
   pull_request:
     paths:
+      - '.github/workflows/test_mim.yml'
+      - 'pyproject.toml'
+      - 'setup.py'
       - 'model-index.yml'
       - 'configs/**'
 
