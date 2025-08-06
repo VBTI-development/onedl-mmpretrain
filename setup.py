@@ -1,68 +1,84 @@
 import os
-import os.path as osp
 import shutil
 import sys
 import warnings
 from setuptools import setup
+from setuptools.command.build_py import build_py
+from setuptools.command.egg_info import egg_info
+from setuptools.command.sdist import sdist
 
 
-def add_mim_extension():
-    """Add extra files that are required to support MIM into the package.
+class CustomEggInfo(egg_info):
+    """Custom egg_info command that adds MIM extension files."""
+    def run(self):
+        # Create MIM files BEFORE running egg_info
+        self.add_mim_extension()
+        super().run()
 
-    These files will be added by creating a symlink to the originals if the
-    package is installed in `editable` mode (e.g. pip install -e .), or by
-    copying from the originals otherwise.
-    """
+    def add_mim_extension(self):
+        """Add extra files that are required to support MIM into the
+        package."""
+        filenames = [
+            'tools', 'configs', 'model-index.yml', 'dataset-index.yml'
+        ]
+        repo_path = os.path.dirname(os.path.abspath(__file__))
+        mim_path = os.path.join(repo_path, 'mmpretrain', '.mim')
 
-    # parse installment mode
-    if 'sdist' in sys.argv or 'bdist_wheel' in sys.argv:
-        # installed by `pip install .`
-        # or create source distribution by `python setup.py sdist`
-        mode = 'copy'
-    else:
-        mode = 'symlink'
+        print(f'Creating MIM files in {mim_path}', file=sys.stderr)
+        os.makedirs(mim_path, exist_ok=True)
 
-    filenames = ['tools', 'configs', 'model-index.yml', 'dataset-index.yml']
-    repo_path = osp.dirname(__file__)
-    mim_path = osp.join(repo_path, 'mmpretrain', '.mim')
-    os.makedirs(mim_path, exist_ok=True)
+        for filename in filenames:
+            if self._file_exists(filename):
+                src_path = os.path.join(repo_path, filename)
+                tar_path = os.path.join(mim_path, filename)
 
-    for filename in filenames:
-        if osp.exists(filename):
-            src_path = osp.join(repo_path, filename)
-            tar_path = osp.join(mim_path, filename)
+                # Remove existing file/directory
+                if os.path.exists(tar_path):
+                    if os.path.isfile(tar_path) or os.path.islink(tar_path):
+                        os.remove(tar_path)
+                    elif os.path.isdir(tar_path):
+                        shutil.rmtree(tar_path)
 
-            if osp.isfile(tar_path) or osp.islink(tar_path):
-                os.remove(tar_path)
-            elif osp.isdir(tar_path):
-                shutil.rmtree(tar_path)
-
-            if mode == 'symlink':
-                src_relpath = osp.relpath(src_path, osp.dirname(tar_path))
+                # Copy the file/directory
                 try:
-                    os.symlink(src_relpath, tar_path)
-                except OSError:
-                    # Creating a symbolic link on windows may raise an
-                    # `OSError: [WinError 1314]` due to privilege. If
-                    # the error happens, the src file will be copied
-                    mode = 'copy'
-                    warnings.warn(
-                        f'Failed to create a symbolic link for {src_relpath}, '
-                        f'and it will be copied to {tar_path}')
-                else:
-                    continue
+                    if os.path.isfile(src_path):
+                        shutil.copy2(src_path, tar_path)
+                        print(f'Copied file: {filename}')
+                    elif os.path.isdir(src_path):
+                        shutil.copytree(src_path, tar_path, dirs_exist_ok=True)
+                        print(f'Copied directory: {filename}')
+                except Exception as e:
+                    warnings.warn(f'Failed to copy {filename}: {e}')
 
-            if mode == 'copy':
-                if osp.isfile(src_path):
-                    shutil.copyfile(src_path, tar_path)
-                elif osp.isdir(src_path):
-                    shutil.copytree(src_path, tar_path)
-                else:
-                    warnings.warn(f'Cannot copy file {src_path}.')
-            else:
-                raise ValueError(f'Invalid mode {mode}')
+    def _file_exists(self, filename):
+        """Check if file exists in the repository root."""
+        repo_path = os.path.dirname(os.path.abspath(__file__))
+        return os.path.exists(os.path.join(repo_path, filename))
+
+
+class CustomBuildPy(build_py):
+    """Custom build_py command that ensures MIM files are included."""
+    def run(self):
+        # Ensure MIM files exist before building
+        custom_egg_info = CustomEggInfo(self.distribution)
+        custom_egg_info.add_mim_extension()
+        super().run()
+
+
+class CustomSdist(sdist):
+    """Custom sdist command that ensures MIM files are included in source
+    distribution."""
+    def run(self):
+        # Ensure MIM files exist before creating source distribution
+        custom_egg_info = CustomEggInfo(self.distribution)
+        custom_egg_info.add_mim_extension()
+        super().run()
 
 
 if __name__ == '__main__':
-    add_mim_extension()
-    setup()
+    setup(
+        cmdclass={
+            'egg_info': CustomEggInfo,
+            'build_py': CustomBuildPy,
+            'sdist': CustomSdist,
+        })
