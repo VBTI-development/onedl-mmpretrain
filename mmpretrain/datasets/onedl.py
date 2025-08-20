@@ -14,8 +14,11 @@ from ._palette import DEFAULT_PALETTE
 
 @DATASETS.register_module()
 class OneDLDataset:
-    """Wrapper for OneDL Classification and Regression datasets to
-    mmpretrain."""
+    """Wrapper for OneDL Classification and Regression datasets to mmpretrain.
+
+    For more information about OneDL datasets, please refer to
+    https://onedl.ai.
+    """
     def __new__(  # noqa: PLR0913
         cls,
         dataset_name: str,
