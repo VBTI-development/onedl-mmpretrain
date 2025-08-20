@@ -736,3 +736,107 @@ class TestArcFaceClsHead(TestCase):
         losses = head.loss(feats, data_samples)
         self.assertEqual(losses.keys(), {'loss'})
         self.assertGreater(losses['loss'].item(), 0)
+
+
+class TestRegressionHead(TestCase):
+    DEFAULT_ARGS = dict(type='RegressionHead')
+    FAKE_FEATS = (torch.rand(4, ), )
+
+    def test_pre_logits(self):
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        # return the last item
+        feats = (torch.rand(4, 10), torch.rand(4, 10))
+        pre_logits = head.pre_logits(feats)
+        self.assertIs(pre_logits, feats[-1])
+
+    def test_forward(self):
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        # return the last item (same as pre_logits)
+        feats = (torch.rand(4, 10), torch.rand(4, 10))
+        outs = head(feats)
+        self.assertIs(outs, feats[-1])
+
+    def test_loss(self):
+        feats = self.FAKE_FEATS
+        data_samples = [DataSample().set_gt_label(1) for _ in range(4)]
+
+        # with cal_acc = False
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        losses = head.loss(feats, data_samples)
+        self.assertEqual(losses.keys(), {'loss'})
+        self.assertGreater(losses['loss'].item(), 0)
+
+        # with cal_acc = True
+        cfg = {**self.DEFAULT_ARGS}  # , 'topk': (1, 2), 'cal_acc': True}
+        head = MODELS.build(cfg)
+
+        losses = head.loss(feats, data_samples)
+        self.assertEqual(losses.keys(), {'loss'})
+        self.assertGreater(losses['loss'].item(), 0)
+
+        # test assertion when cal_acc but data is batch augmented.
+        data_samples = [
+            sample.set_gt_score(torch.rand(1)) for sample in data_samples
+        ]
+        cfg = {
+            **self.DEFAULT_ARGS, 'loss':
+            dict(type='RegressionLoss', loss_type='L2Loss')
+        }
+        head = MODELS.build(cfg)
+        self.assertGreater(losses['loss'].item(), 0)
+
+        cfg = {
+            **self.DEFAULT_ARGS, 'loss':
+            dict(type='RegressionLoss', loss_type='NotAType')
+        }
+        with self.assertRaisesRegex(ValueError, 'Loss type should be one of'):
+            head = MODELS.build(cfg)
+
+    def test_predict(self):
+        feats = (torch.rand(4, 10), )
+        data_samples = [DataSample().set_gt_label(1) for _ in range(4)]
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        # with without data_samples
+        predictions = head.predict(feats)
+        self.assertTrue(is_seq_of(predictions, DataSample))
+        for pred in predictions:
+            self.assertIn('pred_label', pred)
+            self.assertIn('pred_score', pred)
+
+        # with with data_samples
+        predictions = head.predict(feats, data_samples)
+        self.assertTrue(is_seq_of(predictions, DataSample))
+        for sample, pred in zip(data_samples, predictions):
+            self.assertIs(sample, pred)
+            self.assertIn('pred_label', pred)
+            self.assertIn('pred_score', pred)
+
+
+class TestLinearRegressionHead(TestCase):
+    DEFAULT_ARGS = dict(type='LinearRegressionHead',
+                        in_channels=10,
+                        num_classes=5)
+    FAKE_FEATS = (torch.rand(4, 10), )
+
+    def test_initialize(self):
+        with self.assertRaisesRegex(ValueError, 'num_classes=-5 must be'):
+            MODELS.build({**self.DEFAULT_ARGS, 'num_classes': -5})
+
+    def test_pre_logits(self):
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        # return the last item
+        feats = (torch.rand(4, 10), torch.rand(4, 10))
+        pre_logits = head.pre_logits(feats)
+        self.assertIs(pre_logits, feats[-1])
+
+    def test_forward(self):
+        head = MODELS.build(self.DEFAULT_ARGS)
+
+        feats = (torch.rand(4, 10), torch.rand(4, 10))
+        outs = head(feats)
+        self.assertEqual(outs.shape, (4, 5))

@@ -263,6 +263,11 @@ Results and models are available in the [model zoo](https://onedl-mmpretrain.rea
         <li><a href="mmpretrain/models/tta/score_tta.py">TTA</a></li>
         <li>...</li>
         </ul>
+      Regression Heads:
+        <ul>
+        <li><a href="mmpretrain/models/heads/regression_head.py"> RegressionHead</a></li>
+        <li><a href="mmpretrain/models/heads/regression_head.py"> LinearRegressionHead</a></li>
+        </ul>
       </td>
   </tbody>
 </table>
