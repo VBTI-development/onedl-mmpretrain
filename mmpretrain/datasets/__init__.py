@@ -17,6 +17,16 @@ from .mnist import MNIST, FashionMNIST
 from .multi_label import MultiLabelDataset
 from .multi_task import MultiTaskDataset
 from .nlvr2 import NLVR2
+
+try:
+    from .onedl import OneDLDataset
+    onedl_dataset_types = ['OneDLDataset']
+except ImportError:
+    import logging
+
+    from mmengine.logging import print_log
+    print_log('Could not import OneDL', level=logging.DEBUG)
+    onedl_dataset_types = []
 from .oxfordiiitpet import OxfordIIITPet
 from .places205 import Places205
 from .samplers import *  # noqa: F401,F403
@@ -26,12 +36,32 @@ from .transforms import *  # noqa: F401,F403
 from .voc import VOC
 
 __all__ = [
-    'BaseDataset', 'CIFAR10', 'CIFAR100', 'CUB', 'Caltech101', 'CustomDataset',
-    'DTD', 'FGVCAircraft', 'FashionMNIST', 'Flowers102', 'Food101', 'ImageNet',
-    'ImageNet21k', 'InShop', 'KFoldDataset', 'MNIST', 'MultiLabelDataset',
-    'MultiTaskDataset', 'NLVR2', 'OxfordIIITPet', 'Places205', 'SUN397',
-    'StanfordCars', 'VOC', 'build_dataset'
-]
+    'BaseDataset',
+    'CIFAR10',
+    'CIFAR100',
+    'CUB',
+    'Caltech101',
+    'CustomDataset',
+    'DTD',
+    'FGVCAircraft',
+    'FashionMNIST',
+    'Flowers102',
+    'Food101',
+    'ImageNet',
+    'ImageNet21k',
+    'InShop',
+    'KFoldDataset',
+    'MNIST',
+    'MultiLabelDataset',
+    'MultiTaskDataset',
+    'NLVR2',
+    'OxfordIIITPet',
+    'Places205',
+    'SUN397',
+    'StanfordCars',
+    'VOC',
+    'build_dataset',
+] + onedl_dataset_types
 
 if WITH_MULTIMODAL:
     from .coco_caption import COCOCaption

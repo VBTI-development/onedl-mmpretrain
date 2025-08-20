@@ -272,6 +272,7 @@ test_dataloader = val_dataloader
 | [`Flowers102`](mmpretrain.datasets.Flowers102)(data_root[, split, pipeline, ...])  | ["train", "val", "tranval", "test"] | [Oxford 102 Flower](https://www.robots.ox.ac.uk/~vgg/data/flowers/102/) Dataset.    |
 | [`Food101`](mmpretrain.datasets.Food101)(data_root[, split, pipeline, ...])        | ["train", "test"]                   | [Food101](https://data.vision.ee.ethz.ch/cvl/datasets_extra/food-101/) Dataset.     |
 | [`MNIST`](mmpretrain.datasets.MNIST) (data_root[, split, pipeline, ...])           | ["train", "test"]                   | [MNIST](http://yann.lecun.com/exdb/mnist/) Dataset.                                 |
+| [`OneDL`](mmpretrain.datasets.OneDL) (data_root[, split, pipeline, ...])           | ["train", "test"]                   | [OneDL](https://onedl.ai) Dataset.                                                  |
 | [`OxfordIIITPet`](mmpretrain.datasets.OxfordIIITPet)(data_root[, split, pipeline, ...]) | ["tranval", test"]                  | [Oxford-IIIT Pets](https://www.robots.ox.ac.uk/~vgg/data/pets/) Dataset.            |
 | [`Places205`](mmpretrain.datasets.Places205)(data_root[, pipeline, ...])           | -                                   | [Places205](http://places.csail.mit.edu/downloadData.html) Dataset.                 |
 | [`StanfordCars`](mmpretrain.datasets.StanfordCars)(data_root[, split, pipeline, ...]) | ["train", "test"]                   | [Stanford Cars](https://ai.stanford.edu/~jkrause/cars/car_dataset.html) Dataset.    |
