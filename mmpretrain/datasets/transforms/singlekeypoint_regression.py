@@ -124,7 +124,7 @@ class AlbuKeypoint(Albumentations):
             self.keymap_to_albu = keymap
         self.keymap_back = {v: k for k, v in self.keymap_to_albu.items()}
 
-    def transform(self, results):
+    def transform(self, results: dict) -> dict:
         # dict to albumentations format
         results = self.mapper(results, self.keymap_to_albu)
 

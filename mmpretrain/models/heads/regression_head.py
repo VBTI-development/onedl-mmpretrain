@@ -27,8 +27,19 @@ class RegressionHead(ClsHead):
                                              loss=loss,
                                              cal_acc=False)
 
-    def _get_predictions(self, cls_score, data_samples):
-        """Post-process the output of head."""
+    def _get_predictions(self, cls_score: torch.Tensor,
+                         data_samples: list[DataSample]) -> list[DataSample]:
+        """Post-process the output of head.
+
+        Sets the score and prediction label for each prediction in the
+        data sample.
+
+        Args:
+            cls_score: The output score of the head.
+            data_samples: The data samples to be processed.
+        Returns:
+            list[DataSample]: The post-processed data samples.
+        """
         pred_scores = cls_score.detach()
 
         out_data_samples = []
@@ -88,7 +99,14 @@ class LinearRegressionHead(RegressionHead):
         return feats[-1]
 
     def forward(self, feats: Tuple[torch.Tensor]) -> torch.Tensor:
-        """The forward process."""
+        """The forward process.
+
+        Args:
+            feats: The input ``feats`` is a tuple of tensor, and each tensor is
+                the feature of a backbone stage. In ``LinearClsHead``, we just
+                obtain the feature of the last stage.
+        """
+
         pre_logits = self.pre_logits(feats)
         # The final classification head.
         cls_score = self.fc(pre_logits)
