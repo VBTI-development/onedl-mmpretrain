@@ -92,7 +92,7 @@ class PackInputs(BaseTransform):
     """
 
     DEFAULT_META_KEYS = ('sample_idx', 'img_path', 'ori_shape', 'img_shape',
-                         'scale_factor', 'flip', 'flip_direction')
+                         'scale_factor', 'flip', 'flip_direction', 'ori_kp')
 
     def __init__(self,
                  input_key='img',

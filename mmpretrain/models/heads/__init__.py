@@ -23,6 +23,7 @@ from .multi_label_cls_head import MultiLabelClsHead
 from .multi_label_csra_head import CSRAClsHead
 from .multi_label_linear_head import MultiLabelLinearClsHead
 from .multi_task_head import MultiTaskHead
+from .regression_head import RegressionHead
 from .seq_gen_head import SeqGenerationHead
 from .simmim_head import SimMIMHead
 from .spark_head import SparKPretrainHead
@@ -66,4 +67,5 @@ __all__ = [
     'GroundingHead',
     'iTPNClipHead',
     'SparKPretrainHead',
+    'RegressionHead',
 ]
