@@ -30,7 +30,7 @@ Models:
           Top 1 Accuracy: 57.91
           Top 5 Accuracy: 80.19
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth
     Config: configs/mobilenet_v3/mobilenet-v3-small-050_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/mobilenetv3_small_050_lambc-4b7bbe87.pth
@@ -46,7 +46,7 @@ Models:
           Top 1 Accuracy: 65.23
           Top 5 Accuracy: 85.44
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-075_3rdparty_in1k_20221114-2011fa76.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-075_3rdparty_in1k_20221114-2011fa76.pth
     Config: configs/mobilenet_v3/mobilenet-v3-small-075_8xb128_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-weights/mobilenetv3_small_075_lambc-384766db.pth
@@ -62,7 +62,7 @@ Models:
           Top 1 Accuracy: 66.68
           Top 5 Accuracy: 86.74
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-small_8xb128_in1k_20221114-bd1bfcde.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/mobilenet-v3-small_8xb128_in1k_20221114-bd1bfcde.pth
     Config: configs/mobilenet_v3/mobilenet-v3-small_8xb128_in1k.py
   - Name: mobilenet-v3-small_3rdparty_in1k
     Metadata:
@@ -75,7 +75,7 @@ Models:
           Top 1 Accuracy: 67.66
           Top 5 Accuracy: 87.41
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_small-8427ecf0.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_small-8427ecf0.pth
     Config: configs/mobilenet_v3/mobilenet-v3-small_8xb128_in1k.py
     Converted From:
       Weights: https://download.pytorch.org/models/mobilenet_v3_small-047dcff4.pth
@@ -91,7 +91,7 @@ Models:
           Top 1 Accuracy: 73.49
           Top 5 Accuracy: 91.31
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-large_8xb128_in1k_20221114-0ed9ed9a.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/mobilenet-v3-large_8xb128_in1k_20221114-0ed9ed9a.pth
     Config: configs/mobilenet_v3/mobilenet-v3-large_8xb128_in1k.py
   - Name: mobilenet-v3-large_3rdparty_in1k
     Metadata:
@@ -104,7 +104,7 @@ Models:
           Top 1 Accuracy: 74.04
           Top 5 Accuracy: 91.34
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_large-3ea3c186.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/convert/mobilenet_v3_large-3ea3c186.pth
     Config: configs/mobilenet_v3/mobilenet-v3-large_8xb128_in1k.py
     Converted From:
       Weights: https://download.pytorch.org/models/mobilenet_v3_large-8738ca79.pth

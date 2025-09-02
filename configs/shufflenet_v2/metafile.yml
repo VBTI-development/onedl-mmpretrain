@@ -31,5 +31,5 @@ Models:
           Top 1 Accuracy: 69.55
           Top 5 Accuracy: 88.92
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/shufflenet_v2/shufflenet_v2_batch1024_imagenet_20200812-5bf4721e.pth
     Config: configs/shufflenet_v2/shufflenet-v2-1x_16xb64_in1k.py

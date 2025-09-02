@@ -23,7 +23,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: DenseCL
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/densecl/densecl_resnet50_8xb32-coslr-200e_in1k/densecl_resnet50_8xb32-coslr-200e_in1k_20220825-3078723b.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/densecl/densecl_resnet50_8xb32-coslr-200e_in1k/densecl_resnet50_8xb32-coslr-200e_in1k_20220825-3078723b.pth
     Config: configs/densecl/densecl_resnet50_8xb32-coslr-200e_in1k.py
     Downstream:
       - resnet50_densecl-pre_8xb32-linear-steplr-100e_in1k
@@ -40,5 +40,5 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 63.5
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/densecl/densecl_resnet50_8xb32-coslr-200e_in1k/resnet50_linear-8xb32-steplr-100e_in1k/resnet50_linear-8xb32-steplr-100e_in1k_20220825-f0f0a579.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/densecl/densecl_resnet50_8xb32-coslr-200e_in1k/resnet50_linear-8xb32-steplr-100e_in1k/resnet50_linear-8xb32-steplr-100e_in1k_20220825-f0f0a579.pth
     Config: configs/densecl/benchmarks/resnet50_8xb32-linear-steplr-100e_in1k.py

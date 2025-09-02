@@ -36,8 +36,8 @@ For Vicuna model, please refer to [MiniGPT-4 page](https://github.com/Vision-CAI
 
 | Model                           | Params (M) | Flops (G) |                   Config                   |                                                   Download                                                   |
 | :------------------------------ | :--------: | :-------: | :----------------------------------------: | :----------------------------------------------------------------------------------------------------------: |
-| `minigpt-4_baichuan-7b_caption` |  8094.77   |    N/A    | [config](minigpt-4_baichuan-7b_caption.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/minigpt4/minigpt-4_linear_baichuan7b_20231011-5dca7ed6.pth) |
-| `minigpt-4_vicuna-7b_caption`\* |  8121.32   |    N/A    |  [config](minigpt-4_vicuna-7b_caption.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/minigpt4/minigpt-4_linear_vicuna7b_20230615-714b5f52.pth) |
+| `minigpt-4_baichuan-7b_caption` |  8094.77   |    N/A    | [config](minigpt-4_baichuan-7b_caption.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/minigpt4/minigpt-4_linear_baichuan7b_20231011-5dca7ed6.pth) |
+| `minigpt-4_vicuna-7b_caption`\* |  8121.32   |    N/A    |  [config](minigpt-4_vicuna-7b_caption.py)  | [model](https://mmassets.onedl.ai/mmclassification/v1/minigpt4/minigpt-4_linear_vicuna7b_20230615-714b5f52.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/Vision-CAIR/MiniGPT-4/tree/main). The config files of these models are only for inference. We haven't reproduce the training results.*
 

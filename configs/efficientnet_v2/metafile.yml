@@ -32,7 +32,7 @@ Models:
           Top 1 Accuracy: 78.52
           Top 5 Accuracy: 94.44
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-b0_3rdparty_in1k_20221221-9ef6e736.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-b0_3rdparty_in1k_20221221-9ef6e736.pth
     Config: configs/efficientnet_v2/efficientnetv2-b0_8xb32_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_b0-c7cc451f.pth
@@ -48,7 +48,7 @@ Models:
           Top 1 Accuracy: 79.80
           Top 5 Accuracy: 94.89
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-b1_3rdparty_in1k_20221221-6955d9ce.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-b1_3rdparty_in1k_20221221-6955d9ce.pth
     Config: configs/efficientnet_v2/efficientnetv2-b1_8xb32_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_b1-be6e41b0.pth
@@ -64,7 +64,7 @@ Models:
           Top 1 Accuracy: 80.63
           Top 5 Accuracy: 95.30
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-b2_3rdparty_in1k_20221221-74f7d493.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-b2_3rdparty_in1k_20221221-74f7d493.pth
     Config: configs/efficientnet_v2/efficientnetv2-b2_8xb32_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_b2-847de54e.pth
@@ -80,7 +80,7 @@ Models:
           Top 1 Accuracy: 82.03
           Top 5 Accuracy: 95.88
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-b3_3rdparty_in1k_20221221-b6f07a36.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-b3_3rdparty_in1k_20221221-b6f07a36.pth
     Config: configs/efficientnet_v2/efficientnetv2-b3_8xb32_in1k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_b3-57773f13.pth
@@ -96,7 +96,7 @@ Models:
           Top 1 Accuracy: 83.82
           Top 5 Accuracy: 96.67
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-s_3rdparty_in1k_20221220-f0eaff9d.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-s_3rdparty_in1k_20221220-f0eaff9d.pth
     Config: configs/efficientnet_v2/efficientnetv2-s_8xb32_in1k-384px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_s-eb54923e.pth
@@ -112,7 +112,7 @@ Models:
           Top 1 Accuracy: 85.01
           Top 5 Accuracy: 97.26
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-m_3rdparty_in1k_20221220-9dc0c729.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-m_3rdparty_in1k_20221220-9dc0c729.pth
     Config: configs/efficientnet_v2/efficientnetv2-m_8xb32_in1k-480px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_m-cc09e0cd.pth
@@ -128,7 +128,7 @@ Models:
           Top 1 Accuracy: 85.43
           Top 5 Accuracy: 97.31
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-l_3rdparty_in1k_20221220-5c3bac0f.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-l_3rdparty_in1k_20221220-5c3bac0f.pth
     Config: configs/efficientnet_v2/efficientnetv2-l_8xb32_in1k-480px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_l-d664b728.pth
@@ -147,7 +147,7 @@ Models:
           Top 1 Accuracy: 84.29
           Top 5 Accuracy: 97.26
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-s_in21k-pre-3rdparty_in1k_20221220-7a7c8475.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-s_in21k-pre-3rdparty_in1k_20221220-7a7c8475.pth
     Config: configs/efficientnet_v2/efficientnetv2-s_8xb32_in1k-384px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_s_21ft1k-d7dafa41.pth
@@ -166,7 +166,7 @@ Models:
           Top 1 Accuracy: 85.47
           Top 5 Accuracy: 97.76
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-m_in21k-pre-3rdparty_in1k_20221220-a1013a04.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-m_in21k-pre-3rdparty_in1k_20221220-a1013a04.pth
     Config: configs/efficientnet_v2/efficientnetv2-m_8xb32_in1k-480px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_m_21ft1k-bf41664a.pth
@@ -185,7 +185,7 @@ Models:
           Top 1 Accuracy: 86.31
           Top 5 Accuracy: 97.99
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-l_in21k-pre-3rdparty_in1k_20221220-63df0efd.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-l_in21k-pre-3rdparty_in1k_20221220-63df0efd.pth
     Config: configs/efficientnet_v2/efficientnetv2-l_8xb32_in1k-480px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_l_21ft1k-60127a9d.pth
@@ -204,7 +204,7 @@ Models:
           Top 1 Accuracy: 86.39
           Top 5 Accuracy: 97.83
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-xl_in21k-pre-3rdparty_in1k_20221220-583ac18b.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-xl_in21k-pre-3rdparty_in1k_20221220-583ac18b.pth
     Config: configs/efficientnet_v2/efficientnetv2-xl_8xb32_in1k-512px.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_xl_in21ft1k-06c35c48.pth
@@ -215,7 +215,7 @@ Models:
       Parameters: 48158371
     In Collection: EfficientNetV2
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-s_3rdparty_in21k_20221220-c0572b56.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-s_3rdparty_in21k_20221220-c0572b56.pth
     Config: configs/efficientnet_v2/efficientnetv2-s_8xb32_in21k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_s_21k-6337ad01.pth
@@ -226,7 +226,7 @@ Models:
       Parameters: 80839239
     In Collection: EfficientNetV2
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-m_3rdparty_in21k_20221220-073e944c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-m_3rdparty_in21k_20221220-073e944c.pth
     Config: configs/efficientnet_v2/efficientnetv2-m_8xb32_in21k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_m_21k-361418a2.pth
@@ -237,7 +237,7 @@ Models:
       Parameters: 145215155
     In Collection: EfficientNetV2
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-l_3rdparty_in21k_20221220-f28f91e1.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-l_3rdparty_in21k_20221220-f28f91e1.pth
     Config: configs/efficientnet_v2/efficientnetv2-l_8xb32_in21k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_l_21k-91a19ec9.pth
@@ -248,7 +248,7 @@ Models:
       Parameters: 234819691
     In Collection: EfficientNetV2
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/efficientnetv2/efficientnetv2-xl_3rdparty_in21k_20221220-b2c9329c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/efficientnetv2/efficientnetv2-xl_3rdparty_in21k_20221220-b2c9329c.pth
     Config: configs/efficientnet_v2/efficientnetv2-xl_8xb32_in21k.py
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-effv2-weights/tf_efficientnetv2_xl_in21k-fd7e8abf.pth

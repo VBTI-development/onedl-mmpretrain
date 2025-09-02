@@ -71,7 +71,7 @@ python tools/train.py configs/mixmim/mixmim_mixmim-base_16xb128-coslr-300e_in1k.
 Test:
 
 ```shell
-python tools/test.py configs/mixmim/benchmarks/mixmim-base_8xb128-coslr-100e_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth
+python tools/test.py configs/mixmim/benchmarks/mixmim-base_8xb128-coslr-100e_in1k.py https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth
 ```
 
 <!-- [TABS-END] -->
@@ -82,13 +82,13 @@ python tools/test.py configs/mixmim/benchmarks/mixmim-base_8xb128-coslr-100e_in1
 
 | Model                                        | Params (M) | Flops (G) |                         Config                          |                                      Download                                      |
 | :------------------------------------------- | :--------: | :-------: | :-----------------------------------------------------: | :--------------------------------------------------------------------------------: |
-| `mixmim_mixmim-base_16xb128-coslr-300e_in1k` |   114.67   |   16.35   | [config](mixmim_mixmim-base_16xb128-coslr-300e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.json) |
+| `mixmim_mixmim-base_16xb128-coslr-300e_in1k` |   114.67   |   16.35   | [config](mixmim_mixmim-base_16xb128-coslr-300e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.json) |
 
 ### Image Classification on ImageNet-1k
 
 | Model                                     |                   Pretrain                   | Params (M) | Flops (G) | Top-1 (%) |                   Config                   |                   Download                    |
 | :---------------------------------------- | :------------------------------------------: | :--------: | :-------: | :-------: | :----------------------------------------: | :-------------------------------------------: |
-| `mixmim-base_mixmim-pre_8xb128-coslr-100e_in1k` | [MIXMIM](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth) |   88.34    |   16.35   |   84.63   | [config](benchmarks/mixmim-base_8xb128-coslr-100e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.json) |
+| `mixmim-base_mixmim-pre_8xb128-coslr-100e_in1k` | [MIXMIM](https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth) |   88.34    |   16.35   |   84.63   | [config](benchmarks/mixmim-base_8xb128-coslr-100e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.json) |
 
 ## Citation
 

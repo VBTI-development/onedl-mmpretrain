@@ -12,7 +12,7 @@ cat $DOWNLOAD_DIR/ImageNet-1K/raw/*.tar.gz.* | tar -xvz -C $DOWNLOAD_DIR
 mv $DOWNLOAD_DIR/ImageNet-1K/{train,val,test} $DATA_ROOT
 
 # download the mate ann_files file
-wget -P $DATA_ROOT  https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/datasets/imagenet/meta/caffe_ilsvrc12.tar.gz
+wget -P $DATA_ROOT  https://mmassets.onedl.ai/mmclassification/datasets/imagenet/meta/caffe_ilsvrc12.tar.gz
 
 # unzip mate ann_files file and put it into 'meta' folder
 mkdir $DATA_ROOT/meta

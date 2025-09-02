@@ -1,6 +1,6 @@
 from pathlib import Path
 
-HTTP_PREFIX = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/'
+HTTP_PREFIX = 'https://mmassets.onedl.ai/'
 MMCLS_ROOT = Path(__file__).absolute().parents[2]
 METRICS_MAP = {
     'Top 1 Accuracy': 'accuracy/top1',

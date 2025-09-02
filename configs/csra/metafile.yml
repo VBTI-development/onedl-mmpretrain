@@ -25,5 +25,5 @@ Models:
           OF1: 90.80
           CF1: 89.16
         Task: Multi-Label Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/csra/resnet101-csra_1xb16_voc07-448px_20220722-29efb40a.pth
     Config: configs/csra/resnet101-csra_1xb16_voc07-448px.py

@@ -55,7 +55,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/mvit/mvitv2-tiny_8xb256_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mvit/mvitv2-tiny_3rdparty_in1k_20220722-db7beeef.pth
+python tools/test.py configs/mvit/mvitv2-tiny_8xb256_in1k.py https://mmassets.onedl.ai/mmclassification/v0/mvit/mvitv2-tiny_3rdparty_in1k_20220722-db7beeef.pth
 ```
 
 <!-- [TABS-END] -->
@@ -66,10 +66,10 @@ python tools/test.py configs/mvit/mvitv2-tiny_8xb256_in1k.py https://pub-ed9ed75
 
 | Model                          |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                 |                                       Download                                       |
 | :----------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :-----------------------------------: | :----------------------------------------------------------------------------------: |
-| `mvitv2-tiny_3rdparty_in1k`\*  | From scratch |   24.17    |   4.70    |   82.33   |   96.15   | [config](mvitv2-tiny_8xb256_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mvit/mvitv2-tiny_3rdparty_in1k_20220722-db7beeef.pth) |
-| `mvitv2-small_3rdparty_in1k`\* | From scratch |   34.87    |   7.00    |   83.63   |   96.51   | [config](mvitv2-small_8xb256_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mvit/mvitv2-small_3rdparty_in1k_20220722-986bd741.pth) |
-| `mvitv2-base_3rdparty_in1k`\*  | From scratch |   51.47    |   10.16   |   84.34   |   96.86   | [config](mvitv2-base_8xb256_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mvit/mvitv2-base_3rdparty_in1k_20220722-9c4f0a17.pth) |
-| `mvitv2-large_3rdparty_in1k`\* | From scratch |   217.99   |   43.87   |   85.25   |   97.14   | [config](mvitv2-large_8xb256_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mvit/mvitv2-large_3rdparty_in1k_20220722-2b57b983.pth) |
+| `mvitv2-tiny_3rdparty_in1k`\*  | From scratch |   24.17    |   4.70    |   82.33   |   96.15   | [config](mvitv2-tiny_8xb256_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/mvit/mvitv2-tiny_3rdparty_in1k_20220722-db7beeef.pth) |
+| `mvitv2-small_3rdparty_in1k`\* | From scratch |   34.87    |   7.00    |   83.63   |   96.51   | [config](mvitv2-small_8xb256_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/mvit/mvitv2-small_3rdparty_in1k_20220722-986bd741.pth) |
+| `mvitv2-base_3rdparty_in1k`\*  | From scratch |   51.47    |   10.16   |   84.34   |   96.86   | [config](mvitv2-base_8xb256_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/mvit/mvitv2-base_3rdparty_in1k_20220722-9c4f0a17.pth) |
+| `mvitv2-large_3rdparty_in1k`\* | From scratch |   217.99   |   43.87   |   85.25   |   97.14   | [config](mvitv2-large_8xb256_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/mvit/mvitv2-large_3rdparty_in1k_20220722-2b57b983.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/facebookresearch/mvit). The config files of these models are only for inference. We haven't reproduce the training results.*
 

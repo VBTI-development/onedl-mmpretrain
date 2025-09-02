@@ -54,7 +54,7 @@ python tools/train.py configs/byol/byol_resnet50_16xb256-coslr-200e_in1k.py
 Test:
 
 ```shell
-python tools/test.py configs/byol/benchmarks/resnet50_8xb512-linear-coslr-90e_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.pth
+python tools/test.py configs/byol/benchmarks/resnet50_8xb512-linear-coslr-90e_in1k.py https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,13 +65,13 @@ python tools/test.py configs/byol/benchmarks/resnet50_8xb512-linear-coslr-90e_in
 
 | Model                                   | Params (M) | Flops (G) |                       Config                       |                                           Download                                           |
 | :-------------------------------------- | :--------: | :-------: | :------------------------------------------------: | :------------------------------------------------------------------------------------------: |
-| `byol_resnet50_16xb256-coslr-200e_in1k` |   68.02    |   4.11    | [config](byol_resnet50_16xb256-coslr-200e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.json) |
+| `byol_resnet50_16xb256-coslr-200e_in1k` |   68.02    |   4.11    | [config](byol_resnet50_16xb256-coslr-200e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.json) |
 
 ### Image Classification on ImageNet-1k
 
 | Model                                     |                   Pretrain                   | Params (M) | Flops (G) | Top-1 (%) |                   Config                   |                   Download                    |
 | :---------------------------------------- | :------------------------------------------: | :--------: | :-------: | :-------: | :----------------------------------------: | :-------------------------------------------: |
-| `resnet50_byol-pre_8xb512-linear-coslr-90e_in1k` | [BYOL](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth) |   25.56    |   4.11    |   71.80   | [config](benchmarks/resnet50_8xb512-linear-coslr-90e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.json) |
+| `resnet50_byol-pre_8xb512-linear-coslr-90e_in1k` | [BYOL](https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/byol_resnet50_16xb256-coslr-200e_in1k_20220825-de817331.pth) |   25.56    |   4.11    |   71.80   | [config](benchmarks/resnet50_8xb512-linear-coslr-90e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in1k/resnet50_linear-8xb512-coslr-90e_in1k/resnet50_linear-8xb512-coslr-90e_in1k_20220825-7596c6f5.json) |
 
 ## Citation
 

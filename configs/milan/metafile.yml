@@ -22,7 +22,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MILAN
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k_20221129-180922e8.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k_20221129-180922e8.pth
     Config: configs/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k.py
     Downstream:
       - vit-base-p16_milan-pre_8xb128-coslr-100e_in1k
@@ -40,7 +40,7 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 85.3
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k-milan_20221129-74ac94fa.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k-milan_20221129-74ac94fa.pth
     Config: configs/milan/benchmarks/vit-base-p16_8xb128-coslr-100e_in1k.py
   - Name: vit-base-p16_milan-pre_8xb2048-linear-coslr-100e_in1k
     Metadata:
@@ -55,5 +55,5 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 78.9
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/vit-base-p16_linear-8xb2048-coslr-100e_in1k/vit-base-p16_linear-8xb2048-coslr-100e_in1k_20221129-03f26f85.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/milan/milan_vit-base-p16_16xb256-amp-coslr-400e_in1k/vit-base-p16_linear-8xb2048-coslr-100e_in1k/vit-base-p16_linear-8xb2048-coslr-100e_in1k_20221129-03f26f85.pth
     Config: configs/milan/benchmarks/vit-base-p16_8xb2048-linear-coslr-100e_in1k.py

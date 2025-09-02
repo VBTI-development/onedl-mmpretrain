@@ -22,7 +22,7 @@ model = dict(
         final_norm=False,
         out_type='raw',
         pretrained=(
-            'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/'
+            'https://mmassets.onedl.ai/'
             'mmclassification/v0/clip/'
             'vit-large-p14_clip-openai-pre_3rdparty_20230517-95e2af0b.pth'),
     ),

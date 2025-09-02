@@ -13,7 +13,7 @@ from mmpretrain.structures import DataSample
 from mmpretrain.visualization import UniversalVisualizer
 
 MODEL = 'mobilenet-v3-small-050_3rdparty_in1k'
-WEIGHT = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth'  # noqa: E501
+WEIGHT = 'https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v3/mobilenet-v3-small-050_3rdparty_in1k_20221114-e0b86be1.pth'  # noqa: E501
 CONFIG = ModelHub.get(MODEL).config
 
 

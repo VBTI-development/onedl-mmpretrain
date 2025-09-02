@@ -54,7 +54,7 @@ python tools/train.py configs/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-30
 Test:
 
 ```shell
-python tools/test.py configs/maskfeat/benchmarks/vit-base-p16_8xb256-coslr-100e_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.pth
+python tools/test.py configs/maskfeat/benchmarks/vit-base-p16_8xb256-coslr-100e_in1k.py https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,13 +65,13 @@ python tools/test.py configs/maskfeat/benchmarks/vit-base-p16_8xb256-coslr-100e_
 
 | Model                                              | Params (M) | Flops (G) |                            Config                             |                                Download                                |
 | :------------------------------------------------- | :--------: | :-------: | :-----------------------------------------------------------: | :--------------------------------------------------------------------: |
-| `maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k` |   85.88    |   17.58   | [config](maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.json) |
+| `maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k` |   85.88    |   17.58   | [config](maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.json) |
 
 ### Image Classification on ImageNet-1k
 
 | Model                                     |                   Pretrain                   | Params (M) | Flops (G) | Top-1 (%) |                   Config                   |                   Download                    |
 | :---------------------------------------- | :------------------------------------------: | :--------: | :-------: | :-------: | :----------------------------------------: | :-------------------------------------------: |
-| `vit-base-p16_maskfeat-pre_8xb256-coslr-100e_in1k` | [MASKFEAT](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.pth) |   86.57    |   17.58   |   83.40   | [config](benchmarks/vit-base-p16_8xb256-coslr-100e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.json) |
+| `vit-base-p16_maskfeat-pre_8xb256-coslr-100e_in1k` | [MASKFEAT](https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221101-6dfc8bf3.pth) |   86.57    |   17.58   |   83.40   | [config](benchmarks/vit-base-p16_8xb256-coslr-100e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/maskfeat/maskfeat_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k/vit-base-p16_ft-8xb256-coslr-100e_in1k_20221028-5134431c.json) |
 
 ## Citation
 

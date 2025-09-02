@@ -61,7 +61,7 @@ model = dict(
         init_cfg=dict(
             type='Pretrained',
             checkpoint=  # noqa: E251
-            'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/target_generator_ckpt/dalle_encoder.pth',  # noqa: E501
+            'https://mmassets.onedl.ai/mmselfsup/1.x/target_generator_ckpt/dalle_encoder.pth',  # noqa: E501
         )),
     base_momentum=0.0)
 

@@ -63,13 +63,13 @@ python tools/test.py configs/eva02/eva02-tiny-p14_in1k.py /path/to/eva02-tiny-p1
 
 ### Pretrained models
 
-| Model                             | Params (M) | Flops (G) |                Config                 |                                                    Download                                                     |
-| :-------------------------------- | :--------: | :-------: | :-----------------------------------: | :-------------------------------------------------------------------------------------------------------------: |
-| `vit-tiny-p14_eva02-pre_in21k`\*  |    5.50    |   1.70    | [config](eva02-tiny-p14_headless.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-tiny-p14_pre_in21k_20230505-d703e7b1.pth) |
-| `vit-small-p14_eva02-pre_in21k`\* |   21.62    |   6.14    | [config](eva02-small-p14_headless.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-small-p14_pre_in21k_20230505-3175f463.pth) |
-| `vit-base-p14_eva02-pre_in21k`\*  |   85.77    |   23.22   | [config](eva02-base-p14_headless.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-base-p14_pre_in21k_20230505-2f2d4d3c.pth) |
-| `vit-large-p14_eva02-pre_in21k`\* |   303.29   |   81.15   | [config](eva02-large-p14_headless.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-large-p14_pre_in21k_20230505-9072de5d.pth) |
-| `vit-large-p14_eva02-pre_m38m`\*  |   303.29   |   81.15   | [config](eva02-large-p14_headless.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-large-p14_pre_m38m_20230505-b8a1a261.pth) |
+| Model                             | Params (M) | Flops (G) |                Config                 |                                                 Download                                                 |
+| :-------------------------------- | :--------: | :-------: | :-----------------------------------: | :------------------------------------------------------------------------------------------------------: |
+| `vit-tiny-p14_eva02-pre_in21k`\*  |    5.50    |   1.70    | [config](eva02-tiny-p14_headless.py)  | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-tiny-p14_pre_in21k_20230505-d703e7b1.pth)  |
+| `vit-small-p14_eva02-pre_in21k`\* |   21.62    |   6.14    | [config](eva02-small-p14_headless.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-small-p14_pre_in21k_20230505-3175f463.pth) |
+| `vit-base-p14_eva02-pre_in21k`\*  |   85.77    |   23.22   | [config](eva02-base-p14_headless.py)  | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-base-p14_pre_in21k_20230505-2f2d4d3c.pth)  |
+| `vit-large-p14_eva02-pre_in21k`\* |   303.29   |   81.15   | [config](eva02-large-p14_headless.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-large-p14_pre_in21k_20230505-9072de5d.pth) |
+| `vit-large-p14_eva02-pre_m38m`\*  |   303.29   |   81.15   | [config](eva02-large-p14_headless.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-large-p14_pre_m38m_20230505-b8a1a261.pth)  |
 
 - The input size / patch size of MIM pre-trained EVA-02 is `224x224` / `14x14`.
 
@@ -81,9 +81,9 @@ python tools/test.py configs/eva02/eva02-tiny-p14_in1k.py /path/to/eva02-tiny-p1
 
 | Model                                                 |      Pretrain      | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |               Config                |                         Download                          |
 | :---------------------------------------------------- | :----------------: | :--------: | :-------: | :-------: | :-------: | :---------------------------------: | :-------------------------------------------------------: |
-| `vit-tiny-p14_eva02-in21k-pre_3rdparty_in1k-336px`\*  | EVA02 ImageNet-21k |    5.76    |   4.68    |   80.69   |   95.54   | [config](./eva02-tiny-p14_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-tiny-p14_in21k-pre_3rdparty_in1k-336px_20230505-a4e8708a.pth) |
-| `vit-small-p14_eva02-in21k-pre_3rdparty_in1k-336px`\* | EVA02 ImageNet-21k |   22.13    |   15.48   |   85.78   |   97.60   | [config](./eva02-small-p14_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-small-p14_in21k-pre_3rdparty_in1k-336px_20230505-9c5b0e85.pth) |
-| `vit-base-p14_eva02-in21k-pre_3rdparty_in1k-448px`\*  | EVA02 ImageNet-21k |   87.13    |  107.11   |   88.29   |   98.53   | [config](./eva02-base-p14_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-base-p14_in21k-pre_3rdparty_in1k-448px_20230505-8ad211c5.pth) |
+| `vit-tiny-p14_eva02-in21k-pre_3rdparty_in1k-336px`\*  | EVA02 ImageNet-21k |    5.76    |   4.68    |   80.69   |   95.54   | [config](./eva02-tiny-p14_in1k.py)  | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-tiny-p14_in21k-pre_3rdparty_in1k-336px_20230505-a4e8708a.pth) |
+| `vit-small-p14_eva02-in21k-pre_3rdparty_in1k-336px`\* | EVA02 ImageNet-21k |   22.13    |   15.48   |   85.78   |   97.60   | [config](./eva02-small-p14_in1k.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-small-p14_in21k-pre_3rdparty_in1k-336px_20230505-9c5b0e85.pth) |
+| `vit-base-p14_eva02-in21k-pre_3rdparty_in1k-448px`\*  | EVA02 ImageNet-21k |   87.13    |  107.11   |   88.29   |   98.53   | [config](./eva02-base-p14_in1k.py)  | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-base-p14_in21k-pre_3rdparty_in1k-448px_20230505-8ad211c5.pth) |
 
 *Models with * are converted from the  [official repo](https://github.com/baaivision/EVA/tree/master/EVA-02). The config files of these models are only for inference. We haven't reproduce the training results.*
 
@@ -91,9 +91,9 @@ python tools/test.py configs/eva02/eva02-tiny-p14_in1k.py /path/to/eva02-tiny-p1
 
 | Model                                                 |      Pretrain      | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |               Config                |                         Download                          |
 | :---------------------------------------------------- | :----------------: | :--------: | :-------: | :-------: | :-------: | :---------------------------------: | :-------------------------------------------------------: |
-| `vit-base-p14_eva02-in21k-pre_in21k-medft_3rdparty_in1k-448px`\* | EVA02 ImageNet-21k |   87.13    |  107.11   |   88.47   |   98.62   | [config](./eva02-base-p14_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-base-p14_in21k-pre_in21k-medft_3rdparty_in1k-448px_20230505-5cd4d87f.pth) |
-| `vit-large-p14_eva02-in21k-pre_in21k-medft_3rdparty_in1k-448px`\* | EVA02 ImageNet-21k |   305.08   |  362.33   |   89.65   |   98.95   | [config](./eva02-large-p14_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-large-p14_in21k-pre_in21k-medft_3rdparty_in1k-448px_20230505-926d1599.pth) |
-| `vit-large-p14_eva02_m38m-pre_in21k-medft_3rdparty_in1k-448px`\* |  EVA02 Merged-38M  |   305.10   |  362.33   |   89.83   |   99.00   | [config](./eva02-large-p14_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmpretrain/v1.0/eva02/eva02-large-p14_m38m-pre_in21k-medft_3rdparty_in1k-448px_20230505-150dc5ed.pth) |
+| `vit-base-p14_eva02-in21k-pre_in21k-medft_3rdparty_in1k-448px`\* | EVA02 ImageNet-21k |   87.13    |  107.11   |   88.47   |   98.62   | [config](./eva02-base-p14_in1k.py)  | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-base-p14_in21k-pre_in21k-medft_3rdparty_in1k-448px_20230505-5cd4d87f.pth) |
+| `vit-large-p14_eva02-in21k-pre_in21k-medft_3rdparty_in1k-448px`\* | EVA02 ImageNet-21k |   305.08   |  362.33   |   89.65   |   98.95   | [config](./eva02-large-p14_in1k.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-large-p14_in21k-pre_in21k-medft_3rdparty_in1k-448px_20230505-926d1599.pth) |
+| `vit-large-p14_eva02_m38m-pre_in21k-medft_3rdparty_in1k-448px`\* |  EVA02 Merged-38M  |   305.10   |  362.33   |   89.83   |   99.00   | [config](./eva02-large-p14_in1k.py) | [model](https://mmassets.onedl.ai/mmpretrain/v1.0/eva02/eva02-large-p14_m38m-pre_in21k-medft_3rdparty_in1k-448px_20230505-150dc5ed.pth) |
 
 *Models with * are converted from the  [official repo](https://github.com/baaivision/EVA/tree/master/EVA-02). The config files of these models are only for inference. We haven't reproduce the training results.*
 

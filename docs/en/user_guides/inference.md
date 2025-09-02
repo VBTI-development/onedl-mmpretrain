@@ -147,7 +147,7 @@ inference images by CUDA.
 >>> from mmpretrain import ImageClassificationInferencer
 >>> image = 'https://github.com/VBTI-development/onedl-mmpretrain/raw/main/demo/demo.JPEG'
 >>> config = 'configs/resnet/resnet50_8xb32_in1k.py'
->>> checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth'
+>>> checkpoint = 'https://mmassets.onedl.ai/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth'
 >>> inferencer = ImageClassificationInferencer(model=config, pretrained=checkpoint, device='cuda')
 >>> result = inferencer(image)[0]
 >>> print(result['pred_class'])

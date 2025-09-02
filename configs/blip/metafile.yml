@@ -28,7 +28,7 @@ Models:
         Metrics:
           Accuracy (testA): 86.14
           Accuracy (testB): 77.33
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip/blip-base_8xb16_refcoco_20230508-d2d10f4c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/blip/blip-base_8xb16_refcoco_20230508-d2d10f4c.pth
     Config: configs/blip/blip-base_8xb16_refcoco.py
   - Name: blip-base_3rdparty_caption
     Metadata:
@@ -41,7 +41,7 @@ Models:
         Metrics:
           BLEU-4: 40.12
           CIDER: 132.82
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip/blip-base_3rdparty_coco-caption_20230419-a5b71af3.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/blip/blip-base_3rdparty_coco-caption_20230419-a5b71af3.pth
     Config: configs/blip/blip-base_8xb32_caption.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP/blip_coco_caption_base.pth
@@ -56,7 +56,7 @@ Models:
         Dataset: NLVR2
         Metrics:
           Top 1 Accuracy: 82.33
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip/blip-base_3rdparty_nlvr_20230427-3b14d33f.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/blip/blip-base_3rdparty_nlvr_20230427-3b14d33f.pth
     Config: configs/blip/blip-base_8xb32_nlvr.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_nlvr.pth
@@ -71,7 +71,7 @@ Models:
         Dataset: VQAv2
         Metrics:
           Accuracy: 78.2
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip/blip-base_3rdparty-capflit_vqa_20230505-81488941.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/blip/blip-base_3rdparty-capflit_vqa_20230505-81488941.pth
     Config: configs/blip/blip-base_8xb32_vqa.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/BLIP/models/model_base_vqa_capfilt_large.pth
@@ -92,7 +92,7 @@ Models:
         Metrics:
           Recall@1: 64.82
           Recall@5: 86.28
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/blip/blip-base_3rdparty_coco-retrieval_20230419-a1804d2c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/blip/blip-base_3rdparty_coco-retrieval_20230419-a1804d2c.pth
     Config: configs/blip/blip-base_8xb32_retrieval.py
     Converted From:
       Weights: https://storage.googleapis.com/sfr-vision-language-research/LAVIS/models/BLIP/blip_coco_retrieval.pth
