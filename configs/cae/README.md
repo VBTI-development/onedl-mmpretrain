@@ -54,7 +54,7 @@ python tools/train.py configs/cae/cae_beit-base-p16_8xb256-amp-coslr-300e_in1k.p
 Test:
 
 ```shell
-python tools/test.py configs/cae/benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.pth
+python tools/test.py configs/cae/benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,13 +65,13 @@ python tools/test.py configs/cae/benchmarks/beit-base-p16_8xb128-coslr-100e_in1k
 
 | Model                                          | Params (M) | Flops (G) |                          Config                           |                                    Download                                    |
 | :--------------------------------------------- | :--------: | :-------: | :-------------------------------------------------------: | :----------------------------------------------------------------------------: |
-| `cae_beit-base-p16_8xb256-amp-coslr-300e_in1k` |   288.43   |   17.58   | [config](cae_beit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.json) |
+| `cae_beit-base-p16_8xb256-amp-coslr-300e_in1k` |   288.43   |   17.58   | [config](cae_beit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.json) |
 
 ### Image Classification on ImageNet-1k
 
 | Model                                     |                   Pretrain                   | Params (M) | Flops (G) | Top-1 (%) |                   Config                   |                   Download                    |
 | :---------------------------------------- | :------------------------------------------: | :--------: | :-------: | :-------: | :----------------------------------------: | :-------------------------------------------: |
-| `beit-base-p16_cae-pre_8xb128-coslr-100e_in1k` | [CAE](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.pth) |   86.68    |   17.58   |   83.20   | [config](benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.json) |
+| `beit-base-p16_cae-pre_8xb128-coslr-100e_in1k` | [CAE](https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k/cae_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221230-808170f3.pth) |   86.68    |   17.58   |   83.20   | [config](benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/cae/cae_vit-base-p16_16xb128-fp16-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k/vit-base-p16_ft-8xb128-coslr-100e-rpe_in1k_20220825-f3d234cd.json) |
 
 ## Citation
 

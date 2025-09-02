@@ -48,7 +48,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/davit/davit-tiny_4xb256_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/davit/davit-tiny_3rdparty_in1k_20221116-700fdf7d.pth
+python tools/test.py configs/davit/davit-tiny_4xb256_in1k.py https://mmassets.onedl.ai/mmclassification/v0/davit/davit-tiny_3rdparty_in1k_20221116-700fdf7d.pth
 ```
 
 <!-- [TABS-END] -->
@@ -59,9 +59,9 @@ python tools/test.py configs/davit/davit-tiny_4xb256_in1k.py https://pub-ed9ed75
 
 | Model                         |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                |                                        Download                                        |
 | :---------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :----------------------------------: | :------------------------------------------------------------------------------------: |
-| `davit-tiny_3rdparty_in1k`\*  | From scratch |   28.36    |   4.54    |   82.24   |   96.13   | [config](davit-tiny_4xb256_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/davit/davit-tiny_3rdparty_in1k_20221116-700fdf7d.pth) |
-| `davit-small_3rdparty_in1k`\* | From scratch |   49.75    |   8.80    |   83.61   |   96.75   | [config](davit-small_4xb256_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/davit/davit-small_3rdparty_in1k_20221116-51a849a6.pth) |
-| `davit-base_3rdparty_in1k`\*  | From scratch |   87.95    |   15.51   |   84.09   |   96.82   | [config](davit-base_4xb256_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/davit/davit-base_3rdparty_in1k_20221116-19e0d956.pth) |
+| `davit-tiny_3rdparty_in1k`\*  | From scratch |   28.36    |   4.54    |   82.24   |   96.13   | [config](davit-tiny_4xb256_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/davit/davit-tiny_3rdparty_in1k_20221116-700fdf7d.pth) |
+| `davit-small_3rdparty_in1k`\* | From scratch |   49.75    |   8.80    |   83.61   |   96.75   | [config](davit-small_4xb256_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/davit/davit-small_3rdparty_in1k_20221116-51a849a6.pth) |
+| `davit-base_3rdparty_in1k`\*  | From scratch |   87.95    |   15.51   |   84.09   |   96.82   | [config](davit-base_4xb256_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/davit/davit-base_3rdparty_in1k_20221116-19e0d956.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/dingmyu/davit/blob/main/mmdet/mmdet/models/backbones/davit.py#L355). The config files of these models are only for inference. We haven't reproduce the training results.*
 

@@ -16,7 +16,7 @@ model = dict(
     init_cfg=dict(
         type='Pretrained',
         checkpoint=  # noqa: E251
-        'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k_20220825-cc7e98c9.pth'  # noqa
+        'https://mmassets.onedl.ai/mmselfsup/1.x/mae/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k/mae_vit-large-p16_8xb512-fp16-coslr-1600e_in1k_20220825-cc7e98c9.pth'  # noqa
     ))
 custom_imports = dict(imports='mmpretrain.datasets',
                       allow_failed_imports=False)

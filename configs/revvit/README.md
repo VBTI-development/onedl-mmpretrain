@@ -62,7 +62,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/revvit/revvit-small_8xb256_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/revvit/revvit-base_3rdparty_in1k_20221213-87a7b0a5.pth
+python tools/test.py configs/revvit/revvit-small_8xb256_in1k.py https://mmassets.onedl.ai/mmclassification/v0/revvit/revvit-base_3rdparty_in1k_20221213-87a7b0a5.pth
 ```
 
 <!-- [TABS-END] -->
@@ -73,8 +73,8 @@ python tools/test.py configs/revvit/revvit-small_8xb256_in1k.py https://pub-ed9e
 
 | Model                          |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                Config                 |                                       Download                                       |
 | :----------------------------- | :----------: | :--------: | :-------: | :-------: | :-------: | :-----------------------------------: | :----------------------------------------------------------------------------------: |
-| `revvit-small_3rdparty_in1k`\* | From scratch |   22.44    |   4.58    |   79.87   |   94.90   | [config](revvit-small_8xb256_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/revvit/revvit-base_3rdparty_in1k_20221213-87a7b0a5.pth) |
-| `revvit-base_3rdparty_in1k`\*  | From scratch |   87.34    |   17.49   |   81.81   |   95.56   | [config](revvit-base_8xb256_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/revvit/revvit-small_3rdparty_in1k_20221213-a3a34f5c.pth) |
+| `revvit-small_3rdparty_in1k`\* | From scratch |   22.44    |   4.58    |   79.87   |   94.90   | [config](revvit-small_8xb256_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/revvit/revvit-base_3rdparty_in1k_20221213-87a7b0a5.pth) |
+| `revvit-base_3rdparty_in1k`\*  | From scratch |   87.34    |   17.49   |   81.81   |   95.56   | [config](revvit-base_8xb256_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/revvit/revvit-small_3rdparty_in1k_20221213-a3a34f5c.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/facebookresearch/SlowFast). The config files of these models are only for inference. We haven't reproduce the training results.*
 

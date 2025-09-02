@@ -6,7 +6,7 @@ _base_ = [
 ]
 
 # model settings
-checkpoint = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
+checkpoint = 'https://mmassets.onedl.ai/mmclassification/v0/swin-transformer/convert/swin-large_3rdparty_in21k-384px.pth'  # noqa
 model = dict(type='ImageClassifier',
              backbone=dict(init_cfg=dict(
                  type='Pretrained', checkpoint=checkpoint, prefix='backbone')),

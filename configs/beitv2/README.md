@@ -54,7 +54,7 @@ python tools/train.py configs/beitv2/beitv2_beit-base-p16_8xb256-amp-coslr-300e_
 Test:
 
 ```shell
-python tools/test.py configs/beitv2/benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.pth
+python tools/test.py configs/beitv2/benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,14 +65,14 @@ python tools/test.py configs/beitv2/benchmarks/beit-base-p16_8xb128-coslr-100e_i
 
 | Model                                             | Params (M) | Flops (G) |                            Config                            |                                 Download                                 |
 | :------------------------------------------------ | :--------: | :-------: | :----------------------------------------------------------: | :----------------------------------------------------------------------: |
-| `beitv2_beit-base-p16_8xb256-amp-coslr-300e_in1k` |   192.81   |   17.58   | [config](beitv2_beit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.json) |
+| `beitv2_beit-base-p16_8xb256-amp-coslr-300e_in1k` |   192.81   |   17.58   | [config](beitv2_beit-base-p16_8xb256-amp-coslr-300e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.json) |
 
 ### Image Classification on ImageNet-1k
 
 | Model                                   |                  Pretrain                  | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                  Config                  |                  Download                  |
 | :-------------------------------------- | :----------------------------------------: | :--------: | :-------: | :-------: | :-------: | :--------------------------------------: | :----------------------------------------: |
-| `beit-base-p16_beitv2-pre_8xb128-coslr-100e_in1k` | [BEITV2](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.pth) |   86.53    |   17.58   |   85.00   |    N/A    | [config](benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.pth) \| [log](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.json) |
-| `beit-base-p16_beitv2-in21k-pre_3rdparty_in1k`\* |            BEITV2 ImageNet-21k             |   86.53    |   17.58   |   86.47   |   97.99   | [config](benchmarks/beit-base-p16_8xb64_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/beit/beitv2-base_3rdparty_in1k_20221114-73e11905.pth) |
+| `beit-base-p16_beitv2-pre_8xb128-coslr-100e_in1k` | [BEITV2](https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k_20221212-a157be30.pth) |   86.53    |   17.58   |   85.00   |    N/A    | [config](benchmarks/beit-base-p16_8xb128-coslr-100e_in1k.py) | [model](https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.pth) \| [log](https://mmassets.onedl.ai/mmselfsup/1.x/beitv2/beitv2_vit-base-p16_8xb256-amp-coslr-300e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k/vit-base-p16_ft-8xb128-coslr-100e_in1k_20221212-d1c0789e.json) |
+| `beit-base-p16_beitv2-in21k-pre_3rdparty_in1k`\* |            BEITV2 ImageNet-21k             |   86.53    |   17.58   |   86.47   |   97.99   | [config](benchmarks/beit-base-p16_8xb64_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/beit/beitv2-base_3rdparty_in1k_20221114-73e11905.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/microsoft/unilm/tree/master/beit2). The config files of these models are only for inference. We haven't reproduce the training results.*
 

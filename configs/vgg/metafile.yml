@@ -30,7 +30,7 @@ Models:
           Top 1 Accuracy: 68.75
           Top 5 Accuracy: 88.87
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg11_batch256_imagenet_20210208-4271cd6c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg11_batch256_imagenet_20210208-4271cd6c.pth
     Config: configs/vgg/vgg11_8xb32_in1k.py
   - Name: vgg13_8xb32_in1k
     Metadata:
@@ -43,7 +43,7 @@ Models:
           Top 1 Accuracy: 70.02
           Top 5 Accuracy: 89.46
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg13_batch256_imagenet_20210208-4d1d6080.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg13_batch256_imagenet_20210208-4d1d6080.pth
     Config: configs/vgg/vgg13_8xb32_in1k.py
   - Name: vgg16_8xb32_in1k
     Metadata:
@@ -56,7 +56,7 @@ Models:
           Top 1 Accuracy: 71.62
           Top 5 Accuracy: 90.49
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg16_batch256_imagenet_20210208-db26f1a5.pth
     Config: configs/vgg/vgg16_8xb32_in1k.py
   - Name: vgg19_8xb32_in1k
     Metadata:
@@ -69,7 +69,7 @@ Models:
           Top 1 Accuracy: 72.41
           Top 5 Accuracy: 90.8
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg19_batch256_imagenet_20210208-e6920e4a.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg19_batch256_imagenet_20210208-e6920e4a.pth
     Config: configs/vgg/vgg19_8xb32_in1k.py
   - Name: vgg11bn_8xb32_in1k
     Metadata:
@@ -82,7 +82,7 @@ Models:
           Top 1 Accuracy: 70.67
           Top 5 Accuracy: 90.16
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg11_bn_batch256_imagenet_20210207-f244902c.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg11_bn_batch256_imagenet_20210207-f244902c.pth
     Config: configs/vgg/vgg11bn_8xb32_in1k.py
   - Name: vgg13bn_8xb32_in1k
     Metadata:
@@ -95,7 +95,7 @@ Models:
           Top 1 Accuracy: 72.12
           Top 5 Accuracy: 90.66
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg13_bn_batch256_imagenet_20210207-1a8b7864.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg13_bn_batch256_imagenet_20210207-1a8b7864.pth
     Config: configs/vgg/vgg13bn_8xb32_in1k.py
   - Name: vgg16bn_8xb32_in1k
     Metadata:
@@ -108,7 +108,7 @@ Models:
           Top 1 Accuracy: 73.74
           Top 5 Accuracy: 91.66
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg16_bn_batch256_imagenet_20210208-7e55cd29.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg16_bn_batch256_imagenet_20210208-7e55cd29.pth
     Config: configs/vgg/vgg16bn_8xb32_in1k.py
   - Name: vgg19bn_8xb32_in1k
     Metadata:
@@ -121,5 +121,5 @@ Models:
           Top 1 Accuracy: 74.68
           Top 5 Accuracy: 92.27
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/vgg/vgg19_bn_batch256_imagenet_20210208-da620c4f.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/vgg/vgg19_bn_batch256_imagenet_20210208-da620c4f.pth
     Config: configs/vgg/vgg19bn_8xb32_in1k.py

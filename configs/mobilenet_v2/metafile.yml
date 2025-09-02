@@ -30,5 +30,5 @@ Models:
           Top 1 Accuracy: 71.86
           Top 5 Accuracy: 90.42
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mobilenet_v2/mobilenet_v2_batch256_imagenet_20200708-3b2dc3af.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mobilenet_v2/mobilenet_v2_batch256_imagenet_20200708-3b2dc3af.pth
     Config: configs/mobilenet_v2/mobilenet-v2_8xb32_in1k.py

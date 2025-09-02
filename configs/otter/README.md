@@ -35,7 +35,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/otter/otter-9b_caption.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth
+python tools/test.py configs/otter/otter-9b_caption.py https://mmassets.onedl.ai/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth
 ```
 
 <!-- [TABS-END] -->
@@ -44,17 +44,17 @@ python tools/test.py configs/otter/otter-9b_caption.py https://pub-ed9ed750ddcc4
 
 ### Image Caption on COCO
 
-| Model                         | Params (M) |  BLEU-4  |  CIDER   |            Config             |                                                       Download                                                       |
-| :---------------------------- | :--------: | :------: | :------: | :---------------------------: | :------------------------------------------------------------------------------------------------------------------: |
-| `otter-9b_3rdparty_caption`\* |  8220.45   | Upcoming | Upcoming | [config](otter-9b_caption.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth) |
+| Model                         | Params (M) |  BLEU-4  |  CIDER   |            Config             |                                              Download                                               |
+| :---------------------------- | :--------: | :------: | :------: | :---------------------------: | :-------------------------------------------------------------------------------------------------: |
+| `otter-9b_3rdparty_caption`\* |  8220.45   | Upcoming | Upcoming | [config](otter-9b_caption.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/Luodian/Otter/tree/main). The config files of these models are only for inference. We haven't reproduce the training results.*
 
 ### Visual Question Answering on VQAv2
 
-| Model                     | Params (M) | Accuracy |          Config           |                                                           Download                                                            |
-| :------------------------ | :--------: | :------: | :-----------------------: | :---------------------------------------------------------------------------------------------------------------------------: |
-| `otter-9b_3rdparty_vqa`\* |  8220.45   | Upcoming | [config](otter-9b_vqa.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth) |
+| Model                     | Params (M) | Accuracy |          Config           |                                              Download                                               |
+| :------------------------ | :--------: | :------: | :-----------------------: | :-------------------------------------------------------------------------------------------------: |
+| `otter-9b_3rdparty_vqa`\* |  8220.45   | Upcoming | [config](otter-9b_vqa.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/otter/otter-9b-adapter_20230613-51c5be8d.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/Luodian/Otter/tree/main). The config files of these models are only for inference. We haven't reproduce the training results.*
 

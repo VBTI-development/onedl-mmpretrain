@@ -20,7 +20,7 @@ Models:
         Dataset: COCO
         Metrics:
           CIDER: 65.50  # Report from the official repo
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
     Config: configs/flamingo/flamingo_zeroshot_caption.py
     Converted From:
       Weights: https://huggingface.co/openflamingo/OpenFlamingo-9B
@@ -35,7 +35,7 @@ Models:
         Dataset: VQAv2
         Metrics:
           Accuracy: 43.50  # Report from the official repo
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
     Config: configs/flamingo/flamingo_zeroshot_vqa.py
     Converted From:
       Weights: https://huggingface.co/openflamingo/OpenFlamingo-9B

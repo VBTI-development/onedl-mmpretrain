@@ -54,7 +54,7 @@ python tools/train.py configs/conformer/conformer-small-p32_8xb128_in1k.py
 Test:
 
 ```shell
-python tools/test.py configs/conformer/conformer-tiny-p16_8xb128_in1k.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth
+python tools/test.py configs/conformer/conformer-tiny-p16_8xb128_in1k.py https://mmassets.onedl.ai/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth
 ```
 
 <!-- [TABS-END] -->
@@ -65,10 +65,10 @@ python tools/test.py configs/conformer/conformer-tiny-p16_8xb128_in1k.py https:/
 
 | Model                                 |   Pretrain   | Params (M) | Flops (G) | Top-1 (%) | Top-5 (%) |                    Config                    |                                Download                                |
 | :------------------------------------ | :----------: | :--------: | :-------: | :-------: | :-------: | :------------------------------------------: | :--------------------------------------------------------------------: |
-| `conformer-tiny-p16_3rdparty_in1k`\*  | From scratch |   23.52    |   4.90    |   81.31   |   95.60   | [config](conformer-tiny-p16_8xb128_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth) |
-| `conformer-small-p16_3rdparty_in1k`\* | From scratch |   37.67    |   10.31   |   83.32   |   96.46   | [config](conformer-small-p16_8xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-small-p16_3rdparty_8xb128_in1k_20211206-3065dcf5.pth) |
-| `conformer-small-p32_8xb128_in1k`     | From scratch |   38.85    |   7.09    |   81.96   |   96.02   | [config](conformer-small-p32_8xb128_in1k.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-small-p32_8xb128_in1k_20211206-947a0816.pth) |
-| `conformer-base-p16_3rdparty_in1k`\*  | From scratch |   83.29    |   22.89   |   83.82   |   96.59   | [config](conformer-base-p16_8xb128_in1k.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/conformer/conformer-base-p16_3rdparty_8xb128_in1k_20211206-bfdf8637.pth) |
+| `conformer-tiny-p16_3rdparty_in1k`\*  | From scratch |   23.52    |   4.90    |   81.31   |   95.60   | [config](conformer-tiny-p16_8xb128_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/conformer/conformer-tiny-p16_3rdparty_8xb128_in1k_20211206-f6860372.pth) |
+| `conformer-small-p16_3rdparty_in1k`\* | From scratch |   37.67    |   10.31   |   83.32   |   96.46   | [config](conformer-small-p16_8xb128_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/conformer/conformer-small-p16_3rdparty_8xb128_in1k_20211206-3065dcf5.pth) |
+| `conformer-small-p32_8xb128_in1k`     | From scratch |   38.85    |   7.09    |   81.96   |   96.02   | [config](conformer-small-p32_8xb128_in1k.py) | [model](https://mmassets.onedl.ai/mmclassification/v0/conformer/conformer-small-p32_8xb128_in1k_20211206-947a0816.pth) |
+| `conformer-base-p16_3rdparty_in1k`\*  | From scratch |   83.29    |   22.89   |   83.82   |   96.59   | [config](conformer-base-p16_8xb128_in1k.py)  | [model](https://mmassets.onedl.ai/mmclassification/v0/conformer/conformer-base-p16_3rdparty_8xb128_in1k_20211206-bfdf8637.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/pengzhiliang/Conformer/blob/main/models.py#L89). The config files of these models are only for inference. We haven't reproduce the training results.*
 

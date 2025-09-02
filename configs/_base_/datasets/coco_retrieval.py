@@ -1,8 +1,8 @@
 # data settings
 # Here are the links to download the annotations for coco retrieval for conveniency # noqa
-# https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/datasets/coco_retrieval/caption_karpathy_train2014.json
-# https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/datasets/coco_retrieval/caption_karpathy_val2014.json
-# https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/datasets/coco_retrieval/caption_karpathy_test2014.json
+# https://mmassets.onedl.ai/mmclassification/datasets/coco_retrieval/caption_karpathy_train2014.json
+# https://mmassets.onedl.ai/mmclassification/datasets/coco_retrieval/caption_karpathy_val2014.json
+# https://mmassets.onedl.ai/mmclassification/datasets/coco_retrieval/caption_karpathy_test2014.json
 data_preprocessor = dict(
     type='MultiModalDataPreprocessor',
     mean=[122.770938, 116.7460125, 104.09373615],

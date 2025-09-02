@@ -30,7 +30,7 @@ Models:
           Top 1 Accuracy: 77.74
           Top 5 Accuracy: 93.84
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/se-resnet/se-resnet50_batch256_imagenet_20200804-ae206104.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/se-resnet/se-resnet50_batch256_imagenet_20200804-ae206104.pth
     Config: configs/seresnet/seresnet50_8xb32_in1k.py
   - Name: seresnet101_8xb32_in1k
     Metadata:
@@ -43,5 +43,5 @@ Models:
           Top 1 Accuracy: 78.26
           Top 5 Accuracy: 94.07
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/se-resnet/se-resnet101_batch256_imagenet_20200804-ba5b51d4.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/se-resnet/se-resnet101_batch256_imagenet_20200804-ba5b51d4.pth
     Config: configs/seresnet/seresnet101_8xb32_in1k.py

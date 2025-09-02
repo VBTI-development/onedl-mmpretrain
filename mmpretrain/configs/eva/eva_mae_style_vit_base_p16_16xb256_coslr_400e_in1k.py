@@ -43,7 +43,7 @@ model.head = dict(type=MIMHead,
 model.target_generator = dict(
     type=CLIPGenerator,
     tokenizer_path=  # noqa
-    'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
+    'https://mmassets.onedl.ai/mmselfsup/1.x/target_generator_ckpt/clip_vit_base_16.pth.tar'  # noqa
 )
 
 # optimizer wrapper

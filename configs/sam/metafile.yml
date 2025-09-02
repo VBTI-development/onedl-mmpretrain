@@ -26,7 +26,7 @@ Models:
         - SA-1B
     In Collection: SAM
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-base-p16_sam-pre_3rdparty_sa1b-1024px_20230411-2320f9cc.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/vit_sam/vit-base-p16_sam-pre_3rdparty_sa1b-1024px_20230411-2320f9cc.pth
     Config: configs/sam/vit-base-p16_sam_headless.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_b_01ec64.pth
@@ -40,7 +40,7 @@ Models:
         - SA-1B
     In Collection: SAM
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-large-p16_sam-pre_3rdparty_sa1b-1024px_20230411-595feafd.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/vit_sam/vit-large-p16_sam-pre_3rdparty_sa1b-1024px_20230411-595feafd.pth
     Config: configs/sam/vit-large-p16_sam_headless.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_l_0b3195.pth
@@ -54,7 +54,7 @@ Models:
         - SA-1B
     In Collection: SAM
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/vit_sam/vit-huge-p16_sam-pre_3rdparty_sa1b-1024px_20230411-3f13c653.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v1/vit_sam/vit-huge-p16_sam-pre_3rdparty_sa1b-1024px_20230411-3f13c653.pth
     Config: configs/sam/vit-huge-p16_sam_headless.py
     Converted From:
       Weights: https://dl.fbaipublicfiles.com/segment_anything/sam_vit_h_4b8939.pth

@@ -33,7 +33,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/ofa/ofa-base_finetuned_refcoco.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/ofa/ofa-base_3rdparty_refcoco_20230418-2797d3ab.pth
+python tools/test.py configs/ofa/ofa-base_finetuned_refcoco.py https://mmassets.onedl.ai/mmclassification/v1/ofa/ofa-base_3rdparty_refcoco_20230418-2797d3ab.pth
 ```
 
 <!-- [TABS-END] -->
@@ -44,7 +44,7 @@ python tools/test.py configs/ofa/ofa-base_finetuned_refcoco.py https://pub-ed9ed
 
 | Model                                   | Params (M) | BLEU-4 | CIDER  |                 Config                  |                                               Download                                               |
 | :-------------------------------------- | :--------: | :----: | :----: | :-------------------------------------: | :--------------------------------------------------------------------------------------------------: |
-| `ofa-base_3rdparty-finetuned_caption`\* |   182.24   | 42.64  | 144.50 | [config](ofa-base_finetuned_caption.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/ofa/ofa-base_3rdparty_coco-caption_20230418-de18914e.pth) |
+| `ofa-base_3rdparty-finetuned_caption`\* |   182.24   | 42.64  | 144.50 | [config](ofa-base_finetuned_caption.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/ofa/ofa-base_3rdparty_coco-caption_20230418-de18914e.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/OFA-Sys/OFA). The config files of these models are only for inference. We haven't reproduce the training results.*
 
@@ -52,16 +52,16 @@ python tools/test.py configs/ofa/ofa-base_finetuned_refcoco.py https://pub-ed9ed
 
 | Model                                   | Params (M) | Accuracy (testA) | Accuracy (testB) |                 Config                  |                                     Download                                     |
 | :-------------------------------------- | :--------: | :--------------: | :--------------: | :-------------------------------------: | :------------------------------------------------------------------------------: |
-| `ofa-base_3rdparty-finetuned_refcoco`\* |   182.24   |      90.49       |      83.63       | [config](ofa-base_finetuned_refcoco.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/ofa/ofa-base_3rdparty_refcoco_20230418-2797d3ab.pth) |
+| `ofa-base_3rdparty-finetuned_refcoco`\* |   182.24   |      90.49       |      83.63       | [config](ofa-base_finetuned_refcoco.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/ofa/ofa-base_3rdparty_refcoco_20230418-2797d3ab.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/OFA-Sys/OFA). The config files of these models are only for inference. We haven't reproduce the training results.*
 
 ### Visual Question Answering on VQAv2
 
-| Model                               | Params (M) | Accuracy |               Config                |                                                     Download                                                     |
-| :---------------------------------- | :--------: | :------: | :---------------------------------: | :--------------------------------------------------------------------------------------------------------------: |
-| `ofa-base_3rdparty-finetuned_vqa`\* |   182.24   |  78.00   | [config](ofa-base_finetuned_vqa.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/ofa/ofa-base_3rdparty_coco-vqa_20230418-f38539a5.pth) |
-| `ofa-base_3rdparty-zeroshot_vqa`\*  |   182.24   |  58.32   | [config](ofa-base_zeroshot_vqa.py)  | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/ofa/ofa-base_3rdparty_pretrain_20230418-dccfc07f.pth) |
+| Model                               | Params (M) | Accuracy |               Config                |                                                  Download                                                   |
+| :---------------------------------- | :--------: | :------: | :---------------------------------: | :---------------------------------------------------------------------------------------------------------: |
+| `ofa-base_3rdparty-finetuned_vqa`\* |   182.24   |  78.00   | [config](ofa-base_finetuned_vqa.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/ofa/ofa-base_3rdparty_coco-vqa_20230418-f38539a5.pth) |
+| `ofa-base_3rdparty-zeroshot_vqa`\*  |   182.24   |  58.32   | [config](ofa-base_zeroshot_vqa.py)  | [model](https://mmassets.onedl.ai/mmclassification/v1/ofa/ofa-base_3rdparty_pretrain_20230418-dccfc07f.pth) |
 
 *Models with * are converted from the [official repo](https://github.com/OFA-Sys/OFA). The config files of these models are only for inference. We haven't reproduce the training results.*
 

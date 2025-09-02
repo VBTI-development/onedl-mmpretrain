@@ -33,7 +33,7 @@ Prepare your dataset according to the [docs](https://onedl-mmpretrain.readthedoc
 Test:
 
 ```shell
-python tools/test.py configs/flamingo/flamingo_zeroshot_caption.py https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
+python tools/test.py configs/flamingo/flamingo_zeroshot_caption.py https://mmassets.onedl.ai/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth
 ```
 
 <!-- [TABS-END] -->
@@ -44,15 +44,15 @@ python tools/test.py configs/flamingo/flamingo_zeroshot_caption.py https://pub-e
 
 | Model                                  | Params (G) | CIDER |                 Config                 |                                                   Download                                                    |
 | :------------------------------------- | :--------: | :---: | :------------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
-| `flamingo_3rdparty-zeroshot_caption`\* |   8.220    | 65.50 | [config](flamingo_zeroshot_caption.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth) |
+| `flamingo_3rdparty-zeroshot_caption`\* |   8.220    | 65.50 | [config](flamingo_zeroshot_caption.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth) |
 
 *Models with * are converted from the [openflamingo](https://github.com/mlfoundations/open_flamingo). The config files of these models are only for inference. We haven't reproduce the training results.*
 
 ### Visual Question Answering on VQAv2
 
-| Model                              | Params (G) | Accuracy |               Config               |                                                      Download                                                      |
-| :--------------------------------- | :--------: | :------: | :--------------------------------: | :----------------------------------------------------------------------------------------------------------------: |
-| `flamingo_3rdparty-zeroshot_vqa`\* |    8.22    |  43.50   | [config](flamingo_zeroshot_vqa.py) | [model](https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth) |
+| Model                              | Params (G) | Accuracy |               Config               |                                                   Download                                                    |
+| :--------------------------------- | :--------: | :------: | :--------------------------------: | :-----------------------------------------------------------------------------------------------------------: |
+| `flamingo_3rdparty-zeroshot_vqa`\* |    8.22    |  43.50   | [config](flamingo_zeroshot_vqa.py) | [model](https://mmassets.onedl.ai/mmclassification/v1/flamingo/openflamingo-9b-adapter_20230505-554310c8.pth) |
 
 *Models with * are converted from the [openflamingo](https://github.com/mlfoundations/open_flamingo). The config files of these models are only for inference. We haven't reproduce the training results.*
 

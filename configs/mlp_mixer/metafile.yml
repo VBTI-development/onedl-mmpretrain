@@ -27,7 +27,7 @@ Models:
           Top 1 Accuracy: 76.68
           Top 5 Accuracy: 92.25
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mlp-mixer/mixer-base-p16_3rdparty_64xb64_in1k_20211124-1377e3e0.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mlp-mixer/mixer-base-p16_3rdparty_64xb64_in1k_20211124-1377e3e0.pth
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-vitjx/jx_mixer_b16_224-76587d61.pth
       Code: https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/mlp_mixer.py#L70
@@ -44,7 +44,7 @@ Models:
           Top 1 Accuracy: 72.34
           Top 5 Accuracy: 88.02
         Task: Image Classification
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/mlp-mixer/mixer-large-p16_3rdparty_64xb64_in1k_20211124-5a2519d2.pth
+    Weights: https://mmassets.onedl.ai/mmclassification/v0/mlp-mixer/mixer-large-p16_3rdparty_64xb64_in1k_20211124-5a2519d2.pth
     Converted From:
       Weights: https://github.com/rwightman/pytorch-image-models/releases/download/v0.1-vitjx/jx_mixer_b16_224_in21k-617b3de2.pth
       Code: https://github.com/rwightman/pytorch-image-models/blob/master/timm/models/mlp_mixer.py#L73

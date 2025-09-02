@@ -223,7 +223,7 @@ def main(args):
 
         logger.info(f'Processing: {model_name}')
 
-        http_prefix = 'https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/'  # noqa
+        http_prefix = 'https://mmassets.onedl.ai/mmclassification/'  # noqa
         dataset = model_info.results[0].dataset
         if dataset not in dataset_map.keys():
             continue

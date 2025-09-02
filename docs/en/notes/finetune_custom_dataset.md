@@ -99,7 +99,7 @@ model = dict(
         frozen_stages=2,
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
+            checkpoint='https://mmassets.onedl.ai/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
             prefix='backbone',
         )),
     head=dict(num_classes=10),
@@ -131,7 +131,7 @@ model = dict(
         frozen_stages=2,
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
+            checkpoint='https://mmassets.onedl.ai/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
             prefix='backbone',
         )),
     head=dict(num_classes=10),
@@ -176,7 +176,7 @@ model = dict(
         frozen_stages=2,
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
+            checkpoint='https://mmassets.onedl.ai/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
             prefix='backbone',
         )),
     head=dict(num_classes=10),
@@ -232,7 +232,7 @@ model = dict(
         frozen_stages=2,
         init_cfg=dict(
             type='Pretrained',
-            checkpoint='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
+            checkpoint='https://mmassets.onedl.ai/mmclassification/v0/resnet/resnet50_8xb32_in1k_20210831-ea4938fc.pth',
             prefix='backbone',
         )),
     head=dict(num_classes=10),
@@ -335,6 +335,6 @@ For example, the command below will also load pre-trained model.
 ```shell
 bash tools/dist_train.sh configs/resnet/resnet50_8xb32-ft_custom.py 8 \
     --cfg-options model.backbone.init_cfg.type='Pretrained' \
-    model.backbone.init_cfg.checkpoint='https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mocov3/mocov3_resnet50_8xb512-amp-coslr-100e_in1k/mocov3_resnet50_8xb512-amp-coslr-100e_in1k_20220927-f1144efa.pth' \
+    model.backbone.init_cfg.checkpoint='https://mmassets.onedl.ai/mmselfsup/1.x/mocov3/mocov3_resnet50_8xb512-amp-coslr-100e_in1k/mocov3_resnet50_8xb512-amp-coslr-100e_in1k_20220927-f1144efa.pth' \
     model.backbone.init_cfg.prefix='backbone' \
 ```

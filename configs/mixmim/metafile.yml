@@ -30,7 +30,7 @@ Models:
       Training Data: ImageNet-1k
     In Collection: MixMIM
     Results: null
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_16xb128-coslr-300e_in1k_20221208-44fe8d2c.pth
     Config: configs/mixmim/mixmim_mixmim-base_16xb128-coslr-300e_in1k.py
     Downstream:
       - mixmim-base_mixmim-pre_8xb128-coslr-100e_in1k
@@ -47,5 +47,5 @@ Models:
         Dataset: ImageNet-1k
         Metrics:
           Top 1 Accuracy: 84.63
-    Weights: https://pub-ed9ed750ddcc469da251e2d1a2cea382.r2.dev/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth
+    Weights: https://mmassets.onedl.ai/mmselfsup/1.x/mixmim/mixmim-base-p16_16xb128-coslr-300e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k/mixmim-base-p16_ft-8xb128-coslr-100e_in1k_20221208-41ecada9.pth
     Config: configs/mixmim/benchmarks/mixmim-base_8xb128-coslr-100e_in1k.py
