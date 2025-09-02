@@ -116,7 +116,8 @@ class AlbuKeypoint(Albumentations):
         if keypoint_params is not None:
             keypoint_params = albumentations.KeypointParams(**keypoint_params)
         self.aug = Compose([self.albu_builder(t) for t in self.transforms],
-                           keypoint_params=keypoint_params)
+                           keypoint_params=keypoint_params,
+                           strict=False)
 
         if not keymap:
             self.keymap_to_albu = {'img': 'image'}
