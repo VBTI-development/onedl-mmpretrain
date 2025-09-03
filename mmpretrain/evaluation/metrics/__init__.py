@@ -5,6 +5,7 @@ from .gqa import GQAAcc
 from .multi_label import AveragePrecision, MultiLabelMetric
 from .multi_task import MultiTasksMetric
 from .nocaps import NocapsSave
+from .regression import RegressionMetric
 from .retrieval import RetrievalAveragePrecision, RetrievalRecall
 from .scienceqa import ScienceQAMetric
 from .shape_bias_label import ShapeBiasMetric
@@ -18,5 +19,5 @@ __all__ = [
     'MultiTasksMetric', 'VOCAveragePrecision', 'VOCMultiLabelMetric',
     'ConfusionMatrix', 'RetrievalRecall', 'VQAAcc', 'ReportVQA', 'COCOCaption',
     'VisualGroundingMetric', 'ScienceQAMetric', 'GQAAcc', 'NocapsSave',
-    'RetrievalAveragePrecision', 'ShapeBiasMetric', 'ANLS'
+    'RetrievalAveragePrecision', 'ShapeBiasMetric', 'ANLS', 'RegressionMetric'
 ]
