@@ -53,13 +53,13 @@ readthedocs = [
     "pycocotools",
     "torch",
     "torchvision",
-    "transformers>=4.28.0",
+    "transformers>=4.53.0",
 ]
 
 [project.optional-dependencies]
 multimodal = [
     "pycocotools",
-    "transformers>=4.28.0",
+    "transformers>=4.53.0",
 ]
 mminstall = [
     "onedl-mmcv>=2.0.0",
