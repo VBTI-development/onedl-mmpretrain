@@ -1,10 +1,12 @@
 <div align="center">
+  <picture>
+    <!-- User prefers dark mode: -->
+  <source srcset="https://raw.githubusercontent.com/vbti-development/onedl-mmengine/main/docs/en/_static/image/onedl-mmengine-banner-dark.png"  media="(prefers-color-scheme: dark)"/>
 
-<!-- <img src="resources/mmpt-logo.png" width="600"/> -->
+<img src="https://raw.githubusercontent.com/vbti-development/onedl-mmengine/main/docs/en/_static/image/onedl-mmengine-banner.png" alt="OneDL-Engine logo" height="200"/>
+  </picture>
 
-<div align="center">
-  <img width="600" alt="onedl-mmengine" src="https://raw.githubusercontent.com/VBTI-development/onedl-mmpretrain/main/resources/mmpt-logo.png"/>
-  <div>&nbsp;</div>
+<div>&nbsp;</div>
   <div align="center">
     <a href="https://vbti.ai">
       <b><font size="5">VBTI Website</font></b>
@@ -15,7 +17,6 @@
     </a>
   </div>
 <div>&nbsp;</div>
-</div>
 
 [![Docs](https://img.shields.io/badge/docs-latest-blue)](https://onedl-mmpretrain.readthedocs.io/en/latest/)
 [![license](https://img.shields.io/github/license/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/blob/main/LICENSE)
@@ -33,13 +34,11 @@
 [🆕 Update News](https://onedl-mmpretrain.readthedocs.io/en/latest/notes/changelog.html) |
 [🤔 Reporting Issues](https://github.com/VBTI-development/onedl-mmpretrain/issues/new/choose)
 
-<img src="https://user-images.githubusercontent.com/36138628/230307505-4727ad0a-7d71-4069-939d-b499c7e272b7.png" width="400"/>
-
 </div>
 
 ## Introduction
 
-MMPreTrain is an open source pre-training toolbox based on PyTorch. It is a part of the [OpenMMLab](https://openmmlab.com/) project.
+MMPreTrain is an open source pre-training toolbox based on PyTorch.
 
 ### Major features
 
@@ -56,11 +55,11 @@ MMPreTrain is an open source pre-training toolbox based on PyTorch. It is a part
   - Visual Grounding
   - Retrieval (Image-To-Image, Text-To-Image, Image-To-Text)
 
-https://github.com/open-mmlab/mmpretrain/assets/26739999/e4dcd3a2-f895-4d1b-a351-fbc74a04e904
+https://github.com/vbti-development/onedl-mmpretrain/assets/26739999/e4dcd3a2-f895-4d1b-a351-fbc74a04e904
 
 ## What's new
 
-The VBTI development team is reviving MMLabs code, making it work with
+The VBTI development team is forking MMLabs code, making it work with
 newer pytorch versions and fixing bugs. We are only a small team, so your help
 is appreciated.
 
@@ -104,11 +103,11 @@ uv pip install
 ```
 
 ```shell
-conda create -n open-mmlab python=3.8 pytorch==1.10.1 torchvision==0.11.2 cudatoolkit=11.3 -c pytorch -y
-conda activate open-mmlab
-pip install openmim
+conda create -n onedl-lab python=3.10 pytorch==2.8.0 torchvision==0.23.0 cudatoolkit=12.9 -c pytorch -y
+conda activate onedl-lab
+pip install onedl-mim
 git clone https://github.com/VBTI-development/onedl-mmpretrain.git
-cd mmpretrain
+cd onedl-mmpretrain
 mim install -e .
 ```
 
@@ -288,10 +287,10 @@ If you find this project useful in your research, please consider cite:
 
 ```BibTeX
 @misc{2023mmpretrain,
-    title={OpenMMLab's Pre-training Toolbox and Benchmark},
-    author={MMPreTrain Contributors},
-    howpublished = {\url{https://github.com/open-mmlab/mmpretrain}},
-    year={2023}
+    title={OneDL Pre-training Toolbox and Benchmark},
+    author={OneDL-MMPreTrain Contributors},
+    howpublished = {\url{https://github.com/vbti-development/onedl-mmpretrain}},
+    year={2025}
 }
 ```
 
@@ -299,28 +298,13 @@ If you find this project useful in your research, please consider cite:
 
 This project is released under the [Apache 2.0 license](LICENSE).
 
-## Projects in OpenMMLab
+## Projects in VBTI-development
 
-- [MMEngine](https://github.com/open-mmlab/mmengine): OpenMMLab foundational library for training deep learning models.
-- [MMCV](https://github.com/open-mmlab/mmcv): OpenMMLab foundational library for computer vision.
-- [MIM](https://github.com/open-mmlab/mim): MIM installs OpenMMLab packages.
-- [MMEval](https://github.com/open-mmlab/mmeval): A unified evaluation library for multiple machine learning libraries.
-- [MMPreTrain](https://github.com/open-mmlab/mmpretrain): OpenMMLab pre-training toolbox and benchmark.
-- [MMDetection](https://github.com/open-mmlab/mmdetection): OpenMMLab detection toolbox and benchmark.
-- [MMDetection3D](https://github.com/open-mmlab/mmdetection3d): OpenMMLab's next-generation platform for general 3D object detection.
-- [MMRotate](https://github.com/open-mmlab/mmrotate): OpenMMLab rotated object detection toolbox and benchmark.
-- [MMYOLO](https://github.com/open-mmlab/mmyolo): OpenMMLab YOLO series toolbox and benchmark.
-- [MMSegmentation](https://github.com/open-mmlab/mmsegmentation): OpenMMLab semantic segmentation toolbox and benchmark.
-- [MMOCR](https://github.com/open-mmlab/mmocr): OpenMMLab text detection, recognition, and understanding toolbox.
-- [MMPose](https://github.com/open-mmlab/mmpose): OpenMMLab pose estimation toolbox and benchmark.
-- [MMHuman3D](https://github.com/open-mmlab/mmhuman3d): OpenMMLab 3D human parametric model toolbox and benchmark.
-- [MMSelfSup](https://github.com/open-mmlab/mmselfsup): OpenMMLab self-supervised learning toolbox and benchmark.
-- [MMRazor](https://github.com/open-mmlab/mmrazor): OpenMMLab model compression toolbox and benchmark.
-- [MMFewShot](https://github.com/open-mmlab/mmfewshot): OpenMMLab fewshot learning toolbox and benchmark.
-- [MMAction2](https://github.com/open-mmlab/mmaction2): OpenMMLab's next-generation action understanding toolbox and benchmark.
-- [MMTracking](https://github.com/open-mmlab/mmtracking): OpenMMLab video perception toolbox and benchmark.
-- [MMFlow](https://github.com/open-mmlab/mmflow): OpenMMLab optical flow toolbox and benchmark.
-- [MMagic](https://github.com/open-mmlab/mmagic): Open**MM**Lab **A**dvanced, **G**enerative and **I**ntelligent **C**reation toolbox.
-- [MMGeneration](https://github.com/open-mmlab/mmgeneration): OpenMMLab image and video generative models toolbox.
-- [MMDeploy](https://github.com/open-mmlab/mmdeploy): OpenMMLab model deployment framework.
-- [Playground](https://github.com/open-mmlab/playground): A central hub for gathering and showcasing amazing projects built upon OpenMMLab.
+- [MMEngine](https://github.com/vbti-development/onedl-mmengine): Foundational library for training deep learning models.
+- [MMCV](https://github.com/vbti-development/onedl-mmcv): Foundational library for computer vision.
+- [MMPreTrain](https://github.com/vbti-development/onedl-mmpretrain): Pre-training toolbox and benchmark.
+- [MMDetection](https://github.com/vbti-development/onedl-mmdetection): Detection toolbox and benchmark.
+- [MMRotate](https://github.com/vbti-development/onedl-mmrotate): Rotated object detection toolbox and benchmark.
+- [MMSegmentation](https://github.com/vbti-development/onedl-mmsegmentation): Semantic segmentation toolbox and benchmark.
+- [MMDeploy](https://github.com/vbti-development/onedl-mmdeploy): Model deployment framework.
+- [MIM](https://github.com/vbti-development/onedl-mim): MIM installs VBTI packages.

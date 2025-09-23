@@ -154,7 +154,7 @@ pip install -U openxlab
 # log in OpenXLab
 openxlab login
 # download and preprocess by MIM, better to execute in $MMPreTrain directory.
-mim download mmpretrain --dataset imagenet1k
+mim download onedl-mmpretrain --dataset imagenet1k
 ```
 
 ````

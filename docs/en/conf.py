@@ -166,7 +166,7 @@ man_pages = [(root_doc, 'mmpretrain', 'MMPretrain Documentation', [author], 1)]
 #  dir menu entry, description, category)
 texinfo_documents = [
     (root_doc, 'mmpretrain', 'MMPretrain Documentation', author, 'mmpretrain',
-     'OpenMMLab pre-training toolbox and benchmark.', 'Miscellaneous'),
+     'OneDL pre-training toolbox and benchmark.', 'Miscellaneous'),
 ]
 
 # -- Options for Epub output -------------------------------------------------

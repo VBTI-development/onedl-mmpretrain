@@ -35,8 +35,8 @@ For detailed finetuning and inference code, please refer to [this repo](https://
 
 ### Our Model
 
-- ViT(MAE-pre-train)   # Pretrained with [MAE](https://github.com/open-mmlab/mmppretrain/tree/main/projects/fgia_accv2022_1st/config/mae_vit-large-p16_8xb512-amp-coslr-1600e_in1k.py)
-- Swin-v2(SimMIM-pre-train)   # From [MMPretrain-swin_transformer_v2](https://github.com/open-mmlab/mmppretrain/tree/main/configs/swin_transformer_v2).
+- ViT(MAE-pre-train)   # Pretrained with [MAE](https://github.com/vbti-development/onedl-mmpretrain/tree/main/projects/fgia_accv2022_1st/config/mae_vit-large-p16_8xb512-amp-coslr-1600e_in1k.py)
+- Swin-v2(SimMIM-pre-train)   # From [MMPretrain-swin_transformer_v2](https://github.com/vbti-development/onedl-mmpretrain/tree/main/configs/swin_transformer_v2).
 
 \*\*The architectures we use \*\*
 

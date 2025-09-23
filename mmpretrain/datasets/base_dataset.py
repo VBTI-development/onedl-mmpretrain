@@ -29,7 +29,7 @@ class BaseDataset(_BaseDataset):
     format`.
 
     .. _OpenMMLab 2.0 style annotation format:
-        https://github.com/open-mmlab/mmengine/blob/main/docs/zh_cn/tutorials/basedataset.md
+        https://github.com/vbti-development/onedl-mmengine/blob/main/docs/en/tutorials/dataset.md
 
     Comparing with the :class:`mmengine.BaseDataset`, this class implemented
     several useful methods.

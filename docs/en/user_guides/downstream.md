@@ -2,11 +2,11 @@
 
 ## Detection
 
-For detection tasks, please use MMDetection. First, make sure you have installed [MIM](https://github.com/vbti-development/mim), which is also a project of OpenMMLab.
+For detection tasks, please use MMDetection. First, make sure you have installed [MIM](https://github.com/vbti-development/mim), which is also a project of VBTI development.
 
 ```shell
-pip install openmim
-mim install 'mmdet>=3.0.0rc0'
+pip install onedl-mim
+mim install 'onedl-mmdetection'
 ```
 
 Besides, please refer to MMDet for [installation](https://onedl-mmdetection.readthedocs.io/en/latest/get_started.html) and [data preparation](https://onedl-mmdetection.readthedocs.io/en/latest/user_guides/dataset_prepare.html)
@@ -67,11 +67,11 @@ https://mmassets.onedl.ai/mmselfsup/1.x/byol/byol_resnet50_16xb256-coslr-200e_in
 
 ## Segmentation
 
-For semantic segmentation task, we use MMSegmentation. First, make sure you have installed [MIM](https://github.com/open-mmlab/mim), which is also a project of OpenMMLab.
+For semantic segmentation task, we use MMSegmentation. First, make sure you have installed [MIM](https://github.com/vbti-development/onedl-mim), which is also a project of VBTI Development.
 
 ```shell
-pip install openmim
-mim install 'mmsegmentation>=1.0.0rc0'
+pip install onedl-mim
+mim install 'onedl-mmsegmentation'
 ```
 
 Besides, please refer to MMSegmentation for [installation](https://onedl-mmsegmentation.readthedocs.io/en/latest/get_started.html) and [data preparation](https://onedl-mmsegmentation.readthedocs.io/en/latest/user_guides/2_dataset_prepare.html).

@@ -39,8 +39,8 @@ jobs:
       - name: Install PyTorch
         run: |
           uv pip install torch==${{ matrix.torch }} torchvision
-      - name: Install openmim
-        run: uv pip install openmim
+      - name: Install mim
+        run: uv pip install onedl-mim
       - name: Build and install
         run: |
           source .venv/bin/activate

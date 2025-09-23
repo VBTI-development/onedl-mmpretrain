@@ -13,8 +13,8 @@ If you are experienced with PyTorch and have already installed it, just skip thi
 **Step 2.** Create a conda environment and activate it.
 
 ```shell
-conda create --name openmmlab python=3.8 -y
-conda activate openmmlab
+conda create --name onedl-lab python=3.8 -y
+conda activate onedl-lab
 ```
 
 **Step 3.** Install PyTorch following [official instructions](https://pytorch.org/get-started/locally/), e.g.
@@ -51,7 +51,7 @@ In this case, install mmpretrain from source:
 ```shell
 git clone https://github.com/VBTI-development/onedl-mmpretrain.git
 cd mmpretrain
-pip install -U openmim && mim install -e .
+pip install -U onedl-mim && mim install -e .
 ```
 
 ```{note}
@@ -63,11 +63,11 @@ pip install -U openmim && mim install -e .
 Just install with mim.
 
 ```shell
-pip install -U openmim && mim install "mmpretrain>=1.0.0rc8"
+pip install -U onedl-mim && mim install "onedl-mmpretrain>=1.0.0rc8"
 ```
 
 ```{note}
-`mim` is a light-weight command-line tool to setup appropriate environment for OpenMMLab repositories according to PyTorch and CUDA version. It also has some useful functions for deep-learning experiments.
+`mim` is a light-weight command-line tool to setup appropriate environment for VBTI development repositories according to PyTorch and CUDA version. It also has some useful functions for deep-learning experiments.
 ```
 
 ## Install multi-modality support (Optional)

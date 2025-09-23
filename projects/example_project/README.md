@@ -81,10 +81,10 @@ mim test mmpretrain configs/examplenet_8xb32_in1k.py --checkpoint $CHECKPOINT --
 
 ```BibTeX
 @misc{2023mmpretrain,
-    title={OpenMMLab's Pre-training Toolbox and Benchmark},
-    author={MMPreTrain Contributors},
+    title={OneDL Pre-training Toolbox and Benchmark},
+    author={OneDL-MMPreTrain Contributors},
     howpublished = {\url{https://github.com/VBTI-development/onedl-mmpretrain}},
-    year={2023}
+    year={2025}
 }
 ```
 

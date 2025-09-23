@@ -2,7 +2,7 @@
 
 ## Get the FLOPs and params (experimental)
 
-We provide a script adapted from [MMEngine](https://github.com/open-mmlab/mmengine/blob/main/mmengine/analysis/complexity_analysis.py) to compute the FLOPs and params of a given model.
+We provide a script adapted from [MMEngine](https://github.com/vbti-development/onedl-mmengine/blob/main/mmengine/analysis/complexity_analysis.py) to compute the FLOPs and params of a given model.
 
 ```shell
 python tools/analysis_tools/get_flops.py ${CONFIG_FILE} [--shape ${INPUT_SHAPE}]
@@ -73,5 +73,5 @@ Also, you will get the detailed complexity information of each layer like this:
 ```{warning}
 This tool is still experimental and we do not guarantee that the number is correct. You may well use the result for simple comparisons, but double-check it before you adopt it in technical reports or papers.
 - FLOPs are related to the input shape while parameters are not. The default input shape is (1, 3, 224, 224).
-- Some operators are not counted into FLOPs like custom operators. Refer to [`mmengine.analysis.complexity_analysis._DEFAULT_SUPPORTED_FLOP_OPS`](https://github.com/open-mmlab/mmengine/blob/main/mmengine/analysis/complexity_analysis.py) for details.
+- Some operators are not counted into FLOPs like custom operators. Refer to [`mmengine.analysis.complexity_analysis._DEFAULT_SUPPORTED_FLOP_OPS`](https://github.com/vbti-development/onedl-mmengine/blob/main/mmengine/analysis/complexity_analysis.py) for details.
 ```

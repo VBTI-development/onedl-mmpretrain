@@ -9,7 +9,7 @@ The checkpoint saving functionality is a default hook during training. And you c
 `default_hooks.checkpoint` field.
 
 ```{note}
-The hook mechanism is widely used in all OpenMMLab libraries. Through hooks, you can plug in many
+The hook mechanism is widely used in all OneDL libraries. Through hooks, you can plug in many
 functionalities without modifying the main execution logic of the runner.
 
 A detailed introduction of hooks can be found in {external+mmengine:doc}`Hooks <tutorials/hook>`.
