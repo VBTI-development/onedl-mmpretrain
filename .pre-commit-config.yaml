@@ -45,8 +45,8 @@ repos:
     hooks:
       - id: docformatter
         args: ["--in-place", "--wrap-descriptions", "79"]
-  - repo: https://github.com/open-mmlab/pre-commit-hooks
-    rev: v0.4.0
+  - repo: https://github.com/vbti-development/pre-commit-hooks
+    rev: 0.4.2
     hooks:
     -   id: check-copyright
         args: ["mmpretrain", "tests", "demo", "tools", "--excludes", "mmpretrain/.mim/", "--ignore-file-not-found-error"]

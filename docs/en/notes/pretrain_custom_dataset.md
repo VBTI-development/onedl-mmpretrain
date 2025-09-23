@@ -179,7 +179,7 @@ By using the edited config file, you are able to train a self-supervised model w
 ## Another example: Train MAE on COCO Dataset
 
 ```{note}
-You need to install MMDetection to use the `mmdet.CocoDataset` follow this [documentation](https://github.com/open-mmlab/mmdetection/blob/3.x/docs/en/get_started.md)
+You need to install MMDetection to use the `mmdet.CocoDataset` follow this [documentation](https://github.com/vbti-development/onedl-mmdetection/main/docs/en/get_started.md)
 ```
 
 Follow the aforementioned idea, we also present an example of how to train MAE on COCO dataset.  The edited file will be like this:

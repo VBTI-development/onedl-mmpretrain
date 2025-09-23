@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y ffmpeg libsm6 libxext6 git ninja-build 
     && rm -rf /var/lib/apt/lists/*
 
 # Install MIM
-RUN pip install openmim
+RUN pip install onedl-mim
 
 # Install MMPretrain
 RUN conda clean --all

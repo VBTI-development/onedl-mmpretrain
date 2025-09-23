@@ -14,7 +14,7 @@ def register_all_modules(init_default_scope: bool = True) -> None:
             `mmpretrain`, and all registries will build modules from
             mmpretrain's registry node. To understand more about the registry,
             please refer to
-            https://github.com/open-mmlab/mmengine/blob/main/docs/en/tutorials/registry.md
+            https://github.com/vbti-development/onedl-mmengine/blob/main/docs/en/tutorials/registry.md
             Defaults to True.
     """  # noqa: E501
     import mmpretrain.datasets  # noqa: F401,F403

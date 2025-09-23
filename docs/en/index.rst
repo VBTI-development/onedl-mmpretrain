@@ -3,11 +3,7 @@ Welcome to MMPretrain's documentation!
 
 MMPretrain is a newly upgraded open-source framework for pre-training.
 It has set out to provide multiple powerful pre-trained backbones and
-support different pre-training strategies. MMPretrain originated from the
-famous open-source projects
-`MMClassification <https://github.com/open-mmlab/mmclassification/tree/1.x>`_
-and `MMSelfSup <https://github.com/open-mmlab/mmselfsup>`_, and is developed
-with many exiciting new features. The pre-training stage is essential for
+support different pre-training strategies. The pre-training stage is essential for
 vision recognition currently. With the rich and strong pre-trained models,
 we are currently capable of improving various downstream vision tasks.
 

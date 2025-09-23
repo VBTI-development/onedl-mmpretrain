@@ -7,6 +7,3 @@ contact_links:
   - name: 💬 General questions
     url: https://github.com/VBTI-development/onedl-mmpretrain/discussions
     about: Ask general usage questions and discuss with other MMPreTrain community members
-  - name: 🌐 Explore OpenMMLab
-    url: https://openmmlab.com/
-    about: Get know more about OpenMMLab

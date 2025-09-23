@@ -15,11 +15,11 @@ RUN export FORCE_CUDA=1
 RUN pip install torchserve torch-model-archiver
 RUN pip install nvgpu
 
-# OPEN-MMLAB
+# ONEDL_LAB
 ARG PYTORCH
 ARG CUDA
-RUN pip install openmim
-RUN mim install mmpretrain==${MMPRE}
+RUN pip install onedl-mim
+RUN mim install onedl-mmpretrain==${MMPRE}
 RUN mkdir -p $HOME/tmp
 
 COPY --chown=model-server entrypoint.sh $HOME/.local/bin/entrypoint.sh
