@@ -1,9 +1,9 @@
 # Copyright (c) OpenMMLab. All rights reserved.
 import re
 from functools import wraps
+from importlib.metadata import PackageNotFoundError, distribution
 from inspect import isfunction
 
-from importlib_metadata import PackageNotFoundError, distribution
 from mmengine.utils import digit_version
 
 
