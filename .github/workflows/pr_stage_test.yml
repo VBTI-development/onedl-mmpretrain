@@ -93,9 +93,8 @@ jobs:
       - name: Install system dependencies
         run: |
           apt-get update
-          apt-get install -y tzdata ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
+          apt-get install -y ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
           apt-get clean -y
-
       - name: Install torch
         run: |
           uv pip install -v --torch-backend=${{matrix.torch-backend}} torch==${{ matrix.torch }} torchvision
@@ -103,7 +102,7 @@ jobs:
       - name: Install mmpretrain dependencies
         run: |
           uv pip install onedl-mim
-          mim install onedl-mmengine onedl-mmcv --only-binary=onedl-mmcv
+          mim install -v onedl-mmengine onedl-mmcv --only-binary=onedl-mmcv
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install -e .
