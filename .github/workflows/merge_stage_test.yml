@@ -32,11 +32,13 @@ jobs:
       matrix:
         include:
           - python-version: '3.10' # minimum version
-            torch: '2.0.0'
-            container: 'nvidia/cuda:11.1.1-cudnn8-runtime-ubuntu20.04'
-          - python-version: '3.10'  # maximum version
-            torch: '2.8.0'
+            torch: '2.4.1'
+            container: 'nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04'
+            torch-backend: 'cu118'
+          - python-version: '3.12'  # maximum version
+            torch: '2.9.0'
             container: 'nvidia/cuda:12.9.1-cudnn-runtime-ubuntu22.04'
+            torch-backend: 'cu129'
     container:
       image: ${{ matrix.container }}
     env:
@@ -63,12 +65,12 @@ jobs:
 
       - name: Install torch
         run: |
-          uv pip install -v --torch-backend=auto torch==${{ matrix.torch }} torchvision
+          uv pip install -v --torch-backend=${{ matrix.torch-backend }} torch==${{ matrix.torch }} torchvision
           uv cache clean
       - name: Install mmpretrain dependencies
         run: |
           uv pip install onedl-mim
-          mim install onedl-mmengine onedl-mmcv
+          mim install onedl-mmengine onedl-mmcv --only-binary=onedl-mmcv
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install -e .

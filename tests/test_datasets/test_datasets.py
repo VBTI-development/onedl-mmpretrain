@@ -1210,13 +1210,12 @@ class TestMultiTaskDataset(TestCase):
                 'gender': 0
             }
         })
-        self.assertDictContainsSubset(
-            {
-                'img_path': os.path.join(ASSETS_ROOT, 'a.jpg'),
-                'gt_label': {
-                    'gender': 0
-                }
-            }, data)
+        self.assertLessEqual({
+            'img_path': os.path.join(ASSETS_ROOT, 'a.jpg'),
+            'gt_label': {
+                'gender': 0
+            }
+        }.items(), data.items())
         np.testing.assert_equal(data['gt_label']['gender'], 0)
 
         # Test missing path

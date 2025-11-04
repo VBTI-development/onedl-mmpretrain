@@ -19,15 +19,13 @@ concurrency:
 jobs:
   build_cpu:
     runs-on: ubuntu-22.04
-    permissions:
-      pull-requests: write
     strategy:
       matrix:
         include:
           - python-version: '3.10' # minimum version
-            torch: '2.0.0'
-          - python-version: '3.10'  # maximum version
-            torch: '2.5.1'
+            torch: '2.4.1'
+          - python-version: '3.12'  # maximum version
+            torch: '2.9.0'
     steps:
       - uses: actions/checkout@v4
       - name: Install uv and set the python version
@@ -37,10 +35,11 @@ jobs:
           activate-environment: true
       - name: Install PyTorch
         run: |
-          uv pip install torch==${{ matrix.torch }} torchvision
+          uv pip install --torch-backend=cpu torch==${{ matrix.torch }} torchvision
       - name: Install mmpretrain dependencies
         run: |
-          uv pip install onedl-mmengine onedl-mmcv
+          uv pip install onedl-mim
+          mim install onedl-mmengine onedl-mmcv --only-binary=onedl-mmcv
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install .
@@ -59,12 +58,6 @@ jobs:
           format: markdown
           output: both
           hide_branch_rate: false
-      - name: Add Coverage PR Comment
-        uses: marocchino/sticky-pull-request-comment@v2
-        if: github.event_name == 'pull_request'
-        with:
-          recreate: true
-          path: code-coverage-results.md
 
   build_gpu:
     runs-on: ubuntu-22.04
@@ -72,11 +65,13 @@ jobs:
       matrix:
         include:
           - python-version: '3.10' # minimum version
-            torch: '2.0.0'
-            container: 'nvidia/cuda:11.1.1-cudnn8-runtime-ubuntu20.04'
-          - python-version: '3.10'  # maximum version
-            torch: '2.8.0'
+            torch: '2.4.1'
+            container: 'nvidia/cuda:11.8.0-cudnn8-runtime-ubuntu22.04'
+            torch-backend: 'cu118'
+          - python-version: '3.12'  # maximum version
+            torch: '2.9.0'
             container: 'nvidia/cuda:12.9.1-cudnn-runtime-ubuntu22.04'
+            torch-backend: 'cu129'
     container:
       image: ${{ matrix.container }}
     env:
@@ -98,17 +93,16 @@ jobs:
       - name: Install system dependencies
         run: |
           apt-get update
-          apt-get install -y tzdata ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
+          apt-get install -y ffmpeg libsm6 libxext6 git ninja-build libglib2.0-0 libxrender-dev libc6 libc6-dev
           apt-get clean -y
-
       - name: Install torch
         run: |
-          uv pip install -v --torch-backend=auto torch==${{ matrix.torch }} torchvision
+          uv pip install -v --torch-backend=${{matrix.torch-backend}} torch==${{ matrix.torch }} torchvision
           uv cache clean
       - name: Install mmpretrain dependencies
         run: |
           uv pip install onedl-mim
-          mim install onedl-mmengine onedl-mmcv
+          mim install -v onedl-mmengine onedl-mmcv --only-binary=onedl-mmcv
           uv pip install -r pyproject.toml
       - name: Build and install
         run: uv pip install -e .
