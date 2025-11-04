@@ -28,7 +28,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        python-version: ['3.10']
+        python-version: ['3.10', '3.12']
         torch: ['2.5.1']
     steps:
       - uses: actions/checkout@v3
@@ -40,7 +40,6 @@ jobs:
       - name: Install PyTorch
         run: |
           uv pip install --torch-backend=cpu torch==${{ matrix.torch }} torchvision
-          uv pip install importlib-metadata
       - name: Install mim
         run: uv pip install "onedl-mim>=0.4.0rc2"
       - name: Build and install
