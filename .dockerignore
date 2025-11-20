@@ -36,3 +36,7 @@ coverage.xml
 docs/
 examples/
 tests/
+
+# virual environments
+.venv
+*venv*/
