@@ -25,6 +25,7 @@
 [![PyPI](https://img.shields.io/pypi/v/onedl-mmpretrain)](https://pypi.org/project/onedl-mmpretrain)
 
 [![Build Status](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/merge_stage_test.yml/badge.svg)](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/merge_stage_test.yml)
+[![Docker Image](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/docker.yml/badge.svg)](https://hub.docker.com/r/vbti/onedl-mmpretrain-cu129-torch280/tags)
 [![open issues](https://isitmaintained.com/badge/open/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 [![issue resolution](https://isitmaintained.com/badge/resolution/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 
