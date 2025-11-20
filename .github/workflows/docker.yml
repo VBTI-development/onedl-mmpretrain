@@ -107,7 +107,7 @@ jobs:
         uses: docker/build-push-action@v5
         with:
           context: .
-          file: ./docker/release/Dockerfile
+          file: ./docker/Dockerfile
           build-args: |
             CU_VERSION=129
             TORCH_VERSION=280
