@@ -125,13 +125,3 @@ jobs:
           subject-name: index.docker.io/${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
           subject-digest: ${{ steps.build.outputs.digest }}
           push-to-registry: true
-
-      - name: Create badge
-        if: always()
-        uses: RubbaBoy/BYOB@v1.2.1
-        with:
-          NAME: docker_gpu_build
-          LABEL: 'docker-gpu'
-          STATUS: ${{ steps.build.conclusion == 'success' && 'passing' || 'failing' }}
-          COLOR: ${{ steps.build.conclusion == 'success' && 'green' || 'red' }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
