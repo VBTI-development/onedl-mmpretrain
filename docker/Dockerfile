@@ -8,7 +8,8 @@ FROM vbti/onedl-mmcv-cu${CU_VERSION}-torch${TORCH_VERSION}:${ONEDL_MMCV_VERSION}
 COPY . /onedl/onedl-mmpretrain
 
 WORKDIR /onedl/onedl-mmpretrain
-RUN mim install --no-cache-dir -e .[multimodal,optional]
+RUN mim install --no-cache-dir -e .[multimodal,optional] \
+    && python -m compileall -q /onedl/onedl-mmpretrain
 
 # Verify installation
 RUN python -c "import mmpretrain; print('mmpretrain version:', mmpretrain.__version__)"
