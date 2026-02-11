@@ -1,6 +1,6 @@
 [project]
 name = "onedl-mmpretrain"
-version = "1.3.2"
+version = "1.3.3"
 description = "OneDL Model Pretraining Toolbox and Benchmark"
 readme = "README.md"
 authors = [
