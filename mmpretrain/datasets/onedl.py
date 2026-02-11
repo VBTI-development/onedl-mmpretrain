@@ -135,9 +135,15 @@ class OneDLDatasetAdapterSingleLabel(BaseDataset):
         cat_to_imgs = defaultdict(list)
         for img_path, instances in zip(dataset.inputs.path_iterator(),
                                        dataset.targets):
-            data_infos.append(
-                dict(img_path=img_path,
-                     gt_label=int(self.label_map[instances])))
+            if isinstance(instances, str):
+                gt_label = int(self.label_map[instances])
+            elif hasattr(instances, 'label'):
+                gt_label = int(self.label_map[instances.label])
+            else:
+                msg = f'Unexpected instance type {type(instances)}'
+                raise ValueError(msg)
+
+            data_infos.append(dict(img_path=img_path, gt_label=gt_label))
 
         self.cat_to_imgs = cat_to_imgs
         return data_infos
