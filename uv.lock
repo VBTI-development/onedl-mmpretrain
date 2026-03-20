@@ -1367,7 +1367,7 @@ requires-dist = [
     { name = "rich" },
     { name = "scikit-learn", marker = "extra == 'optional'", specifier = ">=1.5" },
     { name = "torch", marker = "python_full_version == '3.12.*' and extra == 'torch'", specifier = "==2.9.0" },
-    { name = "torch", marker = "python_full_version != '3.12.*' and extra == 'torch'" },
+    { name = "torch", marker = "python_full_version != '3.12.*' and extra == 'torch'", specifier = ">2" },
     { name = "torchvision", marker = "extra == 'torch'" },
     { name = "transformers", marker = "extra == 'multimodal'", specifier = ">=4.53.0,<5" },
 ]
