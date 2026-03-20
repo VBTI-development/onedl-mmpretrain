@@ -8,14 +8,18 @@
 # https://github.com/OpenGVLab/InternImage/blob/master/classification/models/
 
 from __future__ import absolute_import, division, print_function
+from functools import partial
 
 import DCNv3
 import pkg_resources
 import torch
 import torch.nn.functional as F
+from torch.amp import custom_bwd, custom_fwd
 from torch.autograd import Function
 from torch.autograd.function import once_differentiable
-from torch.cuda.amp import custom_bwd, custom_fwd
+
+custom_bwd = partial(custom_bwd, device_type='cuda')
+custom_fwd = partial(custom_fwd, device_type='cuda')
 
 dcn_version = float(pkg_resources.get_distribution('DCNv3').version)
 

@@ -2,7 +2,7 @@
 
 In this section we demonstrate how to prepare an environment with PyTorch.
 
-MMPretrain works on Linux, Windows and macOS. It requires Python 3.7+, CUDA 10.2+ and PyTorch 1.8+.
+MMPretrain works on Linux, Windows and macOS. It requires Python 3.10+, CUDA 11.8+ and PyTorch 2.0+.
 
 ```{note}
 If you are experienced with PyTorch and have already installed it, just skip this part and jump to the [next section](#installation). Otherwise, you can follow these steps for the preparation.
@@ -13,7 +13,7 @@ If you are experienced with PyTorch and have already installed it, just skip thi
 **Step 2.** Create a conda environment and activate it.
 
 ```shell
-conda create --name onedl-lab python=3.8 -y
+conda create --name onedl-lab python=3.10 -y
 conda activate onedl-lab
 ```
 
