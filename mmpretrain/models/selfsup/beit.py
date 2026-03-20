@@ -85,7 +85,7 @@ class VQKD(BaseModule):
         encoder_features = encoder_features.permute(0, 2, 3,
                                                     1).reshape(B, N1 * N2, C)
 
-        with torch.cuda.amp.autocast(enabled=False):
+        with torch.amp.autocast('cuda', enabled=False):
             to_quantizer_features = self.encode_task_layer(
                 encoder_features.type_as(self.encode_task_layer[-1].weight))
 
