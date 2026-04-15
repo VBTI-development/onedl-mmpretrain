@@ -47,6 +47,7 @@ class SwinBlockV2(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -101,6 +102,7 @@ class SwinBlockV2(BaseModule):
             self.norm3 = build_norm_layer(norm_cfg, embed_dims)[1]
 
     def forward(self, x, hw_shape):
+
         def _inner_forward(x):
             # Use post normalization
             identity = x
@@ -156,6 +158,7 @@ class SwinBlockV2Sequence(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  embed_dims,
                  depth,
@@ -424,8 +427,8 @@ class SwinTransformerV2(BaseBackbone):
 
         self.stages = ModuleList()
         embed_dims = [self.embed_dims]
-        for i, (depth, num_heads) in enumerate(zip(self.depths,
-                                                   self.num_heads)):
+        for i, (depth,
+                num_heads) in enumerate(zip(self.depths, self.num_heads)):
             if isinstance(stage_cfgs, Sequence):
                 stage_cfg = stage_cfgs[i]
             else:

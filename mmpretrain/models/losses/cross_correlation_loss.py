@@ -14,6 +14,7 @@ class CrossCorrelationLoss(BaseModule):
     Args:
         lambd (float): The weight for the off-diag loss.
     """
+
     def __init__(self, lambd: float = 0.0051) -> None:
         super().__init__()
         self.lambd = lambd

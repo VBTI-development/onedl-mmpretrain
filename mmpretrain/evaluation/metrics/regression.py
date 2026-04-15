@@ -42,8 +42,9 @@ def calculate_distance(
     # torch version is faster in most situations.
     pred = to_tensor(pred)
     target = to_tensor(target)
-    return torch.linalg.norm(pred - target, ord=l_value,
-                             dim=-1).mean()  # type: ignore[no-any-return]
+    return torch.linalg.norm(
+        pred - target, ord=l_value,
+        dim=-1).mean()  # type: ignore[no-any-return]
 
 
 @METRICS.register_module()

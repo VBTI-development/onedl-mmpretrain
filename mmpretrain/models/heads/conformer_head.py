@@ -22,6 +22,7 @@ class ConformerHead(ClsHead):
         init_cfg (dict | optional): The extra init config of layers.
             Defaults to use ``dict(type='Normal', layer='Linear', std=0.01)``.
     """
+
     def __init__(
             self,
             num_classes: int,
@@ -102,7 +103,8 @@ class ConformerHead(ClsHead):
         # compute loss
         losses = dict()
         loss = sum([
-            self.loss_module(score, target, avg_factor=score.size(0), **kwargs)
+            self.loss_module(
+                score, target, avg_factor=score.size(0), **kwargs)
             for score in cls_score
         ])
         losses['loss'] = loss
@@ -111,11 +113,11 @@ class ConformerHead(ClsHead):
         if self.cal_acc:
             assert target.ndim == 1, 'If you enable batch augmentation ' \
                 'like mixup during training, `cal_acc` is pointless.'
-            acc = Accuracy.calculate(cls_score[0] + cls_score[1],
-                                     target,
-                                     topk=self.topk)
-            losses.update(
-                {f'accuracy_top-{k}': a
-                 for k, a in zip(self.topk, acc)})
+            acc = Accuracy.calculate(
+                cls_score[0] + cls_score[1], target, topk=self.topk)
+            losses.update({
+                f'accuracy_top-{k}': a
+                for k, a in zip(self.topk, acc)
+            })
 
         return losses

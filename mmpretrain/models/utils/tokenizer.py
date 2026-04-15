@@ -18,6 +18,7 @@ register_hf_tokenizer(BertTokenizer)
 @register_hf_tokenizer()
 class BlipTokenizer(BertTokenizerFast):
     """"BlipTokenizer inherit BertTokenizerFast (fast, Rust-based)."""
+
     @classmethod
     def from_pretrained(
         cls,
@@ -39,6 +40,7 @@ class BlipTokenizer(BertTokenizerFast):
 
 @register_hf_tokenizer()
 class Blip2Tokenizer(BertTokenizer):
+
     @classmethod
     def from_pretrained(
         cls,
@@ -118,6 +120,7 @@ class OFATokenizer(BartTokenizer):
 @TOKENIZER.register_module()
 class FullTokenizer(BertTokenizer):
     """Runs end-to-end tokenziation."""
+
     def __init__(self, vocab_file, do_lower_case=True):
         self.vocab = self.load_vocab(vocab_file)
         self.inv_vocab = {v: k for k, v in self.vocab.items()}
@@ -162,15 +165,16 @@ class FullTokenizer(BertTokenizer):
     @staticmethod
     def convert_tokens_to_string(tokens, clean_up_tokenization_spaces=True):
         """Converts a sequence of tokens (string) in a single string."""
+
         def clean_up_tokenization(out_string):
             """Clean up a list of simple English tokenization artifacts like
             spaces before punctuation and abbreviated forms."""
-            out_string = (out_string.replace(' .', '.').replace(
-                ' ?', '?').replace(' !', '!').replace(' ,', ',').replace(
-                    " ' ",
-                    "'").replace(" n't", "n't").replace(" 'm", "'m").replace(
-                        " 's", "'s").replace(" 've",
-                                             "'ve").replace(" 're", "'re"))
+            out_string = (
+                out_string.replace(' .', '.').replace(' ?', '?').replace(
+                    ' !', '!').replace(' ,', ',').replace(" ' ", "'").replace(
+                        " n't", "n't").replace(" 'm", "'m").replace(
+                            " 's", "'s").replace(" 've",
+                                                 "'ve").replace(" 're", "'re"))
             return out_string
 
         text = ' '.join(tokens).replace(' ##', '').strip()

@@ -23,6 +23,7 @@ class LatentPredictHead(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  loss: dict,
                  predictor: dict,
@@ -63,6 +64,7 @@ class LatentCrossCorrelationHead(BaseModule):
         init_cfg (dict or List[dict], optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  loss: dict,

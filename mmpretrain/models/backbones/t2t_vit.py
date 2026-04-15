@@ -50,6 +50,7 @@ class T2TTransformerLayer(BaseModule):
         code, it uses ``(input_dims // num_heads) ** -0.5``, so here we
         keep the same with the official implementation.
     """
+
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -84,13 +85,13 @@ class T2TTransformerLayer(BaseModule):
 
         self.ln2 = build_norm_layer(norm_cfg, embed_dims)
 
-        self.ffn = FFN(embed_dims=embed_dims,
-                       feedforward_channels=feedforward_channels,
-                       num_fcs=num_fcs,
-                       ffn_drop=drop_rate,
-                       dropout_layer=dict(type='DropPath',
-                                          drop_prob=drop_path_rate),
-                       act_cfg=act_cfg)
+        self.ffn = FFN(
+            embed_dims=embed_dims,
+            feedforward_channels=feedforward_channels,
+            num_fcs=num_fcs,
+            ffn_drop=drop_rate,
+            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
+            act_cfg=act_cfg)
 
     def forward(self, x):
         if self.v_shortcut:
@@ -121,6 +122,7 @@ class T2TModule(BaseModule):
         Usually, ``token_dim`` is set as a small value (32 or 64) to reduce
         MACs
     """
+
     def __init__(
         self,
         img_size=224,
@@ -134,15 +136,12 @@ class T2TModule(BaseModule):
 
         self.embed_dims = embed_dims
 
-        self.soft_split0 = nn.Unfold(kernel_size=(7, 7),
-                                     stride=(4, 4),
-                                     padding=(2, 2))
-        self.soft_split1 = nn.Unfold(kernel_size=(3, 3),
-                                     stride=(2, 2),
-                                     padding=(1, 1))
-        self.soft_split2 = nn.Unfold(kernel_size=(3, 3),
-                                     stride=(2, 2),
-                                     padding=(1, 1))
+        self.soft_split0 = nn.Unfold(
+            kernel_size=(7, 7), stride=(4, 4), padding=(2, 2))
+        self.soft_split1 = nn.Unfold(
+            kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
+        self.soft_split2 = nn.Unfold(
+            kernel_size=(3, 3), stride=(2, 2), padding=(1, 1))
 
         if not use_performer:
             self.attention1 = T2TTransformerLayer(
@@ -215,6 +214,7 @@ def get_sinusoid_encoding(n_position, embed_dims):
     Returns:
         :obj:`torch.FloatTensor`: The sinusoid encoding table.
     """
+
     def get_position_angle_vec(position):
         return [
             position / np.power(10000, 2 * (i // 2) / embed_dims)
@@ -296,10 +296,11 @@ class T2T_ViT(BaseBackbone):
         super().__init__(init_cfg)
 
         # Token-to-Token Module
-        self.tokens_to_token = T2TModule(img_size=img_size,
-                                         in_channels=in_channels,
-                                         embed_dims=embed_dims,
-                                         **t2t_cfg)
+        self.tokens_to_token = T2TModule(
+            img_size=img_size,
+            in_channels=in_channels,
+            embed_dims=embed_dims,
+            **t2t_cfg)
         self.patch_resolution = self.tokens_to_token.init_out_size
         num_patches = self.patch_resolution[0] * self.patch_resolution[1]
 
@@ -411,11 +412,12 @@ class T2T_ViT(BaseBackbone):
             cls_token = self.cls_token.expand(B, -1, -1)
             x = torch.cat((cls_token, x), dim=1)
 
-        x = x + resize_pos_embed(self.pos_embed,
-                                 self.patch_resolution,
-                                 patch_resolution,
-                                 mode=self.interpolate_mode,
-                                 num_extra_tokens=self.num_extra_tokens)
+        x = x + resize_pos_embed(
+            self.pos_embed,
+            self.patch_resolution,
+            patch_resolution,
+            mode=self.interpolate_mode,
+            num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         outs = []

@@ -36,6 +36,7 @@ class RandomBatchAugment:
         probability to use CutMix is 0.5, to use Mixup is 0.3, and to do
         nothing is 0.2.
     """
+
     def __init__(self, augments: Union[Callable, dict, list], probs=None):
         if not isinstance(augments, (tuple, list)):
             augments = [augments]

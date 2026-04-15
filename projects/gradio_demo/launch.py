@@ -67,6 +67,7 @@ class InferencerCache:
 
 
 class ImageCaptionTab:
+
     def __init__(self) -> None:
         self.model_list = ImageCaptionInferencer.list_models()
         self.tab = self.create_ui()
@@ -116,6 +117,7 @@ class ImageCaptionTab:
 
 
 class ImageClassificationTab:
+
     def __init__(self) -> None:
         self.short_list = [
             'resnet50_8xb32_in1k',
@@ -143,9 +145,8 @@ class ImageClassificationTab:
                     models = self.long_list if value else self.short_list
                     return gr.update(choices=models)
 
-                expand.select(fn=browse_all_model,
-                              inputs=expand,
-                              outputs=select_model)
+                expand.select(
+                    fn=browse_all_model, inputs=expand, outputs=select_model)
             with gr.Column():
                 in_image = gr.Image(
                     label='Input',
@@ -186,6 +187,7 @@ class ImageClassificationTab:
 
 
 class ImageRetrievalTab:
+
     def __init__(self) -> None:
         self.model_list = ImageRetrievalInferencer.list_models()
         self.tab = self.create_ui()
@@ -202,9 +204,10 @@ class ImageRetrievalTab:
                 )
                 topk = gr.Slider(minimum=1, maximum=6, value=3, step=1)
             with gr.Column():
-                prototype = gr.File(label='Retrieve from',
-                                    file_count='multiple',
-                                    file_types=['image'])
+                prototype = gr.File(
+                    label='Retrieve from',
+                    file_count='multiple',
+                    file_types=['image'])
                 image_input = gr.Image(
                     label='Query',
                     source='upload',
@@ -215,7 +218,8 @@ class ImageRetrievalTab:
                 retri_output = gr.Gallery(
                     label='Result',
                     elem_classes='img_retri_result',
-                ).style(columns=[3], object_fit='contain', height='auto')
+                ).style(
+                    columns=[3], object_fit='contain', height='auto')
                 run_button = gr.Button(
                     'Run',
                     elem_classes='run_button',
@@ -253,6 +257,7 @@ class ImageRetrievalTab:
 
 
 class TextToImageRetrievalTab:
+
     def __init__(self) -> None:
         self.model_list = TextToImageRetrievalInferencer.list_models()
         self.tab = self.create_ui()
@@ -269,8 +274,8 @@ class TextToImageRetrievalTab:
                 )
                 topk = gr.Slider(minimum=1, maximum=6, value=3, step=1)
             with gr.Column():
-                prototype = gr.File(file_count='multiple',
-                                    file_types=['image'])
+                prototype = gr.File(
+                    file_count='multiple', file_types=['image'])
                 text_input = gr.Textbox(
                     label='Query',
                     elem_classes='input_text',
@@ -279,7 +284,8 @@ class TextToImageRetrievalTab:
                 retri_output = gr.Gallery(
                     label='Result',
                     elem_classes='img_retri_result',
-                ).style(columns=[3], object_fit='contain', height='auto')
+                ).style(
+                    columns=[3], object_fit='contain', height='auto')
                 run_button = gr.Button(
                     'Run',
                     elem_classes='run_button',
@@ -315,11 +321,12 @@ class TextToImageRetrievalTab:
 
 
 class VisualGroundingTab:
+
     def __init__(self) -> None:
         self.model_list = VisualGroundingInferencer.list_models()
         self.tab = self.create_ui()
-        self.visualizer = UniversalVisualizer(fig_save_cfg=dict(figsize=(16,
-                                                                         9)))
+        self.visualizer = UniversalVisualizer(
+            fig_save_cfg=dict(figsize=(16, 9)))
 
     def create_ui(self):
         with gr.Row():
@@ -369,15 +376,15 @@ class VisualGroundingTab:
             partial(VisualGroundingInferencer, model),
         )
 
-        result = inferencer(image[:, :, ::-1], text,
-                            return_datasamples=True)[0]
-        vis = self.visualizer.visualize_visual_grounding(image,
-                                                         result,
-                                                         resize=512)
+        result = inferencer(
+            image[:, :, ::-1], text, return_datasamples=True)[0]
+        vis = self.visualizer.visualize_visual_grounding(
+            image, result, resize=512)
         return vis
 
 
 class VisualQuestionAnsweringTab:
+
     def __init__(self) -> None:
         self.model_list = VisualQuestionAnsweringInferencer.list_models()
         # The fine-tuned OFA vqa models requires extra object description.

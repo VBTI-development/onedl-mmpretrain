@@ -16,6 +16,7 @@ except ImportError:
 class DenormalizeKeypointLocation(BaseTransform):
     """Denormalize keypoint location (xy) to image size (reverse effect of
     normalization)"""
+
     def __init__(self) -> None:
         pass
 
@@ -43,6 +44,7 @@ class NormalizeKeypointLocation(BaseTransform):
     WARNING: This will mess up the evaluation, since this is not done
     for eval results.
     """
+
     def __init__(self) -> None:
         pass
 
@@ -99,6 +101,7 @@ class AlbuKeypoint(Albumentations):
         transforms (list[dict]): A list of albu transformations
         keymap (dict): Contains {'input key':'albumentation-style key'}
     """
+
     def __init__(self,
                  transforms,
                  keymap=None,

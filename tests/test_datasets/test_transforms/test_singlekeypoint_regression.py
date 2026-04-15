@@ -21,9 +21,11 @@ def construct_toy_data():
 
 
 class TestDenormalizeKeypointLocation(TestCase):
+
     def test_transform(self):
-        results = dict(img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
-                       gt_score=[0.5, 0.5])
+        results = dict(
+            img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
+            gt_score=[0.5, 0.5])
 
         # test random crop by default.
         cfg = dict(type='DenormalizeKeypointLocation')
@@ -37,8 +39,9 @@ class TestDenormalizeKeypointLocation(TestCase):
         self.assertEqual(repr(transform), 'DenormalizeKeypointLocation()')
 
     def test_transform_round_robin(self):
-        results = dict(img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
-                       gt_score=[0.5, 0.5])
+        results = dict(
+            img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
+            gt_score=[0.5, 0.5])
 
         # test random crop by default.
         cfg = dict(type='DenormalizeKeypointLocation')
@@ -54,9 +57,11 @@ class TestDenormalizeKeypointLocation(TestCase):
 
 
 class TestNormalizeKeypointLocation(TestCase):
+
     def test_transform(self):
-        results = dict(img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
-                       gt_score=[192, 128])
+        results = dict(
+            img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
+            gt_score=[192, 128])
 
         # test random crop by default.
         cfg = dict(type='NormalizeKeypointLocation')
@@ -70,8 +75,9 @@ class TestNormalizeKeypointLocation(TestCase):
         self.assertEqual(repr(transform), 'NormalizeKeypointLocation()')
 
     def test_transform_round_robin(self):
-        results = dict(img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
-                       gt_score=[192, 128])
+        results = dict(
+            img=np.random.randint(0, 256, (256, 384, 3), np.uint8),
+            gt_score=[192, 128])
 
         # test random crop by default.
         cfg = dict(type='NormalizeKeypointLocation')

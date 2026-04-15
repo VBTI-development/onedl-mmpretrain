@@ -11,6 +11,7 @@ from mmpretrain.models.utils import CosineEMA
 
 
 class TestEMA(TestCase):
+
     def test_cosine_ema(self):
         model = nn.Sequential(nn.Conv2d(1, 5, kernel_size=3), nn.Linear(5, 10))
 

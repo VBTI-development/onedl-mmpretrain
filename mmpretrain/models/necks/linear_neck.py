@@ -26,6 +26,7 @@ class LinearNeck(BaseModule):
         init_cfg (dict, optional): dictionary to initialize weights.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  out_channels: int,

@@ -175,6 +175,7 @@ class PackMultiTaskInputs(BaseTransform):
         input_key (str):
         task_handlers (dict):
     """
+
     def __init__(self,
                  multi_task_fields,
                  input_key='img',
@@ -241,6 +242,7 @@ class Transpose(BaseTransform):
         keys (List[str]): The fields to convert to tensor.
         order (List[int]): The output dimensions order.
     """
+
     def __init__(self, keys, order):
         self.keys = keys
         self.order = order
@@ -271,6 +273,7 @@ class NumpyToPIL(BaseTransform):
     Args:
         to_rgb (bool): Whether to convert img to rgb. Defaults to True.
     """
+
     def __init__(self, to_rgb: bool = False) -> None:
         self.to_rgb = to_rgb
 
@@ -303,6 +306,7 @@ class PILToNumpy(BaseTransform):
         dtype (str, optional): The dtype of the converted numpy array.
             Defaults to None.
     """
+
     def __init__(self, to_bgr: bool = False, dtype=None) -> None:
         self.to_bgr = to_bgr
         self.dtype = dtype
@@ -335,6 +339,7 @@ class Collect(BaseTransform):
     Args:
         keys (Sequence[str]): The keys of the fields to be collected.
     """
+
     def __init__(self, keys):
         self.keys = keys
 

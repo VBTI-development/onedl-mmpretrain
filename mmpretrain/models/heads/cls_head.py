@@ -26,6 +26,7 @@ class ClsHead(BaseModule):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  loss: dict = dict(type='CrossEntropyLoss', loss_weight=1.0),
                  topk: Union[int, Tuple[int]] = (1, ),
@@ -91,10 +92,8 @@ class ClsHead(BaseModule):
 
         # compute loss
         losses = dict()
-        loss = self.loss_module(cls_score,
-                                target,
-                                avg_factor=cls_score.size(0),
-                                **kwargs)
+        loss = self.loss_module(
+            cls_score, target, avg_factor=cls_score.size(0), **kwargs)
         losses['loss'] = loss
 
         # compute accuracy
@@ -102,9 +101,10 @@ class ClsHead(BaseModule):
             assert target.ndim == 1, 'If you enable batch augmentation ' \
                 'like mixup during training, `cal_acc` is pointless.'
             acc = Accuracy.calculate(cls_score, target, topk=self.topk)
-            losses.update(
-                {f'accuracy_top-{k}': a
-                 for k, a in zip(self.topk, acc)})
+            losses.update({
+                f'accuracy_top-{k}': a
+                for k, a in zip(self.topk, acc)
+            })
 
         return losses
 

@@ -172,6 +172,7 @@ class Attention(nn.Module):
         input_size (int, optional): Input resolution for calculating the
             relative positional parameter size. Defaults to None.
     """
+
     def __init__(
         self,
         embed_dims: int,
@@ -245,6 +246,7 @@ class TransformerEncoderLayer(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  embed_dims: int,
                  num_heads: int,
@@ -277,13 +279,13 @@ class TransformerEncoderLayer(BaseModule):
 
         self.ln2 = build_norm_layer(norm_cfg, self.embed_dims)
 
-        self.ffn = FFN(embed_dims=embed_dims,
-                       feedforward_channels=feedforward_channels,
-                       num_fcs=num_fcs,
-                       ffn_drop=drop_rate,
-                       dropout_layer=dict(type='DropPath',
-                                          drop_prob=drop_path_rate),
-                       act_cfg=act_cfg)
+        self.ffn = FFN(
+            embed_dims=embed_dims,
+            feedforward_channels=feedforward_channels,
+            num_fcs=num_fcs,
+            ffn_drop=drop_rate,
+            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
+            act_cfg=act_cfg)
 
     @property
     def norm1(self):
@@ -492,18 +494,19 @@ class ViTSAM(BaseBackbone):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(embed_dims=self.embed_dims,
-                              num_heads=self.arch_settings['num_heads'],
-                              feedforward_channels=self.
-                              arch_settings['feedforward_channels'],
-                              drop_rate=drop_rate,
-                              drop_path_rate=dpr[i],
-                              qkv_bias=qkv_bias,
-                              window_size=window_size
-                              if i not in self.global_attn_indexes else 0,
-                              input_size=self.patch_resolution,
-                              use_rel_pos=use_rel_pos,
-                              norm_cfg=norm_cfg)
+            _layer_cfg = dict(
+                embed_dims=self.embed_dims,
+                num_heads=self.arch_settings['num_heads'],
+                feedforward_channels=self.
+                arch_settings['feedforward_channels'],
+                drop_rate=drop_rate,
+                drop_path_rate=dpr[i],
+                qkv_bias=qkv_bias,
+                window_size=window_size
+                if i not in self.global_attn_indexes else 0,
+                input_size=self.patch_resolution,
+                use_rel_pos=use_rel_pos,
+                norm_cfg=norm_cfg)
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(TransformerEncoderLayer(**_layer_cfg))
 
@@ -575,11 +578,12 @@ class ViTSAM(BaseBackbone):
             # 'resize_pos_embed' only supports 'pos_embed' with ndim==3, but
             # in ViTSAM, the 'pos_embed' has 4 dimensions (1, H, W, C), so it
             # is flattened. Besides, ViTSAM doesn't have any extra token.
-            resized_pos_embed = resize_pos_embed(self.pos_embed.flatten(1, 2),
-                                                 self.patch_resolution,
-                                                 patch_resolution,
-                                                 mode=self.interpolate_mode,
-                                                 num_extra_tokens=0)
+            resized_pos_embed = resize_pos_embed(
+                self.pos_embed.flatten(1, 2),
+                self.patch_resolution,
+                patch_resolution,
+                mode=self.interpolate_mode,
+                num_extra_tokens=0)
             x = x + resized_pos_embed.view(1, *patch_resolution,
                                            self.embed_dims)
             x = self.drop_after_pos(x)

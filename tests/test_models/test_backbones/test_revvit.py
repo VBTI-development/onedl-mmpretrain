@@ -12,11 +12,10 @@ from .utils import timm_resize_pos_embed
 
 
 class TestRevVisionTransformer(TestCase):
+
     def setUp(self):
-        self.cfg = dict(arch='b',
-                        img_size=224,
-                        patch_size=16,
-                        drop_path_rate=0.1)
+        self.cfg = dict(
+            arch='b', img_size=224, patch_size=16, drop_path_rate=0.1)
 
     def test_structure(self):
         # Test invalid default arch
@@ -68,10 +67,11 @@ class TestRevVisionTransformer(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(type='Kaiming',
-                 layer='Conv2d',
-                 mode='fan_in',
-                 nonlinearity='linear')
+            dict(
+                type='Kaiming',
+                layer='Conv2d',
+                mode='fan_in',
+                nonlinearity='linear')
         ]
         model = RevVisionTransformer(**cfg)
         ori_weight = model.patch_embed.projection.weight.clone().detach()
@@ -98,9 +98,8 @@ class TestRevVisionTransformer(TestCase):
         cfg['img_size'] = 384
         model = RevVisionTransformer(**cfg)
         load_checkpoint(model, checkpoint, strict=True)
-        resized_pos_embed = timm_resize_pos_embed(pretrain_pos_embed,
-                                                  model.pos_embed,
-                                                  num_tokens=0)
+        resized_pos_embed = timm_resize_pos_embed(
+            pretrain_pos_embed, model.pos_embed, num_tokens=0)
         self.assertTrue(torch.allclose(model.pos_embed, resized_pos_embed))
 
         os.remove(checkpoint)

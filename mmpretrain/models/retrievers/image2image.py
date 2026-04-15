@@ -54,6 +54,7 @@ class ImageToImageRetriever(BaseRetriever):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  image_encoder: Union[dict, List[dict]],
                  prototype: Union[DataLoader, dict, str, torch.Tensor],
@@ -74,9 +75,8 @@ class ImageToImageRetriever(BaseRetriever):
             # Set batch augmentations by `train_cfg`
             data_preprocessor['batch_augments'] = train_cfg
 
-        super(ImageToImageRetriever,
-              self).__init__(init_cfg=init_cfg,
-                             data_preprocessor=data_preprocessor)
+        super(ImageToImageRetriever, self).__init__(
+            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
 
         if not isinstance(image_encoder, nn.Module):
             image_encoder = MODELS.build(image_encoder)
@@ -195,9 +195,8 @@ class ImageToImageRetriever(BaseRetriever):
         """
         sim = self.similarity_fn(inputs, self.prototype_vecs)
         sorted_sim, indices = torch.sort(sim, descending=True, dim=-1)
-        predictions = dict(score=sim,
-                           pred_label=indices,
-                           pred_score=sorted_sim)
+        predictions = dict(
+            score=sim, pred_label=indices, pred_score=sorted_sim)
         return predictions
 
     def predict(self,
@@ -300,9 +299,8 @@ class ImageToImageRetriever(BaseRetriever):
             loader = Runner.build_dataloader(self.prototype)
             prototype_vecs = self._get_prototype_vecs_from_dataloader(loader)
 
-        self.register_buffer('prototype_vecs',
-                             prototype_vecs.to(device),
-                             persistent=False)
+        self.register_buffer(
+            'prototype_vecs', prototype_vecs.to(device), persistent=False)
         self.prototype_inited = True
 
     def dump_prototype(self, path):

@@ -22,6 +22,7 @@ class COCOCaption(BaseDataset):
         pipeline (Sequence): Processing pipeline. Defaults to an empty tuple.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
+
     def load_data_list(self) -> List[dict]:
         """Load data list."""
         img_prefix = self.data_prefix['img_path']

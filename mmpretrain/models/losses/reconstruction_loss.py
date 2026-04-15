@@ -24,6 +24,7 @@ class PixelReconstructionLoss(BaseModule):
             reconstruction loss. If not None, the reconstruction loss
             will be divided by the channel. Defaults to None.
     """
+
     def __init__(self, criterion: str, channel: Optional[int] = None) -> None:
         super().__init__()
 

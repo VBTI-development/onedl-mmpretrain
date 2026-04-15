@@ -186,6 +186,7 @@ class CustomDataset(BaseDataset):
             ``lazy_init=False``. Defaults to False.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
+
     def __init__(self,
                  data_root: str = '',
                  data_prefix: Union[str, dict] = '',

@@ -19,14 +19,17 @@ class OneDLDataset:
     For more information about OneDL datasets, please refer to
     https://onedl.ai.
     """
+
     def __new__(  # noqa: PLR0913
         cls,
         dataset_name: str,
         pipeline: Optional[List[Union[dict, Callable]]] = None,  # noqa: FA100
         test_mode: bool = False,
-    ) -> Union['OneDLDatasetAdapterSingleLabel',
-               'OneDLDatasetAdapterMultiLabel',
-               'OneDLDatasetAdapterRegressionValues', ]:
+    ) -> Union[
+            'OneDLDatasetAdapterSingleLabel',
+            'OneDLDatasetAdapterMultiLabel',
+            'OneDLDatasetAdapterRegressionValues',
+    ]:
         """Wrapper for OneDL Classification and Regression datasets to
         mmpretrain.
 
@@ -50,8 +53,8 @@ class OneDLDataset:
         from onedl.client import Client
 
         client = Client()
-        dataset = client.datasets.load(dataset_name,
-                                       pull_blobs=True)  # type: ignore
+        dataset = client.datasets.load(
+            dataset_name, pull_blobs=True)  # type: ignore
 
         if dataset.targets.get_dtype_str() == 'RegressionValues':
             return OneDLDatasetAdapterRegressionValues(
@@ -66,13 +69,15 @@ class OneDLDataset:
                 pipeline=pipeline,
                 test_mode=test_mode,
             )
-        return OneDLDatasetAdapterSingleLabel(classification_dataset=dataset,
-                                              dataset_name=dataset_name,
-                                              pipeline=pipeline,
-                                              test_mode=test_mode)
+        return OneDLDatasetAdapterSingleLabel(
+            classification_dataset=dataset,
+            dataset_name=dataset_name,
+            pipeline=pipeline,
+            test_mode=test_mode)
 
 
 class OneDLDatasetAdapterSingleLabel(BaseDataset):
+
     def __init__(  # noqa: PLR0913
         self,
         classification_dataset: ClassificationDataset,
@@ -150,6 +155,7 @@ class OneDLDatasetAdapterSingleLabel(BaseDataset):
 
 
 class OneDLDatasetAdapterMultiLabel(BaseDataset):
+
     def __init__(
         self,
         multilabel_classification_dataset: MultiLabelClassificationDataset,
@@ -176,12 +182,12 @@ class OneDLDatasetAdapterMultiLabel(BaseDataset):
             'classes': self.label_map.get_labels(),
             'palette': DEFAULT_PALETTE[:self.label_map.n_classes]
         }
-        super(OneDLDatasetAdapterMultiLabel,
-              self).__init__(ann_file=dataset_name,
-                             data_root='',
-                             pipeline=pipeline,
-                             metainfo=meta_info,
-                             test_mode=test_mode)
+        super(OneDLDatasetAdapterMultiLabel, self).__init__(
+            ann_file=dataset_name,
+            data_root='',
+            pipeline=pipeline,
+            metainfo=meta_info,
+            test_mode=test_mode)
 
     def load_data_list(self) -> List[dict]:
         """Load annotations.
@@ -207,6 +213,7 @@ class OneDLDatasetAdapterMultiLabel(BaseDataset):
 
 
 class OneDLDatasetAdapterRegressionValues(BaseDataset):
+
     def __init__(
         self,
         regression_dataset: RegressionDataset,
@@ -231,11 +238,11 @@ class OneDLDatasetAdapterRegressionValues(BaseDataset):
             'classes': self.label_map.get_labels(),
             'palette': DEFAULT_PALETTE[:self.label_map.n_classes]
         }
-        super(OneDLDatasetAdapterRegressionValues,
-              self).__init__(ann_file=dataset_name,
-                             pipeline=pipeline,
-                             test_mode=test_mode,
-                             metainfo=meta_info)
+        super(OneDLDatasetAdapterRegressionValues, self).__init__(
+            ann_file=dataset_name,
+            pipeline=pipeline,
+            test_mode=test_mode,
+            metainfo=meta_info)
 
     def load_data_list(self) -> List[dict]:
         """Load annotations.

@@ -9,6 +9,7 @@ from mmpretrain.evaluation.metrics.regression import (RegressionMetric,
 
 
 class TestRegressionMetric(TestCase):
+
     def test_calculate_distance(self):
         # Test L1 and L2 distance with numpy arrays
         pred = np.array([0., 1, 1, 3])

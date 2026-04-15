@@ -12,6 +12,7 @@ from mmpretrain.structures import DataSample
 
 
 class TestClsDataPreprocessor(TestCase):
+
     def test_stack_batch(self):
         cfg = dict(type='ClsDataPreprocessor')
         processor: ClsDataPreprocessor = MODELS.build(cfg)
@@ -58,9 +59,10 @@ class TestClsDataPreprocessor(TestCase):
         torch.testing.assert_allclose(data['inputs'].flip(1).float(), inputs)
 
     def test_normalization(self):
-        cfg = dict(type='ClsDataPreprocessor',
-                   mean=[127.5, 127.5, 127.5],
-                   std=[127.5, 127.5, 127.5])
+        cfg = dict(
+            type='ClsDataPreprocessor',
+            mean=[127.5, 127.5, 127.5],
+            std=[127.5, 127.5, 127.5])
         processor: ClsDataPreprocessor = MODELS.build(cfg)
 
         data = {'inputs': [torch.randint(0, 256, (3, 224, 224))]}
@@ -76,12 +78,13 @@ class TestClsDataPreprocessor(TestCase):
         self.assertTrue((inputs <= 1).all())
 
     def test_batch_augmentation(self):
-        cfg = dict(type='ClsDataPreprocessor',
-                   num_classes=10,
-                   batch_augments=dict(augments=[
-                       dict(type='Mixup', alpha=0.8),
-                       dict(type='CutMix', alpha=1.)
-                   ]))
+        cfg = dict(
+            type='ClsDataPreprocessor',
+            num_classes=10,
+            batch_augments=dict(augments=[
+                dict(type='Mixup', alpha=0.8),
+                dict(type='CutMix', alpha=1.)
+            ]))
         processor: ClsDataPreprocessor = MODELS.build(cfg)
         self.assertIsInstance(processor.batch_augments, RandomBatchAugment)
         data = {
@@ -102,6 +105,7 @@ class TestClsDataPreprocessor(TestCase):
 
 
 class TestSelfSupDataPreprocessor(TestCase):
+
     def test_to_rgb(self):
         cfg = dict(type='SelfSupDataPreprocessor', to_rgb=True)
         processor: SelfSupDataPreprocessor = MODELS.build(cfg)
@@ -120,9 +124,8 @@ class TestSelfSupDataPreprocessor(TestCase):
                                       inputs[1])
 
     def test_forward(self):
-        data_preprocessor = SelfSupDataPreprocessor(to_rgb=True,
-                                                    mean=[124, 117, 104],
-                                                    std=[59, 58, 58])
+        data_preprocessor = SelfSupDataPreprocessor(
+            to_rgb=True, mean=[124, 117, 104], std=[59, 58, 58])
 
         # test list inputs
         fake_data = {
@@ -145,6 +148,7 @@ class TestSelfSupDataPreprocessor(TestCase):
 
 
 class TestTwoNormDataPreprocessor(TestCase):
+
     def test_assertion(self):
         with pytest.raises(AssertionError):
             _ = TwoNormDataPreprocessor(
@@ -170,11 +174,12 @@ class TestTwoNormDataPreprocessor(TestCase):
             )
 
     def test_forward(self):
-        data_preprocessor = dict(mean=(123.675, 116.28, 103.53),
-                                 std=(58.395, 57.12, 57.375),
-                                 second_mean=(127.5, 127.5, 127.5),
-                                 second_std=(127.5, 127.5, 127.5),
-                                 to_rgb=True)
+        data_preprocessor = dict(
+            mean=(123.675, 116.28, 103.53),
+            std=(58.395, 57.12, 57.375),
+            second_mean=(127.5, 127.5, 127.5),
+            second_std=(127.5, 127.5, 127.5),
+            to_rgb=True)
 
         data_preprocessor = TwoNormDataPreprocessor(**data_preprocessor)
         fake_data = {
@@ -189,6 +194,7 @@ class TestTwoNormDataPreprocessor(TestCase):
 
 
 class TestVideoDataPreprocessor(TestCase):
+
     def test_NCTHW_format(self):
         data_preprocessor = VideoDataPreprocessor(
             mean=[114.75, 114.75, 114.75],

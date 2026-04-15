@@ -89,6 +89,7 @@ class AsymmetricLoss(nn.Module):
         eps (float): The minimum value of the argument of logarithm. Defaults
             to 1e-8.
     """
+
     def __init__(self,
                  gamma_pos=0.0,
                  gamma_neg=4.0,
@@ -130,8 +131,8 @@ class AsymmetricLoss(nn.Module):
             torch.Tensor: Loss.
         """
         assert reduction_override in (None, 'none', 'mean', 'sum')
-        reduction = (reduction_override
-                     if reduction_override else self.reduction)
+        reduction = (
+            reduction_override if reduction_override else self.reduction)
         if target.dim() == 1 or (target.dim() == 2 and target.shape[1] == 1):
             target = convert_to_one_hot(target.view(-1, 1), pred.shape[-1])
         loss_cls = self.loss_weight * asymmetric_loss(

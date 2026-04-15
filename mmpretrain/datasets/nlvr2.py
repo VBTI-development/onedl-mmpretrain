@@ -11,6 +11,7 @@ from .base_dataset import BaseDataset
 @DATASETS.register_module()
 class NLVR2(BaseDataset):
     """COCO Caption dataset."""
+
     def load_data_list(self) -> List[dict]:
         """Load data list."""
 

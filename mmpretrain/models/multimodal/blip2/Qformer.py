@@ -27,18 +27,20 @@ logger = logging.get_logger(__name__)
 
 class BertEmbeddings(nn.Module):
     """Construct the embeddings from word and position embeddings."""
+
     def __init__(self, config):
         super().__init__()
-        self.word_embeddings = nn.Embedding(config.vocab_size,
-                                            config.hidden_size,
-                                            padding_idx=config.pad_token_id)
+        self.word_embeddings = nn.Embedding(
+            config.vocab_size,
+            config.hidden_size,
+            padding_idx=config.pad_token_id)
         self.position_embeddings = nn.Embedding(config.max_position_embeddings,
                                                 config.hidden_size)
 
         # self.LayerNorm is not snake-cased to stick with TensorFlow model variable name and be able to load
         # any TensorFlow checkpoint file
-        self.LayerNorm = nn.LayerNorm(config.hidden_size,
-                                      eps=config.layer_norm_eps)
+        self.LayerNorm = nn.LayerNorm(
+            config.hidden_size, eps=config.layer_norm_eps)
         self.dropout = nn.Dropout(config.hidden_dropout_prob)
 
         # position_ids (1, len position emb) is contiguous in memory and exported when serialized
@@ -85,6 +87,7 @@ class BertEmbeddings(nn.Module):
 
 
 class BertLayer(nn.Module):
+
     def __init__(self, config, layer_num):
         super().__init__()
         self.config = config
@@ -117,8 +120,8 @@ class BertLayer(nn.Module):
         query_length=0,
     ):
         # decoder uni-directional self-attention cached key/values tuple is at positions 1,2
-        self_attn_past_key_value = (past_key_value[:2]
-                                    if past_key_value is not None else None)
+        self_attn_past_key_value = (
+            past_key_value[:2] if past_key_value is not None else None)
         self_attention_outputs = self.attention(
             hidden_states,
             attention_mask,
@@ -191,6 +194,7 @@ class BertLayer(nn.Module):
 
 
 class BertEncoder(nn.Module):
+
     def __init__(self, config):
         super().__init__()
         self.config = config
@@ -237,6 +241,7 @@ class BertEncoder(nn.Module):
                     use_cache = False
 
                 def create_custom_forward(module):
+
                     def custom_forward(*inputs):
                         return module(*inputs, past_key_value,
                                       output_attentions, query_length)
@@ -304,6 +309,7 @@ class BertModel(BertPreTrainedModel):
     :obj:`encoder_hidden_states` is then expected as an input to the forward
     pass.
     """
+
     def __init__(self, config, add_pooling_layer=False):
         super().__init__(config)
         self.config = config
@@ -365,8 +371,9 @@ class BertModel(BertPreTrainedModel):
                 batch_size, seq_length = input_shape
 
                 seq_ids = torch.arange(seq_length, device=device)
-                causal_mask = (seq_ids[None, None, :].repeat(
-                    batch_size, seq_length, 1) <= seq_ids[None, :, None])
+                causal_mask = (
+                    seq_ids[None, None, :].repeat(batch_size, seq_length, 1)
+                    <= seq_ids[None, :, None])
 
                 # add a prefix ones mask to the causal mask
                 # causal and attention masks must have same type with pytorch version < 1.3
@@ -399,8 +406,9 @@ class BertModel(BertPreTrainedModel):
                         ],
                         axis=-1,
                     )
-                extended_attention_mask = (causal_mask[:, None, :, :] *
-                                           attention_mask[:, None, None, :])
+                extended_attention_mask = (
+                    causal_mask[:, None, :, :] *
+                    attention_mask[:, None, None, :])
             else:
                 extended_attention_mask = attention_mask[:, None, None, :]
         else:
@@ -455,13 +463,15 @@ class BertModel(BertPreTrainedModel):
             If set to :obj:`True`, :obj:`past_key_values` key value states are returned and can be used to speed up
             decoding (see :obj:`past_key_values`).
         """
-        output_attentions = (output_attentions if output_attentions is not None
-                             else self.config.output_attentions)
-        output_hidden_states = (output_hidden_states
-                                if output_hidden_states is not None else
-                                self.config.output_hidden_states)
-        return_dict = (return_dict if return_dict is not None else
-                       self.config.use_return_dict)
+        output_attentions = (
+            output_attentions if output_attentions is not None else
+            self.config.output_attentions)
+        output_hidden_states = (
+            output_hidden_states if output_hidden_states is not None else
+            self.config.output_hidden_states)
+        return_dict = (
+            return_dict
+            if return_dict is not None else self.config.use_return_dict)
 
         # use_cache = use_cache if use_cache is not None else self.config.use_cache
         if input_ids is None:
@@ -470,9 +480,9 @@ class BertModel(BertPreTrainedModel):
             ), 'You have to specify query_embeds when input_ids is None'
 
         # past_key_values_length
-        past_key_values_length = (past_key_values[0][0].shape[2] -
-                                  self.config.query_length
-                                  if past_key_values is not None else 0)
+        past_key_values_length = (
+            past_key_values[0][0].shape[2] -
+            self.config.query_length if past_key_values is not None else 0)
 
         query_length = query_embeds.shape[1] if query_embeds is not None else 0
 
@@ -527,8 +537,8 @@ class BertModel(BertPreTrainedModel):
                     for mask in encoder_attention_mask
                 ]
             elif encoder_attention_mask is None:
-                encoder_attention_mask = torch.ones(encoder_hidden_shape,
-                                                    device=device)
+                encoder_attention_mask = torch.ones(
+                    encoder_hidden_shape, device=device)
                 encoder_extended_attention_mask = self.invert_attention_mask(
                     encoder_attention_mask)
             else:
@@ -559,8 +569,8 @@ class BertModel(BertPreTrainedModel):
             query_length=query_length,
         )
         sequence_output = encoder_outputs[0]
-        pooled_output = (self.pooler(sequence_output)
-                         if self.pooler is not None else None)
+        pooled_output = (
+            self.pooler(sequence_output) if self.pooler is not None else None)
 
         if not return_dict:
             return (sequence_output, pooled_output) + encoder_outputs[1:]
@@ -652,8 +662,9 @@ class BertLMHeadModel(BertPreTrainedModel):
             >>> outputs = model(**inputs)
             >>> prediction_logits = outputs.logits
         """
-        return_dict = (return_dict if return_dict is not None else
-                       self.config.use_return_dict)
+        return_dict = (
+            return_dict
+            if return_dict is not None else self.config.use_return_dict)
         if labels is not None:
             use_cache = False
         if past_key_values is not None:
@@ -689,8 +700,8 @@ class BertLMHeadModel(BertPreTrainedModel):
             shifted_prediction_scores = prediction_scores[:, :
                                                           -1, :].contiguous()
             labels = labels[:, 1:].contiguous()
-            loss_fct = CrossEntropyLoss(reduction=reduction,
-                                        label_smoothing=0.1)
+            loss_fct = CrossEntropyLoss(
+                reduction=reduction, label_smoothing=0.1)
             lm_loss = loss_fct(
                 shifted_prediction_scores.view(-1, self.config.vocab_size),
                 labels.view(-1),
@@ -755,6 +766,7 @@ class BertLMHeadModel(BertPreTrainedModel):
 
 @MODELS.register_module()
 class Qformer(BertLMHeadModel):
+
     def __init__(self, model_style: str, vision_model_width: int,
                  add_cross_attention: bool, cross_attention_freq: int,
                  num_query_token: int) -> None:

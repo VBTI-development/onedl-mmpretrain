@@ -109,9 +109,8 @@ class RetrievalRecall(BaseMetric):
             # compared to the normal classification, to save resources, the
             # evaluation results are computed each batch here and then reduce
             #  all results at the end.
-            result = RetrievalRecall.calculate(pred_score.unsqueeze(0),
-                                               target.unsqueeze(0),
-                                               topk=self.topk)
+            result = RetrievalRecall.calculate(
+                pred_score.unsqueeze(0), target.unsqueeze(0), topk=self.topk)
             self.results.append(result)
 
     def compute_metrics(self, results: List):
@@ -176,11 +175,15 @@ class RetrievalRecall(BaseMetric):
         results = []
         for k in topk:
             recalls = torch.zeros(num_samples)
-            for i, (sample_pred, sample_target) in enumerate(zip(pred,
-                                                                 target)):
-                sample_pred = np.array(to_tensor(sample_pred).cpu())
-                sample_target = np.array(to_tensor(sample_target).cpu())
-                recalls[i] = int(np.in1d(sample_pred[:k], sample_target).max())
+            for i, (sample_pred,
+                    sample_target) in enumerate(zip(pred, target)):
+                sample_pred = to_tensor(sample_pred)
+                sample_target = to_tensor(sample_target)
+
+                if sample_pred.device != sample_target.device:
+                    sample_target = sample_target.to(sample_pred.device)
+                recalls[i] = int(
+                    torch.isin(sample_pred[:k], sample_target).any())
             results.append(recalls.mean() * 100)
         return results
 
@@ -373,16 +376,19 @@ class RetrievalAveragePrecision(BaseMetric):
 
 
 def _calculateAp_for_sample(pred, target, mode):
-    pred = np.array(to_tensor(pred).cpu())
-    target = np.array(to_tensor(target).cpu())
+    pred = to_tensor(pred)
+    target = to_tensor(target)
+    if pred.device != target.device:
+        target = target.to(pred.device)
 
     num_preds = len(pred)
 
-    # TODO: use ``torch.isin`` in torch1.10.
-    positive_ranks = np.arange(num_preds)[np.in1d(pred, target)]
+    positive_ranks = torch.arange(
+        num_preds, device=pred.device)[torch.isin(pred, target)]
 
     ap = 0
     for i, rank in enumerate(positive_ranks):
+        rank = rank.item()
         if mode == 'IR':
             precision = (i + 1) / (rank + 1)
             ap += precision

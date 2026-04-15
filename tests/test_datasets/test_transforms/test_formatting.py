@@ -13,6 +13,7 @@ from mmpretrain.structures import DataSample, MultiTaskDataSample
 
 
 class TestPackInputs(unittest.TestCase):
+
     def test_transform(self):
         img_path = osp.join(osp.dirname(__file__), '../../data/color.jpg')
         data = {
@@ -46,9 +47,8 @@ class TestPackInputs(unittest.TestCase):
         self.assertEqual(results['inputs'].shape, (1, 300, 400))
 
         # Test video input
-        data['img'] = np.random.randint(0,
-                                        256, (10, 3, 1, 224, 224),
-                                        dtype=np.uint8)
+        data['img'] = np.random.randint(
+            0, 256, (10, 3, 1, 224, 224), dtype=np.uint8)
         results = transform(copy.deepcopy(data))
         self.assertIn('inputs', results)
         self.assertIsInstance(results['inputs'], torch.Tensor)
@@ -76,6 +76,7 @@ class TestPackInputs(unittest.TestCase):
 
 
 class TestTranspose(unittest.TestCase):
+
     def test_transform(self):
         cfg = dict(type='Transpose', keys=['img'], order=[2, 0, 1])
         transform = TRANSFORMS.build(cfg)
@@ -88,11 +89,12 @@ class TestTranspose(unittest.TestCase):
     def test_repr(self):
         cfg = dict(type='Transpose', keys=['img'], order=(2, 0, 1))
         transform = TRANSFORMS.build(cfg)
-        self.assertEqual(repr(transform),
-                         "Transpose(keys=['img'], order=(2, 0, 1))")
+        self.assertEqual(
+            repr(transform), "Transpose(keys=['img'], order=(2, 0, 1))")
 
 
 class TestToPIL(unittest.TestCase):
+
     def test_transform(self):
         cfg = dict(type='ToPIL')
         transform = TRANSFORMS.build(cfg)
@@ -118,6 +120,7 @@ class TestToPIL(unittest.TestCase):
 
 
 class TestToNumpy(unittest.TestCase):
+
     def test_transform(self):
         img_path = osp.join(osp.dirname(__file__), '../../data/color.jpg')
         data = {
@@ -140,11 +143,12 @@ class TestToNumpy(unittest.TestCase):
     def test_repr(self):
         cfg = dict(type='ToNumpy', to_bgr=True)
         transform = TRANSFORMS.build(cfg)
-        self.assertEqual(repr(transform),
-                         'PILToNumpy(to_bgr=True, dtype=None)')
+        self.assertEqual(
+            repr(transform), 'PILToNumpy(to_bgr=True, dtype=None)')
 
 
 class TestCollect(unittest.TestCase):
+
     def test_transform(self):
         data = {'img': [1, 2, 3], 'gt_label': 1}
 
@@ -161,6 +165,7 @@ class TestCollect(unittest.TestCase):
 
 
 class TestPackMultiTaskInputs(unittest.TestCase):
+
     def test_transform(self):
         img_path = osp.join(osp.dirname(__file__), '../../data/color.jpg')
         data = {

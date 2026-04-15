@@ -15,6 +15,7 @@ class SparKPretrainHead(BaseModule):
         patch_size (int): Patch size, equal to downsample ratio of backbone.
             Defaults to 32.
     """
+
     def __init__(self,
                  loss: dict,
                  norm_pix: bool = True,

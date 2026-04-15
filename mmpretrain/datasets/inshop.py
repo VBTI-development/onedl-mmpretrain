@@ -62,6 +62,7 @@ class InShop(BaseDataset):
             The `CLASSES` meta info is not set.
             Root of dataset:    data/inshop
     """
+
     def __init__(self,
                  data_root: str,
                  split: str = 'train',
@@ -74,10 +75,11 @@ class InShop(BaseDataset):
             f" bu get '{split}'"  # codespell:ignore bu
         self.backend = get_file_backend(data_root, enable_singleton=True)
         self.split = split
-        super().__init__(data_root=data_root,
-                         data_prefix=data_prefix,
-                         ann_file=ann_file,
-                         **kwargs)
+        super().__init__(
+            data_root=data_root,
+            data_prefix=data_prefix,
+            ann_file=ann_file,
+            **kwargs)
 
     def _process_annotations(self):
         lines = list_from_file(self.ann_file)
@@ -132,8 +134,8 @@ class InShop(BaseDataset):
             img_path = self.backend.join_path(self.img_prefix, img_name)
             if status == 'query':
                 anno_query['data_list'].append(
-                    dict(img_path=img_path,
-                         gt_label=gt_label_gallery[item_id]))
+                    dict(
+                        img_path=img_path, gt_label=gt_label_gallery[item_id]))
                 query_num += 1
 
         anno_query['metainfo']['sample_number'] = query_num

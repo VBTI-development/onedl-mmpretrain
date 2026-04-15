@@ -23,6 +23,7 @@ class CLIPTransformer(nn.Module):
         heads (int): The number of attention heads.
         attn_mask (torch.Tensor, optional): The attention mask.
     """
+
     def __init__(self,
                  width: int,
                  layers: int,
@@ -36,10 +37,8 @@ class CLIPTransformer(nn.Module):
             self.resblocks.append(
                 ResidualAttentionBlock(width, heads, attn_mask))
         self.resblocks.append(
-            ResidualAttentionBlock(width,
-                                   heads,
-                                   attn_mask,
-                                   return_attention=True))
+            ResidualAttentionBlock(
+                width, heads, attn_mask, return_attention=True))
 
     def forward(
             self, x: torch.Tensor
@@ -66,6 +65,7 @@ class CLIPProjection(BaseModule):
         init_cfg (dict | list[dict], optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  out_channels: int,

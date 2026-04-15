@@ -86,11 +86,12 @@ class CUB(BaseDataset):
             data_root, image_class_labels_file)
         self.train_test_split_file = self.backend.join_path(
             data_root, train_test_split_file)
-        super(CUB, self).__init__(ann_file=ann_file,
-                                  data_root=data_root,
-                                  data_prefix=data_prefix,
-                                  test_mode=test_mode,
-                                  **kwargs)
+        super(CUB, self).__init__(
+            ann_file=ann_file,
+            data_root=data_root,
+            data_prefix=data_prefix,
+            test_mode=test_mode,
+            **kwargs)
 
     def _load_data_from_txt(self, filepath):
         """Load data from CUB txt file, the every line of the file is idx and a
@@ -112,7 +113,7 @@ class CUB(BaseDataset):
 
         split_dict = self._load_data_from_txt(self.train_test_split_file)
 
-        assert sample_dict.keys() == label_dict.keys() == split_dict.keys(),\
+        assert sample_dict.keys() == label_dict.keys() == split_dict.keys(), \
             f'sample_ids should be same in files {self.ann_file}, ' \
             f'{self.image_class_labels_file} and {self.train_test_split_file}'
 

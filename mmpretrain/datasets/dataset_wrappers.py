@@ -25,6 +25,7 @@ class KFoldDataset:
         seed (int, optional): The seed to shuffle the dataset before splitting.
             If None, not shuffle the dataset. Defaults to None.
     """
+
     def __init__(self,
                  dataset,
                  fold=0,

@@ -29,9 +29,8 @@ class MultiTaskMetric(TestCase):
                 task_sample.set_gt_label(data_gt[i][task_name])
                 task_sample.set_field(True, 'eval_mask', field_type='metainfo')
             else:
-                task_sample.set_field(False,
-                                      'eval_mask',
-                                      field_type='metainfo')
+                task_sample.set_field(
+                    False, 'eval_mask', field_type='metainfo')
             sample[task_name] = task_sample.to_dict()
 
         preds.append(sample)
@@ -68,7 +67,7 @@ class MultiTaskMetric(TestCase):
     for score, label in data2:
         sample = {}
         for task_name in score:
-            if type(score[task_name]) != dict:
+            if not isinstance(score[task_name], dict):
                 task_sample = DataSample().set_pred_score(score[task_name])
                 task_sample.set_gt_label(label[task_name])
                 sample[task_name] = task_sample.to_dict()
@@ -96,14 +95,15 @@ class MultiTaskMetric(TestCase):
     task_metrics2 = {
         'task0': [dict(type='Accuracy', topk=(1, ))],
         'task1': [
-            dict(type='MultiTasksMetric',
-                 task_metrics={
-                     'task10': [
-                         dict(type='Accuracy', topk=(1, 3)),
-                         dict(type='SingleLabelMetric', items=['precision'])
-                     ],
-                     'task11': [dict(type='Accuracy', topk=(1, ))]
-                 })
+            dict(
+                type='MultiTasksMetric',
+                task_metrics={
+                    'task10': [
+                        dict(type='Accuracy', topk=(1, 3)),
+                        dict(type='SingleLabelMetric', items=['precision'])
+                    ],
+                    'task11': [dict(type='Accuracy', topk=(1, ))]
+                })
         ]
     }
 

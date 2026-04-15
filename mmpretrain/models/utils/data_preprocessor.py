@@ -53,6 +53,7 @@ class ClsDataPreprocessor(BaseDataPreprocessor):
             including "augments" and "probs". For more details, see
             :class:`mmpretrain.models.RandomBatchAugment`.
     """
+
     def __init__(self,
                  mean: Sequence[Number] = None,
                  std: Sequence[Number] = None,
@@ -203,6 +204,7 @@ class SelfSupDataPreprocessor(ImgDataPreprocessor):
     Compared with the :class:`mmengine.ImgDataPreprocessor`, this module
     supports ``inputs`` as torch.Tensor or a list of torch.Tensor.
     """
+
     def __init__(self,
                  mean: Optional[Sequence[Union[float, int]]] = None,
                  std: Optional[Sequence[Union[float, int]]] = None,
@@ -212,13 +214,14 @@ class SelfSupDataPreprocessor(ImgDataPreprocessor):
                  bgr_to_rgb: bool = False,
                  rgb_to_bgr: bool = False,
                  non_blocking: Optional[bool] = False):
-        super().__init__(mean=mean,
-                         std=std,
-                         pad_size_divisor=pad_size_divisor,
-                         pad_value=pad_value,
-                         bgr_to_rgb=bgr_to_rgb,
-                         rgb_to_bgr=rgb_to_bgr,
-                         non_blocking=non_blocking)
+        super().__init__(
+            mean=mean,
+            std=std,
+            pad_size_divisor=pad_size_divisor,
+            pad_value=pad_value,
+            bgr_to_rgb=bgr_to_rgb,
+            rgb_to_bgr=rgb_to_bgr,
+            non_blocking=non_blocking)
 
         self._channel_conversion = to_rgb or bgr_to_rgb or rgb_to_bgr
 
@@ -314,6 +317,7 @@ class TwoNormDataPreprocessor(SelfSupDataPreprocessor):
         non_blocking (bool): Whether block current process when transferring
             data to device. Defaults to False.
     """
+
     def __init__(self,
                  mean: Optional[Sequence[Union[float, int]]] = None,
                  std: Optional[Sequence[Union[float, int]]] = None,
@@ -323,12 +327,13 @@ class TwoNormDataPreprocessor(SelfSupDataPreprocessor):
                  pad_value: Union[float, int] = 0,
                  to_rgb: bool = False,
                  non_blocking: Optional[bool] = False):
-        super().__init__(mean=mean,
-                         std=std,
-                         pad_size_divisor=pad_size_divisor,
-                         pad_value=pad_value,
-                         to_rgb=to_rgb,
-                         non_blocking=non_blocking)
+        super().__init__(
+            mean=mean,
+            std=std,
+            pad_size_divisor=pad_size_divisor,
+            pad_value=pad_value,
+            to_rgb=to_rgb,
+            non_blocking=non_blocking)
         assert (second_mean is not None) and (second_std is not None), (
             'mean and std should not be None while using '
             '`TwoNormDataPreprocessor`')
@@ -407,6 +412,7 @@ class VideoDataPreprocessor(BaseDataPreprocessor):
         format_shape (str): Format shape of input data.
             Defaults to ``'NCHW'``.
     """
+
     def __init__(self,
                  mean: Optional[Sequence[Union[float, int]]] = None,
                  std: Optional[Sequence[Union[float, int]]] = None,
@@ -536,6 +542,7 @@ class MultiModalDataPreprocessor(BaseDataPreprocessor):
         to_rgb (bool): whether to convert image from BGR to RGB.
             Defaults to False.
     """
+
     def __init__(
         self,
         mean: Sequence[Number] = None,

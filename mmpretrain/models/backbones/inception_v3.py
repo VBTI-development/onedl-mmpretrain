@@ -22,6 +22,7 @@ class BasicConv2d(BaseModule):
             Defaults to None.
         **kwargs: Other keyword arguments of the convolution layer.
     """
+
     def __init__(self,
                  in_channels: int,
                  out_channels: int,
@@ -29,11 +30,8 @@ class BasicConv2d(BaseModule):
                  init_cfg: Optional[dict] = None,
                  **kwargs) -> None:
         super().__init__(init_cfg=init_cfg)
-        self.conv = build_conv_layer(conv_cfg,
-                                     in_channels,
-                                     out_channels,
-                                     bias=False,
-                                     **kwargs)
+        self.conv = build_conv_layer(
+            conv_cfg, in_channels, out_channels, bias=False, **kwargs)
         self.bn = nn.BatchNorm2d(out_channels, eps=0.001)
         self.relu = nn.ReLU(inplace=True)
 
@@ -55,49 +53,32 @@ class InceptionA(BaseModule):
         init_cfg (dict, optional): The config of initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  pool_features: int,
                  conv_cfg: Optional[dict] = None,
                  init_cfg: Optional[dict] = None):
         super().__init__(init_cfg=init_cfg)
-        self.branch1x1 = BasicConv2d(in_channels,
-                                     64,
-                                     kernel_size=1,
-                                     conv_cfg=conv_cfg)
+        self.branch1x1 = BasicConv2d(
+            in_channels, 64, kernel_size=1, conv_cfg=conv_cfg)
 
-        self.branch5x5_1 = BasicConv2d(in_channels,
-                                       48,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
-        self.branch5x5_2 = BasicConv2d(48,
-                                       64,
-                                       kernel_size=5,
-                                       padding=2,
-                                       conv_cfg=conv_cfg)
+        self.branch5x5_1 = BasicConv2d(
+            in_channels, 48, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch5x5_2 = BasicConv2d(
+            48, 64, kernel_size=5, padding=2, conv_cfg=conv_cfg)
 
-        self.branch3x3dbl_1 = BasicConv2d(in_channels,
-                                          64,
-                                          kernel_size=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_2 = BasicConv2d(64,
-                                          96,
-                                          kernel_size=3,
-                                          padding=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_3 = BasicConv2d(96,
-                                          96,
-                                          kernel_size=3,
-                                          padding=1,
-                                          conv_cfg=conv_cfg)
+        self.branch3x3dbl_1 = BasicConv2d(
+            in_channels, 64, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_2 = BasicConv2d(
+            64, 96, kernel_size=3, padding=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_3 = BasicConv2d(
+            96, 96, kernel_size=3, padding=1, conv_cfg=conv_cfg)
 
-        self.branch_pool_downsample = nn.AvgPool2d(kernel_size=3,
-                                                   stride=1,
-                                                   padding=1)
-        self.branch_pool = BasicConv2d(in_channels,
-                                       pool_features,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
+        self.branch_pool_downsample = nn.AvgPool2d(
+            kernel_size=3, stride=1, padding=1)
+        self.branch_pool = BasicConv2d(
+            in_channels, pool_features, kernel_size=1, conv_cfg=conv_cfg)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
@@ -127,31 +108,21 @@ class InceptionB(BaseModule):
         init_cfg (dict, optional): The config of initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  conv_cfg: Optional[dict] = None,
                  init_cfg: Optional[dict] = None):
         super().__init__(init_cfg=init_cfg)
-        self.branch3x3 = BasicConv2d(in_channels,
-                                     384,
-                                     kernel_size=3,
-                                     stride=2,
-                                     conv_cfg=conv_cfg)
+        self.branch3x3 = BasicConv2d(
+            in_channels, 384, kernel_size=3, stride=2, conv_cfg=conv_cfg)
 
-        self.branch3x3dbl_1 = BasicConv2d(in_channels,
-                                          64,
-                                          kernel_size=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_2 = BasicConv2d(64,
-                                          96,
-                                          kernel_size=3,
-                                          padding=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_3 = BasicConv2d(96,
-                                          96,
-                                          kernel_size=3,
-                                          stride=2,
-                                          conv_cfg=conv_cfg)
+        self.branch3x3dbl_1 = BasicConv2d(
+            in_channels, 64, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_2 = BasicConv2d(
+            64, 96, kernel_size=3, padding=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_3 = BasicConv2d(
+            96, 96, kernel_size=3, stride=2, conv_cfg=conv_cfg)
 
         self.branch_pool = nn.MaxPool2d(kernel_size=3, stride=2)
 
@@ -180,65 +151,39 @@ class InceptionC(BaseModule):
         init_cfg (dict, optional): The config of initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  channels_7x7: int,
                  conv_cfg: Optional[dict] = None,
                  init_cfg=None):
         super().__init__(init_cfg=init_cfg)
-        self.branch1x1 = BasicConv2d(in_channels,
-                                     192,
-                                     kernel_size=1,
-                                     conv_cfg=conv_cfg)
+        self.branch1x1 = BasicConv2d(
+            in_channels, 192, kernel_size=1, conv_cfg=conv_cfg)
 
         c7 = channels_7x7
-        self.branch7x7_1 = BasicConv2d(in_channels,
-                                       c7,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
-        self.branch7x7_2 = BasicConv2d(c7,
-                                       c7,
-                                       kernel_size=(1, 7),
-                                       padding=(0, 3),
-                                       conv_cfg=conv_cfg)
-        self.branch7x7_3 = BasicConv2d(c7,
-                                       192,
-                                       kernel_size=(7, 1),
-                                       padding=(3, 0),
-                                       conv_cfg=conv_cfg)
+        self.branch7x7_1 = BasicConv2d(
+            in_channels, c7, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch7x7_2 = BasicConv2d(
+            c7, c7, kernel_size=(1, 7), padding=(0, 3), conv_cfg=conv_cfg)
+        self.branch7x7_3 = BasicConv2d(
+            c7, 192, kernel_size=(7, 1), padding=(3, 0), conv_cfg=conv_cfg)
 
-        self.branch7x7dbl_1 = BasicConv2d(in_channels,
-                                          c7,
-                                          kernel_size=1,
-                                          conv_cfg=conv_cfg)
-        self.branch7x7dbl_2 = BasicConv2d(c7,
-                                          c7,
-                                          kernel_size=(7, 1),
-                                          padding=(3, 0),
-                                          conv_cfg=conv_cfg)
-        self.branch7x7dbl_3 = BasicConv2d(c7,
-                                          c7,
-                                          kernel_size=(1, 7),
-                                          padding=(0, 3),
-                                          conv_cfg=conv_cfg)
-        self.branch7x7dbl_4 = BasicConv2d(c7,
-                                          c7,
-                                          kernel_size=(7, 1),
-                                          padding=(3, 0),
-                                          conv_cfg=conv_cfg)
-        self.branch7x7dbl_5 = BasicConv2d(c7,
-                                          192,
-                                          kernel_size=(1, 7),
-                                          padding=(0, 3),
-                                          conv_cfg=conv_cfg)
+        self.branch7x7dbl_1 = BasicConv2d(
+            in_channels, c7, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch7x7dbl_2 = BasicConv2d(
+            c7, c7, kernel_size=(7, 1), padding=(3, 0), conv_cfg=conv_cfg)
+        self.branch7x7dbl_3 = BasicConv2d(
+            c7, c7, kernel_size=(1, 7), padding=(0, 3), conv_cfg=conv_cfg)
+        self.branch7x7dbl_4 = BasicConv2d(
+            c7, c7, kernel_size=(7, 1), padding=(3, 0), conv_cfg=conv_cfg)
+        self.branch7x7dbl_5 = BasicConv2d(
+            c7, 192, kernel_size=(1, 7), padding=(0, 3), conv_cfg=conv_cfg)
 
-        self.branch_pool_downsample = nn.AvgPool2d(kernel_size=3,
-                                                   stride=1,
-                                                   padding=1)
-        self.branch_pool = BasicConv2d(in_channels,
-                                       192,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
+        self.branch_pool_downsample = nn.AvgPool2d(
+            kernel_size=3, stride=1, padding=1)
+        self.branch_pool = BasicConv2d(
+            in_channels, 192, kernel_size=1, conv_cfg=conv_cfg)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
@@ -271,40 +216,25 @@ class InceptionD(BaseModule):
         init_cfg (dict, optional): The config of initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  conv_cfg: Optional[dict] = None,
                  init_cfg: Optional[dict] = None):
         super().__init__(init_cfg=init_cfg)
-        self.branch3x3_1 = BasicConv2d(in_channels,
-                                       192,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
-        self.branch3x3_2 = BasicConv2d(192,
-                                       320,
-                                       kernel_size=3,
-                                       stride=2,
-                                       conv_cfg=conv_cfg)
+        self.branch3x3_1 = BasicConv2d(
+            in_channels, 192, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch3x3_2 = BasicConv2d(
+            192, 320, kernel_size=3, stride=2, conv_cfg=conv_cfg)
 
-        self.branch7x7x3_1 = BasicConv2d(in_channels,
-                                         192,
-                                         kernel_size=1,
-                                         conv_cfg=conv_cfg)
-        self.branch7x7x3_2 = BasicConv2d(192,
-                                         192,
-                                         kernel_size=(1, 7),
-                                         padding=(0, 3),
-                                         conv_cfg=conv_cfg)
-        self.branch7x7x3_3 = BasicConv2d(192,
-                                         192,
-                                         kernel_size=(7, 1),
-                                         padding=(3, 0),
-                                         conv_cfg=conv_cfg)
-        self.branch7x7x3_4 = BasicConv2d(192,
-                                         192,
-                                         kernel_size=3,
-                                         stride=2,
-                                         conv_cfg=conv_cfg)
+        self.branch7x7x3_1 = BasicConv2d(
+            in_channels, 192, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch7x7x3_2 = BasicConv2d(
+            192, 192, kernel_size=(1, 7), padding=(0, 3), conv_cfg=conv_cfg)
+        self.branch7x7x3_3 = BasicConv2d(
+            192, 192, kernel_size=(7, 1), padding=(3, 0), conv_cfg=conv_cfg)
+        self.branch7x7x3_4 = BasicConv2d(
+            192, 192, kernel_size=3, stride=2, conv_cfg=conv_cfg)
 
         self.branch_pool = nn.MaxPool2d(kernel_size=3, stride=2)
 
@@ -333,58 +263,35 @@ class InceptionE(BaseModule):
         init_cfg (dict, optional): The config of initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels: int,
                  conv_cfg: Optional[dict] = None,
                  init_cfg=None):
         super().__init__(init_cfg=init_cfg)
-        self.branch1x1 = BasicConv2d(in_channels,
-                                     320,
-                                     kernel_size=1,
-                                     conv_cfg=conv_cfg)
+        self.branch1x1 = BasicConv2d(
+            in_channels, 320, kernel_size=1, conv_cfg=conv_cfg)
 
-        self.branch3x3_1 = BasicConv2d(in_channels,
-                                       384,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
-        self.branch3x3_2a = BasicConv2d(384,
-                                        384,
-                                        kernel_size=(1, 3),
-                                        padding=(0, 1),
-                                        conv_cfg=conv_cfg)
-        self.branch3x3_2b = BasicConv2d(384,
-                                        384,
-                                        kernel_size=(3, 1),
-                                        padding=(1, 0),
-                                        conv_cfg=conv_cfg)
+        self.branch3x3_1 = BasicConv2d(
+            in_channels, 384, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch3x3_2a = BasicConv2d(
+            384, 384, kernel_size=(1, 3), padding=(0, 1), conv_cfg=conv_cfg)
+        self.branch3x3_2b = BasicConv2d(
+            384, 384, kernel_size=(3, 1), padding=(1, 0), conv_cfg=conv_cfg)
 
-        self.branch3x3dbl_1 = BasicConv2d(in_channels,
-                                          448,
-                                          kernel_size=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_2 = BasicConv2d(448,
-                                          384,
-                                          kernel_size=3,
-                                          padding=1,
-                                          conv_cfg=conv_cfg)
-        self.branch3x3dbl_3a = BasicConv2d(384,
-                                           384,
-                                           kernel_size=(1, 3),
-                                           padding=(0, 1),
-                                           conv_cfg=conv_cfg)
-        self.branch3x3dbl_3b = BasicConv2d(384,
-                                           384,
-                                           kernel_size=(3, 1),
-                                           padding=(1, 0),
-                                           conv_cfg=conv_cfg)
+        self.branch3x3dbl_1 = BasicConv2d(
+            in_channels, 448, kernel_size=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_2 = BasicConv2d(
+            448, 384, kernel_size=3, padding=1, conv_cfg=conv_cfg)
+        self.branch3x3dbl_3a = BasicConv2d(
+            384, 384, kernel_size=(1, 3), padding=(0, 1), conv_cfg=conv_cfg)
+        self.branch3x3dbl_3b = BasicConv2d(
+            384, 384, kernel_size=(3, 1), padding=(1, 0), conv_cfg=conv_cfg)
 
-        self.branch_pool_downsample = nn.AvgPool2d(kernel_size=3,
-                                                   stride=1,
-                                                   padding=1)
-        self.branch_pool = BasicConv2d(in_channels,
-                                       192,
-                                       kernel_size=1,
-                                       conv_cfg=conv_cfg)
+        self.branch_pool_downsample = nn.AvgPool2d(
+            kernel_size=3, stride=1, padding=1)
+        self.branch_pool = BasicConv2d(
+            in_channels, 192, kernel_size=1, conv_cfg=conv_cfg)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         """Forward function."""
@@ -424,6 +331,7 @@ class InceptionAux(BaseModule):
             Defaults to use trunc normal with ``std=0.01`` for Conv2d layers
             and use trunc normal with ``std=0.001`` for Linear layers..
     """
+
     def __init__(self,
                  in_channels: int,
                  num_classes: int,
@@ -434,10 +342,8 @@ class InceptionAux(BaseModule):
                  ]):
         super().__init__(init_cfg=init_cfg)
         self.downsample = nn.AvgPool2d(kernel_size=5, stride=3)
-        self.conv0 = BasicConv2d(in_channels,
-                                 128,
-                                 kernel_size=1,
-                                 conv_cfg=conv_cfg)
+        self.conv0 = BasicConv2d(
+            in_channels, 128, kernel_size=1, conv_cfg=conv_cfg)
         self.conv1 = BasicConv2d(128, 768, kernel_size=5, conv_cfg=conv_cfg)
         self.gap = nn.AdaptiveAvgPool2d((1, 1))
         self.fc = nn.Linear(768, num_classes)
@@ -499,6 +405,7 @@ class InceptionV3(BaseBackbone):
         >>> print(aux_out.shape, out.shape)
         torch.Size([2, 100]) torch.Size([2, 100])
     """
+
     def __init__(
         self,
         num_classes: int = 1000,

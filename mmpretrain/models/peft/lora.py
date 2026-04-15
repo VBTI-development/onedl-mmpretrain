@@ -31,6 +31,7 @@ class LoRALinear(nn.Module):
         :math:`A` and :math:`B` are the low-rank decomposition matrixs,
         :math: `\alpha` is the scale factor and :math: `r` is the rank.
     """
+
     def __init__(self,
                  original_layer: nn.Linear,
                  alpha: int = 1,
@@ -86,6 +87,7 @@ class LoRAModel(BaseModule):
         ...         dict(type='proj', alpha=8, rank=8), # suffix
         ...     ])
     """
+
     def __init__(self,
                  module: dict,
                  alpha: int = 1,
@@ -169,6 +171,7 @@ class LoRAModel(BaseModule):
         the state dict. And register state dict loading hooks to handle the
         incompatible keys while loading the state dict.
         """
+
         def _state_dict_hook(module, state_dict, prefix, local_metadata):
             """Save only the lora parameters to the state dict."""
             keys = [k for k, _ in state_dict.items()]

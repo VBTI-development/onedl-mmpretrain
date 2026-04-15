@@ -82,6 +82,7 @@ class EmbeddingEMA(nn.Module):
         codebook_init_path (str): The initialization checkpoint for codebook.
             Defaults to None.
     """
+
     def __init__(self,
                  num_tokens: int,
                  codebook_dim: int,
@@ -99,8 +100,8 @@ class EmbeddingEMA(nn.Module):
             self.register_buffer('initted', torch.Tensor([not kmeans_init]))
         else:
             print(f'load init codebook weight from {codebook_init_path}')
-            codebook_ckpt_weight = torch.load(codebook_init_path,
-                                              map_location='cpu')
+            codebook_ckpt_weight = torch.load(
+                codebook_init_path, map_location='cpu')
             weight = codebook_ckpt_weight.clone()
             self.register_buffer('initted', torch.Tensor([True]))
 
@@ -140,6 +141,7 @@ class NormEMAVectorQuantizer(nn.Module):
         codebook_init_path (str): The initialization checkpoint for codebook.
             Defaults to None.
     """
+
     def __init__(self,
                  num_embed: int,
                  embed_dims: int,
@@ -155,10 +157,11 @@ class NormEMAVectorQuantizer(nn.Module):
         self.decay = decay
 
         # learnable = True if orthogonal_reg_weight > 0 else False
-        self.embedding = EmbeddingEMA(num_tokens=self.num_tokens,
-                                      codebook_dim=self.codebook_dim,
-                                      kmeans_init=kmeans_init,
-                                      codebook_init_path=codebook_init_path)
+        self.embedding = EmbeddingEMA(
+            num_tokens=self.num_tokens,
+            codebook_dim=self.codebook_dim,
+            kmeans_init=kmeans_init,
+            codebook_init_path=codebook_init_path)
 
         self.statistic_code_usage = statistic_code_usage
         if statistic_code_usage:

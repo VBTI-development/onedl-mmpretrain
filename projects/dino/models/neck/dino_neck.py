@@ -19,6 +19,7 @@ class DINONeck(BaseModule):
         out_channels (int): Output channels.
         bottleneck_channels (int): Bottleneck channels.
     """
+
     def __init__(self, in_channels: int, hidden_channels: int,
                  out_channels: int, bottleneck_channels: int) -> None:
         super().__init__()
@@ -30,9 +31,8 @@ class DINONeck(BaseModule):
             nn.Linear(hidden_channels, bottleneck_channels),
         ])
 
-        self.last_layer = nn.Linear(bottleneck_channels,
-                                    out_channels,
-                                    bias=False)
+        self.last_layer = nn.Linear(
+            bottleneck_channels, out_channels, bias=False)
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x = self.mlp(x[0])

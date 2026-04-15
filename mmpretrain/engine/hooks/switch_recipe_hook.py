@@ -132,6 +132,7 @@ class SwitchRecipeHook(Hook):
     @staticmethod
     def _switch_train_pipeline(runner, train_pipeline):
         """Switch the train loader dataset pipeline."""
+
         def switch_pipeline(dataset, pipeline):
             if hasattr(dataset, 'pipeline'):
                 # for usual dataset

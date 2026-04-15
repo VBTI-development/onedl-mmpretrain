@@ -9,6 +9,7 @@ from mmpretrain.models.backbones.poolformer import PoolFormerBlock
 
 
 class TestPoolFormer(TestCase):
+
     def setUp(self):
         arch = 's12'
         self.cfg = dict(arch=arch, drop_path_rate=0.1)
@@ -61,10 +62,11 @@ class TestPoolFormer(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(type='Kaiming',
-                 layer='Conv2d',
-                 mode='fan_in',
-                 nonlinearity='linear')
+            dict(
+                type='Kaiming',
+                layer='Conv2d',
+                mode='fan_in',
+                nonlinearity='linear')
         ]
         model = PoolFormer(**cfg)
         ori_weight = model.patch_embed.proj.weight.clone().detach()

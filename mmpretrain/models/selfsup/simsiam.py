@@ -18,6 +18,7 @@ class SimSiam(BaseSelfSupervisor):
     The operation of fixing learning rate
     of predictor is in `engine/hooks/simsiam_hook.py`.
     """
+
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

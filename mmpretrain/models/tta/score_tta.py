@@ -9,6 +9,7 @@ from mmpretrain.structures import DataSample
 
 @MODELS.register_module()
 class AverageClsScoreTTA(BaseTTAModel):
+
     def merge_preds(
         self,
         data_samples_list: List[List[DataSample]],

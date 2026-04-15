@@ -28,10 +28,8 @@ def parse_args():
         type=str,
         choices=['train', 'test', 'val'],
         help='phase of dataset to visualize, accept "train" "test" and "val".')
-    parser.add_argument('--num-process',
-                        type=int,
-                        default=1,
-                        help='number of process to use')
+    parser.add_argument(
+        '--num-process', type=int, default=1, help='number of process to use')
     parser.add_argument(
         '--cfg-options',
         nargs='+',
@@ -50,6 +48,7 @@ def parse_args():
 
 class DatasetValidator():
     """The dataset tool class to check if all file are broken."""
+
     def __init__(self, dataset_cfg, log_file_path):
         super(DatasetValidator, self).__init__()
         # keep only LoadImageFromFile pipeline
@@ -130,11 +129,12 @@ def main():
         if extra:
             chunksize += 1
 
-        track_parallel_progress(validator.valid_idx,
-                                list(range(len(validator))),
-                                args.num_process,
-                                chunksize=chunksize,
-                                keep_order=False)
+        track_parallel_progress(
+            validator.valid_idx,
+            list(range(len(validator))),
+            args.num_process,
+            chunksize=chunksize,
+            keep_order=False)
     else:
         track_progress(validator.valid_idx, list(range(len(validator))))
 

@@ -16,11 +16,12 @@ def test_spark():
         'to_rgb': True
     }
 
-    backbone = dict(type='SparseResNet',
-                    depth=50,
-                    out_indices=(0, 1, 2, 3),
-                    drop_path_rate=0.05,
-                    norm_cfg=dict(type='BN'))
+    backbone = dict(
+        type='SparseResNet',
+        depth=50,
+        out_indices=(0, 1, 2, 3),
+        drop_path_rate=0.05,
+        norm_cfg=dict(type='BN'))
     neck = dict(
         type='SparKLightDecoder',
         feature_dim=512,
@@ -28,8 +29,9 @@ def test_spark():
         mid_channels=0,
         norm_cfg=dict(type='BN'),
         last_act=False)
-    head = dict(type='SparKPretrainHead',
-                loss=dict(type='PixelReconstructionLoss', criterion='L2'))
+    head = dict(
+        type='SparKPretrainHead',
+        loss=dict(type='PixelReconstructionLoss', criterion='L2'))
 
     alg = SparK(
         backbone=backbone,

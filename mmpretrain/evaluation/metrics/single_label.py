@@ -460,10 +460,8 @@ class SingleLabelMetric(BaseMetric):
         target = torch.cat([res['gt_label'] for res in results])
         if 'pred_score' in results[0]:
             pred = torch.stack([res['pred_score'] for res in results])
-            metrics_list = self.calculate(pred,
-                                          target,
-                                          thrs=self.thrs,
-                                          average=self.average)
+            metrics_list = self.calculate(
+                pred, target, thrs=self.thrs, average=self.average)
 
             multi_thrs = len(self.thrs) > 1
             for i, thr in enumerate(self.thrs):
@@ -477,10 +475,11 @@ class SingleLabelMetric(BaseMetric):
         else:
             # If only label in the `pred_label`.
             pred = torch.cat([res['pred_label'] for res in results])
-            res = self.calculate(pred,
-                                 target,
-                                 average=self.average,
-                                 num_classes=results[0]['num_classes'])
+            res = self.calculate(
+                pred,
+                target,
+                average=self.average,
+                num_classes=results[0]['num_classes'])
             metrics = pack_results(*res)
 
         result_metrics = dict()
@@ -750,12 +749,8 @@ class ConfusionMatrix(BaseMetric):
                 if len(text_d) < len(text_cm):
                     text_cm = text_d
 
-                text_[i, j] = ax.text(j,
-                                      i,
-                                      text_cm,
-                                      ha='center',
-                                      va='center',
-                                      color=color)
+                text_[i, j] = ax.text(
+                    j, i, text_cm, ha='center', va='center', color=color)
 
         display_labels = classes or np.arange(num_classes)
 

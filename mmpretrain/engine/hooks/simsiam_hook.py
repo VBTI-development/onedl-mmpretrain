@@ -18,6 +18,7 @@ class SimSiamHook(Hook):
         adjust_by_epoch (bool, optional): whether to set lr by epoch or iter.
             Defaults to True.
     """
+
     def __init__(self,
                  fix_pred_lr: bool,
                  lr: float,

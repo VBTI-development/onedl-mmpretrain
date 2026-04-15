@@ -86,8 +86,8 @@ class ModelHub:
             import mmpretrain
             root = Path(mmpretrain.__file__).parent
             model_index_path = root / '.mim' / 'model-index.yml'
-            ModelHub.register_model_index(model_index_path,
-                                          config_prefix=root / '.mim')
+            ModelHub.register_model_index(
+                model_index_path, config_prefix=root / '.mim')
             cls.__mmpretrain_registered = True
 
     @classmethod
@@ -214,9 +214,8 @@ def get_model(model: Union[str, Config],
         dataset_meta = getattr(dataset_class, 'METAINFO', {})
 
     if device_map is not None:
-        model = dispatch_model(model,
-                               device_map=device_map,
-                               offload_folder=offload_folder)
+        model = dispatch_model(
+            model, device_map=device_map, offload_folder=offload_folder)
     elif device is not None:
         model.to(device)
 

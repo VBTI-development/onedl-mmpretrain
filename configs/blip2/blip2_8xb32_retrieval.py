@@ -24,12 +24,13 @@ model = dict(
         final_norm=False,
         use_shared_rel_pos_bias=False,
         out_type='raw'),
-    multimodal_backbone=dict(type='Qformer',
-                             model_style='bert-base-uncased',
-                             vision_model_width=1408,
-                             add_cross_attention=True,
-                             cross_attention_freq=2,
-                             num_query_token=32),
+    multimodal_backbone=dict(
+        type='Qformer',
+        model_style='bert-base-uncased',
+        vision_model_width=1408,
+        add_cross_attention=True,
+        cross_attention_freq=2,
+        num_query_token=32),
     vision_neck=dict(
         type='LinearClsHead',
         in_channels=768,
@@ -51,14 +52,16 @@ model = dict(
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize',
-         scale=(364, 364),
-         interpolation='bicubic',
-         backend='pillow'),
+    dict(
+        type='Resize',
+        scale=(364, 364),
+        interpolation='bicubic',
+        backend='pillow'),
     dict(type='CleanCaption', keys='text'),
-    dict(type='PackInputs',
-         algorithm_keys=['text', 'gt_text_id', 'gt_image_id'],
-         meta_keys=['image_id']),
+    dict(
+        type='PackInputs',
+        algorithm_keys=['text', 'gt_text_id', 'gt_image_id'],
+        meta_keys=['image_id']),
 ]
 
 val_dataloader = dict(dataset=dict(pipeline=test_pipeline))

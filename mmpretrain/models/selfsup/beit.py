@@ -92,10 +92,9 @@ class VQKD(BaseModule):
         N = to_quantizer_features.shape[1]
         h, w = int(math.sqrt(N)), int(math.sqrt(N))
 
-        to_quantizer_features = rearrange(to_quantizer_features,
-                                          'b (h w) c -> b c h w',
-                                          h=h,
-                                          w=w)  # reshape for quantizer
+        to_quantizer_features = rearrange(
+            to_quantizer_features, 'b (h w) c -> b c h w', h=h,
+            w=w)  # reshape for quantizer
         quantize, loss, embed_ind = self.quantize(to_quantizer_features)
 
         return quantize, embed_ind, loss
@@ -173,6 +172,7 @@ class BEiTPretrainViT(BEiTViT):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  arch: str = 'base',
                  img_size: int = 224,
@@ -193,26 +193,27 @@ class BEiTPretrainViT(BEiTViT):
                  patch_cfg: dict = dict(padding=0),
                  layer_cfgs: dict = dict(),
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(arch=arch,
-                         img_size=img_size,
-                         patch_size=patch_size,
-                         in_channels=in_channels,
-                         out_indices=out_indices,
-                         drop_rate=drop_rate,
-                         drop_path_rate=drop_path_rate,
-                         norm_cfg=norm_cfg,
-                         final_norm=final_norm,
-                         out_type=out_type,
-                         with_cls_token=True,
-                         frozen_stages=frozen_stages,
-                         use_abs_pos_emb=use_abs_pos_emb,
-                         use_shared_rel_pos_bias=use_shared_rel_pos_bias,
-                         use_rel_pos_bias=use_rel_pos_bias,
-                         layer_scale_init_value=layer_scale_init_value,
-                         interpolate_mode=interpolate_mode,
-                         patch_cfg=patch_cfg,
-                         layer_cfgs=layer_cfgs,
-                         init_cfg=init_cfg)
+        super().__init__(
+            arch=arch,
+            img_size=img_size,
+            patch_size=patch_size,
+            in_channels=in_channels,
+            out_indices=out_indices,
+            drop_rate=drop_rate,
+            drop_path_rate=drop_path_rate,
+            norm_cfg=norm_cfg,
+            final_norm=final_norm,
+            out_type=out_type,
+            with_cls_token=True,
+            frozen_stages=frozen_stages,
+            use_abs_pos_emb=use_abs_pos_emb,
+            use_shared_rel_pos_bias=use_shared_rel_pos_bias,
+            use_rel_pos_bias=use_rel_pos_bias,
+            layer_scale_init_value=layer_scale_init_value,
+            interpolate_mode=interpolate_mode,
+            patch_cfg=patch_cfg,
+            layer_cfgs=layer_cfgs,
+            init_cfg=init_cfg)
 
         self.mask_token = nn.Parameter(torch.zeros(1, 1, self.embed_dims))
 
@@ -231,6 +232,7 @@ class BEiTPretrainViT(BEiTViT):
 
     def rescale_init_weight(self) -> None:
         """Rescale the initialized weights."""
+
         def rescale(param, layer_id):
             param.div_(math.sqrt(2.0 * layer_id))
 
@@ -305,6 +307,7 @@ class BEiT(BaseSelfSupervisor):
     with Vector-Quantized Visual Tokenizers
     <https://arxiv.org/abs/2208.06366>`_.
     """
+
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 

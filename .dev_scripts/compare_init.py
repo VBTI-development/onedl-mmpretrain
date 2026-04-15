@@ -25,14 +25,16 @@ def parse_args():
         'model_b',
         type=Path,
         help='The path of the second checkpoint or model config.')
-    parser.add_argument('--show',
-                        action='store_true',
-                        help='Whether to draw the KDE of variables')
-    parser.add_argument('-p',
-                        default=0.01,
-                        type=float,
-                        help='The threshold of p-value. '
-                        'Higher threshold means more strict test.')
+    parser.add_argument(
+        '--show',
+        action='store_true',
+        help='Whether to draw the KDE of variables')
+    parser.add_argument(
+        '-p',
+        default=0.01,
+        type=float,
+        help='The threshold of p-value. '
+        'Higher threshold means more strict test.')
     args = parser.parse_args()
     return args
 

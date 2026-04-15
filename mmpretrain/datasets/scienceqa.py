@@ -30,6 +30,7 @@ class ScienceQA(BaseDataset):
         pipeline (Sequence): Processing pipeline. Defaults to an empty tuple.
         **kwargs: Other keyword arguments in :class:`BaseDataset`.
     """
+
     def __init__(self,
                  data_root: str,
                  split: str,
@@ -46,11 +47,12 @@ class ScienceQA(BaseDataset):
         self.split_file = os.path.join(data_root, split_file)
         self.image_only = image_only
 
-        super().__init__(data_root=data_root,
-                         ann_file=ann_file,
-                         data_prefix=data_prefix,
-                         pipeline=pipeline,
-                         **kwargs)
+        super().__init__(
+            data_root=data_root,
+            ann_file=ann_file,
+            data_prefix=data_prefix,
+            pipeline=pipeline,
+            **kwargs)
 
     def load_data_list(self) -> List[dict]:
         """Load data list."""

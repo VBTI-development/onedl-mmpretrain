@@ -3,11 +3,15 @@
 {
 	"name": "Python 3",
 	// Or use a Dockerfile or Docker Compose file. More info: https://containers.dev/guide/dockerfile
-	"image": "mcr.microsoft.com/devcontainers/python:1-3.10-bookworm",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
 		"ghcr.io/devcontainers/features/git-lfs:1": {},
-		"ghcr.io/devcontainers/features/nvidia-cuda:2": {},
+		"ghcr.io/devcontainers/features/nvidia-cuda:3": {
+			"cudaVersion": "12.9",
+		},
 		"ghcr.io/va-h/devcontainers-features/uv:1": {}
 	},
 
@@ -18,7 +22,7 @@
 	// "forwardPorts": [],
 
 	// Use 'postCreateCommand' to run commands after the container is created.
-	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1",
+	"postCreateCommand": "sudo apt-get update && sudo apt-get install -y libgl1 && uv sync --all-extras --all-groups",
 
 	// Configure tool-specific properties.
 	"customizations": {
