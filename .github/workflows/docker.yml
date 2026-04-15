@@ -49,7 +49,7 @@ jobs:
         attestations: write
         id-token: write
     env:
-      IMAGE_NAME: onedl-mmpretrain-cu129-torch280
+      IMAGE_NAME: onedl-mmpretrain-cu129-torch2100
     steps:
       - name: Free Disk Space (Ubuntu)
         uses: jlumbroso/free-disk-space@main
@@ -68,7 +68,7 @@ jobs:
           swap-storage: true
 
       - name: Checkout repository at specific tag
-        uses: actions/checkout@v5
+        uses: actions/checkout@v6
         with:
           ref: ${{ needs.extract_version.outputs.tag_name }}
           submodules: 'recursive'
@@ -104,13 +104,13 @@ jobs:
 
       - name: Build and push Docker image
         id: build
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: .
           file: ./docker/Dockerfile
           build-args: |
             CU_VERSION=129
-            TORCH_VERSION=280
+            TORCH_VERSION=2100
             ONEDL_MMCV_VERSION=latest
           platforms: linux/amd64
           push: true
