@@ -53,7 +53,7 @@ readthedocs = [
     "onedl-mmcv",
     "onedl-mmengine",
     "pycocotools",
-    "torch==2.9.0; python_version == '3.12'",
+    "torch==2.10.0; python_version == '3.12'",
     "torch; python_version != '3.12'",
     "torchvision",
     "transformers>=4.53.0,<5",
@@ -75,7 +75,7 @@ optional = [
     "scikit-learn>=1.5"
 ]
 torch = [
-    "torch==2.9.0; python_version == '3.12'",
+    "torch==2.10.0; python_version == '3.12'",
     "torch>2; python_version != '3.12'",
     "torchvision",
 ]
