@@ -179,6 +179,9 @@ class RetrievalRecall(BaseMetric):
                     sample_target) in enumerate(zip(pred, target)):
                 sample_pred = to_tensor(sample_pred)
                 sample_target = to_tensor(sample_target)
+
+                if sample_pred.device != sample_target.device:
+                    sample_target = sample_target.to(sample_pred.device)
                 recalls[i] = int(
                     torch.isin(sample_pred[:k], sample_target).any())
             results.append(recalls.mean() * 100)
@@ -375,6 +378,8 @@ class RetrievalAveragePrecision(BaseMetric):
 def _calculateAp_for_sample(pred, target, mode):
     pred = to_tensor(pred)
     target = to_tensor(target)
+    if pred.device != target.device:
+        target = target.to(pred.device)
 
     num_preds = len(pred)
 
