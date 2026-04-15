@@ -9,6 +9,7 @@ from mmpretrain.models.retrievers import BaseRetriever
 
 
 class ToyRetriever(BaseRetriever):
+
     def forward(self, inputs, data_samples=None, mode: str = 'loss'):
         self.prototype_inited is False
 
@@ -19,6 +20,7 @@ class ToyRetriever(BaseRetriever):
 
 
 class TestPrepareProtBeforeValLoopHook(TestCase):
+
     def setUp(self):
         self.hook = PrepareProtoBeforeValLoopHook
         self.runner = MagicMock()

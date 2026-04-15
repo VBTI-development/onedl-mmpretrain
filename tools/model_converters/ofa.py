@@ -10,9 +10,8 @@ prog_description = """\
 Convert OFA official models to MMPretrain format.
 """
 
-MapItem = namedtuple('MapItem',
-                     'pattern repl key_action value_action',
-                     defaults=[None] * 4)
+MapItem = namedtuple(
+    'MapItem', 'pattern repl key_action value_action', defaults=[None] * 4)
 
 
 def convert_by_mapdict(src_dict: dict, map_dict: Path):
@@ -66,8 +65,9 @@ map_dict = [
     MapItem(r'\.ffn_layernorm\.', '.ffn_mid_ln.'),
     MapItem(r'\.final_layer_norm', '.ffn_ln'),
     MapItem(r'encoder.*(\.self_attn\.)', key_action=lambda _: '.attn.'),
-    MapItem(r'encoder.*(\.self_attn_layer_norm\.)',
-            key_action=lambda _: '.attn_ln.'),
+    MapItem(
+        r'encoder.*(\.self_attn_layer_norm\.)',
+        key_action=lambda _: '.attn_ln.'),
     # Decoder modules
     MapItem(r'\.code_layernorm_embedding\.', '.code_embedding_ln.'),
     MapItem(r'decoder.layer_norm\.', 'decoder.final_ln.'),
@@ -76,8 +76,9 @@ map_dict = [
     MapItem(r'\.cross_attn_ln', '.cross_attn_mid_ln'),
     MapItem(r'\.encoder_attn_layer_norm', '.cross_attn_ln'),
     MapItem(r'\.encoder_attn', '.cross_attn'),
-    MapItem(r'decoder.*(\.self_attn_layer_norm\.)',
-            key_action=lambda _: '.self_attn_ln.'),
+    MapItem(
+        r'decoder.*(\.self_attn_layer_norm\.)',
+        key_action=lambda _: '.self_attn_ln.'),
     # Remove version key
     MapItem(r'version', '', value_action=lambda _: None),
     # Add model prefix

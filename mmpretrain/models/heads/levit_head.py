@@ -9,6 +9,7 @@ from ..utils import build_norm_layer
 
 
 class BatchNormLinear(BaseModule):
+
     def __init__(self, in_channels, out_channels, norm_cfg=dict(type='BN1d')):
         super(BatchNormLinear, self).__init__()
         self.bn = build_norm_layer(norm_cfg, in_channels)
@@ -42,6 +43,7 @@ def fuse_parameters(module):
 
 @MODELS.register_module()
 class LeViTClsHead(ClsHead):
+
     def __init__(self,
                  num_classes=1000,
                  distillation=True,

@@ -84,6 +84,7 @@ def weighted_loss(loss_func):
     >>> l1_loss(pred, target, weight, avg_factor=2)
     tensor(1.5000)
     """
+
     @functools.wraps(loss_func)
     def wrapper(pred,
                 target,
@@ -111,8 +112,8 @@ def convert_to_one_hot(targets: torch.Tensor, classes) -> torch.Tensor:
     Returns:
         Tensor: Processed loss values.
     """
-    assert (torch.max(targets).item() <
-            classes), 'Class Index must be less than number of classes'
-    one_hot_targets = F.one_hot(targets.long().squeeze(-1),
-                                num_classes=classes)
+    assert (torch.max(targets).item()
+            < classes), 'Class Index must be less than number of classes'
+    one_hot_targets = F.one_hot(
+        targets.long().squeeze(-1), num_classes=classes)
     return one_hot_targets

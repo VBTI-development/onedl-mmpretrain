@@ -36,8 +36,8 @@ def tie_encoder_decoder_weights(encoder: nn.Module, decoder: nn.Module,
         encoder_modules = encoder_pointer._modules
         decoder_modules = decoder_pointer._modules
         if len(decoder_modules) > 0:
-            assert (len(encoder_modules) >
-                    0), f'''Encoder module {encoder_pointer}
+            assert (len(encoder_modules)
+                    > 0), f'''Encoder module {encoder_pointer}
             does not match decoder module {decoder_pointer}'''
 
             all_encoder_weights = set([
@@ -64,10 +64,11 @@ def tie_encoder_decoder_weights(encoder: nn.Module, decoder: nn.Module,
                 elif name not in encoder_modules:
                     continue
                 elif depth > 500:
-                    raise ValueError(
-                        '''Max depth of recursive function `tie_encoder_to_decoder` reached.
-                        It seems that there is a circular dependency
-                        between two or more `nn.Modules` of your model.''')
+                    msg = '''Max depth of recursive function
+                    `tie_encoder_to_decoder` reached. It seems that there is
+                    a circular dependency between two or more `nn.Modules`
+                    of your model.'''
+                    raise ValueError(msg)
                 else:
                     decoder_name = encoder_name = name
                 tie_encoder_to_decoder_recursively(

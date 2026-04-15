@@ -83,11 +83,12 @@ class DistilledVisionTransformer(VisionTransformer):
         cls_tokens = self.cls_token.expand(B, -1, -1)
         dist_token = self.dist_token.expand(B, -1, -1)
         x = torch.cat((cls_tokens, dist_token, x), dim=1)
-        x = x + self.resize_pos_embed(self.pos_embed,
-                                      self.patch_resolution,
-                                      patch_resolution,
-                                      mode=self.interpolate_mode,
-                                      num_extra_tokens=self.num_extra_tokens)
+        x = x + self.resize_pos_embed(
+            self.pos_embed,
+            self.patch_resolution,
+            patch_resolution,
+            mode=self.interpolate_mode,
+            num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         outs = []

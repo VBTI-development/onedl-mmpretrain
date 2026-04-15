@@ -76,6 +76,7 @@ class DataSample(BaseDataElement):
         >>> print(data_sample.my_field)
         [1, 2, 3]
     """
+
     def set_gt_label(self, value: LABEL_TYPE) -> 'DataSample':
         """Set ``gt_label``."""
         self.set_field(format_label(value), 'gt_label', dtype=torch.Tensor)
@@ -90,9 +91,8 @@ class DataSample(BaseDataElement):
                 f'The length of score {len(score)} should be '\
                 f'equal to the num_classes {self.num_classes}.'
         else:
-            self.set_field(name='num_classes',
-                           value=len(score),
-                           field_type='metainfo')
+            self.set_field(
+                name='num_classes', value=len(score), field_type='metainfo')
         return self
 
     def set_pred_label(self, value: LABEL_TYPE) -> 'DataSample':
@@ -109,9 +109,8 @@ class DataSample(BaseDataElement):
                 f'The length of score {len(score)} should be '\
                 f'equal to the num_classes {self.num_classes}.'
         else:
-            self.set_field(name='num_classes',
-                           value=len(score),
-                           field_type='metainfo')
+            self.set_field(
+                name='num_classes', value=len(score), field_type='metainfo')
         return self
 
     def set_mask(self, value: Union[torch.Tensor, np.ndarray]):
@@ -124,6 +123,7 @@ class DataSample(BaseDataElement):
 
     def __repr__(self) -> str:
         """Represent the object."""
+
         def dump_items(items, prefix=''):
             return '\n'.join(f'{prefix}{k}: {v}' for k, v in items)
 

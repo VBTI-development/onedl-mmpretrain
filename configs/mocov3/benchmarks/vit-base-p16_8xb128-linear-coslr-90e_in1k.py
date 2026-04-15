@@ -27,11 +27,9 @@ model = dict(
     ))
 
 # optimizer
-optim_wrapper = dict(type='OptimWrapper',
-                     optimizer=dict(type='SGD',
-                                    lr=12,
-                                    momentum=0.9,
-                                    weight_decay=0.))
+optim_wrapper = dict(
+    type='OptimWrapper',
+    optimizer=dict(type='SGD', lr=12, momentum=0.9, weight_decay=0.))
 
 # learning rate scheduler
 param_scheduler = [

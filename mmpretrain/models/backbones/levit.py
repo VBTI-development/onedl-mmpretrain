@@ -13,6 +13,7 @@ from ..utils import build_norm_layer
 
 
 class HybridBackbone(BaseModule):
+
     def __init__(
             self,
             embed_dim,
@@ -61,6 +62,7 @@ class HybridBackbone(BaseModule):
 
 
 class ConvolutionBatchNorm(BaseModule):
+
     def __init__(
             self,
             in_channel,
@@ -73,14 +75,15 @@ class ConvolutionBatchNorm(BaseModule):
             norm_cfg=dict(type='BN'),
     ):
         super(ConvolutionBatchNorm, self).__init__()
-        self.conv = nn.Conv2d(in_channel,
-                              out_channel,
-                              kernel_size=kernel_size,
-                              stride=stride,
-                              padding=pad,
-                              dilation=dilation,
-                              groups=groups,
-                              bias=False)
+        self.conv = nn.Conv2d(
+            in_channel,
+            out_channel,
+            kernel_size=kernel_size,
+            stride=stride,
+            padding=pad,
+            dilation=dilation,
+            groups=groups,
+            bias=False)
         self.bn = build_norm_layer(norm_cfg, out_channel)
 
     def forward(self, x):
@@ -94,6 +97,7 @@ class ConvolutionBatchNorm(BaseModule):
 
 
 class LinearBatchNorm(BaseModule):
+
     def __init__(self, in_feature, out_feature, norm_cfg=dict(type='BN1d')):
         super(LinearBatchNorm, self).__init__()
         self.linear = nn.Linear(in_feature, out_feature, bias=False)
@@ -124,6 +128,7 @@ class LinearBatchNorm(BaseModule):
 
 
 class Residual(BaseModule):
+
     def __init__(self, block, drop_path_rate=0.):
         super(Residual, self).__init__()
         self.block = block
@@ -138,6 +143,7 @@ class Residual(BaseModule):
 
 
 class Attention(BaseModule):
+
     def __init__(
             self,
             dim,
@@ -157,8 +163,8 @@ class Attention(BaseModule):
         self.attn_ratio = attn_ratio
         h = self.dh + nh_kd * 2
         self.qkv = LinearBatchNorm(dim, h)
-        self.proj = nn.Sequential(build_activation_layer(act_cfg),
-                                  LinearBatchNorm(self.dh, dim))
+        self.proj = nn.Sequential(
+            build_activation_layer(act_cfg), LinearBatchNorm(self.dh, dim))
 
         points = list(itertools.product(range(resolution), range(resolution)))
         N = len(points)
@@ -207,6 +213,7 @@ class Attention(BaseModule):
 
 
 class MLP(nn.Sequential):
+
     def __init__(self, embed_dim, mlp_ratio, act_cfg=dict(type='HSwish')):
         super(MLP, self).__init__()
         h = embed_dim * mlp_ratio
@@ -222,6 +229,7 @@ class MLP(nn.Sequential):
 
 
 class Subsample(BaseModule):
+
     def __init__(self, stride, resolution):
         super(Subsample, self).__init__()
         self.stride = stride
@@ -237,6 +245,7 @@ class Subsample(BaseModule):
 
 
 class AttentionSubsample(nn.Sequential):
+
     def __init__(self,
                  in_dim,
                  out_dim,
@@ -258,17 +267,17 @@ class AttentionSubsample(nn.Sequential):
         h = self.dh + nh_kd
         self.kv = LinearBatchNorm(in_dim, h)
 
-        self.q = nn.Sequential(Subsample(stride, resolution),
-                               LinearBatchNorm(in_dim, nh_kd))
-        self.proj = nn.Sequential(build_activation_layer(act_cfg),
-                                  LinearBatchNorm(self.dh, out_dim))
+        self.q = nn.Sequential(
+            Subsample(stride, resolution), LinearBatchNorm(in_dim, nh_kd))
+        self.proj = nn.Sequential(
+            build_activation_layer(act_cfg), LinearBatchNorm(self.dh, out_dim))
 
         self.stride = stride
         self.resolution = resolution
         points = list(itertools.product(range(resolution), range(resolution)))
         sub_points = list(
-            itertools.product(range(self.sub_resolution),
-                              range(self.sub_resolution)))
+            itertools.product(
+                range(self.sub_resolution), range(self.sub_resolution)))
         N = len(points)
         N_sub = len(sub_points)
         attention_offsets = {}
@@ -443,8 +452,9 @@ class LeViT(BaseBackbone):
                 resolution = downsample.sub_resolution
                 if mlp_ratio > 0:  # mlp_ratio
                     blocks.append(
-                        Residual(MLP(embed_dims, mlp_ratio, act_cfg=act_cfg),
-                                 self.drop_path_rate))
+                        Residual(
+                            MLP(embed_dims, mlp_ratio, act_cfg=act_cfg),
+                            self.drop_path_rate))
             self.resolutions.append(resolution)
             for _ in range(depth):
                 blocks.append(
@@ -459,8 +469,9 @@ class LeViT(BaseBackbone):
                         ), self.drop_path_rate))
                 if mlp_ratio > 0:
                     blocks.append(
-                        Residual(MLP(embed_dims, mlp_ratio, act_cfg=act_cfg),
-                                 self.drop_path_rate))
+                        Residual(
+                            MLP(embed_dims, mlp_ratio, act_cfg=act_cfg),
+                            self.drop_path_rate))
 
             self.stages.append(Sequential(*blocks))
 

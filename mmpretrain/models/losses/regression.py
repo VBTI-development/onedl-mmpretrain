@@ -10,6 +10,7 @@ from mmpretrain.models.losses.utils import weight_reduce_loss
 @LOSSES.register_module()
 class RegressionLoss(nn.Module):
     """Module to calculate loss for regression values."""
+
     def __init__(self,
                  loss_type: Literal['L1Loss', 'L2Loss', 'MSELoss'],
                  reduction: str = 'mean',
@@ -54,12 +55,10 @@ class RegressionLoss(nn.Module):
             list[torch.Tensor]: The loss
         """
         assert reduction_override in (None, 'none', 'mean', 'sum')
-        reduction = (reduction_override
-                     if reduction_override else self.reduction)
+        reduction = (
+            reduction_override if reduction_override else self.reduction)
 
         loss = self.loss_weight * self.criterion(pred, target)
-        loss = weight_reduce_loss(loss,
-                                  weight=weight,
-                                  reduction=reduction,
-                                  avg_factor=avg_factor)
+        loss = weight_reduce_loss(
+            loss, weight=weight, reduction=reduction, avg_factor=avg_factor)
         return loss

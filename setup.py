@@ -10,6 +10,7 @@ from setuptools.command.sdist import sdist
 
 class CustomEggInfo(egg_info):
     """Custom egg_info command that adds MIM extension files."""
+
     def run(self):
         # Create MIM files BEFORE running egg_info
         self.add_mim_extension()
@@ -58,6 +59,7 @@ class CustomEggInfo(egg_info):
 
 class CustomBuildPy(build_py):
     """Custom build_py command that ensures MIM files are included."""
+
     def run(self):
         # Ensure MIM files exist before building
         custom_egg_info = CustomEggInfo(self.distribution)
@@ -68,6 +70,7 @@ class CustomBuildPy(build_py):
 class CustomSdist(sdist):
     """Custom sdist command that ensures MIM files are included in source
     distribution."""
+
     def run(self):
         # Ensure MIM files exist before creating source distribution
         custom_egg_info = CustomEggInfo(self.distribution)

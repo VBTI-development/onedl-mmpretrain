@@ -39,6 +39,7 @@ def construct_toy_data():
 
 
 class TestRandomCrop(TestCase):
+
     def test_assertion(self):
         with self.assertRaises(AssertionError):
             cfg = dict(type='RandomCrop', crop_size=-1)
@@ -66,19 +67,15 @@ class TestRandomCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test int padding and int pad_val.
-        cfg = dict(type='RandomCrop',
-                   crop_size=(224, 224),
-                   padding=2,
-                   pad_val=1)
+        cfg = dict(
+            type='RandomCrop', crop_size=(224, 224), padding=2, pad_val=1)
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test int padding and sequence pad_val.
-        cfg = dict(type='RandomCrop',
-                   crop_size=224,
-                   padding=2,
-                   pad_val=(0, 50, 0))
+        cfg = dict(
+            type='RandomCrop', crop_size=224, padding=2, pad_val=(0, 50, 0))
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
@@ -90,10 +87,11 @@ class TestRandomCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test pad_if_needed.
-        cfg = dict(type='RandomCrop',
-                   crop_size=300,
-                   pad_if_needed=True,
-                   padding_mode='edge')
+        cfg = dict(
+            type='RandomCrop',
+            crop_size=300,
+            pad_if_needed=True,
+            padding_mode='edge')
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (300, 300, 3))
@@ -121,6 +119,7 @@ class TestRandomCrop(TestCase):
 
 
 class TestRandomResizedCrop(TestCase):
+
     def test_assertion(self):
         with self.assertRaises(AssertionError):
             cfg = dict(type='RandomResizedCrop', scale=-1)
@@ -135,15 +134,15 @@ class TestRandomResizedCrop(TestCase):
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(ValueError):
-            cfg = dict(type='RandomResizedCrop',
-                       scale=224,
-                       crop_ratio_range=(1, 0.1))
+            cfg = dict(
+                type='RandomResizedCrop', scale=224, crop_ratio_range=(1, 0.1))
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(ValueError):
-            cfg = dict(type='RandomResizedCrop',
-                       scale=224,
-                       aspect_ratio_range=(1, 0.1))
+            cfg = dict(
+                type='RandomResizedCrop',
+                scale=224,
+                aspect_ratio_range=(1, 0.1))
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(AssertionError):
@@ -164,17 +163,17 @@ class TestRandomResizedCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test crop_ratio_range.
-        cfg = dict(type='RandomResizedCrop',
-                   scale=(224, 224),
-                   crop_ratio_range=(0.5, 0.8))
+        cfg = dict(
+            type='RandomResizedCrop',
+            scale=(224, 224),
+            crop_ratio_range=(0.5, 0.8))
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test aspect_ratio_range.
-        cfg = dict(type='RandomResizedCrop',
-                   scale=224,
-                   aspect_ratio_range=(0.5, 0.8))
+        cfg = dict(
+            type='RandomResizedCrop', scale=224, aspect_ratio_range=(0.5, 0.8))
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
@@ -210,21 +209,20 @@ class TestRandomResizedCrop(TestCase):
 
 
 class TestEfficientNetRandomCrop(TestCase):
+
     def test_assertion(self):
         with self.assertRaises(AssertionError):
             cfg = dict(type='EfficientNetRandomCrop', scale=(1, 1))
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(AssertionError):
-            cfg = dict(type='EfficientNetRandomCrop',
-                       scale=224,
-                       min_covered=-1)
+            cfg = dict(
+                type='EfficientNetRandomCrop', scale=224, min_covered=-1)
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(AssertionError):
-            cfg = dict(type='EfficientNetRandomCrop',
-                       scale=224,
-                       crop_padding=-1)
+            cfg = dict(
+                type='EfficientNetRandomCrop', scale=224, crop_padding=-1)
             TRANSFORMS.build(cfg)
 
     def test_transform(self):
@@ -237,17 +235,19 @@ class TestEfficientNetRandomCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test crop_ratio_range.
-        cfg = dict(type='EfficientNetRandomCrop',
-                   scale=224,
-                   crop_ratio_range=(0.5, 0.8))
+        cfg = dict(
+            type='EfficientNetRandomCrop',
+            scale=224,
+            crop_ratio_range=(0.5, 0.8))
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test aspect_ratio_range.
-        cfg = dict(type='EfficientNetRandomCrop',
-                   scale=224,
-                   aspect_ratio_range=(0.5, 0.8))
+        cfg = dict(
+            type='EfficientNetRandomCrop',
+            scale=224,
+            aspect_ratio_range=(0.5, 0.8))
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
@@ -265,10 +265,11 @@ class TestEfficientNetRandomCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test crop_padding.
-        cfg = dict(type='EfficientNetRandomCrop',
-                   scale=224,
-                   min_covered=0.9,
-                   crop_padding=10)
+        cfg = dict(
+            type='EfficientNetRandomCrop',
+            scale=224,
+            min_covered=0.9,
+            crop_padding=10)
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
@@ -291,6 +292,7 @@ class TestEfficientNetRandomCrop(TestCase):
 
 
 class TestResizeEdge(TestCase):
+
     def test_transform(self):
         results = dict(img=np.random.randint(0, 256, (128, 256, 3), np.uint8))
 
@@ -332,6 +334,7 @@ class TestResizeEdge(TestCase):
 
 
 class TestEfficientNetCenterCrop(TestCase):
+
     def test_assertion(self):
         with self.assertRaises(AssertionError):
             cfg = dict(type='EfficientNetCenterCrop', crop_size=(1, 1))
@@ -342,9 +345,8 @@ class TestEfficientNetCenterCrop(TestCase):
             TRANSFORMS.build(cfg)
 
         with self.assertRaises(AssertionError):
-            cfg = dict(type='EfficientNetCenterCrop',
-                       crop_size=224,
-                       crop_padding=-1)
+            cfg = dict(
+                type='EfficientNetCenterCrop', crop_size=224, crop_padding=-1)
             TRANSFORMS.build(cfg)
 
     def test_transform(self):
@@ -357,9 +359,8 @@ class TestEfficientNetCenterCrop(TestCase):
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
 
         # test crop_padding.
-        cfg = dict(type='EfficientNetCenterCrop',
-                   crop_size=224,
-                   crop_padding=10)
+        cfg = dict(
+            type='EfficientNetCenterCrop', crop_size=224, crop_padding=10)
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertTupleEqual(results['img'].shape, (224, 224, 3))
@@ -380,6 +381,7 @@ class TestEfficientNetCenterCrop(TestCase):
 
 
 class TestRandomErasing(TestCase):
+
     def test_initialize(self):
         # test erase_prob assertion
         with self.assertRaises(AssertionError):
@@ -398,9 +400,8 @@ class TestRandomErasing(TestCase):
             TRANSFORMS.build(cfg)
         with self.assertRaises(AssertionError):
             # min_area_ratio should be smaller than max_area_ratio
-            cfg = dict(type='RandomErasing',
-                       min_area_ratio=0.6,
-                       max_area_ratio=0.4)
+            cfg = dict(
+                type='RandomErasing', min_area_ratio=0.6, max_area_ratio=0.4)
             TRANSFORMS.build(cfg)
 
         # test aspect_range assertion
@@ -447,20 +448,22 @@ class TestRandomErasing(TestCase):
     def test_transform(self):
         # test when erase_prob=0.
         results = construct_toy_data()
-        cfg = dict(type='RandomErasing',
-                   erase_prob=0.,
-                   mode='const',
-                   fill_color=(255, 255, 255))
+        cfg = dict(
+            type='RandomErasing',
+            erase_prob=0.,
+            mode='const',
+            fill_color=(255, 255, 255))
         random_erasing = TRANSFORMS.build(cfg)
         results = random_erasing(results)
         np.testing.assert_array_equal(results['img'], results['ori_img'])
 
         # test mode 'const'
         results = construct_toy_data()
-        cfg = dict(type='RandomErasing',
-                   erase_prob=1.,
-                   mode='const',
-                   fill_color=(255, 255, 255))
+        cfg = dict(
+            type='RandomErasing',
+            erase_prob=1.,
+            mode='const',
+            fill_color=(255, 255, 255))
         with patch('numpy.random', np.random.RandomState(0)):
             random_erasing = TRANSFORMS.build(cfg)
             results = random_erasing(results)
@@ -482,10 +485,11 @@ class TestRandomErasing(TestCase):
 
         # test mode 'rand' with uniform distribution
         results = construct_toy_data()
-        cfg = dict(type='RandomErasing',
-                   erase_prob=1.,
-                   mode='rand',
-                   fill_std=(10, 255, 0))
+        cfg = dict(
+            type='RandomErasing',
+            erase_prob=1.,
+            mode='rand',
+            fill_std=(10, 255, 0))
         with patch('numpy.random', np.random.RandomState(0)):
             random_erasing = TRANSFORMS.build(cfg)
             results = random_erasing(results)
@@ -495,11 +499,12 @@ class TestRandomErasing(TestCase):
             np.testing.assert_array_equal(results['img'], expect_out)
 
     def test_repr(self):
-        cfg = dict(type='RandomErasing',
-                   erase_prob=0.5,
-                   mode='const',
-                   aspect_range=(0.3, 1.3),
-                   fill_color=(255, 255, 255))
+        cfg = dict(
+            type='RandomErasing',
+            erase_prob=0.5,
+            mode='const',
+            aspect_range=(0.3, 1.3),
+            fill_color=(255, 255, 255))
         transform = TRANSFORMS.build(cfg)
         self.assertEqual(
             repr(transform),
@@ -510,18 +515,20 @@ class TestRandomErasing(TestCase):
 
 class TestColorJitter(TestCase):
 
-    DEFAULT_ARGS = dict(type='ColorJitter',
-                        brightness=0.5,
-                        contrast=0.5,
-                        saturation=0.5,
-                        hue=0.2)
+    DEFAULT_ARGS = dict(
+        type='ColorJitter',
+        brightness=0.5,
+        contrast=0.5,
+        saturation=0.5,
+        hue=0.2)
 
     def test_initialize(self):
-        cfg = dict(type='ColorJitter',
-                   brightness=(0.8, 1.2),
-                   contrast=[0.5, 1.5],
-                   saturation=0.,
-                   hue=0.2)
+        cfg = dict(
+            type='ColorJitter',
+            brightness=(0.8, 1.2),
+            contrast=[0.5, 1.5],
+            saturation=0.,
+            hue=0.2)
         transform = TRANSFORMS.build(cfg)
         self.assertEqual(transform.brightness, (0.8, 1.2))
         self.assertEqual(transform.contrast, (0.5, 1.5))
@@ -556,10 +563,8 @@ class TestColorJitter(TestCase):
 
         # test call with brightness, contrast and saturation are all 0
         results = dict(img=copy.deepcopy(ori_img))
-        cfg = dict(type='ColorJitter',
-                   brightness=0.,
-                   contrast=0.,
-                   saturation=0.)
+        cfg = dict(
+            type='ColorJitter', brightness=0., contrast=0., saturation=0.)
         transform = TRANSFORMS.build(cfg)
         results = transform(results)
         self.assertEqual(results['img'].dtype, ori_img.dtype)
@@ -588,6 +593,7 @@ class TestColorJitter(TestCase):
 
 
 class TestLighting(TestCase):
+
     def setUp(self):
         EIGVAL = [0.2175, 0.0188, 0.0045]
         EIGVEC = [
@@ -595,11 +601,12 @@ class TestLighting(TestCase):
             [-0.5808, -0.0045, -0.814],
             [-0.5675, 0.7192, 0.4009],
         ]
-        self.DEFAULT_ARGS = dict(type='Lighting',
-                                 eigval=EIGVAL,
-                                 eigvec=EIGVEC,
-                                 alphastd=25.5,
-                                 to_rgb=False)
+        self.DEFAULT_ARGS = dict(
+            type='Lighting',
+            eigval=EIGVAL,
+            eigvec=EIGVEC,
+            alphastd=25.5,
+            to_rgb=False)
 
     def test_assertion(self):
         with self.assertRaises(AssertionError):
@@ -669,11 +676,11 @@ class TestLighting(TestCase):
 
 
 class TestAlbumentations(TestCase):
-    DEFAULT_ARGS = dict(type='Albumentations',
-                        transforms=[dict(type='ChannelShuffle', p=1)])
+    DEFAULT_ARGS = dict(
+        type='Albumentations', transforms=[dict(type='ChannelShuffle', p=1)])
 
-    @pytest.mark.skipif(albumentations is None,
-                        reason='No Albumentations module.')
+    @pytest.mark.skipif(
+        albumentations is None, reason='No Albumentations module.')
     def test_assertion(self):
         # Test with non-list transforms
         with self.assertRaises(AssertionError):
@@ -705,8 +712,8 @@ class TestAlbumentations(TestCase):
             cfg['keymap'] = []
             TRANSFORMS.build(cfg)
 
-    @pytest.mark.skipif(albumentations is None,
-                        reason='No Albumentations module.')
+    @pytest.mark.skipif(
+        albumentations is None, reason='No Albumentations module.')
     def test_transform(self):
         ori_img = np.random.randint(0, 256, (256, 256, 3), np.uint8)
         results = dict(img=copy.deepcopy(ori_img))
@@ -742,23 +749,26 @@ class TestAlbumentations(TestCase):
         results = dict(img=copy.deepcopy(ori_img))
         cfg = copy.deepcopy(self.DEFAULT_ARGS)
         nested_transform_cfg = [
-            dict(type='ShiftScaleRotate',
-                 shift_limit=0.0625,
-                 scale_limit=0.0,
-                 rotate_limit=0,
-                 interpolation=1,
-                 p=0.5),
-            dict(type='RandomBrightnessContrast',
-                 brightness_limit=[0.1, 0.3],
-                 contrast_limit=[0.1, 0.3],
-                 p=0.2),
+            dict(
+                type='ShiftScaleRotate',
+                shift_limit=0.0625,
+                scale_limit=0.0,
+                rotate_limit=0,
+                interpolation=1,
+                p=0.5),
+            dict(
+                type='RandomBrightnessContrast',
+                brightness_limit=[0.1, 0.3],
+                contrast_limit=[0.1, 0.3],
+                p=0.2),
             dict(type='ChannelShuffle', p=0.1),
-            dict(type='OneOf',
-                 transforms=[
-                     dict(type='Blur', blur_limit=3, p=1.0),
-                     dict(type='MedianBlur', blur_limit=3, p=1.0)
-                 ],
-                 p=0.1),
+            dict(
+                type='OneOf',
+                transforms=[
+                    dict(type='Blur', blur_limit=3, p=1.0),
+                    dict(type='MedianBlur', blur_limit=3, p=1.0)
+                ],
+                p=0.1),
         ]
         cfg['transforms'] = nested_transform_cfg
         mmpretrain_module = TRANSFORMS.build(cfg)
@@ -804,8 +814,8 @@ class TestAlbumentations(TestCase):
         assert min(ablu_result['img'].shape[:2]) == 400
         assert ablu_result['img_shape'] == (400, 600)
 
-    @pytest.mark.skipif(albumentations is None,
-                        reason='No Albumentations module.')
+    @pytest.mark.skipif(
+        albumentations is None, reason='No Albumentations module.')
     def test_repr(self):
         cfg = copy.deepcopy(self.DEFAULT_ARGS)
         transform = TRANSFORMS.build(cfg)
@@ -815,11 +825,12 @@ class TestAlbumentations(TestCase):
 
 
 class TestSimMIMMaskGenerator(TestCase):
-    DEFAULT_ARGS = dict(type='SimMIMMaskGenerator',
-                        input_size=192,
-                        mask_patch_size=32,
-                        model_patch_size=4,
-                        mask_ratio=0.6)
+    DEFAULT_ARGS = dict(
+        type='SimMIMMaskGenerator',
+        input_size=192,
+        mask_patch_size=32,
+        model_patch_size=4,
+        mask_ratio=0.6)
 
     def test_transform(self):
         img = np.random.randint(0, 256, (3, 192, 192), np.uint8)
@@ -840,11 +851,12 @@ class TestSimMIMMaskGenerator(TestCase):
 
 
 class TestBEiTMaskGenerator(TestCase):
-    DEFAULT_ARGS = dict(type='BEiTMaskGenerator',
-                        input_size=(14, 14),
-                        num_masking_patches=75,
-                        max_num_patches=None,
-                        min_num_patches=16)
+    DEFAULT_ARGS = dict(
+        type='BEiTMaskGenerator',
+        input_size=(14, 14),
+        num_masking_patches=75,
+        max_num_patches=None,
+        min_num_patches=16)
 
     def test_transform(self):
         module = TRANSFORMS.build(self.DEFAULT_ARGS)
@@ -865,6 +877,7 @@ class TestBEiTMaskGenerator(TestCase):
 
 
 class TestVisionTransformWrapper(TestCase):
+
     def test_register(self):
         for t in VISION_TRANSFORMS:
             self.assertIn('torchvision/', t)
@@ -880,8 +893,8 @@ class TestVisionTransformWrapper(TestCase):
         mmcls_trans = TRANSFORMS.build(
             dict(type='torchvision/RandomResizedCrop', size=224))
         mmcls_transformed_img = mmcls_trans(data)['img']
-        np.equal(np.array(vision_transformed_img),
-                 np.array(mmcls_transformed_img))
+        np.equal(
+            np.array(vision_transformed_img), np.array(mmcls_transformed_img))
 
         # test convert type dtype
         data = {'img': torch.randn(3, 224, 224)}
@@ -890,8 +903,8 @@ class TestVisionTransformWrapper(TestCase):
         mmcls_trans = TRANSFORMS.build(
             dict(type='torchvision/ConvertImageDtype', dtype='float'))
         mmcls_transformed_img = mmcls_trans(data)['img']
-        np.equal(np.array(vision_transformed_img),
-                 np.array(mmcls_transformed_img))
+        np.equal(
+            np.array(vision_transformed_img), np.array(mmcls_transformed_img))
 
         # test transform with interpolation
         data = {'img': Image.open(img_path)}
@@ -905,8 +918,8 @@ class TestVisionTransformWrapper(TestCase):
         mmcls_trans = TRANSFORMS.build(
             dict(type='torchvision/Resize', size=224, interpolation='nearest'))
         mmcls_transformed_img = mmcls_trans(data)['img']
-        np.equal(np.array(vision_transformed_img),
-                 np.array(mmcls_transformed_img))
+        np.equal(
+            np.array(vision_transformed_img), np.array(mmcls_transformed_img))
 
         # test compose transforms
         data = {'img': Image.open(img_path)}
@@ -915,8 +928,8 @@ class TestVisionTransformWrapper(TestCase):
             transforms.RandomHorizontalFlip(),
             transforms.PILToTensor(),
             transforms.ConvertImageDtype(torch.float),
-            transforms.Normalize(mean=[0.485, 0.456, 0.406],
-                                 std=[0.229, 0.224, 0.225])
+            transforms.Normalize(
+                mean=[0.485, 0.456, 0.406], std=[0.229, 0.224, 0.225])
         ])
         vision_transformed_img = vision_trans(data['img'])
 
@@ -937,8 +950,8 @@ class TestVisionTransformWrapper(TestCase):
         mmcls_trans = Compose(transforms=pipeline)
         mmcls_data = {'img_path': img_path}
         mmcls_transformed_img = mmcls_trans(mmcls_data)['img']
-        np.equal(np.array(vision_transformed_img),
-                 np.array(mmcls_transformed_img))
+        np.equal(
+            np.array(vision_transformed_img), np.array(mmcls_transformed_img))
 
     def test_repr(self):
         vision_trans = transforms.RandomResizedCrop(224)

@@ -18,6 +18,7 @@ CONFIG = ModelHub.get(MODEL).config
 
 
 class TestImageClassificationInferencer(TestCase):
+
     def test_init(self):
         # test input BaseModel
         model = get_model(MODEL)
@@ -72,10 +73,8 @@ class TestImageClassificationInferencer(TestCase):
             self.assertTrue(osp.exists(osp.join(tmpdir, '0.png')))
 
             inferencer.visualizer = MagicMock(wraps=inferencer.visualizer)
-            inferencer(img_path,
-                       rescale_factor=2.,
-                       draw_score=False,
-                       show_dir=tmpdir)
+            inferencer(
+                img_path, rescale_factor=2., draw_score=False, show_dir=tmpdir)
             self.assertTrue(osp.exists(osp.join(tmpdir, 'color.png')))
             inferencer.visualizer.visualize_cls.assert_called_once_with(
                 ANY,
@@ -93,6 +92,7 @@ class TestImageClassificationInferencer(TestCase):
 
 
 class TestInferenceAPIs(TestCase):
+
     def test_inference_model(self):
         # test backward compatibility
         img_path = osp.join(osp.dirname(__file__), '../data/color.jpg')

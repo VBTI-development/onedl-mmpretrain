@@ -8,10 +8,11 @@ _base_ = [
 # dataset setting
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='RandomResizedCrop',
-         scale=512,
-         backend='pillow',
-         interpolation='bicubic'),
+    dict(
+        type='RandomResizedCrop',
+        scale=512,
+        backend='pillow',
+        interpolation='bicubic'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(type='PackInputs'),
 ]

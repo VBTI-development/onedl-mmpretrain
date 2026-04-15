@@ -41,6 +41,7 @@ class ImageClassifier(BaseClassifier):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  backbone: dict,
                  neck: Optional[dict] = None,
@@ -63,9 +64,8 @@ class ImageClassifier(BaseClassifier):
                             f'`nn.Module` instance, but got '
                             f'{type(data_preprocessor)}')
 
-        super(ImageClassifier,
-              self).__init__(init_cfg=init_cfg,
-                             data_preprocessor=data_preprocessor)
+        super(ImageClassifier, self).__init__(
+            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
 
         if not isinstance(backbone, nn.Module):
             backbone = MODELS.build(backbone)

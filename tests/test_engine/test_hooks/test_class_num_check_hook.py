@@ -6,6 +6,7 @@ from mmpretrain.engine import ClassNumCheckHook
 
 
 class TestClassNumCheckHook(TestCase):
+
     def setUp(self):
         self.runner = MagicMock()
         self.dataset = MagicMock()

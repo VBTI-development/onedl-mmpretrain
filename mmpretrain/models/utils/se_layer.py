@@ -30,6 +30,7 @@ class SELayer(BaseModule):
             second activation layer will be configured by the second dict.
             Default: (dict(type='ReLU'), dict(type='Sigmoid'))
     """
+
     def __init__(self,
                  channels,
                  squeeze_channels=None,
@@ -52,20 +53,22 @@ class SELayer(BaseModule):
             '"squeeze_channels" should be a positive integer, but get ' + \
             f'{squeeze_channels} instead.'
         self.return_weight = return_weight
-        self.conv1 = ConvModule(in_channels=channels,
-                                out_channels=squeeze_channels,
-                                kernel_size=1,
-                                stride=1,
-                                bias=bias,
-                                conv_cfg=conv_cfg,
-                                act_cfg=act_cfg[0])
-        self.conv2 = ConvModule(in_channels=squeeze_channels,
-                                out_channels=channels,
-                                kernel_size=1,
-                                stride=1,
-                                bias=bias,
-                                conv_cfg=conv_cfg,
-                                act_cfg=act_cfg[1])
+        self.conv1 = ConvModule(
+            in_channels=channels,
+            out_channels=squeeze_channels,
+            kernel_size=1,
+            stride=1,
+            bias=bias,
+            conv_cfg=conv_cfg,
+            act_cfg=act_cfg[0])
+        self.conv2 = ConvModule(
+            in_channels=squeeze_channels,
+            out_channels=channels,
+            kernel_size=1,
+            stride=1,
+            bias=bias,
+            conv_cfg=conv_cfg,
+            act_cfg=act_cfg[1])
 
     def forward(self, x):
         out = self.global_avgpool(x)

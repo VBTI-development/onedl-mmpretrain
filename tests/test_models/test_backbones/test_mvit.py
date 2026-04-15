@@ -9,6 +9,7 @@ from mmpretrain.models import MViT
 
 
 class TestMViT(TestCase):
+
     def setUp(self):
         self.cfg = dict(arch='tiny', drop_path_rate=0.1)
 
@@ -73,10 +74,11 @@ class TestMViT(TestCase):
         # test weight init cfg
         cfg = deepcopy(self.cfg)
         cfg['init_cfg'] = [
-            dict(type='Kaiming',
-                 layer='Conv2d',
-                 mode='fan_in',
-                 nonlinearity='linear')
+            dict(
+                type='Kaiming',
+                layer='Conv2d',
+                mode='fan_in',
+                nonlinearity='linear')
         ]
         cfg['use_abs_pos_embed'] = True
         model = MViT(**cfg)

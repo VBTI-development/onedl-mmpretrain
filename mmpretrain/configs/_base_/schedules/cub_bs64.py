@@ -4,8 +4,9 @@ from mmengine.optim import CosineAnnealingLR, LinearLR
 from torch.optim import SGD
 
 # optimizer
-optim_wrapper = dict(optimizer=dict(
-    type=SGD, lr=0.01, momentum=0.9, weight_decay=0.0005, nesterov=True))
+optim_wrapper = dict(
+    optimizer=dict(
+        type=SGD, lr=0.01, momentum=0.9, weight_decay=0.0005, nesterov=True))
 
 # learning policy
 param_scheduler = [

@@ -51,6 +51,7 @@ class ResizeMix(CutMix):
         .. math::
             \text{ratio} = \sqrt{1-\lambda}
     """
+
     def __init__(self,
                  alpha: float,
                  lam_min: float = 0.1,
@@ -58,9 +59,8 @@ class ResizeMix(CutMix):
                  interpolation: str = 'bilinear',
                  cutmix_minmax: Optional[List[float]] = None,
                  correct_lam: bool = True):
-        super().__init__(alpha=alpha,
-                         cutmix_minmax=cutmix_minmax,
-                         correct_lam=correct_lam)
+        super().__init__(
+            alpha=alpha, cutmix_minmax=cutmix_minmax, correct_lam=correct_lam)
         self.lam_min = lam_min
         self.lam_max = lam_max
         self.interpolation = interpolation
@@ -85,11 +85,11 @@ class ResizeMix(CutMix):
         index = torch.randperm(batch_size)
 
         (y1, y2, x1, x2), lam = self.cutmix_bbox_and_lam(img_shape, lam)
-        batch_inputs[:, :, y1:y2,
-                     x1:x2] = F.interpolate(batch_inputs[index],
-                                            size=(int(y2 - y1), int(x2 - x1)),
-                                            mode=self.interpolation,
-                                            align_corners=False)
+        batch_inputs[:, :, y1:y2, x1:x2] = F.interpolate(
+            batch_inputs[index],
+            size=(int(y2 - y1), int(x2 - x1)),
+            mode=self.interpolation,
+            align_corners=False)
         mixed_scores = lam * batch_scores + (1 - lam) * batch_scores[index, :]
 
         return batch_inputs, mixed_scores

@@ -45,6 +45,7 @@ class SwinBlock(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  embed_dims,
                  num_heads,
@@ -87,6 +88,7 @@ class SwinBlock(BaseModule):
         self.ffn = FFN(**_ffn_cfgs)
 
     def forward(self, x, hw_shape):
+
         def _inner_forward(x):
             identity = x
             x = self.norm1(x)
@@ -133,6 +135,7 @@ class SwinBlockSequence(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  embed_dims,
                  depth,
@@ -368,8 +371,8 @@ class SwinTransformer(BaseBackbone):
 
         self.stages = ModuleList()
         embed_dims = [self.embed_dims]
-        for i, (depth, num_heads) in enumerate(zip(self.depths,
-                                                   self.num_heads)):
+        for i, (depth,
+                num_heads) in enumerate(zip(self.depths, self.num_heads)):
             if isinstance(stage_cfgs, Sequence):
                 stage_cfg = stage_cfgs[i]
             else:
@@ -428,9 +431,8 @@ class SwinTransformer(BaseBackbone):
 
         outs = []
         for i, stage in enumerate(self.stages):
-            x, hw_shape = stage(x,
-                                hw_shape,
-                                do_downsample=self.out_after_downsample)
+            x, hw_shape = stage(
+                x, hw_shape, do_downsample=self.out_after_downsample)
             if i in self.out_indices:
                 norm_layer = getattr(self, f'norm{i}')
                 out = norm_layer(x)

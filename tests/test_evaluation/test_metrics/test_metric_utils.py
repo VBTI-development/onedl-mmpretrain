@@ -6,8 +6,8 @@ from mmpretrain.models.losses.utils import convert_to_one_hot
 
 
 def ori_convert_to_one_hot(targets: torch.Tensor, classes) -> torch.Tensor:
-    assert (torch.max(targets).item() <
-            classes), 'Class Index must be less than number of classes'
+    assert (torch.max(targets).item()
+            < classes), 'Class Index must be less than number of classes'
     one_hot_targets = torch.zeros((targets.shape[0], classes),
                                   dtype=torch.long,
                                   device=targets.device)

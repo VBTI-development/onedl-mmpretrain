@@ -16,16 +16,15 @@ class RegressionHead(ClsHead):
     Args:
         loss (dict): Config of regression loss.
     """
+
     def __init__(self,
                  loss: Optional[dict] = None,
                  init_cfg: Optional[dict] = None):
         if loss is None:
-            loss = dict(type='RegressionLoss',
-                        loss_type='L1Loss',
-                        loss_weight=1.0)
-        super(RegressionHead, self).__init__(init_cfg=init_cfg,
-                                             loss=loss,
-                                             cal_acc=False)
+            loss = dict(
+                type='RegressionLoss', loss_type='L1Loss', loss_weight=1.0)
+        super(RegressionHead, self).__init__(
+            init_cfg=init_cfg, loss=loss, cal_acc=False)
 
     def _get_predictions(self, cls_score: torch.Tensor,
                          data_samples: list[DataSample]) -> list[DataSample]:
@@ -65,6 +64,7 @@ class LinearRegressionHead(RegressionHead):
         init_cfg: The extra init config of layers.
             Defaults to use dict(type='Normal', layer='Linear', std=0.01).
     """
+
     def __init__(self,
                  num_classes: int,
                  in_channels: int,
@@ -73,9 +73,8 @@ class LinearRegressionHead(RegressionHead):
                  **kwargs):
         if init_cfg is None:
             init_cfg = dict(type='Normal', layer='Linear', std=0.01)
-        super(LinearRegressionHead, self).__init__(*args,
-                                                   **kwargs,
-                                                   init_cfg=init_cfg)
+        super(LinearRegressionHead, self).__init__(
+            *args, **kwargs, init_cfg=init_cfg)
 
         self.in_channels = in_channels
         self.num_classes = num_classes

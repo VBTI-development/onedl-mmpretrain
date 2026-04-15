@@ -62,6 +62,7 @@ class AutoAugment(RandomChoice):
 
     .. _DeepVoltaire/AutoAugment: https://github.com/DeepVoltaire/AutoAugment
     """
+
     def __init__(self,
                  policies: Union[str, List[List[dict]]],
                  hparams: dict = dict(pad_val=128)):
@@ -185,6 +186,7 @@ class RandAugment(BaseTransform):
             {\text{totallevel}} \times (\text{val2} - \text{val1})
             + \text{val1}
     """
+
     def __init__(self,
                  policies: Union[str, List[dict]],
                  num_policies: int,
@@ -219,9 +221,10 @@ class RandAugment(BaseTransform):
         self.policies = []
         self.transforms = []
 
-        randaug_cfg = dict(magnitude_level=magnitude_level,
-                           total_level=total_level,
-                           magnitude_std=magnitude_std)
+        randaug_cfg = dict(
+            magnitude_level=magnitude_level,
+            total_level=total_level,
+            magnitude_std=magnitude_std)
 
         for policy in policies:
             self._check_policy(policy)
@@ -312,6 +315,7 @@ class BaseAugTransform(BaseTransform):
         random_negative_prob (float): The probability that turns the magnitude
             negative, which should be in range [0,1]. Defaults to 0.
     """
+
     def __init__(self,
                  magnitude_level: int = 10,
                  magnitude_range: Tuple[float, float] = None,
@@ -388,6 +392,7 @@ class Shear(BaseAugTransform):
             'bilinear', 'bicubic', 'area', 'lanczos'. Defaults to 'bicubic'.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  pad_val: Union[int, Sequence[int]] = 128,
@@ -396,9 +401,8 @@ class Shear(BaseAugTransform):
                  random_negative_prob: float = 0.5,
                  interpolation: str = 'bicubic',
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -425,11 +429,12 @@ class Shear(BaseAugTransform):
             magnitude = self.random_negative(self.random_magnitude())
 
         img = results['img']
-        img_sheared = mmcv.imshear(img,
-                                   magnitude,
-                                   direction=self.direction,
-                                   border_value=self.pad_val,
-                                   interpolation=self.interpolation)
+        img_sheared = mmcv.imshear(
+            img,
+            magnitude,
+            direction=self.direction,
+            border_value=self.pad_val,
+            interpolation=self.interpolation)
         results['img'] = img_sheared.astype(img.dtype)
 
         return results
@@ -468,6 +473,7 @@ class Translate(BaseAugTransform):
             'bilinear', 'bicubic', 'area', 'lanczos'. Defaults to 'nearest'.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  pad_val: Union[int, Sequence[int]] = 128,
@@ -476,9 +482,8 @@ class Translate(BaseAugTransform):
                  random_negative_prob: float = 0.5,
                  interpolation: str = 'nearest',
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -510,11 +515,12 @@ class Translate(BaseAugTransform):
             offset = magnitude * width
         else:
             offset = magnitude * height
-        img_translated = mmcv.imtranslate(img,
-                                          offset,
-                                          direction=self.direction,
-                                          border_value=self.pad_val,
-                                          interpolation=self.interpolation)
+        img_translated = mmcv.imtranslate(
+            img,
+            offset,
+            direction=self.direction,
+            border_value=self.pad_val,
+            interpolation=self.interpolation)
         results['img'] = img_translated.astype(img.dtype)
 
         return results
@@ -554,6 +560,7 @@ class Rotate(BaseAugTransform):
             'bilinear', 'bicubic', 'area', 'lanczos'. Defaults to 'nearest'.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  angle: Optional[float] = None,
                  center: Optional[Tuple[float]] = None,
@@ -563,9 +570,8 @@ class Rotate(BaseAugTransform):
                  random_negative_prob: float = 0.5,
                  interpolation: str = 'nearest',
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (angle is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `angle` and `magnitude_range`.'
 
@@ -590,12 +596,13 @@ class Rotate(BaseAugTransform):
             angle = self.random_negative(self.random_magnitude())
 
         img = results['img']
-        img_rotated = mmcv.imrotate(img,
-                                    angle,
-                                    center=self.center,
-                                    scale=self.scale,
-                                    border_value=self.pad_val,
-                                    interpolation=self.interpolation)
+        img_rotated = mmcv.imrotate(
+            img,
+            angle,
+            center=self.center,
+            scale=self.scale,
+            border_value=self.pad_val,
+            interpolation=self.interpolation)
         results['img'] = img_rotated.astype(img.dtype)
 
         return results
@@ -621,6 +628,7 @@ class AutoContrast(BaseAugTransform):
             therefore should be in range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self, prob: float = 0.5, **kwargs):
         super().__init__(prob=prob, **kwargs)
 
@@ -650,6 +658,7 @@ class Invert(BaseAugTransform):
              be in range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self, prob: float = 0.5, **kwargs):
         super().__init__(prob=prob, **kwargs)
 
@@ -679,6 +688,7 @@ class Equalize(BaseAugTransform):
              be in range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self, prob: float = 0.5, **kwargs):
         super().__init__(prob=prob, **kwargs)
 
@@ -711,6 +721,7 @@ class Solarize(BaseAugTransform):
             range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  thr: Union[int, float, None] = None,
                  prob: float = 0.5,
@@ -758,6 +769,7 @@ class SolarizeAdd(BaseAugTransform):
             range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  thr: Union[int, float] = 128,
@@ -811,6 +823,7 @@ class Posterize(BaseAugTransform):
             range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  bits: Optional[int] = None,
                  prob: float = 0.5,
@@ -865,14 +878,14 @@ class Contrast(BaseAugTransform):
         random_negative_prob (float): The probability that turns the magnitude
             negative, which should be in range [0,1]. Defaults to 0.5.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  prob: float = 0.5,
                  random_negative_prob: float = 0.5,
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -919,14 +932,14 @@ class ColorTransform(BaseAugTransform):
             negative, which should be in range [0,1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  prob: float = 0.5,
                  random_negative_prob: float = 0.5,
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -973,14 +986,14 @@ class Brightness(BaseAugTransform):
             negative, which should be in range [0,1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  prob: float = 0.5,
                  random_negative_prob: float = 0.5,
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -1027,14 +1040,14 @@ class Sharpness(BaseAugTransform):
             negative, which should be in range [0,1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  magnitude: Union[int, float, None] = None,
                  prob: float = 0.5,
                  random_negative_prob: float = 0.5,
                  **kwargs):
-        super().__init__(prob=prob,
-                         random_negative_prob=random_negative_prob,
-                         **kwargs)
+        super().__init__(
+            prob=prob, random_negative_prob=random_negative_prob, **kwargs)
         assert (magnitude is None) ^ (self.magnitude_range is None), \
             'Please specify only one of `magnitude` and `magnitude_range`.'
 
@@ -1081,6 +1094,7 @@ class Cutout(BaseAugTransform):
             be in range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  shape: Union[int, Tuple[int], None] = None,
                  pad_val: Union[int, Sequence[int]] = 128,
@@ -1132,6 +1146,7 @@ class GaussianBlur(BaseAugTransform):
             range [0, 1]. Defaults to 0.5.
         **kwargs: Other keyword arguments of :class:`BaseAugTransform`.
     """
+
     def __init__(self,
                  radius: Union[int, float, None] = None,
                  prob: float = 0.5,

@@ -16,6 +16,7 @@ class PrepareProtoBeforeValLoopHook(Hook):
     changes accordingly. So the `prototype_vecs` needs to be regenerated before
     validation loop.
     """
+
     def before_val(self, runner) -> None:
         model = runner.model
         if is_model_wrapper(model):

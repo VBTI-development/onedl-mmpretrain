@@ -14,17 +14,18 @@ from mmpretrain.models.backbones.cspnet import (CSPNet, DarknetBottleneck,
 
 
 class TestCSPNet(TestCase):
+
     def setUp(self):
-        self.arch = dict(block_fn=(DarknetBottleneck, ResNetBottleneck,
-                                   ResNeXtBottleneck),
-                         in_channels=(32, 64, 128),
-                         out_channels=(64, 128, 256),
-                         num_blocks=(1, 2, 8),
-                         expand_ratio=(2, 1, 1),
-                         bottle_ratio=(3, 1, 1),
-                         has_downsampler=True,
-                         down_growth=True,
-                         block_args=({}, {}, dict(base_channels=32)))
+        self.arch = dict(
+            block_fn=(DarknetBottleneck, ResNetBottleneck, ResNeXtBottleneck),
+            in_channels=(32, 64, 128),
+            out_channels=(64, 128, 256),
+            num_blocks=(1, 2, 8),
+            expand_ratio=(2, 1, 1),
+            bottle_ratio=(3, 1, 1),
+            has_downsampler=True,
+            down_growth=True,
+            block_args=({}, {}, dict(base_channels=32)))
         self.stem_fn = partial(torch.nn.Conv2d, out_channels=32, kernel_size=3)
 
     def test_structure(self):
@@ -37,6 +38,7 @@ class TestCSPNet(TestCase):
 
 
 class TestCSPDarkNet(TestCase):
+
     def setUp(self):
         self.class_name = CSPDarkNet
         self.cfg = dict(depth=53)
@@ -109,6 +111,7 @@ class TestCSPDarkNet(TestCase):
 
 
 class TestCSPResNet(TestCSPDarkNet):
+
     def setUp(self):
         self.class_name = CSPResNet
         self.cfg = dict(depth=50)
@@ -128,6 +131,7 @@ class TestCSPResNet(TestCSPDarkNet):
 
 
 class TestCSPResNeXt(TestCSPDarkNet):
+
     def setUp(self):
         self.class_name = CSPResNeXt
         self.cfg = dict(depth=50)

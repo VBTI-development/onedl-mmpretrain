@@ -10,6 +10,7 @@ from mmpretrain.registry import MODELS
 
 
 class Pooler(nn.Module):
+
     def __init__(self, hidden_size):
         super().__init__()
         self.dense = nn.Linear(hidden_size, hidden_size)
@@ -39,6 +40,7 @@ class ITMHead(BaseModule):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  hidden_size: int,
                  with_pooler: bool = True,
@@ -100,10 +102,8 @@ class ITMHead(BaseModule):
         # compute loss
         losses = dict()
 
-        loss = self.loss_module(itm_logits,
-                                target.long(),
-                                avg_factor=itm_logits.size(0),
-                                **kwargs)
+        loss = self.loss_module(
+            itm_logits, target.long(), avg_factor=itm_logits.size(0), **kwargs)
         losses['itm_loss'] = loss
 
         # compute accuracy

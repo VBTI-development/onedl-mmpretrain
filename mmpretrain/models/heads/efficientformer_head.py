@@ -22,6 +22,7 @@ class EfficientFormerClsHead(ClsHead):
         init_cfg (dict): The extra initialization configs. Defaults to
             ``dict(type='Normal', layer='Linear', std=0.01)``.
     """
+
     def __init__(self,
                  num_classes,
                  in_channels,
@@ -29,9 +30,8 @@ class EfficientFormerClsHead(ClsHead):
                  init_cfg=dict(type='Normal', layer='Linear', std=0.01),
                  *args,
                  **kwargs):
-        super(EfficientFormerClsHead, self).__init__(init_cfg=init_cfg,
-                                                     *args,
-                                                     **kwargs)
+        super(EfficientFormerClsHead, self).__init__(
+            init_cfg=init_cfg, *args, **kwargs)
         self.in_channels = in_channels
         self.num_classes = num_classes
         self.dist = distillation

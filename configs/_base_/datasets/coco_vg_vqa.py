@@ -8,11 +8,12 @@ data_preprocessor = dict(
 
 train_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='RandomResizedCrop',
-         scale=(480, 480),
-         crop_ratio_range=(0.5, 1.0),
-         interpolation='bicubic',
-         backend='pillow'),
+    dict(
+        type='RandomResizedCrop',
+        scale=(480, 480),
+        crop_ratio_range=(0.5, 1.0),
+        interpolation='bicubic',
+        backend='pillow'),
     dict(type='RandomFlip', prob=0.5, direction='horizontal'),
     dict(
         type='RandAugment',
@@ -20,20 +21,23 @@ train_pipeline = [
         num_policies=2,
         magnitude_level=5),
     dict(type='CleanCaption', keys=['question', 'gt_answer']),
-    dict(type='PackInputs',
-         algorithm_keys=['question', 'gt_answer', 'gt_answer_weight']),
+    dict(
+        type='PackInputs',
+        algorithm_keys=['question', 'gt_answer', 'gt_answer_weight']),
 ]
 
 test_pipeline = [
     dict(type='LoadImageFromFile'),
-    dict(type='Resize',
-         scale=(480, 480),
-         interpolation='bicubic',
-         backend='pillow'),
+    dict(
+        type='Resize',
+        scale=(480, 480),
+        interpolation='bicubic',
+        backend='pillow'),
     dict(type='CleanCaption', keys=['question']),
-    dict(type='PackInputs',
-         algorithm_keys=['question'],
-         meta_keys=['question_id']),
+    dict(
+        type='PackInputs',
+        algorithm_keys=['question'],
+        meta_keys=['question_id']),
 ]
 
 train_dataloader = dict(

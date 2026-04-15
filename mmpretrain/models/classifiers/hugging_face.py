@@ -87,8 +87,8 @@ class HuggingFaceClassifier(BaseClassifier):
             # Set batch augmentations by `train_cfg`
             data_preprocessor['batch_augments'] = train_cfg
 
-        super().__init__(init_cfg=init_cfg,
-                         data_preprocessor=data_preprocessor)
+        super().__init__(
+            init_cfg=init_cfg, data_preprocessor=data_preprocessor)
 
         from transformers import AutoConfig, AutoModelForImageClassification
         if pretrained:
@@ -157,10 +157,8 @@ class HuggingFaceClassifier(BaseClassifier):
 
         # compute loss
         losses = dict()
-        loss = self.loss_module(cls_score,
-                                target,
-                                avg_factor=cls_score.size(0),
-                                **kwargs)
+        loss = self.loss_module(
+            cls_score, target, avg_factor=cls_score.size(0), **kwargs)
         losses['loss'] = loss
 
         return losses

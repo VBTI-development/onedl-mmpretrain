@@ -34,6 +34,7 @@ class MixerBlock(BaseModule):
         init_cfg (dict, optional): Initialization config dict.
             Defaults to None.
     """
+
     def __init__(self,
                  num_tokens,
                  embed_dims,
@@ -47,30 +48,28 @@ class MixerBlock(BaseModule):
                  init_cfg=None):
         super(MixerBlock, self).__init__(init_cfg=init_cfg)
 
-        self.norm1_name, norm1 = build_norm_layer(norm_cfg,
-                                                  embed_dims,
-                                                  postfix=1)
+        self.norm1_name, norm1 = build_norm_layer(
+            norm_cfg, embed_dims, postfix=1)
         self.add_module(self.norm1_name, norm1)
-        self.token_mix = FFN(embed_dims=num_tokens,
-                             feedforward_channels=tokens_mlp_dims,
-                             num_fcs=num_fcs,
-                             ffn_drop=drop_rate,
-                             dropout_layer=dict(type='DropPath',
-                                                drop_prob=drop_path_rate),
-                             act_cfg=act_cfg,
-                             add_identity=False)
+        self.token_mix = FFN(
+            embed_dims=num_tokens,
+            feedforward_channels=tokens_mlp_dims,
+            num_fcs=num_fcs,
+            ffn_drop=drop_rate,
+            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
+            act_cfg=act_cfg,
+            add_identity=False)
 
-        self.norm2_name, norm2 = build_norm_layer(norm_cfg,
-                                                  embed_dims,
-                                                  postfix=2)
+        self.norm2_name, norm2 = build_norm_layer(
+            norm_cfg, embed_dims, postfix=2)
         self.add_module(self.norm2_name, norm2)
-        self.channel_mix = FFN(embed_dims=embed_dims,
-                               feedforward_channels=channels_mlp_dims,
-                               num_fcs=num_fcs,
-                               ffn_drop=drop_rate,
-                               dropout_layer=dict(type='DropPath',
-                                                  drop_prob=drop_path_rate),
-                               act_cfg=act_cfg)
+        self.channel_mix = FFN(
+            embed_dims=embed_dims,
+            feedforward_channels=channels_mlp_dims,
+            num_fcs=num_fcs,
+            ffn_drop=drop_rate,
+            dropout_layer=dict(type='DropPath', drop_prob=drop_path_rate),
+            act_cfg=act_cfg)
 
     @property
     def norm1(self):
@@ -237,9 +236,8 @@ class MlpMixer(BaseBackbone):
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(MixerBlock(**_layer_cfg))
 
-        self.norm1_name, norm1 = build_norm_layer(norm_cfg,
-                                                  self.embed_dims,
-                                                  postfix=1)
+        self.norm1_name, norm1 = build_norm_layer(
+            norm_cfg, self.embed_dims, postfix=1)
         self.add_module(self.norm1_name, norm1)
 
     @property

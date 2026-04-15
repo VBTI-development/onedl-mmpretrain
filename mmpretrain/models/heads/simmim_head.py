@@ -13,6 +13,7 @@ class SimMIMHead(BaseModule):
         patch_size (int): Patch size of each token.
         loss (dict): The config for loss.
     """
+
     def __init__(self, patch_size: int, loss: dict) -> None:
         super().__init__()
         self.patch_size = patch_size

@@ -33,6 +33,7 @@ class LARS(Optimizer):
         >>> loss_fn(model(input), target).backward()
         >>> optimizer.step()
     """
+
     def __init__(self,
                  params: Iterable,
                  lr: float,
@@ -51,12 +52,13 @@ class LARS(Optimizer):
         if eta < 0.0:
             raise ValueError(f'Invalid LARS coefficient value: {eta}')
 
-        defaults = dict(lr=lr,
-                        momentum=momentum,
-                        dampening=dampening,
-                        weight_decay=weight_decay,
-                        nesterov=nesterov,
-                        eta=eta)
+        defaults = dict(
+            lr=lr,
+            momentum=momentum,
+            dampening=dampening,
+            weight_decay=weight_decay,
+            nesterov=nesterov,
+            eta=eta)
         if nesterov and (momentum <= 0 or dampening != 0):
             raise ValueError(
                 'Nesterov momentum requires a momentum and zero dampening')

@@ -32,13 +32,14 @@ class NocapsSave(COCOCaption):
             will be used instead. Should be modified according to the
             `retrieval_type` for unambiguous results. Defaults to TR.
     """
+
     @require('pycocoevalcap')
     def __init__(self,
                  save_dir: str = './',
                  collect_device: str = 'cpu',
                  prefix: Optional[str] = None):
-        super(COCOCaption, self).__init__(collect_device=collect_device,
-                                          prefix=prefix)
+        super(COCOCaption, self).__init__(
+            collect_device=collect_device, prefix=prefix)
         self.save_dir = save_dir
 
     def compute_metrics(self, results: List):

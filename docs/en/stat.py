@@ -197,10 +197,11 @@ def generate_summary_table(task, model_result_pairs, title=None):
             *[METRIC_ALIAS.get(metric, metric) for metric in metrics],
             'Readme',
         ]
-        table_cfg = dict(tablefmt='pipe',
-                         floatfmt='.2f',
-                         numalign='right',
-                         stralign='center')
+        table_cfg = dict(
+            tablefmt='pipe',
+            floatfmt='.2f',
+            numalign='right',
+            stralign='center')
         f.write(tabulate(rows, header, **table_cfg))
         f.write('\n```\n')
 

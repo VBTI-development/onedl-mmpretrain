@@ -19,6 +19,7 @@ class DINOTeacherTempWarmupHook(Hook):
             temperature.
         max_epochs (int): Maximum epochs for training.
     """
+
     def __init__(self, warmup_teacher_temp: float, teacher_temp: float,
                  teacher_temp_warmup_epochs: int, max_epochs: int) -> None:
         super().__init__()

@@ -24,6 +24,7 @@ class RevBackProp(Function):
     Inspired by
     https://github.com/RobinBruegger/RevTorch/blob/master/revtorch/revtorch.py
     """
+
     @staticmethod
     def forward(
             ctx,
@@ -131,6 +132,7 @@ class RevTransformerEncoderLayer(BaseModule):
             Default: 0
         init_cfg (dict or list[dict], optional): Initialization config dict.
     """
+
     def __init__(self,
                  embed_dims: int,
                  num_heads: int,
@@ -151,20 +153,22 @@ class RevTransformerEncoderLayer(BaseModule):
 
         self.ln1 = build_norm_layer(norm_cfg, self.embed_dims)
 
-        self.attn = MultiheadAttention(embed_dims=embed_dims,
-                                       num_heads=num_heads,
-                                       attn_drop=attn_drop_rate,
-                                       proj_drop=drop_rate,
-                                       qkv_bias=qkv_bias)
+        self.attn = MultiheadAttention(
+            embed_dims=embed_dims,
+            num_heads=num_heads,
+            attn_drop=attn_drop_rate,
+            proj_drop=drop_rate,
+            qkv_bias=qkv_bias)
 
         self.ln2 = build_norm_layer(norm_cfg, self.embed_dims)
 
-        self.ffn = FFN(embed_dims=embed_dims,
-                       feedforward_channels=feedforward_channels,
-                       num_fcs=num_fcs,
-                       ffn_drop=drop_rate,
-                       act_cfg=act_cfg,
-                       add_identity=False)
+        self.ffn = FFN(
+            embed_dims=embed_dims,
+            feedforward_channels=feedforward_channels,
+            num_fcs=num_fcs,
+            ffn_drop=drop_rate,
+            act_cfg=act_cfg,
+            add_identity=False)
 
         self.layer_id = layer_id
         self.seeds = {}
@@ -292,6 +296,7 @@ class TwoStreamFusion(nn.Module):
         mode (str): The mode of fusion. Options are 'add', 'max', 'min',
             'avg', 'concat'.
     """
+
     def __init__(self, mode: str):
         super().__init__()
         self.mode = mode
@@ -519,15 +524,16 @@ class RevVisionTransformer(BaseBackbone):
         if isinstance(layer_cfgs, dict):
             layer_cfgs = [layer_cfgs] * self.num_layers
         for i in range(self.num_layers):
-            _layer_cfg = dict(embed_dims=self.embed_dims,
-                              num_heads=self.arch_settings['num_heads'],
-                              feedforward_channels=self.
-                              arch_settings['feedforward_channels'],
-                              drop_rate=drop_rate,
-                              drop_path_rate=dpr[i],
-                              qkv_bias=qkv_bias,
-                              layer_id=i,
-                              norm_cfg=norm_cfg)
+            _layer_cfg = dict(
+                embed_dims=self.embed_dims,
+                num_heads=self.arch_settings['num_heads'],
+                feedforward_channels=self.
+                arch_settings['feedforward_channels'],
+                drop_rate=drop_rate,
+                drop_path_rate=dpr[i],
+                qkv_bias=qkv_bias,
+                layer_id=i,
+                norm_cfg=norm_cfg)
             _layer_cfg.update(layer_cfgs[i])
             self.layers.append(RevTransformerEncoderLayer(**_layer_cfg))
 
@@ -609,11 +615,12 @@ class RevVisionTransformer(BaseBackbone):
             cls_token = self.cls_token.expand(B, -1, -1)
             x = torch.cat((cls_token, x), dim=1)
 
-        x = x + resize_pos_embed(self.pos_embed,
-                                 self.patch_resolution,
-                                 patch_resolution,
-                                 mode=self.interpolate_mode,
-                                 num_extra_tokens=self.num_extra_tokens)
+        x = x + resize_pos_embed(
+            self.pos_embed,
+            self.patch_resolution,
+            patch_resolution,
+            mode=self.interpolate_mode,
+            num_extra_tokens=self.num_extra_tokens)
         x = self.drop_after_pos(x)
 
         x = torch.cat([x, x], dim=-1)

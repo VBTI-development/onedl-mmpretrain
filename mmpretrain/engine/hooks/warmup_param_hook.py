@@ -21,6 +21,7 @@ class WarmupParamHook(Hook):
             `head`, `head.loss`, etc.
         warmup_epochs (int): The warmup epochs for this parameter.
     """
+
     def __init__(
         self,
         param_name: str,

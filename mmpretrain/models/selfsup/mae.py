@@ -55,6 +55,7 @@ class MAEViT(VisionTransformer):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
+
     def __init__(self,
                  arch: Union[str, dict] = 'b',
                  img_size: int = 224,
@@ -70,20 +71,21 @@ class MAEViT(VisionTransformer):
                  layer_cfgs: dict = dict(),
                  mask_ratio: float = 0.75,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(arch=arch,
-                         img_size=img_size,
-                         patch_size=patch_size,
-                         out_indices=out_indices,
-                         drop_rate=drop_rate,
-                         drop_path_rate=drop_path_rate,
-                         norm_cfg=norm_cfg,
-                         final_norm=final_norm,
-                         out_type=out_type,
-                         with_cls_token=True,
-                         interpolate_mode=interpolate_mode,
-                         patch_cfg=patch_cfg,
-                         layer_cfgs=layer_cfgs,
-                         init_cfg=init_cfg)
+        super().__init__(
+            arch=arch,
+            img_size=img_size,
+            patch_size=patch_size,
+            out_indices=out_indices,
+            drop_rate=drop_rate,
+            drop_path_rate=drop_path_rate,
+            norm_cfg=norm_cfg,
+            final_norm=final_norm,
+            out_type=out_type,
+            with_cls_token=True,
+            interpolate_mode=interpolate_mode,
+            patch_cfg=patch_cfg,
+            layer_cfgs=layer_cfgs,
+            init_cfg=init_cfg)
 
         # position embedding is not learnable during pretraining
         self.pos_embed.requires_grad = False
@@ -137,9 +139,8 @@ class MAEViT(VisionTransformer):
 
         # keep the first subset
         ids_keep = ids_shuffle[:, :len_keep]
-        x_masked = torch.gather(x,
-                                dim=1,
-                                index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
+        x_masked = torch.gather(
+            x, dim=1, index=ids_keep.unsqueeze(-1).repeat(1, 1, D))
 
         # generate the binary mask: 0 is keep, 1 is remove
         mask = torch.ones([N, L], device=x.device)
@@ -211,6 +212,7 @@ class MAE(BaseSelfSupervisor):
     Implementation of `Masked Autoencoders Are Scalable Vision Learners`     `
     <https://arxiv.org/abs/2111.06377>`_.
     """
+
     def extract_feat(self, inputs: torch.Tensor):
         return self.backbone(inputs, mask=None)
 
@@ -268,6 +270,7 @@ class MAEHiViT(HiViT):
         init_cfg (Union[List[dict], dict], optional): Initialization config
             dict. Defaults to None.
     """
+
     def __init__(self,
                  arch: Union[str, dict] = 'b',
                  img_size: int = 224,
@@ -282,18 +285,19 @@ class MAEHiViT(HiViT):
                  layer_scale_init_value: float = 0.0,
                  mask_ratio: float = 0.75,
                  init_cfg: Optional[Union[List[dict], dict]] = None) -> None:
-        super().__init__(arch=arch,
-                         img_size=img_size,
-                         patch_size=patch_size,
-                         inner_patches=inner_patches,
-                         out_indices=out_indices,
-                         drop_rate=drop_rate,
-                         drop_path_rate=drop_path_rate,
-                         norm_cfg=norm_cfg,
-                         ape=ape,
-                         rpe=rpe,
-                         layer_scale_init_value=layer_scale_init_value,
-                         init_cfg=init_cfg)
+        super().__init__(
+            arch=arch,
+            img_size=img_size,
+            patch_size=patch_size,
+            inner_patches=inner_patches,
+            out_indices=out_indices,
+            drop_rate=drop_rate,
+            drop_path_rate=drop_path_rate,
+            norm_cfg=norm_cfg,
+            ape=ape,
+            rpe=rpe,
+            layer_scale_init_value=layer_scale_init_value,
+            init_cfg=init_cfg)
 
         self.pos_embed.requires_grad = False
         self.mask_ratio = mask_ratio
@@ -329,8 +333,8 @@ class MAEHiViT(HiViT):
         N, L = batch_size, self.pos_embed.size(1)
         len_keep = int(L * (1 - mask_ratio))
 
-        noise = torch.rand(N, L,
-                           device=self.pos_embed.device)  # noise in [0, 1]
+        noise = torch.rand(
+            N, L, device=self.pos_embed.device)  # noise in [0, 1]
 
         # sort noise for each sample
         ids_shuffle = torch.argsort(
@@ -386,10 +390,11 @@ class MAEHiViT(HiViT):
 
             x = self.patch_embed(x)
 
-            x = torch.gather(x,
-                             dim=1,
-                             index=ids_keep[:, :, None, None,
-                                            None].expand(-1, -1, *x.shape[2:]))
+            x = torch.gather(
+                x,
+                dim=1,
+                index=ids_keep[:, :, None, None,
+                               None].expand(-1, -1, *x.shape[2:]))
 
             for blk in self.blocks[:-self.num_main_blocks]:
                 x = blk(x)

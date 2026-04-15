@@ -16,6 +16,7 @@ class AlexNet(BaseBackbone):
             The default value is -1, which uses the backbone as
             a feature extractor without the top classifier.
     """
+
     def __init__(self, num_classes=-1):
         super(AlexNet, self).__init__()
         self.num_classes = num_classes

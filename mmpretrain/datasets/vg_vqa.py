@@ -10,6 +10,7 @@ from .base_dataset import BaseDataset
 @DATASETS.register_module()
 class VGVQA(BaseDataset):
     """Visual Genome VQA dataset."""
+
     def load_data_list(self) -> List[dict]:
         """Load data list.
 

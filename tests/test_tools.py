@@ -18,6 +18,7 @@ ASSETS_ROOT = Path(__file__).parent / 'data'
 
 
 class TestImageDemo(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -40,6 +41,7 @@ class TestImageDemo(TestCase):
 
 
 class TestAnalyzeLogs(TestCase):
+
     def setUp(self):
         self.log_file = ASSETS_ROOT / 'vis_data.json'
         self.tmpdir = tempfile.TemporaryDirectory()
@@ -77,6 +79,7 @@ class TestAnalyzeLogs(TestCase):
 
 
 class TestAnalyzeResults(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -122,6 +125,7 @@ class TestAnalyzeResults(TestCase):
 
 
 class TestPrintConfig(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.config_file = MMPRE_ROOT / 'configs/resnet/resnet18_8xb32_in1k.py'
@@ -143,6 +147,7 @@ class TestPrintConfig(TestCase):
 
 
 class TestVerifyDataset(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -178,6 +183,7 @@ class TestVerifyDataset(TestCase):
 
 
 class TestEvalMetric(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -210,6 +216,7 @@ class TestEvalMetric(TestCase):
 
 
 class TestVisScheduler(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -217,11 +224,12 @@ class TestVisScheduler(TestCase):
         config = Config.fromfile(MMPRE_ROOT /
                                  'configs/resnet/resnet18_8xb32_in1k.py')
         config.param_scheduler = [
-            dict(type='LinearLR',
-                 start_factor=0.01,
-                 by_epoch=True,
-                 end=1,
-                 convert_to_iter_based=True),
+            dict(
+                type='LinearLR',
+                start_factor=0.01,
+                by_epoch=True,
+                end=1,
+                convert_to_iter_based=True),
             dict(type='CosineAnnealingLR', by_epoch=True, begin=1),
         ]
         config.work_dir = str(self.dir)
@@ -249,17 +257,19 @@ class TestVisScheduler(TestCase):
 
 
 class TestPublishModel(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
 
-        ckpt = dict(state_dict=OrderedDict({
-            'a': torch.tensor(1.),
-        }),
-                    ema_state_dict=OrderedDict({
-                        'step': 1,
-                        'module.a': torch.tensor(2.),
-                    }))
+        ckpt = dict(
+            state_dict=OrderedDict({
+                'a': torch.tensor(1.),
+            }),
+            ema_state_dict=OrderedDict({
+                'step': 1,
+                'module.a': torch.tensor(2.),
+            }))
         self.ckpt_file = self.dir / 'ckpt.pth'
         torch.save(ckpt, self.ckpt_file)
 
@@ -289,6 +299,7 @@ class TestPublishModel(TestCase):
 
 
 class TestVisCam(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -320,6 +331,7 @@ class TestVisCam(TestCase):
 
 
 class TestConfusionMatrix(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -358,6 +370,7 @@ class TestConfusionMatrix(TestCase):
 
 
 class TestVisTsne(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
         self.dir = Path(self.tmpdir.name)
@@ -394,6 +407,7 @@ class TestVisTsne(TestCase):
 
 
 class TestGetFlops(TestCase):
+
     def test_run(self):
         command = [
             'python',

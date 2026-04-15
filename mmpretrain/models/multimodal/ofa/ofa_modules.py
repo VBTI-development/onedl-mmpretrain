@@ -122,6 +122,7 @@ class MultiheadAttention(BaseModule):
         init_cfg (dict, optional): The Config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  embedding_dim,
                  num_heads,
@@ -227,13 +228,14 @@ class OFAResNet(ResNet):
     }
 
     def __init__(self, depth, *args, **kwargs):
-        super().__init__(depth=depth,
-                         *args,
-                         num_stages=3,
-                         out_indices=(2, ),
-                         dilations=(1, 1, 1),
-                         strides=(1, 2, 2),
-                         **kwargs)
+        super().__init__(
+            depth=depth,
+            *args,
+            num_stages=3,
+            out_indices=(2, ),
+            dilations=(1, 1, 1),
+            strides=(1, 2, 2),
+            **kwargs)
 
 
 @dataclass
@@ -262,6 +264,7 @@ class OFAEncoderOutput(ModelOutput):
 
 class OFAEncoderLayer(nn.Module):
     """OFAEncoder layer block."""
+
     def __init__(self,
                  embedding_dim,
                  num_heads,
@@ -335,10 +338,11 @@ class OFAEncoderLayer(nn.Module):
         # Attention block
         if self.pre_norm:
             x = self.attn_ln(x)
-        x, attn_weights, _ = self.attn(query=x,
-                                       attn_mask=attention_mask,
-                                       attn_bias=attn_bias,
-                                       output_attentions=output_attentions)
+        x, attn_weights, _ = self.attn(
+            query=x,
+            attn_mask=attention_mask,
+            attn_bias=attn_bias,
+            output_attentions=output_attentions)
         if self.normformer:
             x = self.attn_mid_ln(x)
         x = self.dropout(x)
@@ -369,6 +373,7 @@ class OFAEncoderLayer(nn.Module):
 
 class OFADecoderLayer(nn.Module):
     """OFADecoder layer block."""
+
     def __init__(self,
                  embedding_dim,
                  num_heads,
@@ -579,6 +584,7 @@ class OFAEncoder(BaseModule):
             embedding on the embeddings directly. Defaults to False.
         init_cfg (dict, optional): The initialization config. Defaults to None.
     """
+
     def __init__(
         self,
         embed_tokens,
@@ -782,10 +788,11 @@ class OFAEncoder(BaseModule):
             else:
                 attention_mask = None
 
-            out = layer(x,
-                        attention_mask=attention_mask,
-                        attn_bias=self_attn_bias,
-                        output_attentions=output_attentions)
+            out = layer(
+                x,
+                attention_mask=attention_mask,
+                attn_bias=self_attn_bias,
+                output_attentions=output_attentions)
             x = out[0]
 
             if output_attentions:
@@ -912,6 +919,7 @@ class OFADecoder(BaseModule):
             Defaults to True.
         init_cfg (dict, optional): The initialization config. Defaults to None.
     """
+
     def __init__(
         self,
         embed_tokens,
@@ -1044,9 +1052,8 @@ class OFADecoder(BaseModule):
             self.output_projection.weight = self.embed_tokens.weight
         else:
             vocab_size = self.embed_tokens.num_embeddings
-            self.output_projection = nn.Linear(embedding_dim,
-                                               vocab_size,
-                                               bias=False)
+            self.output_projection = nn.Linear(
+                embedding_dim, vocab_size, bias=False)
             nn.init.normal_(
                 self.output_projection.weight,
                 mean=0,
@@ -1077,8 +1084,8 @@ class OFADecoder(BaseModule):
             L_past = 0
 
         # Embed the token position
-        target_pos_idx = torch.arange(L, device=input_ids.device).expand(
-            [B, L]).contiguous()
+        target_pos_idx = torch.arange(
+            L, device=input_ids.device).expand([B, L]).contiguous()
         pos_embedding = self.embed_positions(target_pos_idx)
 
         # Embed the code positions
@@ -1096,8 +1103,8 @@ class OFADecoder(BaseModule):
             self_abs_pos_bias[code_masks] = self_image_abs_pos_bias[code_masks]
 
         # Cross-attention position bias (B, num_heads, L_t, L_s)
-        cross_abs_pos_bias = self.get_pos_info(self.pos_ln(pos_embedding),
-                                               encoder_pos_embedding)
+        cross_abs_pos_bias = self.get_pos_info(
+            self.pos_ln(pos_embedding), encoder_pos_embedding)
         if code_masks is not None and torch.any(code_masks):
             cross_image_abs_pos_bias = self.get_pos_info(
                 self.image_pos_ln(pos_embedding), encoder_pos_embedding)
@@ -1224,13 +1231,11 @@ class OFADecoder(BaseModule):
 
         if attention_mask is not None:
             # (B, L_s) -> (B, 1, L_t, L_s)
-            expanded_attention_mask = _expand_mask(attention_mask,
-                                                   dtype,
-                                                   tgt_len=input_shape[-1])
-            combined_attention_mask = (expanded_attention_mask
-                                       if combined_attention_mask is None else
-                                       expanded_attention_mask +
-                                       combined_attention_mask)
+            expanded_attention_mask = _expand_mask(
+                attention_mask, dtype, tgt_len=input_shape[-1])
+            combined_attention_mask = (
+                expanded_attention_mask if combined_attention_mask is None else
+                expanded_attention_mask + combined_attention_mask)
 
         return combined_attention_mask
 
@@ -1585,8 +1590,9 @@ class OFAEncoderDecoder(BaseModule, GenerationMixin):
         encoder_outputs: Optional[ModelOutput] = None,
         **model_kwargs,
     ):
-        expanded_return_idx = (torch.arange(input_ids.shape[0]).view(
-            -1, 1).repeat(1, expand_size).view(-1).to(input_ids.device))
+        expanded_return_idx = (
+            torch.arange(input_ids.shape[0]).view(-1, 1).repeat(
+                1, expand_size).view(-1).to(input_ids.device))
         input_ids = input_ids.index_select(0, expanded_return_idx)
 
         if attention_mask is not None:

@@ -8,12 +8,10 @@ from conversation import EN_CONV_VISION, ZH_CONV_VISION, Chat
 from mmpretrain import ImageCaptionInferencer
 
 parser = argparse.ArgumentParser(description='MiniGPT4 demo')
-parser.add_argument('cfg',
-                    type=str,
-                    help='config file for minigpt4 (absolute path)')
-parser.add_argument('ckpt',
-                    type=str,
-                    help='pretrained file for minigpt4 (absolute path)')
+parser.add_argument(
+    'cfg', type=str, help='config file for minigpt4 (absolute path)')
+parser.add_argument(
+    'ckpt', type=str, help='pretrained file for minigpt4 (absolute path)')
 args = parser.parse_args()
 
 if torch.cuda.is_available():
@@ -48,9 +46,10 @@ def reset(chat_state, img_list):
     if img_list is not None:
         img_list = []
     return (None, gr.update(value=None, interactive=True),
-            gr.update(value=None,
-                      placeholder='Please upload your image first',
-                      interactive=False),
+            gr.update(
+                value=None,
+                placeholder='Please upload your image first',
+                interactive=False),
             gr.update(value='Upload & Start Chat',
                       interactive=True), chat_state, img_list,
             gr.update(value='Restart', interactive=False),
@@ -60,8 +59,9 @@ def reset(chat_state, img_list):
 def upload_img(gr_img, language, chat_state):
     if gr_img is None:
         return (None,
-                gr.update(placeholder='Please upload your image first',
-                          interactive=False),
+                gr.update(
+                    placeholder='Please upload your image first',
+                    interactive=False),
                 gr.update(value='Upload & Start Chat',
                           interactive=True), chat_state, None,
                 gr.update(value='Restart', interactive=False),
@@ -84,18 +84,20 @@ def upload_img(gr_img, language, chat_state):
 
 def ask(user_message, chatbot, chat_state):
     if (len(user_message) == 0):
-        return gr.update(value=None,
-                         placeholder='Input should not be empty!',
-                         interactive=True), chatbot, chat_state
+        return gr.update(
+            value=None,
+            placeholder='Input should not be empty!',
+            interactive=True), chatbot, chat_state
     chat.ask(user_message, chat_state)
     chatbot = chatbot + [[user_message, None]]
     return '', chatbot, chat_state
 
 
 def answer(chatbot, chat_state, img_list):
-    llm_message = chat.answer(conv=chat_state,
-                              img_list=img_list,
-                              generation_cfg=model.generation_cfg)
+    llm_message = chat.answer(
+        conv=chat_state,
+        img_list=img_list,
+        generation_cfg=model.generation_cfg)
     chatbot[-1][1] = llm_message
     return chatbot, chat_state, img_list
 
@@ -112,16 +114,15 @@ if __name__ == '__main__':
                                        info='Select chatbot\'s language',
                                        value='English',
                                        interactive=True)
-                upload_button = gr.Button(value='Upload & Start Chat',
-                                          interactive=True)
+                upload_button = gr.Button(
+                    value='Upload & Start Chat', interactive=True)
                 clear = gr.Button(value='Restart', interactive=False)
 
             with gr.Column():
                 chat_state = gr.State()
                 img_list = gr.State()
-                chatbot = gr.Chatbot(label='MiniGPT-4',
-                                     min_width=320,
-                                     height=600)
+                chatbot = gr.Chatbot(
+                    label='MiniGPT-4', min_width=320, height=600)
                 text_input = gr.Textbox(
                     label='User',
                     placeholder='Please upload your image first',

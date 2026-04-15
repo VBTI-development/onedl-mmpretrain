@@ -212,13 +212,14 @@ class MultiLabelMetric(BaseMetric):
         target = torch.stack([res['gt_score'] for res in results])
         pred = torch.stack([res['pred_score'] for res in results])
 
-        metric_res = self.calculate(pred,
-                                    target,
-                                    pred_indices=False,
-                                    target_indices=False,
-                                    average=self.average,
-                                    thr=self.thr,
-                                    topk=self.topk)
+        metric_res = self.calculate(
+            pred,
+            target,
+            pred_indices=False,
+            target_indices=False,
+            average=self.average,
+            thr=self.thr,
+            topk=self.topk)
 
         def pack_results(precision, recall, f1_score, support):
             single_metrics = {}

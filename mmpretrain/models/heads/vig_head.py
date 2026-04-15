@@ -26,6 +26,7 @@ class VigClsHead(ClsHead):
         init_cfg (dict, optional): the config to control the initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  num_classes: int,
                  in_channels: int,

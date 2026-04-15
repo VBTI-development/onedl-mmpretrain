@@ -51,10 +51,8 @@ def resize_pos_embed(pos_embed,
     src_weight = src_weight.reshape(1, src_h, src_w, C).permute(0, 3, 1, 2)
 
     # The cubic interpolate algorithm only accepts float32
-    dst_weight = F.interpolate(src_weight.float(),
-                               size=dst_shape,
-                               align_corners=False,
-                               mode=mode)
+    dst_weight = F.interpolate(
+        src_weight.float(), size=dst_shape, align_corners=False, mode=mode)
     dst_weight = torch.flatten(dst_weight, 2).transpose(1, 2)
     dst_weight = dst_weight.to(src_weight.dtype)
 
@@ -133,6 +131,7 @@ class PatchEmbed(BaseModule):
         init_cfg (`mmcv.ConfigDict`, optional): The Config for initialization.
             Default: None
     """
+
     def __init__(self,
                  img_size=224,
                  in_channels=3,
@@ -159,11 +158,8 @@ class PatchEmbed(BaseModule):
 
         # Use conv layer to embed
         conv_cfg = conv_cfg or dict()
-        _conv_cfg = dict(type='Conv2d',
-                         kernel_size=16,
-                         stride=16,
-                         padding=0,
-                         dilation=1)
+        _conv_cfg = dict(
+            type='Conv2d', kernel_size=16, stride=16, padding=0, dilation=1)
         _conv_cfg.update(conv_cfg)
         self.projection = build_conv_layer(_conv_cfg, in_channels, embed_dims)
 
@@ -214,6 +210,7 @@ class HybridEmbed(BaseModule):
         init_cfg (`mmcv.ConfigDict`, optional): The Config for initialization.
             Default: None.
     """
+
     def __init__(self,
                  backbone,
                  img_size=224,
@@ -264,11 +261,8 @@ class HybridEmbed(BaseModule):
 
         # Use conv layer to embed
         conv_cfg = conv_cfg or dict()
-        _conv_cfg = dict(type='Conv2d',
-                         kernel_size=1,
-                         stride=1,
-                         padding=0,
-                         dilation=1)
+        _conv_cfg = dict(
+            type='Conv2d', kernel_size=1, stride=1, padding=0, dilation=1)
         _conv_cfg.update(conv_cfg)
         self.projection = build_conv_layer(_conv_cfg, feature_dim, embed_dims)
 
@@ -317,6 +311,7 @@ class PatchMerging(BaseModule):
         init_cfg (dict, optional): The extra config for initialization.
             Defaults to None.
     """
+
     def __init__(self,
                  in_channels,
                  out_channels,
@@ -343,20 +338,22 @@ class PatchMerging(BaseModule):
         dilation = to_2tuple(dilation)
 
         if isinstance(padding, str):
-            self.adaptive_padding = AdaptivePadding(kernel_size=kernel_size,
-                                                    stride=stride,
-                                                    dilation=dilation,
-                                                    padding=padding)
+            self.adaptive_padding = AdaptivePadding(
+                kernel_size=kernel_size,
+                stride=stride,
+                dilation=dilation,
+                padding=padding)
             # disable the padding of unfold
             padding = 0
         else:
             self.adaptive_padding = None
 
         padding = to_2tuple(padding)
-        self.sampler = nn.Unfold(kernel_size=kernel_size,
-                                 dilation=dilation,
-                                 padding=padding,
-                                 stride=stride)
+        self.sampler = nn.Unfold(
+            kernel_size=kernel_size,
+            dilation=dilation,
+            padding=padding,
+            stride=stride)
 
         sample_dim = kernel_size[0] * kernel_size[1] * in_channels
 

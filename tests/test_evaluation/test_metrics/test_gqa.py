@@ -5,6 +5,7 @@ from mmpretrain.structures import DataSample
 
 
 class TestScienceQAMetric:
+
     def test_evaluate(self):
         meta_info = {
             'pred_answer': 'dog',

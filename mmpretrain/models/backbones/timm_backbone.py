@@ -55,6 +55,7 @@ class TIMMBackbone(BaseBackbone):
             OpenMMLab projects. Defaults to None.
         **kwargs: Other timm & model specific arguments.
     """
+
     @require('timm')
     def __init__(self,
                  model_name,
@@ -82,12 +83,13 @@ class TIMMBackbone(BaseBackbone):
                 return norm_class(*args, **kwargs)
 
             kwargs['norm_layer'] = build_norm
-        self.timm_model = timm.create_model(model_name=model_name,
-                                            features_only=features_only,
-                                            pretrained=pretrained,
-                                            in_chans=in_channels,
-                                            checkpoint_path=checkpoint_path,
-                                            **kwargs)
+        self.timm_model = timm.create_model(
+            model_name=model_name,
+            features_only=features_only,
+            pretrained=pretrained,
+            in_chans=in_channels,
+            checkpoint_path=checkpoint_path,
+            **kwargs)
 
         # reset classifier
         if hasattr(self.timm_model, 'reset_classifier'):

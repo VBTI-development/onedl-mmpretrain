@@ -9,6 +9,7 @@ from mmpretrain.utils import register_all_modules
 
 
 class TestSetupEnv(TestCase):
+
     def test_register_all_modules(self):
         from mmpretrain.registry import DATASETS
 

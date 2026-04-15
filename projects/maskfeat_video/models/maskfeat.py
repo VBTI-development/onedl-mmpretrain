@@ -17,6 +17,7 @@ class VideoMaskFeat(BaseSelfSupervisor):
     Pre-Training
     <https://arxiv.org/abs/2112.09133>`_.
     """
+
     def loss(self, inputs: List[torch.Tensor], data_samples: List[DataSample],
              **kwargs) -> Dict[str, torch.Tensor]:
         """The forward function in training.

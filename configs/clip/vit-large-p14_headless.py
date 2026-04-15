@@ -23,11 +23,12 @@ test_pipeline = [
 test_dataloader = dict(
     batch_size=64,
     num_workers=5,
-    dataset=dict(type='ImageNet',
-                 data_root='data/imagenet',
-                 ann_file='meta/val.txt',
-                 data_prefix='val',
-                 pipeline=test_pipeline),
+    dataset=dict(
+        type='ImageNet',
+        data_root='data/imagenet',
+        ann_file='meta/val.txt',
+        data_prefix='val',
+        pipeline=test_pipeline),
     sampler=dict(type='DefaultSampler', shuffle=False),
 )
 test_evaluator = None

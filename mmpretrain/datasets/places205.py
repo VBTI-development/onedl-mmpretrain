@@ -32,8 +32,9 @@ class Places205(CustomDataset):
                  metainfo: Optional[dict] = None,
                  **kwargs):
         kwargs = {'extensions': self.IMG_EXTENSIONS, **kwargs}
-        super().__init__(data_root=data_root,
-                         data_prefix=data_prefix,
-                         ann_file=ann_file,
-                         metainfo=metainfo,
-                         **kwargs)
+        super().__init__(
+            data_root=data_root,
+            data_prefix=data_prefix,
+            ann_file=ann_file,
+            metainfo=metainfo,
+            **kwargs)

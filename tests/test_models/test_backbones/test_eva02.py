@@ -8,6 +8,7 @@ from mmpretrain.models.backbones import ViTEVA02
 
 
 class TestEVA02(TestCase):
+
     def setUp(self):
         self.cfg = dict(
             arch='t',

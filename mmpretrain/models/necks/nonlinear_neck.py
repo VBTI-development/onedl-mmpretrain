@@ -36,6 +36,7 @@ class NonLinearNeck(BaseModule):
             Defaults to dict(type='SyncBN').
         init_cfg (dict or list[dict], optional): Initialization config dict.
     """
+
     def __init__(
         self,
         in_channels: int,
@@ -75,8 +76,8 @@ class NonLinearNeck(BaseModule):
             else:
                 self.add_module(
                     f'fc{i}',
-                    nn.Linear(hid_channels, this_channels,
-                              bias=with_last_bias))
+                    nn.Linear(
+                        hid_channels, this_channels, bias=with_last_bias))
                 if with_last_bn:
                     self.add_module(
                         f'bn{i}',

@@ -24,6 +24,7 @@ from mmpretrain.models.utils.batch_augments import RandomBatchAugment
 
 
 class SimpleDataPreprocessor(BaseDataPreprocessor):
+
     def __init__(self):
         super().__init__()
         self.batch_augments = None
@@ -42,6 +43,7 @@ class SimpleDataPreprocessor(BaseDataPreprocessor):
 
 
 class SimpleModel(BaseModel):
+
     def __init__(self):
         super().__init__()
         self.data_preprocessor = SimpleDataPreprocessor()
@@ -59,6 +61,7 @@ class SimpleModel(BaseModel):
 
 
 class ExampleDataset(BaseDataset):
+
     def load_data_list(self) -> List[dict]:
         return [{
             'inputs': torch.rand(3, 12, 12),
@@ -67,11 +70,13 @@ class ExampleDataset(BaseDataset):
 
 
 class EmptyTransform:
+
     def __call__(self, results):
         return {}
 
 
 class TestSwitchRecipeHook(TestCase):
+
     def setUp(self):
         self.tmpdir = tempfile.TemporaryDirectory()
 
@@ -209,8 +214,9 @@ class TestSwitchRecipeHook(TestCase):
             side_effect=lambda x, y: CrossEntropyLoss.forward(loss, x, y))
         batch_augments = RandomBatchAugment(dict(type='Mixup', alpha=0.5))
         switch_hook = SwitchRecipeHook([
-            dict(action_epoch=1,
-                 train_pipeline=[MagicMock(side_effect=lambda x: x)]),
+            dict(
+                action_epoch=1,
+                train_pipeline=[MagicMock(side_effect=lambda x: x)]),
             dict(action_epoch=2, loss=loss),
             dict(
                 action_epoch=4,
