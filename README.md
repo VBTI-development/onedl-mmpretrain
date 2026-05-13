@@ -25,7 +25,7 @@
 [![PyPI](https://img.shields.io/pypi/v/onedl-mmpretrain)](https://pypi.org/project/onedl-mmpretrain)
 
 [![Build Status](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/merge_stage_test.yml/badge.svg)](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/merge_stage_test.yml)
-[![Docker Image](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/docker.yml/badge.svg)](https://hub.docker.com/r/vbti/onedl-mmpretrain-cu129-torch280/tags)
+[![Docker Image](https://github.com/VBTI-development/onedl-mmpretrain/actions/workflows/docker.yml/badge.svg)](https://hub.docker.com/r/vbti/onedl-mmpretrain-cu129-torch2100/tags)
 [![open issues](https://isitmaintained.com/badge/open/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 [![issue resolution](https://isitmaintained.com/badge/resolution/VBTI-development/onedl-mmpretrain.svg)](https://github.com/VBTI-development/onedl-mmpretrain/issues)
 
@@ -65,11 +65,6 @@ https://github.com/vbti-development/onedl-mmpretrain/assets/26739999/e4dcd3a2-f8
 The VBTI development team is forking MMLabs code, making it work with
 newer pytorch versions and fixing bugs. We are only a small team, so your help
 is appreciated.
-
-🌟 v1.2.0 was released in 04/01/2023
-
-- Support LLaVA 1.5.
-- Implement of RAM with a gradio interface.
 
 🌟 v1.1.0 was released in 12/10/2023
 
