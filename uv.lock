@@ -1478,7 +1478,7 @@ wheels = [
 
 [[package]]
 name = "onedl-mmcv"
-version = "2.3.3"
+version = "2.3.6"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "addict" },
@@ -1492,7 +1492,7 @@ dependencies = [
     { name = "regex", marker = "sys_platform == 'win32'" },
     { name = "yapf" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/01/42/040e63781d7612f836c803598825be1de7d98c21ae70657c246876d0a703/onedl_mmcv-2.3.3.tar.gz", hash = "sha256:71eb10d1163b257799a58cf324d1396c7b337259bfbfc75291e79d724a27b55d", size = 515560, upload-time = "2026-03-19T18:11:00.318Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/f3/75/c41230c08781de8bc3206e244e44c3eab8a4bfaad3878891082067042a7d/onedl_mmcv-2.3.6.tar.gz", hash = "sha256:8704978a3d492b15cc058742ac3165bd1bcc2dd20678da9ed39e0da3048e3045", size = 515592, upload-time = "2026-05-13T11:55:23.23Z" }
 
 [[package]]
 name = "onedl-mmengine"
